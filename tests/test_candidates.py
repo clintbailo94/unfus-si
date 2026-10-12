@@ -359,6 +359,13 @@ def test_trivial_plural_pair_is_removed_within_same_category():
     assert _remove_trivial_plurals([singular, plural]) == [plural]
 
 
+def test_trivial_compound_plural_pair_is_removed_across_new_categories():
+    singular = Candidate("marketflow", "technology", "compound", "market+flow", (), 78)
+    plural = Candidate("marketflows", "business_finance", "compound", "markets+flow", (), 84)
+
+    assert _remove_trivial_plurals([singular, plural]) == [plural]
+
+
 def test_plural_dedup_does_not_strip_s_from_hack_or_invented_sources():
     pairs = [
         (
@@ -393,6 +400,37 @@ def test_generators_are_deterministic_unique_and_meet_documented_counts():
     assert len(first["short"]) >= 500
     assert len(first["dictionary"]) >= 800
     assert len(first["invented"]) >= 1_200
+
+
+def test_t4_categories_share_the_compound_length_policy():
+    t4_categories = (
+        "technology",
+        "business_finance",
+        "health_science",
+        "consumer_brands",
+        "emerging_industries",
+    )
+
+    assert CATEGORIES == (
+        "domain_hacks",
+        "ai",
+        "short",
+        "dictionary",
+        "invented",
+        *t4_categories,
+    )
+    assert all(evaluate_candidate("infosecuritymesh", category) is not None for category in t4_categories)
+    assert all(evaluate_candidate("infosecuritymeshes", category) is None for category in t4_categories)
+
+
+def test_t4_generators_are_substantive_and_keep_global_pool_above_hard_minimum():
+    generated = generate_all()
+    labels = [row.domain_label for rows in generated.values() for row in rows]
+
+    assert all(len(generated[category]) >= 900 for category in CATEGORIES[5:])
+    assert len(labels) >= 5_000
+    assert len(labels) == len(set(labels))
+    assert all(generated[category] for category in CATEGORIES)
 
 
 def test_generated_candidates_pass_registry_rules_and_brand_blocks():

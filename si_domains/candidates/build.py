@@ -9,17 +9,44 @@ from pathlib import Path
 from typing import Callable
 
 from ..config import DATA_DIR
-from .generators import ai, dictionary, domain_hacks, invented, short
+from .generators import (
+    ai,
+    business_finance,
+    consumer_brands,
+    dictionary,
+    domain_hacks,
+    emerging_industries,
+    health_science,
+    invented,
+    short,
+    technology,
+)
 from .schema import CSV_FIELDS, Candidate
 
 
-CATEGORIES = ("domain_hacks", "ai", "short", "dictionary", "invented")
+CATEGORIES = (
+    "domain_hacks",
+    "ai",
+    "short",
+    "dictionary",
+    "invented",
+    "technology",
+    "business_finance",
+    "health_science",
+    "consumer_brands",
+    "emerging_industries",
+)
 MAX_CANDIDATES = {
     "domain_hacks": 850,
     "ai": 1_500,
     "short": 700,
     "dictionary": 1_050,
     "invented": 1_400,
+    "technology": 1_400,
+    "business_finance": 1_400,
+    "health_science": 1_400,
+    "consumer_brands": 1_400,
+    "emerging_industries": 1_400,
 }
 _GENERATORS: dict[str, Callable[[], list[Candidate]]] = {
     "domain_hacks": domain_hacks.generate,
@@ -27,6 +54,11 @@ _GENERATORS: dict[str, Callable[[], list[Candidate]]] = {
     "short": short.generate,
     "dictionary": dictionary.generate,
     "invented": invented.generate,
+    "technology": technology.generate,
+    "business_finance": business_finance.generate,
+    "health_science": health_science.generate,
+    "consumer_brands": consumer_brands.generate,
+    "emerging_industries": emerging_industries.generate,
 }
 
 
@@ -35,30 +67,46 @@ def _plural_rank(candidate: Candidate) -> tuple[int, int, int, str]:
     return (candidate.quality_score, -len(label), candidate.quality_score, label)
 
 
-def _is_trivial_plural_pair(singular: Candidate, plural: Candidate) -> bool:
-    if not plural.domain_label.endswith("s"):
-        return False
-    if plural.domain_label[:-1] != singular.domain_label:
-        return False
-    if singular.method in {"dictionary", "short"} and plural.method in {"dictionary", "short"}:
-        return singular.seed == singular.domain_label and plural.seed == plural.domain_label
+def _pluralizes(singular: str, plural: str) -> bool:
+    """Recognize a few predictable English plural spellings without stemming labels."""
+
+    if plural == singular + "s":
+        return True
+    if singular.endswith(("s", "x", "z", "ch", "sh")) and plural == singular + "es":
+        return True
     if (
-        singular.category == plural.category
-        and singular.method in {"compound", "blend"}
-        and plural.method == singular.method
+        len(singular) > 1
+        and singular.endswith("y")
+        and singular[-2] not in "aeiou"
+        and plural == singular[:-1] + "ies"
     ):
-        singular_parts = singular.seed.split("+")
-        plural_parts = plural.seed.split("+")
-        if len(singular_parts) != len(plural_parts):
-            return False
-        return sum(
-            old == new[:-1] and new.endswith("s")
-            for old, new in zip(singular_parts, plural_parts)
-        ) == 1 and all(
-            old == new or (old == new[:-1] and new.endswith("s"))
-            for old, new in zip(singular_parts, plural_parts)
-        )
+        return True
     return False
+
+
+def _is_trivial_plural_pair(singular: Candidate, plural: Candidate) -> bool:
+    if not _pluralizes(singular.domain_label, plural.domain_label):
+        return False
+
+    word_methods = {"dictionary", "short", "concept"}
+    if singular.method in word_methods and plural.method in word_methods:
+        return singular.seed == singular.domain_label and plural.seed == plural.domain_label
+
+    compound_methods = {"compound", "blend"}
+    if singular.method not in compound_methods or plural.method not in compound_methods:
+        return False
+    singular_parts = singular.seed.split("+")
+    plural_parts = plural.seed.split("+")
+    if len(singular_parts) != len(plural_parts):
+        return False
+    changed_parts = sum(
+        old != new and _pluralizes(old, new)
+        for old, new in zip(singular_parts, plural_parts)
+    )
+    return changed_parts == 1 and all(
+        old == new or _pluralizes(old, new)
+        for old, new in zip(singular_parts, plural_parts)
+    )
 
 
 def _remove_trivial_plurals(candidates: list[Candidate]) -> list[Candidate]:

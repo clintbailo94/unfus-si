@@ -11,7 +11,18 @@ from ..config import DATA_DIR
 from ..rules import classify
 
 
-_CATEGORIES = {"domain_hacks", "ai", "dictionary", "short", "invented"}
+_CATEGORIES = {
+    "domain_hacks",
+    "ai",
+    "dictionary",
+    "short",
+    "invented",
+    "technology",
+    "business_finance",
+    "health_science",
+    "consumer_brands",
+    "emerging_industries",
+}
 _ASCII_LABEL = re.compile(r"^[a-z]+$")
 _REPEATED_LETTER = re.compile(r"([a-z])\1\1")
 _REPEATED_CHUNK = re.compile(r"(.{2,3})\1")
@@ -23,6 +34,11 @@ _IDEAL_LENGTH = {
     "dictionary": 7,
     "short": 4,
     "invented": 7,
+    "technology": 10,
+    "business_finance": 10,
+    "health_science": 10,
+    "consumer_brands": 10,
+    "emerging_industries": 11,
 }
 
 
@@ -87,7 +103,14 @@ def evaluate_candidate(
         else 9
         if category == "invented"
         else 16
-        if category == "ai"
+        if category in {
+            "ai",
+            "technology",
+            "business_finance",
+            "health_science",
+            "consumer_brands",
+            "emerging_industries",
+        }
         else 15
     )
     if not lower_bound <= len(canonical) <= upper_bound:
