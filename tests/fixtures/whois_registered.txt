@@ -1,2 +1,28 @@
-Registrar: [redacted]
-Created: [redacted]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% WHOIS registry header line 01 (redacted fixture)
+% WHOIS registration service information line 02 (redacted fixture)
+% registrar: REDACTED header-comment value (ignored)
+% WHOIS registry header line 04 (redacted fixture)
+% WHOIS registry header line 05 (redacted fixture)
+% WHOIS registry header line 06 (redacted fixture)
+% WHOIS registry header line 07 (redacted fixture)
+% WHOIS registry header line 08 (redacted fixture)
+% WHOIS registry header line 09 (redacted fixture)
+% WHOIS registry header line 10 (redacted fixture)
+% WHOIS registry header line 11 (redacted fixture)
+% WHOIS registry header line 12 (redacted fixture)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+domain: REDACTED
+registrar: REDACTED
+registrar-url: REDACTED
+nameserver: REDACTED
+nameserver: REDACTED
+nameserver: REDACTED
+nameserver: REDACTED
+registrant: REDACTED
+status: REDACTED
+created: REDACTED
+expire: REDACTED
+source: REDACTED
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% WHOIS registry footer line (redacted fixture)

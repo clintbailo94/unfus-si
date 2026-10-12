@@ -25,7 +25,7 @@ from .config import (
     RDAP_TIMEOUT,
     USER_AGENT,
 )
-from .validation import is_valid_label
+from .validation import ascii_label, is_valid_label
 
 
 Clock = Callable[[], datetime | float]
@@ -253,7 +253,7 @@ def check_domain(
                 final_timestamp = _timestamp(clock)
                 attempts = attempt
                 response = session.get(
-                    f"{RDAP_BASE_URL}{domain}",
+                    f"{RDAP_BASE_URL}{ascii_label(label)}.si",
                     headers={"User-Agent": USER_AGENT},
                     timeout=RDAP_TIMEOUT,
                     allow_redirects=False,
