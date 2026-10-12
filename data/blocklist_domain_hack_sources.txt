@@ -1,0 +1,2 @@
+# Exact source-word exclusions; they do not block the resulting label elsewhere.
+lunacy

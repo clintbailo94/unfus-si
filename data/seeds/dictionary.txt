@@ -214,7 +214,6 @@ steeple
 seaport
 varsity
 feeling
-accuser
 playpen
 biplane
 honesty
@@ -766,7 +765,6 @@ courage
 naivety
 calorie
 daytime
-evasive
 foliage
 gateway
 jubilee
@@ -808,14 +806,12 @@ mediate
 uranium
 curious
 keyhole
-evasion
 lookout
 initial
 quality
 requiem
 biology
 agility
-jealous
 variety
 hosiery
 copious
@@ -913,7 +909,6 @@ minuet
 humanity
 pagoda
 header
-futility
 favorite
 dilute
 magazine
@@ -968,7 +963,6 @@ familiar
 nougat
 rotary
 severe
-polygamy
 dynamo
 feudal
 reader
@@ -1003,7 +997,6 @@ bodily
 healer
 literary
 domino
-tirade
 peaked
 museum
 exodus
@@ -1028,7 +1021,6 @@ deacon
 baritone
 palomino
 galore
-desolate
 peanut
 monogamy
 lifeboat

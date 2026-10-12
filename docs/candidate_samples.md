@@ -1,50 +1,51 @@
-## domain_hacks (40 of 136)
+## domain_hacks (40 of 135)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
 | courte.si | hack-suffix | courtesy |  | 82 |
 | can.si | hack-phrase | can + see |  | 74 |
 | idiosyncra.si | hack-suffix | idiosyncrasy |  | 78 |
 | constan.si | hack-suffix | constancy |  | 79 |
-| transparen.si | hack-suffix | transparency |  | 76 |
-| shallwe.si | hack-phrase | shallwe + see |  | 80 |
-| sufficien.si | hack-suffix | sufficiency |  | 88 |
-| piquan.si | hack-suffix | piquancy |  | 86 |
-| ferven.si | hack-suffix | fervency |  | 81 |
+| tryto.si | hack-phrase | tryto + see |  | 81 |
+| solven.si | hack-suffix | solvency |  | 81 |
+| surroga.si | hack-suffix | surrogacy |  | 89 |
+| please.si | hack-phrase | please + see |  | 82 |
+| poten.si | hack-suffix | potency |  | 84 |
+| competen.si | hack-suffix | competency |  | 91 |
 | boun.si | hack-suffix | bouncy |  | 78 |
 | go.si | hack-phrase | go + see | short;word | 70 |
 | addres.si | hack-suffix | addressee |  | 77 |
-| secre.si | hack-suffix | secrecy |  | 80 |
-| prophe.si | hack-suffix | prophecy |  | 81 |
+| shallwe.si | hack-phrase | shallwe + see |  | 80 |
+| pungen.si | hack-suffix | pungency |  | 81 |
 | emergen.si | hack-suffix | emergency |  | 89 |
 | floun.si | hack-suffix | flouncy |  | 80 |
 | lenien.si | hack-suffix | leniency |  | 86 |
 | unfus.si | hack-suffix | unfussy |  | 80 |
-| please.si | hack-phrase | please + see |  | 82 |
+| plian.si | hack-suffix | pliancy |  | 80 |
 | absorben.si | hack-suffix | absorbency |  | 91 |
-| necroman.si | hack-suffix | necromancy |  | 91 |
+| newsagen.si | hack-suffix | newsagency |  | 91 |
 | folk.si | hack-suffix | folksy |  | 70 |
 | you.si | hack-phrase | you + see |  | 53 |
-| numera.si | hack-suffix | numeracy |  | 86 |
-| pregnan.si | hack-suffix | pregnancy |  | 83 |
+| occupan.si | hack-suffix | occupancy |  | 89 |
+| presiden.si | hack-suffix | presidency |  | 91 |
 | consisten.si | hack-suffix | consistency |  | 85 |
 | lega.si | hack-suffix | legacy |  | 78 |
 | bras.si | hack-suffix | brassy |  | 70 |
 | dependen.si | hack-suffix | dependency |  | 91 |
-| tenden.si | hack-suffix | tendency |  | 81 |
+| tenan.si | hack-suffix | tenancy |  | 84 |
 | accura.si | hack-suffix | accuracy |  | 82 |
-| technocra.si | hack-suffix | technocracy |  | 81 |
+| proficien.si | hack-suffix | proficiency |  | 88 |
 | look.si | hack-phrase | look + see |  | 78 |
 | infan.si | hack-suffix | infancy |  | 80 |
 | accountan.si | hack-suffix | accountancy |  | 88 |
 | embas.si | hack-suffix | embassy |  | 80 |
-| meritocra.si | hack-suffix | meritocracy |  | 88 |
+| mos.si | hack-suffix | mossy |  | 74 |
 | concurren.si | hack-suffix | concurrency |  | 85 |
 | flee.si | hack-suffix | fleecy |  | 74 |
-| sas.si | hack-suffix | sassy |  | 74 |
 
 ## ai (40 of 1500)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
+| visisearch.si | blend | vision+search |  | 85 |
 | algoharbor.si | blend | algorithm+harbor |  | 89 |
 | robopilot.si | compound | robo+pilot |  | 96 |
 | imagebridge.si | compound | image+bridge |  | 84 |
@@ -84,11 +85,11 @@
 | neuragrid.si | compound | neura+grid |  | 92 |
 | semaworks.si | blend | semantic+works |  | 85 |
 | algoorbit.si | blend | algorithm+orbit |  | 92 |
-| quantlabs.si | compound | quant+labs |  | 85 |
 
 ## short (40 of 700)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
+| remi.si | short | re+mi | cvcv | 92 |
 | hr.si | short | hr | abbr | 68 |
 | nona.si | short | no+na | cvcv | 92 |
 | numa.si | short | nu+ma | cvcv | 92 |
@@ -128,51 +129,50 @@
 | noni.si | short | no+ni | cvcv | 92 |
 | sale.si | short | sa+le | cvcv | 92 |
 | mema.si | short | me+ma | cvcv | 92 |
-| tito.si | short | ti+to | cvcv | 92 |
 
 ## dictionary (40 of 1050)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
-| period.si | dictionary | period |  | 89 |
+| petunia.si | dictionary | petunia |  | 90 |
 | teapot.si | dictionary | teapot |  | 89 |
-| lotion.si | dictionary | lotion |  | 89 |
-| admiral.si | dictionary | admiral |  | 93 |
-| radiant.si | dictionary | radiant |  | 93 |
+| lullaby.si | dictionary | lullaby |  | 93 |
+| admirer.si | dictionary | admirer |  | 93 |
+| ragtime.si | dictionary | ragtime |  | 93 |
 | zoology.si | dictionary | zoology |  | 90 |
-| dioxide.si | dictionary | dioxide |  | 90 |
-| halibut.si | dictionary | halibut |  | 97 |
-| senate.si | dictionary | senate |  | 89 |
-| brocade.si | dictionary | brocade |  | 93 |
-| uncanny.si | dictionary | uncanny |  | 93 |
-| polygamy.si | dictionary | polygamy |  | 89 |
-| gourmet.si | dictionary | gourmet |  | 93 |
+| diverse.si | dictionary | diverse |  | 93 |
+| haywire.si | dictionary | haywire |  | 90 |
+| sensory.si | dictionary | sensory |  | 93 |
+| broiler.si | dictionary | broiler |  | 93 |
+| undying.si | dictionary | undying |  | 93 |
+| porous.si | dictionary | porous |  | 89 |
+| granule.si | dictionary | granule |  | 93 |
 | voyager.si | dictionary | voyager |  | 90 |
-| rowboat.si | dictionary | rowboat |  | 93 |
-| uranium.si | dictionary | uranium |  | 90 |
-| pigtail.si | dictionary | pigtail |  | 93 |
-| sailing.si | dictionary | sailing |  | 93 |
-| passive.si | dictionary | passive |  | 93 |
+| salable.si | dictionary | salable |  | 93 |
+| urgency.si | dictionary | urgency |  | 93 |
+| piranha.si | dictionary | piranha |  | 93 |
+| salient.si | dictionary | salient |  | 93 |
+| patriot.si | dictionary | patriot |  | 93 |
 | academy.si | dictionary | academy |  | 90 |
-| orbital.si | dictionary | orbital |  | 93 |
+| origin.si | dictionary | origin |  | 89 |
 | teacher.si | dictionary | teacher |  | 93 |
-| auditor.si | dictionary | auditor |  | 90 |
-| interim.si | dictionary | interim |  | 93 |
-| fixture.si | dictionary | fixture |  | 93 |
-| foreman.si | dictionary | foreman |  | 97 |
+| average.si | dictionary | average |  | 90 |
+| ironing.si | dictionary | ironing |  | 93 |
+| foliage.si | dictionary | foliage |  | 90 |
+| fortune.si | dictionary | fortune |  | 93 |
 | conical.si | dictionary | conical |  | 97 |
-| lexicon.si | dictionary | lexicon |  | 97 |
-| balloon.si | dictionary | balloon |  | 93 |
+| license.si | dictionary | license |  | 93 |
+| baritone.si | dictionary | baritone |  | 89 |
 | causal.si | dictionary | causal |  | 89 |
 | coaster.si | dictionary | coaster |  | 93 |
-| animate.si | dictionary | animate |  | 90 |
+| animated.si | dictionary | animated |  | 89 |
 | surname.si | dictionary | surname |  | 93 |
-| analyst.si | dictionary | analyst |  | 93 |
-| mariner.si | dictionary | mariner |  | 97 |
-| legion.si | dictionary | legion |  | 89 |
-| lookout.si | dictionary | lookout |  | 90 |
+| anatomy.si | dictionary | anatomy |  | 90 |
+| mascara.si | dictionary | mascara |  | 93 |
+| leotard.si | dictionary | leotard |  | 93 |
+| luggage.si | dictionary | luggage |  | 93 |
 | decade.si | dictionary | decade |  | 89 |
-| furnace.si | dictionary | furnace |  | 93 |
-| partial.si | dictionary | partial |  | 93 |
+| gallery.si | dictionary | gallery |  | 93 |
+| passive.si | dictionary | passive |  | 93 |
 
 ## invented (40 of 1400)
 | domain | method | seed | tags | quality_score |

@@ -105,6 +105,14 @@ def evaluate_candidate(
         return None
     if _is_blocked(canonical, offensive, minimum_substring=4) or source_tokens.intersection(offensive):
         return None
+    if category == "dictionary" and canonical in _blocklist("blocklist_dictionary.txt"):
+        return None
+    if (
+        category == "domain_hacks"
+        and seed is not None
+        and seed.casefold() in _blocklist("blocklist_domain_hack_sources.txt")
+    ):
+        return None
     low_quality = _blocklist("blocklist_low_quality.txt")
     # These are semantic exclusions for whole labels and source terms, not
     # substring fragments; substring matching would reject valid terms such

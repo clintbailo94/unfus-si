@@ -20,11 +20,11 @@ include both generation reasons (`abbr`, `word`, `cvcv`, `phonotactic`) and
 other applicable candidate categories. `quality_score` is a deterministic
 0-100 heuristic, not an availability or resale score.
 
-The committed T3 pool contains 4,786 unique rows:
+The committed T3 pool contains 4,785 unique rows:
 
 | Category | Rows | Brief target | Generation approach |
 | --- | ---: | ---: | --- |
-| `domain_hacks` | 136 | 700 | Pronunciation-reviewed `-cy` / `-sy` / `-see` completions plus clear phrases |
+| `domain_hacks` | 135 | 700 | Pronunciation-reviewed `-cy` / `-sy` / `-see` completions plus clear phrases |
 | `ai` | 1,500 | 1,300 | Curated AI concept and product compounds, plus selected blends |
 | `short` | 700 | 500 | Meaningful abbreviations and words, plus pronounceable CVCV labels |
 | `dictionary` | 1,050 | 800 | Screened common English noun/adjective seeds |
@@ -32,15 +32,19 @@ The committed T3 pool contains 4,786 unique rows:
 
 The `domain_hacks` count is below its target. The original SCOWL v2 size 60
 suffix set supplied 293 source words. Semantic and pronunciation review left
-147 curated seeds, including the named audit `-sy` examples so tests can
-prove they are rejected. The generator emits 121 suffix completions and 15
-clear phrase completions; the shared gate and global deduplication leave 136
-rows. Expanding to size 85 exceeded 700, but its review sample contained many
-rare specialist or derived forms. Those were left out to honor the brief's
-no-filler requirement. Non-natural splits such as `heresy`, `papacy`, `lacy`,
+146 curated seeds, including the named audit `-sy` examples so tests can
+prove they are rejected. The generator emits 120 suffix completions and 15
+clear phrase completions; the shared gate and global deduplication leave 135
+rows. `lunacy` is excluded as an unsuitable hack source; the exact source guard
+in `data/blocklist_domain_hack_sources.txt` prevents reintroduction while
+leaving `luna` available for consideration in other categories. Expanding to
+size 85 exceeded 700, but its
+review sample contained many rare specialist or derived forms. Those were left
+out to honor the brief's no-filler requirement. Non-natural splits such as
+`heresy`, `papacy`, `lacy`,
 `racy`, `juicy`, `citrusy`, `geodesy`, and `primacy` are pruned only from this
 category's seed file; their resulting labels are not globally blocked. The
-regression test pins the reviewed count at 136
+regression test pins the reviewed count at 135
 rather than treating the 700 target as met; additions should pass the same
 human quality review.
 
@@ -62,7 +66,8 @@ Every candidate must:
   longer than three;
 - include a vowel, except a short label explicitly tagged as a meaningful
   abbreviation;
-- avoid the brand, offensive-language, and low-quality terms in `data/`.
+- avoid the brand, offensive-language, and low-quality terms in `data/`, plus
+  the exact dictionary and domain-hack source exclusions.
 - receive a quality score of at least 50.
 
 Low-quality entries are exact standalone-word and source-seed exclusions, not
@@ -74,7 +79,11 @@ derogatory, criminal, harmful, death-related, or weak standalone words. Neutral
 health and technical vocabulary with credible use remains eligible, including
 `insulin`, `vaccine`, `therapy`, `neutron`, and `quantum`. A few weak general
 dictionary seeds (`dealing`, `fatigue`, and `rumored`) were pruned only from
-that category's seed file rather than globally blocked.
+that category's seed file rather than globally blocked. A further semantic
+pass removed `accuser`, `desolate`, `evasion`, `evasive`, `futility`, `jealous`,
+`tirade`, and `polygamy` from the premium dictionary seeds. These exact terms
+are also in `data/blocklist_dictionary.txt`, which applies only to the
+dictionary category and protects against accidental seed reintroduction.
 The short label `muka` is excluded after manual Slovenian review; the
 [Fran/SSKJ² entry](https://fran.si/iskanje/SSKJ%C2%B2/trpeti?AllNoHeadword=trpeti&FilteredDictionaryIds=133&Query=trpeti&View=1)
 uses it for suffering and torment. The exact-word rule avoids blocking
@@ -111,10 +120,10 @@ pronunciation, so it is rejected for an unreliable read. [*Pansy*](https://www.m
 and [*quinsy*](https://www.merriam-webster.com/dictionary/quinsy) are also
 excluded for semantic reasons. The source review removed weak, negative, and
 obscure forms such as `idiocy`, `contumacy`, `plangency`, `regeneracy`,
-`mendicancy`, `baronetcy`, `inefficacy`, and `inexpediency`; disease names with
-awkward suffix splits and
-rare ecclesiastical or military titles were removed only from this category's
-seeds. Pronunciation and split exclusions never globally block an otherwise
+`mendicancy`, `lunacy`, `baronetcy`, `inefficacy`, and `inexpediency`; disease
+names with awkward suffix splits and rare ecclesiastical or military titles
+were removed only from this category's seeds. Pronunciation and split
+exclusions never globally block an otherwise
 valid label in another category. Final `-see` and `-si` use the same
 natural-read check. The small phrase
 list covers clear reads such as “go see”, “wait and see”, and “come and see”.
@@ -130,12 +139,13 @@ names, including the names called out in the brief.
 
 ### `dictionary`
 
-`data/seeds/dictionary.txt` contains 1,192 retained 6-9 letter US English
+`data/seeds/dictionary.txt` contains 1,184 retained 6-9 letter US English
 noun/adjective entries from an initial 1,450 SCOWL v2 size 35 selections.
 Selection favors a seven-letter length, a comfortable vowel ratio, and simple
-consonant transitions. A full semantic pass removed 258 weak, derogatory,
+consonant transitions. A full semantic pass removed 266 weak, derogatory,
 criminal, harmful, disease-related, or unsuitable standalone words from the
-seeds; the shared exact-word gate also protects future additions.
+seeds, including the eight exact terms listed above; the category-scoped
+exact-word gate also protects future additions.
 The output retains neutral specialist words such as `insulin`, `vaccine`,
 `therapy`, `neutron`, and `quantum`. The committed output is ranked and capped
 at 1,050.

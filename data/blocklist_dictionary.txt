@@ -1,0 +1,10 @@
+# Exact whole-word exclusions from the premium dictionary category only.
+# These remain eligible for consideration in other categories when applicable.
+accuser
+desolate
+evasion
+evasive
+futility
+jealous
+polygamy
+tirade

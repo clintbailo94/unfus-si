@@ -92,6 +92,14 @@ def test_short_abbreviations_and_brand_components_are_checked():
         "leaden",
         "runaway",
         "undoing",
+        "accuser",
+        "desolate",
+        "evasion",
+        "evasive",
+        "futility",
+        "jealous",
+        "tirade",
+        "polygamy",
     ],
 )
 def test_dictionary_gate_rejects_negative_or_weak_standalone_words(label):
@@ -136,6 +144,14 @@ def test_dictionary_generator_omits_semantically_rejected_terms():
         "leaden",
         "runaway",
         "undoing",
+        "accuser",
+        "desolate",
+        "evasion",
+        "evasive",
+        "futility",
+        "jealous",
+        "tirade",
+        "polygamy",
     }
 
     assert not rejected.intersection(row.domain_label for row in generate_all()["dictionary"])
@@ -156,6 +172,16 @@ def test_dictionary_seeds_are_semantically_pruned_without_losing_technical_words
 
     assert not words.intersection(rejected)
     assert not {"dealing", "fatigue", "rumored"}.intersection(words)
+    assert not {
+        "accuser",
+        "desolate",
+        "evasion",
+        "evasive",
+        "futility",
+        "jealous",
+        "tirade",
+        "polygamy",
+    }.intersection(words)
     assert {"insulin", "quantum", "vaccine"}.issubset(words)
 
 
@@ -163,6 +189,7 @@ def test_dictionary_seeds_are_semantically_pruned_without_losing_technical_words
     "source",
     [
         "idiocy",
+        "lunacy",
         "contumacy",
         "plangency",
         "regeneracy",
@@ -290,6 +317,24 @@ def test_domain_hacks_reject_voiced_sy_sources(source):
 
 def test_rejecting_a_hack_source_does_not_globally_block_its_short_label():
     assert evaluate_candidate("la", "short") is not None
+    assert evaluate_candidate("luna", "short") is not None
+    assert evaluate_candidate("luna", "domain_hacks", seed="lunacy") is None
+
+
+def test_lunacy_is_pruned_as_a_domain_hack_source():
+    seeds = {
+        line.strip().casefold()
+        for line in (Path(__file__).parents[1] / "data" / "seeds" / "domain_hacks.txt")
+        .read_text(encoding="utf-8")
+        .splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    }
+
+    assert "lunacy" not in seeds
+    assert not any(
+        candidate.method == "hack-suffix" and candidate.seed == "lunacy"
+        for candidate in generate_domain_hacks()
+    )
 
 
 @pytest.mark.parametrize(
@@ -343,7 +388,7 @@ def test_generators_are_deterministic_unique_and_meet_documented_counts():
     assert "birds" not in labels
     assert "accura" in {row.domain_label for row in first["domain_hacks"]}
     assert "muka" not in labels
-    assert len(first["domain_hacks"]) == 136
+    assert len(first["domain_hacks"]) == 135
     assert len(first["ai"]) >= 1_300
     assert len(first["short"]) >= 500
     assert len(first["dictionary"]) >= 800

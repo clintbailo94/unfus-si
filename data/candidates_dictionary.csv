@@ -3,7 +3,6 @@ abdomen,dictionary,dictionary,abdomen,,93
 ability,dictionary,dictionary,ability,,90
 abreast,dictionary,dictionary,abreast,,93
 academy,dictionary,dictionary,academy,,90
-accuser,dictionary,dictionary,accuser,,93
 acidity,dictionary,dictionary,acidity,,90
 acrobat,dictionary,dictionary,acrobat,,93
 acronym,dictionary,dictionary,acronym,,93
@@ -128,6 +127,7 @@ cadence,dictionary,dictionary,cadence,,93
 calcium,dictionary,dictionary,calcium,,93
 caliber,dictionary,dictionary,caliber,,97
 calorie,dictionary,dictionary,calorie,,90
+canine,dictionary,dictionary,canine,,89
 cannery,dictionary,dictionary,cannery,,93
 canteen,dictionary,dictionary,canteen,,93
 capable,dictionary,dictionary,capable,,93
@@ -242,7 +242,6 @@ demeanor,dictionary,dictionary,demeanor,,89
 denial,dictionary,dictionary,denial,,89
 density,dictionary,dictionary,density,,93
 deputy,dictionary,dictionary,deputy,,89
-desolate,dictionary,dictionary,desolate,,89
 destiny,dictionary,dictionary,destiny,,93
 device,dictionary,dictionary,device,,89
 devoted,dictionary,dictionary,devoted,,97
@@ -321,8 +320,6 @@ erudite,dictionary,dictionary,erudite,,90
 essence,dictionary,dictionary,essence,,93
 eternal,dictionary,dictionary,eternal,,93
 ethical,dictionary,dictionary,ethical,,93
-evasion,dictionary,dictionary,evasion,,90
-evasive,dictionary,dictionary,evasive,,90
 evening,dictionary,dictionary,evening,,93
 evident,dictionary,dictionary,evident,,93
 examiner,dictionary,dictionary,examiner,,89
@@ -379,7 +376,6 @@ freezer,dictionary,dictionary,freezer,,93
 frigate,dictionary,dictionary,frigate,,93
 furnace,dictionary,dictionary,furnace,,93
 furtive,dictionary,dictionary,furtive,,93
-futility,dictionary,dictionary,futility,,89
 gainful,dictionary,dictionary,gainful,,93
 gallery,dictionary,dictionary,gallery,,93
 galore,dictionary,dictionary,galore,,89
@@ -477,7 +473,6 @@ ironing,dictionary,dictionary,ironing,,93
 jailer,dictionary,dictionary,jailer,,89
 janitor,dictionary,dictionary,janitor,,97
 javelin,dictionary,dictionary,javelin,,97
-jealous,dictionary,dictionary,jealous,,90
 jeweler,dictionary,dictionary,jeweler,,97
 jewelry,dictionary,dictionary,jewelry,,93
 jittery,dictionary,dictionary,jittery,,93
@@ -599,6 +594,7 @@ melody,dictionary,dictionary,melody,,89
 memento,dictionary,dictionary,memento,,93
 mercury,dictionary,dictionary,mercury,,93
 mermaid,dictionary,dictionary,mermaid,,93
+meteor,dictionary,dictionary,meteor,,89
 microbe,dictionary,dictionary,microbe,,93
 midwife,dictionary,dictionary,midwife,,93
 mileage,dictionary,dictionary,mileage,,90
@@ -704,6 +700,7 @@ parable,dictionary,dictionary,parable,,93
 paradox,dictionary,dictionary,paradox,,97
 paragon,dictionary,dictionary,paragon,,97
 parasol,dictionary,dictionary,parasol,,97
+parity,dictionary,dictionary,parity,,89
 partial,dictionary,dictionary,partial,,93
 passage,dictionary,dictionary,passage,,93
 passion,dictionary,dictionary,passion,,93
@@ -745,7 +742,6 @@ poetical,dictionary,dictionary,poetical,,89
 pointed,dictionary,dictionary,pointed,,93
 pointer,dictionary,dictionary,pointer,,93
 police,dictionary,dictionary,police,,89
-polygamy,dictionary,dictionary,polygamy,,89
 polygon,dictionary,dictionary,polygon,,97
 pontoon,dictionary,dictionary,pontoon,,93
 popular,dictionary,dictionary,popular,,97
@@ -784,6 +780,7 @@ quinine,dictionary,dictionary,quinine,,90
 quintet,dictionary,dictionary,quintet,,93
 quorum,dictionary,dictionary,quorum,,89
 raccoon,dictionary,dictionary,raccoon,,93
+racial,dictionary,dictionary,racial,,89
 radiant,dictionary,dictionary,radiant,,93
 radical,dictionary,dictionary,radical,,97
 radium,dictionary,dictionary,radium,,89
@@ -895,9 +892,11 @@ sneaker,dictionary,dictionary,sneaker,,93
 snooker,dictionary,dictionary,snooker,,93
 social,dictionary,dictionary,social,,89
 society,dictionary,dictionary,society,,90
+solidity,dictionary,dictionary,solidity,,89
 solitude,dictionary,dictionary,solitude,,89
 soloist,dictionary,dictionary,soloist,,93
 soluble,dictionary,dictionary,soluble,,93
+sometime,dictionary,dictionary,sometime,,89
 soprano,dictionary,dictionary,soprano,,93
 sorcery,dictionary,dictionary,sorcery,,93
 souvenir,dictionary,dictionary,souvenir,,89
@@ -919,6 +918,7 @@ storage,dictionary,dictionary,storage,,93
 sublime,dictionary,dictionary,sublime,,93
 subsidy,dictionary,dictionary,subsidy,,93
 suction,dictionary,dictionary,suction,,93
+suitor,dictionary,dictionary,suitor,,89
 summary,dictionary,dictionary,summary,,93
 sundial,dictionary,dictionary,sundial,,93
 sunrise,dictionary,dictionary,sunrise,,93
@@ -956,7 +956,6 @@ theorem,dictionary,dictionary,theorem,,93
 therapy,dictionary,dictionary,therapy,,93
 thyroid,dictionary,dictionary,thyroid,,93
 timezone,dictionary,dictionary,timezone,,89
-tirade,dictionary,dictionary,tirade,,89
 toaster,dictionary,dictionary,toaster,,93
 tomato,dictionary,dictionary,tomato,,89
 tonnage,dictionary,dictionary,tonnage,,93
@@ -998,6 +997,7 @@ utensil,dictionary,dictionary,utensil,,93
 utility,dictionary,dictionary,utility,,90
 vacancy,dictionary,dictionary,vacancy,,93
 vaccine,dictionary,dictionary,vaccine,,93
+vacuum,dictionary,dictionary,vacuum,,89
 valiant,dictionary,dictionary,valiant,,93
 vampire,dictionary,dictionary,vampire,,93
 vanilla,dictionary,dictionary,vanilla,,93
