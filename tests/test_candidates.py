@@ -361,7 +361,14 @@ def test_trivial_plural_pair_is_removed_within_same_category():
 
 def test_trivial_compound_plural_pair_is_removed_across_new_categories():
     singular = Candidate("marketflow", "technology", "compound", "market+flow", (), 78)
-    plural = Candidate("marketflows", "business_finance", "compound", "markets+flow", (), 84)
+    plural = Candidate("marketsflow", "business_finance", "compound", "markets+flow", (), 84)
+
+    assert _remove_trivial_plurals([singular, plural]) == [plural]
+
+
+def test_trivial_y_plural_pair_is_removed_across_categories():
+    singular = Candidate("industrylab", "technology", "compound", "industry+lab", (), 78)
+    plural = Candidate("industrieslab", "business_finance", "compound", "industries+lab", (), 84)
 
     assert _remove_trivial_plurals([singular, plural]) == [plural]
 
@@ -387,7 +394,18 @@ def test_generators_are_deterministic_unique_and_meet_documented_counts():
     first = generate_all()
     second = generate_all()
 
-    assert CATEGORIES == ("domain_hacks", "ai", "short", "dictionary", "invented")
+    assert CATEGORIES == (
+        "domain_hacks",
+        "ai",
+        "short",
+        "dictionary",
+        "invented",
+        "technology",
+        "business_finance",
+        "health_science",
+        "consumer_brands",
+        "emerging_industries",
+    )
     assert first == second
     assert len({row.domain_label for rows in first.values() for row in rows}) == sum(map(len, first.values()))
     labels = {row.domain_label for rows in first.values() for row in rows}
@@ -431,6 +449,52 @@ def test_t4_generators_are_substantive_and_keep_global_pool_above_hard_minimum()
     assert len(labels) >= 5_000
     assert len(labels) == len(set(labels))
     assert all(generated[category] for category in CATEGORIES)
+
+
+def test_global_dedup_keeps_the_first_primary_category_and_other_category_tags():
+    generated = generate_all()
+    rows = {row.domain_label: row for values in generated.values() for row in values}
+
+    bioengine = rows["bioengine"]
+    assert bioengine.category == "health_science"
+    assert "emerging_industries" in bioengine.tags
+    assert bioengine.tags == tuple(sorted(set(bioengine.tags)))
+    assert len(rows) == sum(map(len, generated.values()))
+
+
+def test_sample_review_exclusions_remove_specific_root_product_pairs():
+    from si_domains.candidates.build import _GENERATORS
+    from si_domains.candidates.generators.common import read_candidate_pair_blocks
+
+    blocked = read_candidate_pair_blocks()
+    for category in CATEGORIES[5:]:
+        seeds = {row.seed for row in _GENERATORS[category]()}
+        assert not {seed for blocked_category, seed in blocked if blocked_category == category} & seeds
+
+
+def test_generated_committed_csvs_and_review_sample_match_regeneration(tmp_path):
+    from si_domains.candidates.build import write_csv
+    from si_domains.candidates.review import render_sample
+
+    generated = generate_all()
+    data_dir = Path(__file__).parents[1] / "data"
+    for category, rows in generated.items():
+        expected = tmp_path / f"{category}.csv"
+        write_csv(expected, rows)
+        first_bytes = expected.read_bytes()
+        write_csv(expected, rows)
+        assert expected.read_bytes() == first_bytes
+        assert first_bytes == (data_dir / f"candidates_{category}.csv").read_bytes()
+
+    combined = tmp_path / "combined.csv"
+    write_csv(combined, [row for category in CATEGORIES for row in generated[category]])
+    first_bytes = combined.read_bytes()
+    write_csv(combined, [row for category in CATEGORIES for row in generated[category]])
+    assert combined.read_bytes() == first_bytes
+    assert first_bytes == (data_dir / "candidates.csv").read_bytes()
+
+    sample_bytes = render_sample(40, 1).encode("utf-8")
+    assert sample_bytes == (data_dir.parent / "docs" / "candidate_samples.md").read_bytes()
 
 
 def test_generated_candidates_pass_registry_rules_and_brand_blocks():

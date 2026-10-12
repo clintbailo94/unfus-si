@@ -42,11 +42,11 @@ MAX_CANDIDATES = {
     "short": 700,
     "dictionary": 1_050,
     "invented": 1_400,
-    "technology": 1_400,
-    "business_finance": 1_400,
-    "health_science": 1_400,
-    "consumer_brands": 1_400,
-    "emerging_industries": 1_400,
+    "technology": 1_200,
+    "business_finance": 1_200,
+    "health_science": 1_200,
+    "consumer_brands": 1_200,
+    "emerging_industries": 1_200,
 }
 _GENERATORS: dict[str, Callable[[], list[Candidate]]] = {
     "domain_hacks": domain_hacks.generate,
@@ -84,8 +84,52 @@ def _pluralizes(singular: str, plural: str) -> bool:
     return False
 
 
+def _plural_forms(singular: str) -> set[str]:
+    forms = {singular + "s"}
+    if singular.endswith(("s", "x", "z", "ch", "sh")):
+        forms.add(singular + "es")
+    if (
+        len(singular) > 1
+        and singular.endswith("y")
+        and singular[-2] not in "aeiou"
+    ):
+        forms.add(singular[:-1] + "ies")
+    return forms
+
+
+def _singular_forms(plural: str) -> set[str]:
+    forms: set[str] = set()
+    if plural.endswith("ies"):
+        forms.add(plural[:-3] + "y")
+    if plural.endswith("es"):
+        forms.add(plural[:-2])
+    if plural.endswith("s"):
+        forms.add(plural[:-1])
+    return {singular for singular in forms if _pluralizes(singular, plural)}
+
+
+def _compound_label_forms(candidate: Candidate, *, plural: bool) -> set[str]:
+    if candidate.method != "compound" or "+" not in candidate.seed:
+        return set()
+    parts = candidate.seed.split("+")
+    if "".join(parts) != candidate.domain_label:
+        return set()
+
+    forms: set[str] = set()
+    for index, part in enumerate(parts):
+        variants = _plural_forms(part) if plural else _singular_forms(part)
+        for variant in variants:
+            other_parts = list(parts)
+            other_parts[index] = variant
+            forms.add("".join(other_parts))
+    return forms
+
+
 def _is_trivial_plural_pair(singular: Candidate, plural: Candidate) -> bool:
-    if not _pluralizes(singular.domain_label, plural.domain_label):
+    labels_match = _pluralizes(singular.domain_label, plural.domain_label)
+    if not labels_match:
+        labels_match = plural.domain_label in _compound_label_forms(singular, plural=True)
+    if not labels_match:
         return False
 
     word_methods = {"dictionary", "short", "concept"}
@@ -114,20 +158,18 @@ def _remove_trivial_plurals(candidates: list[Candidate]) -> list[Candidate]:
     kept: dict[str, Candidate] = {}
     for candidate in sorted(candidates, key=_plural_rank, reverse=True):
         label = candidate.domain_label
-        if label.endswith("s") and len(label) > 3:
-            singular = label[:-1]
-            singular_candidate = by_label.get(singular)
-            if singular_candidate is not None and _is_trivial_plural_pair(singular_candidate, candidate):
-                if singular in kept or _plural_rank(singular_candidate) >= _plural_rank(candidate):
-                    continue
-        else:
-            plural = by_label.get(label + "s")
-            if plural is not None and _is_trivial_plural_pair(candidate, plural):
-                if _plural_rank(plural) > _plural_rank(candidate):
-                    continue
-                kept.pop(label + "s", None)
-        if label not in kept:
-            kept[label] = candidate
+        related_labels = _singular_forms(label) | _compound_label_forms(candidate, plural=False)
+        related_labels |= _plural_forms(label) | _compound_label_forms(candidate, plural=True)
+        if any(
+            other_label in kept
+            and (
+                _is_trivial_plural_pair(by_label[other_label], candidate)
+                or _is_trivial_plural_pair(candidate, by_label[other_label])
+            )
+            for other_label in related_labels
+        ):
+            continue
+        kept[label] = candidate
     return sorted(kept.values(), key=lambda candidate: (candidate.category, candidate.domain_label))
 
 

@@ -1,4 +1,4 @@
-# Candidate generation methodology (T3)
+# Candidate generation methodology (T4)
 
 This stage produces candidate **labels** only. It does not check registration,
 availability, premium pricing, trademark status, or legal suitability. No live
@@ -6,10 +6,12 @@ RDAP or WHOIS queries were made while building these files. Every result must
 be checked against the registry before anyone describes it as available.
 
 The inputs are curated text files under `data/seeds/`, plus the local quality
-and blocklist rules. A seed line is one term; `#` begins a comment. Generators
-have no network dependency. Output is stable: labels are deduplicated across
-categories, near-identical singular/plural pairs keep one higher-ranked row,
-and CSV rows are sorted by label. Equal-score candidates are selected with a
+and blocklist rules. Most seed files contain one term per line; the T4 paired
+vocabularies use `[group_name]` headings so a concept is combined only with
+products in its matching group. `#` begins a comment. Generators have no
+network dependency. Output is stable: labels are deduplicated across
+categories, supported singular/plural pairs keep one higher-ranked row, and
+CSV rows are sorted by label. Equal-score candidates are selected with a
 stable SHA-256 tie-break when a category limit applies.
 
 ## CSV and category counts
@@ -20,7 +22,7 @@ include both generation reasons (`abbr`, `word`, `cvcv`, `phonotactic`) and
 other applicable candidate categories. `quality_score` is a deterministic
 0-100 heuristic, not an availability or resale score.
 
-The committed T3 pool contains 4,785 unique rows:
+The committed T4 pool contains 10,785 unique rows:
 
 | Category | Rows | Brief target | Generation approach |
 | --- | ---: | ---: | --- |
@@ -29,6 +31,11 @@ The committed T3 pool contains 4,785 unique rows:
 | `short` | 700 | 500 | Meaningful abbreviations and words, plus pronounceable CVCV labels |
 | `dictionary` | 1,050 | 800 | Screened common English noun/adjective seeds |
 | `invented` | 1,400 | 1,200 | Stem/ending combinations with spelling and repeated-chunk checks |
+| `technology` | 1,200 | 1,000-1,400 | Grouped cloud, security, software, data, hardware, and fintech compounds |
+| `business_finance` | 1,200 | 1,000-1,400 | Grouped investment, banking, insurance, startup, and operations compounds |
+| `health_science` | 1,200 | 1,000-1,400 | Grouped care, diagnostics, biotech, pharma, longevity, and research compounds |
+| `consumer_brands` | 1,200 | 1,000-1,400 | Grouped fashion, travel, media, education, retail, and lifestyle compounds |
+| `emerging_industries` | 1,200 | 1,000-1,400 | Grouped robotics, quantum, energy, materials, climate, and aerospace compounds |
 
 The `domain_hacks` count is below its target. The original SCOWL v2 size 60
 suffix set supplied 293 source words. Semantic and pronunciation review left
@@ -48,11 +55,12 @@ regression test pins the reviewed count at 135
 rather than treating the 700 target as met; additions should pass the same
 human quality review.
 
-Category ceilings keep this phase focused on the overall 10,000-12,000 name
-pool planned across T3 and T4. When a generator produces more than its ceiling,
-the highest quality scores are kept and ties are resolved deterministically;
-for `short`, the explicitly curated words and abbreviations are retained
-before filling the remaining slots with CVCV candidates.
+Category ceilings keep the combined pool near the planned 10,000-12,000 rows.
+The five T4 ceilings are 1,200 each. When a generator produces more than its
+ceiling, the highest spelling-heuristic scores are kept and ties are resolved
+deterministically; for `short`, the explicitly curated words and abbreviations
+are retained before filling the remaining slots with CVCV candidates. These
+caps and scores do not establish commercial usefulness.
 
 ## Quality gate
 
@@ -60,8 +68,9 @@ Every candidate must:
 
 - pass `si_domains.rules.classify(label) == "ok"`;
 - use lowercase ASCII letters only, with no hyphens, IDNs, or digits;
-- fit the category bounds (short 2-5, AI 3-16, dictionary 4-15, domain hacks
-  2-15, invented 4-9; committed dictionary seeds are 6-9 characters);
+- fit the category bounds (short 2-5; AI and all five T4 compound categories
+  3-16; dictionary 4-15; domain hacks 2-15; invented 4-9; committed
+  dictionary seeds are 6-9 characters);
 - avoid known reserved labels, triple repeated letters, and consonant runs
   longer than three;
 - include a vowel, except a short label explicitly tagged as a meaningful
@@ -137,6 +146,44 @@ stems for pronounceable blends. The result is ranked and capped at 1,500.
 `data/blocklist_brands.txt` blocks well-known AI marks and major product/company
 names, including the names called out in the brief.
 
+### T4 sector categories
+
+The T4 inputs are self-curated vocabularies written for this project. Each
+`*_concepts.txt` and `*_products.txt` file groups terms under matching
+`[group_name]` headings. The shared generator combines only concepts and
+products in the same group, drops identical or substring-redundant joins, then
+applies the common spelling, registry, brand, and offensive-language gates.
+It does not cross every term between sectors. Each row records the two source
+terms in `seed`; the T4 category caps are 1,200 rows after global deduplication.
+
+- `technology`: cloud platforms, security, software delivery, data compute,
+  connected hardware, and fintech infrastructure. Natural shorthand includes
+  `devops`, `netops`, and `infosec`.
+- `business_finance`: investment markets, banking and payments, insurance,
+  startup and venture tools, business operations, and professional services.
+  Selected blends are `fintech`, `insurtech`, `regtech`, `wealthtech`, and
+  `proptech`.
+- `health_science`: care delivery, diagnostics and imaging, biotech and
+  genomics, pharma trials, longevity and wellness, and research. Selected
+  blends include `biotech`, `medtech`, `healthtech`, `telehealth`, and
+  `neurotech`.
+- `consumer_brands`: fashion and beauty, travel and hospitality, media and
+  entertainment, education, retail and ecommerce, and lifestyle communities.
+  Selected blends include `edtech`, `ecommerce`, `staycation`, and
+  `athleisure`.
+- `emerging_industries`: robotics and autonomy, quantum computing, energy
+  storage, advanced materials, climate and agriculture, and aerospace.
+  Selected blends include `cleantech`, `greentech`, `climatetech`, `agritech`,
+  `spacetech`, `foodtech`, and `autotech`.
+
+The 40-per-category sample at seed 1 was reviewed after generation. Exact
+category-scoped joins in `data/blocklist_candidate_pairs.txt` remove redundant
+or weak combinations such as payment/cash repetitions, mismatched consumer
+joins, and unrelated material/energy pairs. This is generator input policy;
+CSV rows and review samples are regenerated, never hand-edited. Review focuses
+on spelling and obvious semantic fit only; it is not a trademark, demand, or
+availability screen.
+
 ### `dictionary`
 
 `data/seeds/dictionary.txt` contains 1,184 retained 6-9 letter US English
@@ -165,6 +212,12 @@ quality gate rejects spelling clusters, repeated letters, and repeated
 two/three-letter chunks. The ranked output ceiling is 1,400.
 
 ## Word-list source and license
+
+The five T4 sector concept/product vocabularies and the sample-review pair
+exclusions were authored and reviewed locally for this project. They were not
+downloaded from an external word list, so the ESDB-derived seed notice below
+applies to the earlier dictionary and domain-hack inputs, not to these T4
+files.
 
 Dictionary and suffix seeds were derived from the English Speller Database
 (ESDB, formerly SCOWL v2), using its US English word-list view and the size and
