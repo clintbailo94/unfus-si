@@ -1,0 +1,136 @@
+domain_label,category,method,seed,tags,quality_score
+absorben,domain_hacks,hack-suffix,absorbency,,91
+accountan,domain_hacks,hack-suffix,accountancy,,88
+accura,domain_hacks,hack-suffix,accuracy,,82
+addres,domain_hacks,hack-suffix,addressee,,77
+adequa,domain_hacks,hack-suffix,adequacy,,78
+adjacen,domain_hacks,hack-suffix,adjacency,,89
+advoca,domain_hacks,hack-suffix,advocacy,,82
+agen,domain_hacks,hack-suffix,agency,,78
+aristocra,domain_hacks,hack-suffix,aristocracy,,88
+art,domain_hacks,hack-suffix,artsy,short;word,70
+ascendan,domain_hacks,hack-suffix,ascendancy,,91
+astringen,domain_hacks,hack-suffix,astringency,,81
+boun,domain_hacks,hack-suffix,bouncy,,78
+bras,domain_hacks,hack-suffix,brassy,,70
+brillian,domain_hacks,hack-suffix,brilliancy,,91
+buoyan,domain_hacks,hack-suffix,buoyancy,,78
+can,domain_hacks,hack-phrase,can + see,,74
+candida,domain_hacks,hack-suffix,candidacy,,89
+captain,domain_hacks,hack-suffix,captaincy,,89
+celiba,domain_hacks,hack-suffix,celibacy,,86
+chaplain,domain_hacks,hack-suffix,chaplaincy,,91
+clas,domain_hacks,hack-suffix,classy,,70
+clemen,domain_hacks,hack-suffix,clemency,,81
+cogen,domain_hacks,hack-suffix,cogency,,84
+come,domain_hacks,hack-phrase,come + see,,78
+comeand,domain_hacks,hack-phrase,comeand + see,,89
+competen,domain_hacks,hack-suffix,competency,,91
+concurren,domain_hacks,hack-suffix,concurrency,,85
+conservan,domain_hacks,hack-suffix,conservancy,,85
+consisten,domain_hacks,hack-suffix,consistency,,85
+constan,domain_hacks,hack-suffix,constancy,,79
+constituen,domain_hacks,hack-suffix,constituency,,80
+consultan,domain_hacks,hack-suffix,consultancy,,85
+contingen,domain_hacks,hack-suffix,contingency,,85
+courte,domain_hacks,hack-suffix,courtesy,,82
+cryptocurren,domain_hacks,hack-suffix,cryptocurrency,,73
+curren,domain_hacks,hack-suffix,currency,,81
+decen,domain_hacks,hack-suffix,decency,,84
+delica,domain_hacks,hack-suffix,delicacy,,86
+democra,domain_hacks,hack-suffix,democracy,,89
+dependen,domain_hacks,hack-suffix,dependency,,91
+diploma,domain_hacks,hack-suffix,diplomacy,dictionary,89
+do,domain_hacks,hack-phrase,do + see,,70
+dorman,domain_hacks,hack-suffix,dormancy,,81
+dres,domain_hacks,hack-suffix,dressy,,70
+ecsta,domain_hacks,hack-suffix,ecstasy,,76
+effica,domain_hacks,hack-suffix,efficacy,,82
+efficien,domain_hacks,hack-suffix,efficiency,,89
+embas,domain_hacks,hack-suffix,embassy,,80
+emergen,domain_hacks,hack-suffix,emergency,,89
+equivalen,domain_hacks,hack-suffix,equivalency,,87
+expectan,domain_hacks,hack-suffix,expectancy,,91
+fan,domain_hacks,hack-suffix,fancy,,74
+ferven,domain_hacks,hack-suffix,fervency,,81
+flee,domain_hacks,hack-suffix,fleecy,,74
+floun,domain_hacks,hack-suffix,flouncy,,80
+fluen,domain_hacks,hack-suffix,fluency,,80
+folk,domain_hacks,hack-suffix,folksy,,70
+fore,domain_hacks,hack-suffix,foresee,,78
+frequen,domain_hacks,hack-suffix,frequency,,89
+glas,domain_hacks,hack-suffix,glassy,,70
+glos,domain_hacks,hack-suffix,glossy,,70
+go,domain_hacks,hack-phrase,go + see,short;word,70
+gras,domain_hacks,hack-suffix,grassy,,70
+gut,domain_hacks,hack-suffix,gutsy,,74
+idiosyncra,domain_hacks,hack-suffix,idiosyncrasy,,78
+immedia,domain_hacks,hack-suffix,immediacy,,82
+incumben,domain_hacks,hack-suffix,incumbency,,91
+indetermina,domain_hacks,hack-suffix,indeterminacy,,80
+infan,domain_hacks,hack-suffix,infancy,,80
+interagen,domain_hacks,hack-suffix,interagency,,88
+intermitten,domain_hacks,hack-suffix,intermittency,,79
+intima,domain_hacks,hack-suffix,intimacy,,82
+intrica,domain_hacks,hack-suffix,intricacy,,85
+laten,domain_hacks,hack-suffix,latency,,84
+lega,domain_hacks,hack-suffix,legacy,,78
+legitima,domain_hacks,hack-suffix,legitimacy,,93
+lenien,domain_hacks,hack-suffix,leniency,,86
+les,domain_hacks,hack-suffix,lessee,,74
+lets,domain_hacks,hack-phrase,lets + see,,70
+letus,domain_hacks,hack-phrase,letus + see,,85
+licen,domain_hacks,hack-suffix,licensee,,84
+litera,domain_hacks,hack-suffix,literacy,,86
+look,domain_hacks,hack-phrase,look + see,,78
+may,domain_hacks,hack-phrase,may + see,,67
+mer,domain_hacks,hack-suffix,mercy,,74
+meritocra,domain_hacks,hack-suffix,meritocracy,,88
+mos,domain_hacks,hack-suffix,mossy,,74
+necroman,domain_hacks,hack-suffix,necromancy,,91
+newsagen,domain_hacks,hack-suffix,newsagency,,91
+normal,domain_hacks,hack-suffix,normalcy,,81
+numera,domain_hacks,hack-suffix,numeracy,,86
+occupan,domain_hacks,hack-suffix,occupancy,,89
+over,domain_hacks,hack-suffix,oversee,,78
+permanen,domain_hacks,hack-suffix,permanency,,91
+pharma,domain_hacks,hack-suffix,pharmacy,,81
+piquan,domain_hacks,hack-suffix,piquancy,,86
+please,domain_hacks,hack-phrase,please + see,,82
+plian,domain_hacks,hack-suffix,pliancy,,80
+poli,domain_hacks,hack-suffix,policy,,78
+poten,domain_hacks,hack-suffix,potency,,84
+pregnan,domain_hacks,hack-suffix,pregnancy,,83
+presiden,domain_hacks,hack-suffix,presidency,,91
+priva,domain_hacks,hack-suffix,privacy,,80
+proficien,domain_hacks,hack-suffix,proficiency,,88
+prophe,domain_hacks,hack-suffix,prophecy,,81
+pungen,domain_hacks,hack-suffix,pungency,,81
+regen,domain_hacks,hack-suffix,regency,,84
+relevan,domain_hacks,hack-suffix,relevancy,,93
+residen,domain_hacks,hack-suffix,residency,,93
+resilien,domain_hacks,hack-suffix,resiliency,,93
+sas,domain_hacks,hack-suffix,sassy,,74
+sau,domain_hacks,hack-suffix,saucy,,67
+secre,domain_hacks,hack-suffix,secrecy,,80
+shallwe,domain_hacks,hack-phrase,shallwe + see,,80
+solven,domain_hacks,hack-suffix,solvency,,81
+spi,domain_hacks,hack-suffix,spicy,,70
+stringen,domain_hacks,hack-suffix,stringency,,82
+subtenan,domain_hacks,hack-suffix,subtenancy,,91
+sufficien,domain_hacks,hack-suffix,sufficiency,,88
+surroga,domain_hacks,hack-suffix,surrogacy,,89
+technocra,domain_hacks,hack-suffix,technocracy,,81
+tenan,domain_hacks,hack-suffix,tenancy,,84
+tenden,domain_hacks,hack-suffix,tendency,,81
+translucen,domain_hacks,hack-suffix,translucency,,76
+transparen,domain_hacks,hack-suffix,transparency,,76
+tryto,domain_hacks,hack-phrase,tryto + see,,81
+unfus,domain_hacks,hack-suffix,unfussy,,80
+urgen,domain_hacks,hack-suffix,urgency,,80
+vacan,domain_hacks,hack-suffix,vacancy,,84
+valen,domain_hacks,hack-suffix,valency,,84
+vibran,domain_hacks,hack-suffix,vibrancy,,81
+waitand,domain_hacks,hack-phrase,waitand + see,,89
+we,domain_hacks,hack-phrase,we + see,short;word,70
+you,domain_hacks,hack-phrase,you + see,,53

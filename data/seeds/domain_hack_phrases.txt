@@ -1,0 +1,16 @@
+# Labels whose .si completion forms a clear English phrase.
+go
+we
+you
+lets
+please
+come
+look
+can
+do
+may
+letus
+tryto
+waitand
+comeand
+shallwe
