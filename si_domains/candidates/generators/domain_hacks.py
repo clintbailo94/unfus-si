@@ -6,8 +6,8 @@ from .common import make_candidate, read_terms, unique_candidates
 from ..schema import Candidate
 
 
-# These common -sy words end with /zee/, so replacing their final syllable by
-# the /see/ sound of .si would be a forced or incorrect pronunciation.
+# These -sy words have a voiced /z/ realization in a common English variety,
+# so replacing the ending with the /s/ sound of .si would be unreliable.
 _VOICED_SY = frozenset(
     {
         "ballsy",
@@ -25,12 +25,20 @@ _VOICED_SY = frozenset(
         "noisy",
         "nosy",
         "prosy",
+        "posy",
+        "pansy",
+        "quinsy",
         "queasy",
         "rosy",
         "speakeasy",
         "sudsy",
         "uneasy",
         "whimsy",
+        "newsy",
+        "tansy",
+        "teensy",
+        "outdoorsy",
+        "woodsy",
         "japanesy",
     }
 )

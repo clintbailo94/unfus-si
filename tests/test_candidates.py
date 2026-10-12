@@ -3,7 +3,9 @@ from pathlib import Path
 import pytest
 
 from si_domains.candidates.quality import evaluate_candidate
-from si_domains.candidates.build import CATEGORIES, generate_all
+from si_domains.candidates.build import CATEGORIES, _remove_trivial_plurals, generate_all
+from si_domains.candidates.generators.domain_hacks import _VOICED_SY, generate as generate_domain_hacks
+from si_domains.candidates.schema import Candidate
 
 
 @pytest.mark.parametrize(
@@ -17,6 +19,7 @@ from si_domains.candidates.build import CATEGORIES, generate_all
         ("rs", "short", False),
         ("112", "short", False),
         ("naïve", "dictionary", False),
+        ("muka", "short", False),
         ("two-words", "dictionary", False),
         ("aabbb", "invented", False),
         ("zzzzzz", "invented", False),
@@ -26,6 +29,12 @@ from si_domains.candidates.build import CATEGORIES, generate_all
         ("monene", "invented", False),
         ("moronic", "dictionary", False),
         ("cassette", "dictionary", True),
+        ("quantum", "dictionary", True),
+        ("insulin", "dictionary", True),
+        ("dynasty", "dictionary", True),
+        ("personality", "dictionary", True),
+        ("neuralprocessing", "ai", True),
+        ("neuralprocessingx", "ai", False),
     ],
 )
 def test_quality_gate_accepts_only_safe_ascii_brandable_labels(label, category, accepted):
@@ -39,8 +48,287 @@ def test_quality_gate_accepts_only_safe_ascii_brandable_labels(label, category, 
 
 def test_short_abbreviations_and_brand_components_are_checked():
     assert evaluate_candidate("ml", "short", tags=("abbr",)) is not None
+    assert evaluate_candidate("po", "short") is not None
     assert evaluate_candidate("zara", "short", tags=("cvcv",)) is None
     assert evaluate_candidate("agentgpt", "ai", seed="agent+gpt") is None
+
+
+@pytest.mark.parametrize(
+    "label",
+    [
+        "bestial",
+        "bigoted",
+        "bigotry",
+        "bribery",
+        "carnage",
+        "carrion",
+        "boorish",
+        "buffoon",
+        "anguish",
+        "ailment",
+        "amateur",
+        "parasite",
+        "conceit",
+        "cynical",
+        "frailty",
+        "arsenic",
+        "cyanide",
+        "macabre",
+        "senile",
+        "failing",
+        "amoral",
+        "unarmed",
+        "wartime",
+        "missile",
+        "militia",
+        "tobacco",
+        "foreleg",
+        "toenail",
+        "manhole",
+        "burial",
+        "remains",
+        "rueful",
+        "libelous",
+        "leaden",
+        "runaway",
+        "undoing",
+    ],
+)
+def test_dictionary_gate_rejects_negative_or_weak_standalone_words(label):
+    assert evaluate_candidate(label, "dictionary") is None
+
+
+def test_dictionary_generator_omits_semantically_rejected_terms():
+    rejected = {
+        "bestial",
+        "bigoted",
+        "bigotry",
+        "bribery",
+        "carnage",
+        "carrion",
+        "boorish",
+        "buffoon",
+        "anguish",
+        "ailment",
+        "amateur",
+        "parasite",
+        "conceit",
+        "cynical",
+        "frailty",
+        "arsenic",
+        "cyanide",
+        "macabre",
+        "senile",
+        "failing",
+        "amoral",
+        "unarmed",
+        "wartime",
+        "missile",
+        "militia",
+        "tobacco",
+        "foreleg",
+        "toenail",
+        "manhole",
+        "burial",
+        "remains",
+        "rueful",
+        "libelous",
+        "leaden",
+        "runaway",
+        "undoing",
+    }
+
+    assert not rejected.intersection(row.domain_label for row in generate_all()["dictionary"])
+
+
+def test_dictionary_seeds_are_semantically_pruned_without_losing_technical_words():
+    data = Path(__file__).parents[1] / "data"
+    words = {
+        line.strip().casefold()
+        for line in (data / "seeds" / "dictionary.txt").read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    }
+    rejected = {
+        line.strip().casefold()
+        for line in (data / "blocklist_low_quality.txt").read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    }
+
+    assert not words.intersection(rejected)
+    assert not {"dealing", "fatigue", "rumored"}.intersection(words)
+    assert {"insulin", "quantum", "vaccine"}.issubset(words)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        "idiocy",
+        "contumacy",
+        "plangency",
+        "regeneracy",
+        "mendicancy",
+        "baronetcy",
+        "vehemency",
+        "infrequency",
+        "inadequacy",
+        "antsy",
+        "argosy",
+        "articulacy",
+        "autocracy",
+        "belligerency",
+        "blatancy",
+        "bossy",
+        "bureaucracy",
+        "codependency",
+        "complacency",
+        "confederacy",
+        "conspiracy",
+        "controversy",
+        "counterinsurgency",
+        "decadency",
+        "deficiency",
+        "delinquency",
+        "deviancy",
+        "discourtesy",
+        "discrepancy",
+        "exigency",
+        "expediency",
+        "flippancy",
+        "flossy",
+        "gassy",
+        "gypsy",
+        "hesitancy",
+        "hypocrisy",
+        "illiteracy",
+        "innumeracy",
+        "insolvency",
+        "insufficiency",
+        "insurgency",
+        "inefficacy",
+        "inexpediency",
+        "intestacy",
+        "inveteracy",
+        "jealousy",
+        "kleptocracy",
+        "messy",
+        "militancy",
+        "minstrelsy",
+        "noisy",
+        "nosy",
+        "pacy",
+        "piracy",
+        "plutocracy",
+        "prissy",
+        "profligacy",
+        "prosy",
+        "queasy",
+        "rampancy",
+        "redundancy",
+        "stridency",
+        "supremacy",
+        "theocracy",
+        "transiency",
+        "vagrancy",
+        "epilepsy",
+        "narcolepsy",
+        "chancy",
+        "cutesy",
+        "curacy",
+        "colonelcy",
+        "episcopacy",
+        "excellency",
+        "flamboyancy",
+        "immunodeficiency",
+        "inarticulacy",
+        "inclemency",
+        "inconsistency",
+        "inconstancy",
+        "illegitimacy",
+        "lambency",
+        "lieutenancy",
+        "magistracy",
+        "paramountcy",
+        "poesy",
+        "poignancy",
+        "prelacy",
+        "stagnancy",
+        "succulency",
+        "trenchancy",
+        "heresy",
+        "papacy",
+        "lacy",
+        "racy",
+        "juicy",
+        "citrusy",
+        "geodesy",
+        "primacy",
+    ],
+)
+def test_domain_hacks_exclude_semantically_weak_sources(source):
+    assert not any(
+        candidate.method == "hack-suffix" and candidate.seed == source
+        for candidate in generate_domain_hacks()
+    )
+
+
+@pytest.mark.parametrize("source", ["posy", "newsy", "tansy", "teensy", "outdoorsy", "woodsy"])
+def test_domain_hacks_reject_voiced_sy_sources(source):
+    assert source in _VOICED_SY
+    seeds = {
+        line.strip().casefold()
+        for line in (Path(__file__).parents[1] / "data" / "seeds" / "domain_hacks.txt")
+        .read_text(encoding="utf-8")
+        .splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    }
+    assert source in seeds
+    assert not any(
+        candidate.method == "hack-suffix" and candidate.seed == source
+        for candidate in generate_domain_hacks()
+    )
+
+
+def test_rejecting_a_hack_source_does_not_globally_block_its_short_label():
+    assert evaluate_candidate("la", "short") is not None
+
+
+@pytest.mark.parametrize(
+    "label,accepted",
+    [("bim", False), ("nava", True), ("malorivae", True), ("malorivana", False)],
+)
+def test_invented_names_must_be_four_to_nine_characters(label, accepted):
+    assert (evaluate_candidate(label, "invented") is not None) is accepted
+
+
+def test_trivial_plural_pair_is_removed_across_primary_categories():
+    singular = Candidate("rune", "dictionary", "dictionary", "rune", (), 80)
+    plural = Candidate("runes", "short", "short", "runes", ("word",), 90)
+
+    assert _remove_trivial_plurals([singular, plural]) == [plural]
+
+
+def test_trivial_plural_pair_is_removed_within_same_category():
+    singular = Candidate("garden", "dictionary", "dictionary", "garden", (), 80)
+    plural = Candidate("gardens", "dictionary", "dictionary", "gardens", (), 90)
+
+    assert _remove_trivial_plurals([singular, plural]) == [plural]
+
+
+def test_plural_dedup_does_not_strip_s_from_hack_or_invented_sources():
+    pairs = [
+        (
+            Candidate("ches", "domain_hacks", "hack-suffix", "chessy", (), 80),
+            Candidate("chess", "domain_hacks", "hack-suffix", "chessy", (), 90),
+        ),
+        (
+            Candidate("chao", "invented", "invented", "cha+o", (), 80),
+            Candidate("chaos", "invented", "invented", "cha+os", (), 90),
+        ),
+    ]
+
+    assert _remove_trivial_plurals([candidate for pair in pairs for candidate in pair]) == [
+        candidate for pair in pairs for candidate in pair
+    ]
 
 
 def test_generators_are_deterministic_unique_and_meet_documented_counts():
@@ -53,8 +341,9 @@ def test_generators_are_deterministic_unique_and_meet_documented_counts():
     labels = {row.domain_label for rows in first.values() for row in rows}
     assert "bird" in labels
     assert "birds" not in labels
-    assert "mes" in labels
-    assert len(first["domain_hacks"]) >= 250
+    assert "accura" in {row.domain_label for row in first["domain_hacks"]}
+    assert "muka" not in labels
+    assert len(first["domain_hacks"]) == 136
     assert len(first["ai"]) >= 1_300
     assert len(first["short"]) >= 500
     assert len(first["dictionary"]) >= 800

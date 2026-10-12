@@ -74,8 +74,22 @@ def evaluate_candidate(
     if canonical != label or not canonical.isascii() or not _ASCII_LABEL.fullmatch(canonical):
         return None
 
-    lower_bound = 2 if category in {"short", "domain_hacks"} else 4 if category == "dictionary" else 3
-    upper_bound = 5 if category == "short" else 16 if category == "ai" else 15
+    lower_bound = (
+        4
+        if category in {"dictionary", "invented"}
+        else 2
+        if category in {"short", "domain_hacks"}
+        else 3
+    )
+    upper_bound = (
+        5
+        if category == "short"
+        else 9
+        if category == "invented"
+        else 16
+        if category == "ai"
+        else 15
+    )
     if not lower_bound <= len(canonical) <= upper_bound:
         return None
     if classify(canonical) != "ok":
@@ -91,12 +105,12 @@ def evaluate_candidate(
         return None
     if _is_blocked(canonical, offensive, minimum_substring=4) or source_tokens.intersection(offensive):
         return None
-    if category in {"domain_hacks", "dictionary"}:
-        low_quality = _blocklist("blocklist_low_quality.txt")
-        if _is_blocked(canonical, low_quality, minimum_substring=4):
-            return None
-        if category == "domain_hacks" and source_tokens.intersection(low_quality):
-            return None
+    low_quality = _blocklist("blocklist_low_quality.txt")
+    # These are semantic exclusions for whole labels and source terms, not
+    # substring fragments; substring matching would reject valid terms such
+    # as "dynasty" merely because they contain "nasty".
+    if canonical in low_quality or source_tokens.intersection(low_quality):
+        return None
 
     supplied_tags = {tag.casefold() for tag in tags}
     vowel_count = sum(character in _VOWELS for character in canonical)

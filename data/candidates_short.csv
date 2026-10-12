@@ -374,7 +374,6 @@ moni,short,short,mo+ni,cvcv,92
 moso,short,short,mo+so,cvcv,92
 mota,short,short,mo+ta,cvcv,92
 move,short,short,mo+ve,cvcv,92
-muka,short,short,mu+ka,cvcv,92
 mula,short,short,mu+la,cvcv,92
 mulo,short,short,mu+lo,cvcv,92
 muto,short,short,mu+to,cvcv,92
@@ -400,6 +399,7 @@ nero,short,short,ne+ro,cvcv;invented;phonotactic,92
 nest,short,short,nest,word,86
 neta,short,short,ne+ta,cvcv,92
 neva,short,short,ne+va,cvcv,92
+new,short,short,new,word,90
 nezo,short,short,ne+zo,cvcv,92
 nile,short,short,ni+le,cvcv,92
 nira,short,short,ni+ra,cvcv;invented;phonotactic,92
@@ -431,7 +431,6 @@ nuso,short,short,nu+so,cvcv,92
 nuta,short,short,nu+ta,cvcv,92
 nuvo,short,short,nu+vo,cvcv,92
 nuza,short,short,nu+za,cvcv,92
-nuzo,short,short,nu+zo,cvcv,92
 oak,short,short,oak,word,83
 ok,short,short,ok,word,86
 on,short,short,on,word,86
@@ -456,6 +455,7 @@ pika,short,short,pi+ka,cvcv,92
 pile,short,short,pi+le,cvcv,92
 pina,short,short,pi+na,cvcv,92
 pini,short,short,pi+ni,cvcv,92
+pira,short,short,pi+ra,cvcv,92
 pisa,short,short,pi+sa,cvcv,92
 piso,short,short,pi+so,cvcv,92
 pita,short,short,pi+ta,cvcv,92

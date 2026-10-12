@@ -20,23 +20,29 @@ include both generation reasons (`abbr`, `word`, `cvcv`, `phonotactic`) and
 other applicable candidate categories. `quality_score` is a deterministic
 0-100 heuristic, not an availability or resale score.
 
-The committed T3 pool contains 4,915 unique rows:
+The committed T3 pool contains 4,786 unique rows:
 
 | Category | Rows | Brief target | Generation approach |
 | --- | ---: | ---: | --- |
-| `domain_hacks` | 265 | 700 | Pronunciation-safe `-cy` / `-sy` / `-see` completions plus a small set of clear phrases |
+| `domain_hacks` | 136 | 700 | Pronunciation-reviewed `-cy` / `-sy` / `-see` completions plus clear phrases |
 | `ai` | 1,500 | 1,300 | Curated AI concept and product compounds, plus selected blends |
 | `short` | 700 | 500 | Meaningful abbreviations and words, plus pronounceable CVCV labels |
 | `dictionary` | 1,050 | 800 | Screened common English noun/adjective seeds |
 | `invented` | 1,400 | 1,200 | Stem/ending combinations with spelling and repeated-chunk checks |
 
-The `domain_hacks` count is below its target. SCOWL v2 size 60 supplied 293
-possible ending words; after sound exceptions, blocklists, registry checks and
-deduplication, 265 remain. Expanding to size 85 exceeded 700, but a review
-sample contained many rare specialist or derived forms. Those were left out to
-honor the brief's no-filler requirement. The automated test records a smaller
-minimum for this category so future seed additions can improve the count
-without legitimizing weak candidates.
+The `domain_hacks` count is below its target. The original SCOWL v2 size 60
+suffix set supplied 293 source words. Semantic and pronunciation review left
+147 curated seeds, including the named audit `-sy` examples so tests can
+prove they are rejected. The generator emits 121 suffix completions and 15
+clear phrase completions; the shared gate and global deduplication leave 136
+rows. Expanding to size 85 exceeded 700, but its review sample contained many
+rare specialist or derived forms. Those were left out to honor the brief's
+no-filler requirement. Non-natural splits such as `heresy`, `papacy`, `lacy`,
+`racy`, `juicy`, `citrusy`, `geodesy`, and `primacy` are pruned only from this
+category's seed file; their resulting labels are not globally blocked. The
+regression test pins the reviewed count at 136
+rather than treating the 700 target as met; additions should pass the same
+human quality review.
 
 Category ceilings keep this phase focused on the overall 10,000-12,000 name
 pool planned across T3 and T4. When a generator produces more than its ceiling,
@@ -50,14 +56,29 @@ Every candidate must:
 
 - pass `si_domains.rules.classify(label) == "ok"`;
 - use lowercase ASCII letters only, with no hyphens, IDNs, or digits;
-- fit the category length (2-5 for short, up to 16 for AI, up to 15 for other
-  categories; dictionary words are 4-9 characters in the committed seeds);
+- fit the category bounds (short 2-5, AI 3-16, dictionary 4-15, domain hacks
+  2-15, invented 4-9; committed dictionary seeds are 6-9 characters);
 - avoid known reserved labels, triple repeated letters, and consonant runs
   longer than three;
 - include a vowel, except a short label explicitly tagged as a meaningful
   abbreviation;
 - avoid the brand, offensive-language, and low-quality terms in `data/`.
 - receive a quality score of at least 50.
+
+Low-quality entries are exact standalone-word and source-seed exclusions, not
+substring matches. This avoids rejecting sound words such as `dynasty` because
+they happen to contain a negative fragment such as `nasty`. Review removed the
+named negative dictionary terms (`bestial`, `bigoted`, `bigotry`, `bribery`,
+`carnage`, `carrion`, `boorish`, `buffoon`, and `anguish`) plus similarly
+derogatory, criminal, harmful, death-related, or weak standalone words. Neutral
+health and technical vocabulary with credible use remains eligible, including
+`insulin`, `vaccine`, `therapy`, `neutron`, and `quantum`. A few weak general
+dictionary seeds (`dealing`, `fatigue`, and `rumored`) were pruned only from
+that category's seed file rather than globally blocked.
+The short label `muka` is excluded after manual Slovenian review; the
+[Fran/SSKJ² entry](https://fran.si/iskanje/SSKJ%C2%B2/trpeti?AllNoHeadword=trpeti&FilteredDictionaryIds=133&Query=trpeti&View=1)
+uses it for suffering and torment. The exact-word rule avoids blocking
+unrelated labels that share only part of its spelling.
 
 Brand entries of five or more letters are blocked as substrings. Shorter marks
 are blocked as exact labels or when present as a generator seed component.
@@ -75,13 +96,29 @@ they do not override a rejection rule. The current implementation is in
 
 ### `domain_hacks`
 
-`data/seeds/domain_hacks.txt` contains English source words from SCOWL v2 size
-60. For final `-cy`, the generator replaces those letters with `.si`; it does
-the same for `-sy` only when the suffix is pronounced with an unvoiced /s/.
-Words where the ending is /zee/ (such as *easy* or *daisy*) are excluded. Final
-`-see` and `-si` are handled only for accepted source spellings. A short
-curated phrase list covers clear reads such as “go see” and “wait and see”.
-The domain label must still pass the shared gate.
+`data/seeds/domain_hacks.txt` contains reviewed English ending-word sources
+from SCOWL v2 size 60. The generator replaces final `-cy` with `.si`; it
+replaces `-sy` only when the spelling and pronunciation produce a natural
+read. The audit examples `posy`, `newsy`, `tansy`, `teensy`, `outdoorsy`, and
+`woodsy` are retained as regression fixtures and never emitted. Five have
+voiced endings supported by the pronunciation entries for [*posy*](https://www.merriam-webster.com/dictionary/posy),
+[*newsy*](https://www.merriam-webster.com/dictionary/newsy),
+[*tansy*](https://www.merriam-webster.com/dictionary/tansy),
+[*outdoorsy*](https://www.merriam-webster.com/dictionary/outdoorsy), and
+[*woodsy*](https://www.merriam-webster.com/dictionary/woodsy). [*Teensy*](https://www.collinsdictionary.com/us/dictionary/english/teensy)
+is accent-sensitive: Collins records an American /s/ and British /z/
+pronunciation, so it is rejected for an unreliable read. [*Pansy*](https://www.merriam-webster.com/dictionary/pansy)
+and [*quinsy*](https://www.merriam-webster.com/dictionary/quinsy) are also
+excluded for semantic reasons. The source review removed weak, negative, and
+obscure forms such as `idiocy`, `contumacy`, `plangency`, `regeneracy`,
+`mendicancy`, `baronetcy`, `inefficacy`, and `inexpediency`; disease names with
+awkward suffix splits and
+rare ecclesiastical or military titles were removed only from this category's
+seeds. Pronunciation and split exclusions never globally block an otherwise
+valid label in another category. Final `-see` and `-si` use the same
+natural-read check. The small phrase
+list covers clear reads such as “go see”, “wait and see”, and “come and see”.
+Every resulting label must pass the shared gate.
 
 ### `ai`
 
@@ -93,12 +130,15 @@ names, including the names called out in the brief.
 
 ### `dictionary`
 
-`data/seeds/dictionary.txt` contains 1,450 selected 6-9 letter US English
-noun/adjective entries from SCOWL v2 size 35. Selection favors a seven-letter
-length, a comfortable vowel ratio, and simple consonant transitions. The
-shared gate and `blocklist_low_quality.txt` remove known weak, negative, or
-unsuitable standalone terms. The committed output is ranked and capped at
-1,050.
+`data/seeds/dictionary.txt` contains 1,192 retained 6-9 letter US English
+noun/adjective entries from an initial 1,450 SCOWL v2 size 35 selections.
+Selection favors a seven-letter length, a comfortable vowel ratio, and simple
+consonant transitions. A full semantic pass removed 258 weak, derogatory,
+criminal, harmful, disease-related, or unsuitable standalone words from the
+seeds; the shared exact-word gate also protects future additions.
+The output retains neutral specialist words such as `insulin`, `vaccine`,
+`therapy`, `neutron`, and `quantum`. The committed output is ranked and capped
+at 1,050.
 
 ### `short`
 

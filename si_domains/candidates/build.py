@@ -36,13 +36,17 @@ def _plural_rank(candidate: Candidate) -> tuple[int, int, int, str]:
 
 
 def _is_trivial_plural_pair(singular: Candidate, plural: Candidate) -> bool:
-    if singular.category != plural.category or not plural.domain_label.endswith("s"):
+    if not plural.domain_label.endswith("s"):
         return False
     if plural.domain_label[:-1] != singular.domain_label:
         return False
-    if singular.method in {"dictionary", "short"}:
+    if singular.method in {"dictionary", "short"} and plural.method in {"dictionary", "short"}:
         return singular.seed == singular.domain_label and plural.seed == plural.domain_label
-    if singular.method in {"compound", "blend"} and plural.method == singular.method:
+    if (
+        singular.category == plural.category
+        and singular.method in {"compound", "blend"}
+        and plural.method == singular.method
+    ):
         singular_parts = singular.seed.split("+")
         plural_parts = plural.seed.split("+")
         if len(singular_parts) != len(plural_parts):
