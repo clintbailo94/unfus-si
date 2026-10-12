@@ -43,6 +43,14 @@ def test_classifies_redacted_fixture_patterns():
     unregistered = (FIXTURES / "whois_unregistered.txt").read_text(encoding="utf-8")
     assert classify_whois_text(registered) == ("registered", "field:registrar")
     assert classify_whois_text(unregistered) == ("not_registered", "no_entries_found")
+    assert unregistered.rstrip().endswith("% No entries found for the selected source(s).")
+    assert sum(line.startswith("%") for line in unregistered.splitlines()) >= 10
+    for field in (
+        "domain", "registrar", "registrar-url", "nameserver", "registrant",
+        "status", "created", "expire", "source",
+    ):
+        assert f"{field}: REDACTED" in registered
+    assert registered.count("nameserver: REDACTED") >= 2
 
 
 def test_whois_sends_rfc3912_query_and_returns_metadata_only():
@@ -52,6 +60,18 @@ def test_whois_sends_rfc3912_query_and_returns_metadata_only():
     assert result.classification == "registered"
     assert result.matched_pattern == "field:registrar"
     assert not hasattr(result, "response")
+
+
+def test_header_comments_do_not_trigger_registered_classification():
+    text = "% WHOIS registration information\n% registrar: not a record\n% registered: no\n"
+    assert classify_whois_text(text) == ("unverified", "no_recognized_pattern")
+
+
+def test_whois_encodes_allowed_idn_as_ascii_ace():
+    connection = FakeSocket(b"% no entries found\r\n")
+    result = whois_check("roža", connect=lambda address, timeout: connection, clock=fixed_clock)
+    assert connection.sent == b"xn--roa-d3a.si\r\n"
+    assert result.classification == "not_registered"
 
 
 def test_socket_failure_is_unverified_without_exposing_error_details():

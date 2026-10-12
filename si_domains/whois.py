@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from typing import Callable
 
 from .config import WHOIS_HOST, WHOIS_MAX_BYTES, WHOIS_PORT, WHOIS_TIMEOUT
-from .validation import is_valid_label
+from .validation import ascii_label, is_valid_label
 
 
 _NO_MATCH_PATTERNS = (
@@ -55,6 +55,8 @@ def classify_whois_text(text: str) -> tuple[str, str]:
                 return "not_registered", pattern_name
 
     for line in text.splitlines():
+        if line.lstrip().startswith("%"):
+            continue
         match = _REGISTRATION_FIELD.search(line)
         if match:
             return "registered", f"field:{match.group(1).casefold().replace(' ', '_')}"
@@ -77,7 +79,8 @@ def whois_check(
     try:
         with connect((WHOIS_HOST, WHOIS_PORT), timeout=WHOIS_TIMEOUT) as connection:
             connection.settimeout(WHOIS_TIMEOUT)
-            connection.sendall((domain + "\r\n").encode("ascii"))
+            query_domain = f"{ascii_label(label)}.si"
+            connection.sendall((query_domain + "\r\n").encode("ascii"))
             chunks: list[bytes] = []
             total = 0
             while total < WHOIS_MAX_BYTES:

@@ -1,1 +1,15 @@
-No entries found for this domain.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% WHOIS registry header line 01 (redacted fixture)
+% WHOIS registration service information line 02 (redacted fixture)
+% WHOIS registry header line 03 (redacted fixture)
+% WHOIS registry header line 04 (redacted fixture)
+% WHOIS registry header line 05 (redacted fixture)
+% WHOIS registry header line 06 (redacted fixture)
+% WHOIS registry header line 07 (redacted fixture)
+% WHOIS registry header line 08 (redacted fixture)
+% WHOIS registry header line 09 (redacted fixture)
+% WHOIS registry header line 10 (redacted fixture)
+% WHOIS registry header line 11 (redacted fixture)
+% WHOIS registry header line 12 (redacted fixture)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% No entries found for the selected source(s).

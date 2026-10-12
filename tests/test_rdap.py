@@ -208,6 +208,23 @@ def test_invalid_syntax_never_hits_network(fake_clock):
     assert session.calls == []
 
 
+def test_registry_rules_prevent_rdap_lookup(fake_clock):
+    session = FakeSession([])
+    result = rdap.check_domain("112", session=session, clock=fake_clock.utc, sleep=fake_clock.sleep)
+    assert result.classification == "reserved"
+    assert result.http_status is None
+    assert result.attempts == 0
+    assert session.calls == []
+
+
+def test_idn_is_sent_as_ascii_ace_to_rdap(fake_clock):
+    session = FakeSession([Response(404, {"errorCode": 404})])
+    result = rdap.check_domain("roža", session=session, clock=fake_clock.utc, sleep=fake_clock.sleep)
+    assert result.classification == "potentially_unregistered"
+    assert result.domain == "roža.si"
+    assert session.calls[0][0] == f"{rdap.RDAP_BASE_URL}xn--roa-d3a.si"
+
+
 def test_consecutive_outages_trip_circuit_breaker(fake_clock, monkeypatch):
     monkeypatch.setattr(rdap, "CIRCUIT_BREAKER", rdap.CircuitBreaker(threshold=2))
     first = check(FakeSession([Response(403, {})]), fake_clock)
