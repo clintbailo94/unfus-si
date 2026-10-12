@@ -472,6 +472,40 @@ def test_sample_review_exclusions_remove_specific_root_product_pairs():
         assert not {seed for blocked_category, seed in blocked if blocked_category == category} & seeds
 
 
+def test_seed_one_sample_review_excludes_weak_sector_pairings():
+    reviewed_pairs = {
+        ("technology", "region+harbor"),
+        ("technology", "cache+learn"),
+        ("technology", "deploy+devops"),
+        ("technology", "backup+proof"),
+        ("technology", "device+camera"),
+        ("business_finance", "service+seed"),
+        ("business_finance", "sales+vendor"),
+        ("business_finance", "debit+cash"),
+        ("business_finance", "estate+auto"),
+        ("health_science", "study+group"),
+        ("health_science", "brain+vital"),
+        ("health_science", "therapy+well"),
+        ("consumer_brands", "photo+ticket"),
+        ("consumer_brands", "home+travel"),
+        ("consumer_brands", "market+cook"),
+        ("consumer_brands", "tour+hotel"),
+        ("consumer_brands", "hotel+tour"),
+        ("emerging_industries", "renewable+crop"),
+        ("emerging_industries", "food+harbor"),
+        ("emerging_industries", "marine+space"),
+        ("emerging_industries", "fuel+energy"),
+    }
+    generated_pairs = {
+        (candidate.category, candidate.seed)
+        for rows in generate_all().values()
+        for candidate in rows
+        if candidate.method == "compound"
+    }
+
+    assert not reviewed_pairs.intersection(generated_pairs)
+
+
 def test_generated_committed_csvs_and_review_sample_match_regeneration(tmp_path):
     from si_domains.candidates.build import write_csv
     from si_domains.candidates.review import render_sample

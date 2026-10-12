@@ -30,6 +30,7 @@ aerospacemap,emerging_industries,compound,aerospace+map,,85
 agricarbon,emerging_industries,compound,agri+carbon,,88
 agriclimate,emerging_industries,compound,agri+climate,,91
 agrienergy,emerging_industries,compound,agri+energy,,85
+agrifield,emerging_industries,compound,agri+field,,84
 agriforest,emerging_industries,compound,agri+forest,,88
 agrigarden,emerging_industries,compound,agri+garden,,88
 agriharbor,emerging_industries,compound,agri+harbor,,88
@@ -406,7 +407,6 @@ foodcarbon,emerging_industries,compound,food+carbon,,88
 foodclimate,emerging_industries,compound,food+climate,,87
 foodenergy,emerging_industries,compound,food+energy,,85
 foodforest,emerging_industries,compound,food+forest,,88
-foodharbor,emerging_industries,compound,food+harbor,,88
 foodharvest,emerging_industries,compound,food+harvest,,90
 foodmarine,emerging_industries,compound,food+marine,,85
 foodmeasure,emerging_industries,compound,food+measure,,88
@@ -425,7 +425,6 @@ frontierlab,emerging_industries,compound,frontier+lab,,90
 fuelbattery,emerging_industries,compound,fuel+battery,,91
 fuelcellcore,emerging_industries,compound,fuelcell+core,,85
 fuelcellhub,emerging_industries,compound,fuelcell+hub,,86
-fuelenergy,emerging_industries,compound,fuel+energy,,85
 fuelengine,emerging_industries,compound,fuel+engine,,85
 fuelfusion,emerging_industries,compound,fuel+fusion,,85
 fuelhydrogen,emerging_industries,compound,fuel+hydrogen,,89
@@ -505,6 +504,7 @@ hydrodesal,emerging_industries,compound,hydro+desal,,88
 hydroenergy,emerging_industries,compound,hydro+energy,,91
 hydroengine,emerging_industries,compound,hydro+engine,,91
 hydrofield,emerging_industries,compound,hydro+field,,88
+hydrofood,emerging_industries,compound,hydro+food,,84
 hydrogarden,emerging_industries,compound,hydro+garden,,90
 hydrogencell,emerging_industries,compound,hydrogen+cell,,85
 hydrogencore,emerging_industries,compound,hydrogen+core,,89
@@ -627,7 +627,6 @@ marinesensor,emerging_industries,compound,marine+sensor,,89
 marinesignal,emerging_industries,compound,marine+signal,,89
 marinesoil,emerging_industries,compound,marine+soil,,89
 marinesolar,emerging_industries,compound,marine+solar,,95
-marinespace,emerging_industries,compound,marine+space,,91
 marinesystem,emerging_industries,compound,marine+system,,89
 marinetidal,emerging_industries,compound,marine+tidal,,95
 marinetrack,emerging_industries,compound,marine+track,,90
@@ -959,7 +958,6 @@ recyclewave,emerging_industries,compound,recycle+wave,,91
 recyclewind,emerging_industries,compound,recycle+wind,,90
 recyclingbio,emerging_industries,compound,recycling+bio,,85
 renewablebio,emerging_industries,compound,renewable+bio,,85
-renewablecrop,emerging_industries,compound,renewable+crop,,84
 renewablegrid,emerging_industries,compound,renewable+grid,,84
 renewablehub,emerging_industries,compound,renewable+hub,,89
 renewablelab,emerging_industries,compound,renewable+lab,,89
@@ -1049,6 +1047,7 @@ smartoptics,emerging_industries,compound,smart+optics,,87
 soilcarbon,emerging_industries,compound,soil+carbon,,88
 soilclimate,emerging_industries,compound,soil+climate,,87
 soilenergy,emerging_industries,compound,soil+energy,,85
+soilfield,emerging_industries,compound,soil+field,,84
 soilharbor,emerging_industries,compound,soil+harbor,,88
 soilharvest,emerging_industries,compound,soil+harvest,,90
 soilmarine,emerging_industries,compound,soil+marine,,85
@@ -1167,6 +1166,7 @@ verticalcell,emerging_industries,compound,vertical+cell,,85
 verticalfarm,emerging_industries,compound,vertical+farm,,85
 verticalfood,emerging_industries,compound,vertical+food,,89
 verticalhub,emerging_industries,compound,vertical+hub,,90
+verticalhydro,emerging_industries,compound,vertical+hydro,,84
 verticallab,emerging_industries,compound,vertical+lab,,90
 verticallife,emerging_industries,compound,vertical+life,,89
 verticalsoil,emerging_industries,compound,vertical+soil,,89

@@ -66,6 +66,7 @@ bioanalysis,health_science,compound,bio+analysis,,88
 bioatlas,health_science,compound,bio+atlas,,82
 biodiscovery,health_science,compound,bio+discovery,,82
 bioengine,health_science,compound,bio+engine,emerging_industries,83
+biofield,health_science,compound,bio+field,,82
 bioforge,health_science,compound,bio+forge,emerging_industries,82
 biogenome,health_science,compound,bio+genome,,87
 bioinsight,health_science,compound,bio+insight,,88
@@ -166,7 +167,6 @@ brainsignal,health_science,compound,brain+signal,,86
 brainsleep,health_science,compound,brain+sleep,,88
 braintrack,health_science,compound,brain+track,,84
 braintrial,health_science,compound,brain+trial,,88
-brainvital,health_science,compound,brain+vital,,92
 brainwell,health_science,compound,brain+well,,85
 brainworks,health_science,compound,brain+works,,84
 cardiacbase,health_science,compound,cardiac+base,,87
@@ -691,6 +691,7 @@ neuralassay,health_science,compound,neural+assay,,84
 neuralatlas,health_science,compound,neural+atlas,,87
 neuralcell,health_science,compound,neural+cell,,92
 neuraldata,health_science,compound,neural+data,emerging_industries,89
+neuralgenome,health_science,compound,neural+genome,,82
 neuralscope,health_science,compound,neural+scope,emerging_industries,83
 neuraltrial,health_science,compound,neural+trial,,83
 neuroassay,health_science,compound,neuro+assay,,85
@@ -1023,6 +1024,7 @@ stemlibrary,health_science,compound,stem+library,,86
 stemmolecule,health_science,compound,stem+molecule,,85
 stemsequence,health_science,compound,stem+sequence,,85
 stemsignal,health_science,compound,stem+signal,,88
+stemtherapy,health_science,compound,stem+therapy,,82
 studyatlas,health_science,compound,study+atlas,,92
 studybase,health_science,compound,study+base,,88
 studycare,health_science,compound,study+care,,88
@@ -1035,7 +1037,6 @@ studyengine,health_science,compound,study+engine,,87
 studyfield,health_science,compound,study+field,,92
 studyflow,health_science,compound,study+flow,,85
 studygraph,health_science,compound,study+graph,,88
-studygroup,health_science,compound,study+group,,92
 studyguide,health_science,compound,study+guide,consumer_brands,89
 studyhub,health_science,compound,study+hub,consumer_brands,83
 studyindex,health_science,compound,study+index,,92
@@ -1093,7 +1094,6 @@ therapysleep,health_science,compound,therapy+sleep,,85
 therapystudy,health_science,compound,therapy+study,,85
 therapytrial,health_science,compound,therapy+trial,,85
 therapyvital,health_science,compound,therapy+vital,,85
-therapywell,health_science,compound,therapy+well,,86
 treatbase,health_science,compound,treat+base,,88
 treatcare,health_science,compound,treat+care,,88
 treatchart,health_science,compound,treat+chart,,84

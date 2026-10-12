@@ -76,7 +76,6 @@ backuphub,technology,compound,backup+hub,,85
 backupkey,technology,compound,backup+key,,88
 backuplock,technology,compound,backup+lock,,88
 backupmesh,technology,compound,backup+mesh,,88
-backupproof,technology,compound,backup+proof,,82
 backupregion,technology,compound,backup+region,,85
 backuprelay,technology,compound,backup+relay,,87
 backuproute,technology,compound,backup+route,,87
@@ -119,7 +118,6 @@ cacheflow,technology,compound,cache+flow,,85
 cachegraph,technology,compound,cache+graph,,88
 cachegrid,technology,compound,cache+grid,,85
 cacheindex,technology,compound,cache+index,,92
-cachelearn,technology,compound,cache+learn,,92
 cachelens,technology,compound,cache+lens,,85
 cachemap,technology,compound,cache+map,,83
 cachematrix,technology,compound,cache+matrix,,86
@@ -324,7 +322,6 @@ deploybuild,technology,compound,deploy+build,,87
 deploycode,technology,compound,deploy+code,,89
 deploycraft,technology,compound,deploy+craft,,86
 deploydesk,technology,compound,deploy+desk,,92
-deploydevops,technology,compound,deploy+devops,,85
 deployengine,technology,compound,deploy+engine,,82
 deployflow,technology,compound,deploy+flow,,92
 deployforge,technology,compound,deploy+forge,,87
@@ -351,7 +348,6 @@ devengine,technology,compound,dev+engine,,88
 devfactory,technology,compound,dev+factory,,92
 devforge,technology,compound,dev+forge,,83
 devicebridge,technology,compound,device+bridge,,85
-devicecamera,technology,compound,device+camera,,86
 devicecore,technology,compound,device+core,,93
 deviceedge,technology,compound,device+edge,,89
 devicefiber,technology,compound,device+fiber,,91
@@ -404,6 +400,7 @@ domainhost,technology,compound,domain+host,,92
 domainhub,technology,compound,domain+hub,,88
 domainmesh,technology,compound,domain+mesh,,92
 domainportal,technology,compound,domain+portal,,85
+domainregion,technology,compound,domain+region,,82
 domainroute,technology,compound,domain+route,,84
 domainserver,technology,compound,domain+server,,85
 domainsystem,technology,compound,domain+system,,85
@@ -787,6 +784,7 @@ qualityflow,technology,compound,quality+flow,,87
 qualityforge,technology,compound,quality+forge,,82
 qualitylab,technology,compound,quality+lab,,93
 qualitystack,technology,compound,quality+stack,,85
+qualitysuite,technology,compound,quality+suite,,82
 qualitytest,technology,compound,quality+test,,87
 querycore,technology,compound,query+core,,87
 queryengine,technology,compound,query+engine,,84
@@ -807,7 +805,6 @@ regionedge,technology,compound,region+edge,,89
 regionfabric,technology,compound,region+fabric,,85
 regionflow,technology,compound,region+flow,,88
 regiongrid,technology,compound,region+grid,,88
-regionharbor,technology,compound,region+harbor,,85
 regionhost,technology,compound,region+host,,92
 regionhub,technology,compound,region+hub,,88
 regionmesh,technology,compound,region+mesh,,92
@@ -878,6 +875,7 @@ safetyshield,technology,compound,safety+shield,,85
 safetysignal,technology,compound,safety+signal,,85
 safetytrust,technology,compound,safety+trust,,86
 safetyvault,technology,compound,safety+vault,,87
+safetywatch,technology,compound,safety+watch,,82
 scriptbase,technology,compound,script+base,,84
 scriptcode,technology,compound,script+code,,84
 searchindex,technology,compound,search+index,,82
@@ -1037,6 +1035,7 @@ threatgate,technology,compound,threat+gate,,88
 threatguard,technology,compound,threat+guard,,82
 threatkey,technology,compound,threat+key,,84
 threatlock,technology,compound,threat+lock,,84
+threatproof,technology,compound,threat+proof,,82
 threatrelay,technology,compound,threat+relay,,83
 threatscan,technology,compound,threat+scan,,84
 threatvault,technology,compound,threat+vault,,82
@@ -1133,6 +1132,7 @@ walletlink,technology,compound,wallet+link,,88
 walletpay,technology,compound,wallet+pay,,88
 walletsecure,technology,compound,wallet+secure,,85
 wallettoken,technology,compound,wallet+token,,86
+wallettrade,technology,compound,wallet+trade,,82
 walletvault,technology,compound,wallet+vault,,86
 wearablecore,technology,compound,wearable+core,,82
 wearablegrid,technology,compound,wearable+grid,,85

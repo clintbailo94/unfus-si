@@ -179,10 +179,18 @@ terms in `seed`; the T4 category caps are 1,200 rows after global deduplication.
 The 40-per-category sample at seed 1 was reviewed after generation. Exact
 category-scoped joins in `data/blocklist_candidate_pairs.txt` remove redundant
 or weak combinations such as payment/cash repetitions, mismatched consumer
-joins, and unrelated material/energy pairs. This is generator input policy;
-CSV rows and review samples are regenerated, never hand-edited. Review focuses
-on spelling and obvious semantic fit only; it is not a trademark, demand, or
-availability screen.
+joins, and unrelated material/energy pairs. The fresh review also removed
+technology joins such as `region+harbor`, `cache+learn`, `deploy+devops`,
+`device+camera`, and `backup+proof`; weak financial pairings such as
+`service+seed`, `sales+vendor`, `debit+cash`, and `estate+auto`; off-sector or
+awkward health and consumer joins such as `study+group`, `brain+vital`,
+`therapy+well`, `photo+ticket`, `home+travel`, and `market+cook`; the reversed
+`tour+hotel` / `hotel+tour` pair; and weak
+emerging-industry joins such as `renewable+crop`, `food+harbor`, `marine+space`,
+and `fuel+energy`. These are category-scoped pairing decisions, not global
+word bans. This is generator input policy; CSV rows and review samples are
+regenerated, never hand-edited. Review focuses on spelling and obvious
+semantic fit only; it is not a trademark, demand, or availability screen.
 
 ### `dictionary`
 

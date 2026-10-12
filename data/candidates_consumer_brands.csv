@@ -134,6 +134,7 @@ cityportal,consumer_brands,compound,city+portal,,92
 cityresort,consumer_brands,compound,city+resort,,92
 cityretreat,consumer_brands,compound,city+retreat,,87
 cityroute,consumer_brands,compound,city+route,,87
+citysail,consumer_brands,compound,city+sail,,86
 cityservice,consumer_brands,compound,city+service,,87
 citytravel,consumer_brands,compound,city+travel,,92
 cityvoyage,consumer_brands,compound,city+voyage,,89
@@ -489,7 +490,6 @@ homelocal,consumer_brands,compound,home+local,,92
 homenature,consumer_brands,compound,home+nature,,93
 homeparty,consumer_brands,compound,home+party,,88
 homesocial,consumer_brands,compound,home+social,,93
-hometravel,consumer_brands,compound,home+travel,,92
 homevibe,consumer_brands,compound,home+vibe,,86
 homewarefood,consumer_brands,compound,homeware+food,,86
 homewaresale,consumer_brands,compound,homeware+sale,,86
@@ -499,6 +499,7 @@ hostelcamp,consumer_brands,compound,hostel+camp,,88
 hostelcoast,consumer_brands,compound,hostel+coast,,86
 hosteldesk,consumer_brands,compound,hostel+desk,,88
 hostelguide,consumer_brands,compound,hostel+guide,,87
+hostellocal,consumer_brands,compound,hostel+local,,86
 hostelpass,consumer_brands,compound,hostel+pass,,88
 hostelroute,consumer_brands,compound,hostel+route,,87
 hostelsail,consumer_brands,compound,hostel+sail,,92
@@ -511,7 +512,6 @@ hotelguide,consumer_brands,compound,hotel+guide,,89
 hotellocal,consumer_brands,compound,hotel+local,,92
 hotelportal,consumer_brands,compound,hotel+portal,,86
 hotelresort,consumer_brands,compound,hotel+resort,,86
-hoteltour,consumer_brands,compound,hotel+tour,,88
 jewelcare,consumer_brands,compound,jewel+care,,88
 jeweldesign,consumer_brands,compound,jewel+design,,86
 jeweledit,consumer_brands,compound,jewel+edit,,92
@@ -604,7 +604,6 @@ makeupshop,consumer_brands,compound,makeup+shop,,88
 makeupskin,consumer_brands,compound,makeup+skin,,88
 makeupwear,consumer_brands,compound,makeup+wear,,89
 marketcart,consumer_brands,compound,market+cart,,88
-marketcook,consumer_brands,compound,market+cook,,92
 marketdeal,consumer_brands,compound,market+deal,,92
 marketfood,consumer_brands,compound,market+food,,92
 marketgift,consumer_brands,compound,market+gift,,88
@@ -712,6 +711,7 @@ nomadroute,consumer_brands,compound,nomad+route,,89
 nomadsail,consumer_brands,compound,nomad+sail,,88
 nomadtour,consumer_brands,compound,nomad+tour,,88
 orderbakery,consumer_brands,compound,order+bakery,,87
+orderbasket,consumer_brands,compound,order+basket,,86
 ordercoffee,consumer_brands,compound,order+coffee,,87
 ordercook,consumer_brands,compound,order+cook,,88
 orderdeal,consumer_brands,compound,order+deal,,88
@@ -730,6 +730,7 @@ parcelfood,consumer_brands,compound,parcel+food,,92
 parcelgift,consumer_brands,compound,parcel+gift,,88
 parcelhost,consumer_brands,compound,parcel+host,,88
 parcelmeal,consumer_brands,compound,parcel+meal,,92
+parcelorder,consumer_brands,compound,parcel+order,,86
 parcelsale,consumer_brands,compound,parcel+sale,,92
 parentcare,consumer_brands,compound,parent+care,,88
 parenteco,consumer_brands,compound,parent+eco,,88
@@ -773,7 +774,6 @@ photosport,consumer_brands,compound,photo+sport,,88
 photostage,consumer_brands,compound,photo+stage,,92
 photostory,consumer_brands,compound,photo+story,,92
 photostudio,consumer_brands,compound,photo+studio,,87
-phototicket,consumer_brands,compound,photo+ticket,,86
 photoverse,consumer_brands,compound,photo+verse,,92
 photovoice,consumer_brands,compound,photo+voice,,89
 playcinema,consumer_brands,compound,play+cinema,,89
@@ -802,6 +802,7 @@ podcastart,consumer_brands,compound,podcast+art,,88
 quizacademy,consumer_brands,compound,quiz+academy,,88
 quizcampus,consumer_brands,compound,quiz+campus,,92
 quizcourse,consumer_brands,compound,quiz+course,,89
+quizexam,consumer_brands,compound,quiz+exam,,86
 quizlesson,consumer_brands,compound,quiz+lesson,,92
 quizlibrary,consumer_brands,compound,quiz+library,,87
 quizmentor,consumer_brands,compound,quiz+mentor,,92
@@ -1110,7 +1111,6 @@ tourbooking,consumer_brands,compound,tour+booking,,87
 tourcoast,consumer_brands,compound,tour+coast,,88
 tourcompass,consumer_brands,compound,tour+compass,,86
 tourescape,consumer_brands,compound,tour+escape,,89
-tourhotel,consumer_brands,compound,tour+hotel,,88
 tourismhub,consumer_brands,compound,tourism+hub,,88
 tourismmap,consumer_brands,compound,tourism+map,,88
 tourlocal,consumer_brands,compound,tour+local,,88
