@@ -12,6 +12,7 @@ import requests
 
 from .evidence import EvidenceStore
 from .rdap import RegistryInaccessible, check_domain
+from .candidates.build import CATEGORIES, default_output, generate_all, write_csv
 
 
 def _positive_limit(value: str) -> int:
@@ -31,6 +32,14 @@ def build_parser() -> argparse.ArgumentParser:
     check.add_argument("--input", required=True, help="CSV with domain_label and category columns")
     check.add_argument("--limit", type=_positive_limit)
     check.add_argument("--retry-unverified", action="store_true")
+
+    candidates = subparsers.add_parser("candidates", help="build or review offline .si label candidates")
+    selection = candidates.add_mutually_exclusive_group()
+    selection.add_argument("--category", choices=CATEGORIES, help="write one candidate category")
+    selection.add_argument("--all", action="store_true", help="write every category")
+    candidates.add_argument("--out", help="output CSV; with --all, combine categories in one file")
+    candidates.add_argument("--sample", type=_positive_limit, help="print a random sample from each category")
+    candidates.add_argument("--seed", type=int, default=1, help="deterministic review sample seed")
     return parser
 
 
@@ -88,10 +97,44 @@ def _run_check(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_candidates(args: argparse.Namespace, parser: argparse.ArgumentParser) -> int:
+    if args.sample is not None:
+        if args.category is not None or args.all or args.out:
+            parser.error("--sample cannot be combined with --category, --all, or --out")
+        from .candidates.review import render_sample
+
+        print(render_sample(args.sample, args.seed), end="")
+        return 0
+
+    if args.category is None and not args.all:
+        parser.error("candidates requires --category <name>, --all, or --sample <count>")
+
+    generated = generate_all()
+    if args.all:
+        if args.out:
+            rows = [candidate for category in CATEGORIES for candidate in generated[category]]
+            count = write_csv(args.out, rows)
+            print(f"Wrote {count} candidates to {args.out}")
+        else:
+            for category in CATEGORIES:
+                output = default_output(category)
+                count = write_csv(output, generated[category])
+                print(f"Wrote {count} {category} candidates to {output}")
+        return 0
+
+    category = args.category
+    output = args.out if args.out else default_output(category)
+    count = write_csv(output, generated[category])
+    print(f"Wrote {count} {category} candidates to {output}")
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     if args.command == "check":
         return _run_check(args)
+    if args.command == "candidates":
+        return _run_candidates(args, parser)
     parser.error("unknown command")
     return 2

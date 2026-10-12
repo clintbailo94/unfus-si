@@ -1,0 +1,21 @@
+# Second syllables for four-letter CVCV short brandables.
+la
+lo
+ma
+na
+ra
+ri
+ro
+ta
+va
+vo
+ni
+ka
+sa
+so
+mi
+za
+zo
+le
+to
+ve

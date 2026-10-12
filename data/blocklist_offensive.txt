@@ -1,0 +1,37 @@
+# Small conservative ASCII transliterations / spellings for EN, DE, FR, ES,
+# IT and SL. Four-or-more-letter entries are blocked as substrings to catch
+# unfortunate blends as well as standalone words.
+fuck
+shit
+cunt
+bitch
+asshole
+motherfucker
+cock
+dick
+peni
+pussy
+sissy
+whore
+slut
+fag
+faggot
+arsch
+fick
+fotze
+scheisse
+merde
+pute
+connard
+salope
+puto
+puta
+mierda
+joder
+cazzo
+stronzo
+puttana
+kurac
+pizda
+sranje
+jebem
