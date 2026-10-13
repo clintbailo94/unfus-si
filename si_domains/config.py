@@ -6,6 +6,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_ROOT / "data"
 OUTPUT_DIR = PROJECT_ROOT / "output"
 EVIDENCE_PATH = OUTPUT_DIR / "rdap_evidence.csv"
+WHOIS_EVIDENCE_PATH = OUTPUT_DIR / "whois_evidence.csv"
 
 RDAP_BASE_URL = "https://rdap.register.si/domain/"
 RDAP_TIMEOUT = (5.0, 15.0)
