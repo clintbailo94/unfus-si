@@ -19,8 +19,10 @@ python -m si_domains validate-delivery --workbook output/si_domains_ranked.xlsx
 It can report structural delivery PASS while saying research screening BLOCKED;
 `python -m si_domains validate-research --candidates data/candidates.csv`
 remains separate and exits 2 while the required top-100 trademark query sets
-are unresolved: TMview 0/100 complete, UKIPO 0/100, and USPTO 0/100. Neither
-command certifies project completion or owner acceptance.
+are unresolved: TMview 0 complete / 100 unverified, UKIPO 0 complete / 100
+query-blocked, and USPTO 56 complete / 44 query-blocked (stopped after one HTTP
+403 on a near-match query). Neither command certifies project completion or
+owner acceptance.
 
 ## Running the verification
 
@@ -180,15 +182,19 @@ coverage. It cannot establish that a cited source page was read correctly,
 that a mark is legally relevant, or that a domain is legally clear; those need
 human evidence review.
 
-For the 2026-10-13 research snapshot, TMview has 0/100 completed required-query
-sets and 100 unverified final-top-100 domains after the source closed its first
-POST before an HTTP response. UKIPO has 0/100 completed sets and 100 blocked
-domains after the first GET returned HTTP 403 Service Captcha. USPTO has 0/100
-completed sets and 100 unverified domains after its first GET returned an
-unparseable JavaScript shell. Six new entrants were recorded in a second
-ranking round from the existing source-wide outcomes; no per-domain request ran.
-The validator passes structural checks, marks query coverage BLOCKED, and exits
-2; blocked or unverified evidence never counts as a completed query.
+For the 2026-10-13 research snapshot, screening followed the ranking for three
+rounds: 100 labels, then 3 new entrants, then 9. TMview has 0/100 complete and
+100 unverified after its earlier POST and three API probes closed before an
+HTTP response. UKIPO has 0/100 complete and 100 query-blocked after its
+search-page GET returned HTTP 403 Service Captcha. USPTO used its public JSON
+endpoint (`https://tmsearch.uspto.gov/prod-stage-v1-0-0/tmsearch`) for two
+control queries and 134 candidate attempts: 133 returned HTTP 200 JSON, and
+one returned HTTP 403 on the `bankingdesk` near query, after which requests
+stopped. The final outcome is 56/100 complete and 44 query-blocked, with the
+remaining 66 query slots blocked without requests. Twenty-four final-top-100
+names were flagged for legal review. The validator passes structural checks,
+marks query coverage BLOCKED, and exits 2; blocked or unverified evidence never
+counts as a completed query.
 
 RDAP and WHOIS outcomes are timestamped observations from the registry's
 channels. They are not registrar checkout confirmation and do not guarantee
