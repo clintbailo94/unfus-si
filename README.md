@@ -56,10 +56,20 @@ The command follows candidate-file order and skips domains already recorded in
 the number of new checks, `--max-minutes` sets a wall-clock budget, and
 `--retry-unverified` retries only domains whose latest WHOIS row is
 `unverified`. The default interval is 2 seconds between connection starts and
-values below 1 second are rejected. After connection errors, timeouts, empty
-responses, or a rate-limit notice, the interval grows by 1.5 up to 6 seconds
-and the command cools down before continuing. Three consecutive cooldown cycles
-without a successful result stop the run with exit code 2.
+values below 1 second are rejected. A timeout, connection error, or empty
+response is retried in place for the same domain after 10 seconds and then
+30 seconds, up to three attempts in one pass. The configured minimum interval
+still applies between every connection start. Only the final result is written,
+once per domain per pass; a domain whose three attempts fail is recorded as
+`unverified` with its final body-free error code.
+
+A rate-limit notice starts a cooldown immediately. Other `unverified` outcomes
+start a cooldown only after three consecutive domains finish unverified. The
+default cooldown is 300 seconds; three consecutive cooldown cycles without a
+successful WHOIS classification stop the run with exit code 2. A rate-limit
+notice or consecutive unverified results increase the interval by 1.5 up to
+6 seconds. It decreases by 1.5 after each 50 consecutive successful checks,
+down to the configured interval.
 
 WHOIS response text is discarded after classification and is never written to
 disk. The six evidence columns contain the domain, category, UTC timestamp,

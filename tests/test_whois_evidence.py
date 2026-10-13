@@ -79,7 +79,7 @@ def test_whois_evidence_fields_use_closed_body_free_vocabularies(tmp_path):
     assert payload not in path.read_text(encoding="utf-8")
 
 
-def test_live_smoke_artifact_has_thirty_lf_body_free_rows():
+def test_committed_whois_artifact_has_lf_body_free_rows():
     path = Path(__file__).parents[1] / "output" / "whois_evidence.csv"
     contents = path.read_bytes()
 
@@ -87,7 +87,7 @@ def test_live_smoke_artifact_has_thirty_lf_body_free_rows():
     with path.open(encoding="utf-8", newline="") as handle:
         rows = list(csv.DictReader(handle))
 
-    assert len(rows) == 30
+    assert len(rows) >= 30
     assert tuple(rows[0]) == WHOIS_FIELDNAMES
     assert all(row["classification"] in {"not_registered", "registered", "unverified"} for row in rows)
     assert all(

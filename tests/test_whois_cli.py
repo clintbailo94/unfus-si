@@ -91,17 +91,25 @@ def test_whois_check_options_default_and_minimum_interval_validation():
         raise AssertionError("a WHOIS interval below one second must be rejected")
 
 
-def test_whois_pacing_and_adaptive_slowdown_after_timeout(tmp_path, monkeypatch):
+def test_whois_retries_transient_failures_in_place_with_pacing_and_one_row(
+    tmp_path, monkeypatch, capsys
+):
     input_path = tmp_path / "candidates.csv"
-    _write_candidates(input_path, ["first", "second", "third"])
+    _write_candidates(input_path, ["first", "second"])
     rdap_path = tmp_path / "rdap_evidence.csv"
     rdap_store = EvidenceStore(rdap_path)
-    for label in ("first", "second", "third"):
+    for label in ("first", "second"):
         rdap_store.append("tech", _rdap_result(label))
 
     now = [0.0]
     sleeps = []
     starts = []
+    responses = [
+        _whois_result("first", "unverified", "timeout"),
+        _whois_result("first", "unverified", "empty_response"),
+        _whois_result("first", "not_registered"),
+        _whois_result("second", "not_registered"),
+    ]
 
     def fake_sleep(seconds):
         sleeps.append(seconds)
@@ -110,9 +118,9 @@ def test_whois_pacing_and_adaptive_slowdown_after_timeout(tmp_path, monkeypatch)
     def fake_check(label, **_kwargs):
         starts.append(now[0])
         now[0] += 0.5
-        if label == "first":
-            return _whois_result(label, "unverified", "timeout")
-        return _whois_result(label, "registered")
+        result = responses.pop(0)
+        assert result.domain == f"{label}.si"
+        return result
 
     monkeypatch.setattr(cli, "MONOTONIC", lambda: now[0])
     monkeypatch.setattr(cli, "SLEEP", fake_sleep)
@@ -127,13 +135,21 @@ def test_whois_pacing_and_adaptive_slowdown_after_timeout(tmp_path, monkeypatch)
             str(rdap_path),
             "--evidence",
             str(tmp_path / "whois_evidence.csv"),
-            "--cooldown-seconds",
-            "0",
+            "--min-interval",
+            "20",
         ]
     ) == 0
 
-    assert starts == [0.0, 3.0, 6.0]
-    assert [delay for delay in sleeps if delay > 0] == [2.5, 2.5]
+    assert starts == [0.0, 20.0, 50.5, 70.5]
+    assert sleeps == [10.0, 9.5, 30.0, 19.5]
+    assert responses == []
+    with (tmp_path / "whois_evidence.csv").open(encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    assert [row["domain"] for row in rows] == ["first.si", "second.si"]
+    assert [row["classification"] for row in rows] == ["not_registered"] * 2
+    output = capsys.readouterr().out
+    assert "4 WHOIS requests" in output
+    assert "2 retries" in output
     assert cli.WhoisRateLimiter(4.0).min_interval == 4.0
     limiter = cli.WhoisRateLimiter(4.0)
     limiter.increase_after_failure()
@@ -143,9 +159,63 @@ def test_whois_pacing_and_adaptive_slowdown_after_timeout(tmp_path, monkeypatch)
     assert limiter.min_interval == 6.0
 
 
-def test_whois_stops_after_three_failed_cooldown_cycles(tmp_path, monkeypatch, capsys):
+def test_whois_records_only_final_result_after_three_failed_attempts(
+    tmp_path, monkeypatch
+):
     input_path = tmp_path / "candidates.csv"
-    labels = [f"name{index}" for index in range(6)]
+    _write_candidates(input_path, ["flaky"])
+    rdap_path = tmp_path / "rdap_evidence.csv"
+    EvidenceStore(rdap_path).append("tech", _rdap_result("flaky"))
+    now = [0.0]
+    responses = [
+        _whois_result("flaky", "unverified", "timeout"),
+        _whois_result("flaky", "unverified", "connection_error"),
+        _whois_result("flaky", "unverified", "empty_response"),
+    ]
+    starts = []
+    sleeps = []
+
+    def fake_sleep(seconds):
+        sleeps.append(seconds)
+        now[0] += seconds
+
+    def fake_check(label, **_kwargs):
+        starts.append(now[0])
+        now[0] += 0.5
+        return responses.pop(0)
+
+    monkeypatch.setattr(cli, "MONOTONIC", lambda: now[0])
+    monkeypatch.setattr(cli, "SLEEP", fake_sleep)
+    monkeypatch.setattr(cli.whois, "whois_check", fake_check)
+    evidence_path = tmp_path / "whois_evidence.csv"
+
+    assert cli.main(
+        [
+            "whois-check",
+            "--input",
+            str(input_path),
+            "--rdap-evidence",
+            str(rdap_path),
+            "--evidence",
+            str(evidence_path),
+        ]
+    ) == 0
+
+    assert starts == [0.0, 10.5, 41.0]
+    assert sleeps == [10.0, 30.0]
+    with evidence_path.open(encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    assert len(rows) == 1
+    assert rows[0]["domain"] == "flaky.si"
+    assert rows[0]["classification"] == "unverified"
+    assert rows[0]["error"] == "empty_response"
+
+
+def test_whois_cools_down_only_after_three_consecutive_unverified_domains(
+    tmp_path, monkeypatch, capsys
+):
+    input_path = tmp_path / "candidates.csv"
+    labels = ["isolated", "recovered", "failed1", "failed2", "failed3", "after"]
     _write_candidates(input_path, labels)
     rdap_path = tmp_path / "rdap_evidence.csv"
     rdap_store = EvidenceStore(rdap_path)
@@ -162,7 +232,59 @@ def test_whois_stops_after_three_failed_cooldown_cycles(tmp_path, monkeypatch, c
 
     def fake_check(label, **_kwargs):
         calls.append(label)
-        return _whois_result(label, "unverified", "connection_error")
+        now[0] += 1.0
+        if label in {"isolated", "failed1", "failed2", "failed3"}:
+            return _whois_result(label, "unverified")
+        return _whois_result(label, "not_registered")
+
+    monkeypatch.setattr(cli, "MONOTONIC", lambda: now[0])
+    monkeypatch.setattr(cli, "SLEEP", fake_sleep)
+    monkeypatch.setattr(cli.whois, "whois_check", fake_check)
+    evidence_path = tmp_path / "whois_evidence.csv"
+
+    assert cli.main(
+        [
+            "whois-check",
+            "--input",
+            str(input_path),
+            "--rdap-evidence",
+            str(rdap_path),
+            "--evidence",
+            str(evidence_path),
+            "--min-interval",
+            "1",
+            "--cooldown-seconds",
+            "0.7",
+        ]
+    ) == 0
+
+    assert calls == labels
+    assert sleeps.count(0.7) == 1
+    assert "WHOIS circuit breaker opened" in capsys.readouterr().err
+
+
+def test_whois_stops_after_three_consecutive_cooldown_cycles(
+    tmp_path, monkeypatch, capsys
+):
+    input_path = tmp_path / "candidates.csv"
+    labels = [f"name{index}" for index in range(12)]
+    _write_candidates(input_path, labels)
+    rdap_path = tmp_path / "rdap_evidence.csv"
+    rdap_store = EvidenceStore(rdap_path)
+    for label in labels:
+        rdap_store.append("tech", _rdap_result(label))
+
+    now = [0.0]
+    sleeps = []
+    calls = []
+
+    def fake_sleep(seconds):
+        sleeps.append(seconds)
+        now[0] += seconds
+
+    def fake_check(label, **_kwargs):
+        calls.append(label)
+        return _whois_result(label, "unverified")
 
     monkeypatch.setattr(cli, "MONOTONIC", lambda: now[0])
     monkeypatch.setattr(cli, "SLEEP", fake_sleep)
@@ -179,14 +301,113 @@ def test_whois_stops_after_three_failed_cooldown_cycles(tmp_path, monkeypatch, c
             "--evidence",
             str(evidence_path),
             "--cooldown-seconds",
+            "0.25",
+            "--min-interval",
             "1",
         ]
     ) == 2
 
-    assert calls == labels[:4]
-    assert sleeps.count(1.0) == 3
-    assert len(WhoisEvidenceStore(evidence_path).load_latest()) == 4
+    assert calls == labels
+    assert sleeps.count(0.25) == 3
+    assert len(WhoisEvidenceStore(evidence_path).load_latest()) == 12
     assert "3 consecutive cooldown cycles" in capsys.readouterr().err
+
+
+def test_whois_rate_limited_notice_still_cools_down_immediately(
+    tmp_path, monkeypatch, capsys
+):
+    input_path = tmp_path / "candidates.csv"
+    _write_candidates(input_path, ["blocked", "next"])
+    rdap_path = tmp_path / "rdap_evidence.csv"
+    for label in ("blocked", "next"):
+        EvidenceStore(rdap_path).append("tech", _rdap_result(label))
+    now = [0.0]
+    sleeps = []
+    calls = []
+
+    def fake_sleep(seconds):
+        sleeps.append(seconds)
+        now[0] += seconds
+
+    def fake_check(label, **_kwargs):
+        calls.append(label)
+        now[0] += 0.5
+        if label == "blocked":
+            return _whois_result(label, "unverified", "rate_limited")
+        return _whois_result(label, "not_registered")
+
+    monkeypatch.setattr(cli, "MONOTONIC", lambda: now[0])
+    monkeypatch.setattr(cli, "SLEEP", fake_sleep)
+    monkeypatch.setattr(cli.whois, "whois_check", fake_check)
+
+    assert cli.main(
+        [
+            "whois-check",
+            "--input",
+            str(input_path),
+            "--rdap-evidence",
+            str(rdap_path),
+            "--evidence",
+            str(tmp_path / "whois_evidence.csv"),
+            "--cooldown-seconds",
+            "0.25",
+            "--min-interval",
+            "1",
+        ]
+    ) == 0
+
+    assert calls == ["blocked", "next"]
+    assert sleeps.count(0.25) == 1
+    assert "WHOIS circuit breaker opened" in capsys.readouterr().err
+
+
+def test_whois_slowdown_requires_consecutive_failures_and_decays_after_50_successes(
+    tmp_path, monkeypatch, capsys
+):
+    input_path = tmp_path / "candidates.csv"
+    labels = [f"domain{index}" for index in range(54)]
+    _write_candidates(input_path, labels)
+    rdap_path = tmp_path / "rdap_evidence.csv"
+    rdap_store = EvidenceStore(rdap_path)
+    for label in labels:
+        rdap_store.append("tech", _rdap_result(label))
+
+    now = [0.0]
+    starts = []
+
+    def fake_sleep(seconds):
+        now[0] += seconds
+
+    def fake_check(label, **_kwargs):
+        starts.append(now[0])
+        now[0] += 1.0
+        index = int(label.removeprefix("domain"))
+        if index in {0, 2, 3}:
+            return _whois_result(label, "unverified")
+        return _whois_result(label, "not_registered")
+
+    monkeypatch.setattr(cli, "MONOTONIC", lambda: now[0])
+    monkeypatch.setattr(cli, "SLEEP", fake_sleep)
+    monkeypatch.setattr(cli.whois, "whois_check", fake_check)
+
+    assert cli.main(
+        [
+            "whois-check",
+            "--input",
+            str(input_path),
+            "--rdap-evidence",
+            str(rdap_path),
+            "--evidence",
+            str(tmp_path / "whois_evidence.csv"),
+            "--min-interval",
+            "1",
+        ]
+    ) == 0
+
+    assert starts[1] - starts[0] == 1.0
+    assert starts[3] - starts[2] == 1.0
+    assert starts[4] - starts[3] == 1.5
+    assert "adaptive interval 1 seconds" in capsys.readouterr().out
 
 
 def test_status_reports_whois_counts_confirmations_and_conflicts_read_only(
