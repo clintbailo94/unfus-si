@@ -3,7 +3,12 @@ from pathlib import Path
 import pytest
 
 from si_domains.candidates.quality import evaluate_candidate
-from si_domains.candidates.build import CATEGORIES, _remove_trivial_plurals, generate_all
+from si_domains.candidates.build import (
+    CATEGORIES,
+    T3_MIN_CANDIDATES,
+    _remove_trivial_plurals,
+    generate_all,
+)
 from si_domains.candidates.generators.domain_hacks import _VOICED_SY, generate as generate_domain_hacks
 from si_domains.candidates.schema import Candidate
 
@@ -409,15 +414,13 @@ def test_generators_are_deterministic_unique_and_meet_documented_counts():
     assert first == second
     assert len({row.domain_label for rows in first.values() for row in rows}) == sum(map(len, first.values()))
     labels = {row.domain_label for rows in first.values() for row in rows}
+    assert set(T3_MIN_CANDIDATES) == set(CATEGORIES[:5])
     assert "bird" in labels
     assert "birds" not in labels
     assert "accura" in {row.domain_label for row in first["domain_hacks"]}
     assert "muka" not in labels
-    assert len(first["domain_hacks"]) == 135
-    assert len(first["ai"]) >= 1_300
-    assert len(first["short"]) >= 500
-    assert len(first["dictionary"]) >= 800
-    assert len(first["invented"]) >= 1_200
+    assert len(first["domain_hacks"]) == T3_MIN_CANDIDATES["domain_hacks"]
+    assert all(len(first[category]) >= minimum for category, minimum in T3_MIN_CANDIDATES.items())
 
 
 def test_t4_categories_share_the_compound_length_policy():
@@ -445,14 +448,23 @@ def test_t4_generators_are_substantive_and_keep_global_pool_above_hard_minimum()
     generated = generate_all()
     labels = [row.domain_label for rows in generated.values() for row in rows]
 
-    assert all(len(generated[category]) >= 400 for category in CATEGORIES[5:])
+    assert all(generated[category] for category in CATEGORIES[5:])
     assert len(labels) >= 5_000
     assert len(labels) == len(set(labels))
     assert all(generated[category] for category in CATEGORIES)
 
 
-def test_global_dedup_keeps_the_first_primary_category_and_other_category_tags():
-    generated = generate_all()
+def test_global_dedup_keeps_the_first_primary_category_and_other_category_tags(monkeypatch):
+    import si_domains.candidates.build as build
+
+    primary = Candidate("precisionlab", "health_science", "compound", "precision+lab", (), 82)
+    secondary = Candidate("precisionlab", "emerging_industries", "compound", "precision+lab", (), 79)
+    generators = {category: (lambda: []) for category in CATEGORIES}
+    generators["health_science"] = lambda: [primary]
+    generators["emerging_industries"] = lambda: [secondary]
+    monkeypatch.setattr(build, "_GENERATORS", generators)
+
+    generated = build.generate_all()
     rows = {row.domain_label: row for values in generated.values() for row in values}
 
     precision_lab = rows["precisionlab"]
@@ -495,6 +507,7 @@ def test_seed_one_sample_review_excludes_weak_sector_pairings():
         ("emerging_industries", "food+harbor"),
         ("emerging_industries", "marine+space"),
         ("emerging_industries", "fuel+energy"),
+        ("consumer_brands", "curriculum+course"),
     }
     generated_pairs = {
         (candidate.category, candidate.seed)
@@ -507,7 +520,7 @@ def test_seed_one_sample_review_excludes_weak_sector_pairings():
 
 
 def test_t4_generated_compounds_are_explicitly_pair_whitelisted():
-    from si_domains.candidates.generators.common import read_curated_pairs
+    from si_domains.candidates.generators.common import read_reviewed_compounds
 
     generated_pairs = {
         (candidate.category, candidate.seed)
@@ -517,54 +530,162 @@ def test_t4_generated_compounds_are_explicitly_pair_whitelisted():
     }
     reviewed_pairs = set()
     for category in CATEGORIES[5:]:
-        pairs = read_curated_pairs(
-            f"{category}_concepts.txt",
-            f"{category}_products.txt",
-            f"{category}_pairs.txt",
+        pairs = read_reviewed_compounds(
+            f"{category}_roots.txt",
+            f"{category}_suffixes.txt",
+            f"{category}_compounds.txt",
         )
-        reviewed_pairs.update((category, f"{concept}+{suffix}") for concept, suffix in pairs)
+        reviewed_pairs.update((category, f"{root}+{suffix}") for root, suffix in pairs)
 
     assert generated_pairs
     assert generated_pairs <= reviewed_pairs
 
 
+def test_t4_small_root_suffix_vocabularies_and_explicit_compounds():
+    from si_domains.candidates.generators.common import (
+        read_reviewed_compounds,
+        read_standalone_roots,
+        read_terms,
+    )
+
+    blocked = {
+        line.strip().casefold()
+        for line in (Path(__file__).parents[1] / "data" / "blocklist_generic_candidate_terms.txt")
+        .read_text(encoding="utf-8")
+        .splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    }
+    for category in CATEGORIES[5:]:
+        roots = read_terms(f"{category}_roots.txt")
+        suffixes = read_terms(f"{category}_suffixes.txt")
+        compounds = read_reviewed_compounds(
+            f"{category}_roots.txt",
+            f"{category}_suffixes.txt",
+            f"{category}_compounds.txt",
+        )
+        standalone = read_standalone_roots(
+            f"{category}_roots.txt",
+            f"{category}_standalone.txt",
+        )
+
+        assert 40 <= len(roots) <= 80
+        assert 12 <= len(suffixes) <= 20
+        assert set(roots).isdisjoint(suffixes)
+        assert not blocked.intersection(roots)
+        assert not blocked.intersection(suffixes)
+        assert set(standalone) <= set(roots)
+        assert compounds
+        assert all(suffix not in root and root not in suffix for root, suffix in compounds)
+
+
+def test_reviewed_compound_reader_rejects_unknown_and_generic_components(tmp_path, monkeypatch):
+    import si_domains.candidates.generators.common as common
+
+    (tmp_path / "roots.txt").write_text("genome\n", encoding="utf-8")
+    (tmp_path / "suffixes.txt").write_text("lab\n", encoding="utf-8")
+    (tmp_path / "compounds.txt").write_text("genome+lab\n", encoding="utf-8")
+    (tmp_path / "standalone.txt").write_text("genome\n", encoding="utf-8")
+    (tmp_path / "generic.txt").write_text("zone\n", encoding="utf-8")
+    monkeypatch.setattr(common, "SEED_DIR", tmp_path)
+    monkeypatch.setattr(common, "_GENERIC_TERMS", tmp_path / "generic.txt", raising=False)
+
+    assert common.read_reviewed_compounds(
+        "roots.txt", "suffixes.txt", "compounds.txt"
+    ) == (("genome", "lab"),)
+    assert common.read_standalone_roots("roots.txt", "standalone.txt") == ("genome",)
+
+    (tmp_path / "compounds.txt").write_text("genome+desk\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="unknown root or suffix"):
+        common.read_reviewed_compounds("roots.txt", "suffixes.txt", "compounds.txt")
+
+    (tmp_path / "roots.txt").write_text("zone\n", encoding="utf-8")
+    (tmp_path / "compounds.txt").write_text("zone+lab\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="generic component"):
+        common.read_reviewed_compounds("roots.txt", "suffixes.txt", "compounds.txt")
+
+
+def test_reviewed_compound_reader_rejects_repeated_domain_component(tmp_path, monkeypatch):
+    import si_domains.candidates.generators.common as common
+
+    (tmp_path / "roots.txt").write_text("microgrid\nworkflow\n", encoding="utf-8")
+    (tmp_path / "suffixes.txt").write_text("grid\nflow\n", encoding="utf-8")
+    (tmp_path / "compounds.txt").write_text("microgrid+grid\n", encoding="utf-8")
+    (tmp_path / "generic.txt").write_text("zone\n", encoding="utf-8")
+    monkeypatch.setattr(common, "SEED_DIR", tmp_path)
+    monkeypatch.setattr(common, "_GENERIC_TERMS", tmp_path / "generic.txt")
+
+    with pytest.raises(ValueError, match="repeats a component"):
+        common.read_reviewed_compounds("roots.txt", "suffixes.txt", "compounds.txt")
+
+
+def test_t4_rework2_review_examples_are_not_generated():
+    generated_labels = {row.domain_label for rows in generate_all().values() for row in rows}
+    weak_labels = {
+        "zonehub", "kernelregion", "sourceapp", "sourcemodule", "regionsystem",
+        "databasezone", "virtualzone", "privatebase", "voicelearn", "camerafiber",
+        "banksystem", "appmodule", "dataindex", "salesfounder", "payaccount",
+        "procureguide", "payrolltax", "covercare", "optionmarket", "expensesuite",
+        "payablespend", "moneypayment", "taxpurchase", "policyhome", "loanwallet",
+        "sharedesk", "investyield", "mindjourney", "treattrack", "vitalhabit",
+        "vitalcare", "vitalitycare", "carerecord", "datagroup", "lifeactive",
+        "lifewell", "studyfield", "labmeasure", "biopsyimage", "skinrecord",
+        "homefriend", "mediamusic", "mediaticket", "photosport", "parentvibe",
+        "sailhotel", "homeguide", "tutorquiz", "studytutor", "lessonpath",
+        "beautyedit", "labelhouse", "waterocean", "oceanmarine", "solarenergy",
+        "tidalenergy", "hydrosolar", "matterfiber", "carbonclean", "agrisystem",
+        "agrisensor", "reactorwind", "missionscope", "microscale", "nanoscience",
+        "buildops", "enterprisestudio", "basketbox", "basketworks", "basketshop",
+        "basketclub", "getawaystay", "agriculturegrid", "soilstorage", "cropops",
+        "aerospaceflight",
+        "curriculumcourse",
+    }
+
+    assert not weak_labels.intersection(generated_labels)
+
+
 def test_t4_pair_whitelist_terms_must_come_from_curated_vocabularies(tmp_path, monkeypatch):
     import si_domains.candidates.generators.common as common
 
-    (tmp_path / "concepts.txt").write_text("genome\n", encoding="utf-8")
-    (tmp_path / "products.txt").write_text("lab\n", encoding="utf-8")
-    (tmp_path / "pairs.txt").write_text("genome|lab,desk\n", encoding="utf-8")
+    (tmp_path / "roots.txt").write_text("genome\n", encoding="utf-8")
+    (tmp_path / "suffixes.txt").write_text("lab\n", encoding="utf-8")
+    (tmp_path / "pairs.txt").write_text("genome+lab\ngenome+desk\n", encoding="utf-8")
+    (tmp_path / "generic.txt").write_text("zone\n", encoding="utf-8")
     monkeypatch.setattr(common, "SEED_DIR", tmp_path)
+    monkeypatch.setattr(common, "_GENERIC_TERMS", tmp_path / "generic.txt")
 
-    with pytest.raises(ValueError, match="unknown concept or product"):
-        common.read_curated_pairs("concepts.txt", "products.txt", "pairs.txt")
+    with pytest.raises(ValueError, match="unknown root or suffix"):
+        common.read_reviewed_compounds("roots.txt", "suffixes.txt", "pairs.txt")
 
 
 def test_t4_seed_vocabularies_exclude_reviewed_generic_filler_terms():
-    seeds_dir = Path(__file__).parents[1] / "data" / "seeds"
-    generic_fillers = {
-        "zone", "region", "life", "guide", "plan", "base", "field", "path",
-        "source", "order", "auto", "measure", "safety", "family", "city",
-    }
-    terms = set()
-    for category in CATEGORIES[5:]:
-        for suffix in ("concepts", "products"):
-            lines = (seeds_dir / f"{category}_{suffix}.txt").read_text(encoding="utf-8").splitlines()
-            terms.update(
-                line.strip().casefold()
-                for line in lines
-                if line.strip() and not line.lstrip().startswith("#")
-            )
+    from si_domains.candidates.generators.common import (
+        read_generic_candidate_terms,
+        read_terms,
+    )
 
-    assert generic_fillers.isdisjoint(terms)
+    generic_fillers = read_generic_candidate_terms()
+    required_generic_terms = {
+        "zone", "region", "source", "data", "app", "system", "module", "base",
+        "life", "care", "home", "media", "mind", "water", "energy", "vital",
+        "study", "lesson", "policy", "pay", "tax", "money", "guide", "plan",
+        "field", "path", "order", "auto", "measure", "safety", "family", "city",
+        "healthy", "treat", "invest", "procure", "private", "shared", "build",
+    }
+    assert required_generic_terms <= generic_fillers
+
+    for category in CATEGORIES[5:]:
+        roots = set(read_terms(f"{category}_roots.txt"))
+        suffixes = set(read_terms(f"{category}_suffixes.txt"))
+
+        assert generic_fillers.isdisjoint(roots | suffixes)
 
 
 def test_consumer_brand_suffix_vocabulary_stays_compact():
     seeds_dir = Path(__file__).parents[1] / "data" / "seeds"
-    lines = (seeds_dir / "consumer_brands_products.txt").read_text(encoding="utf-8").splitlines()
+    lines = (seeds_dir / "consumer_brands_suffixes.txt").read_text(encoding="utf-8").splitlines()
     heads = [line.strip() for line in lines if line.strip() and not line.lstrip().startswith("#")]
 
-    assert len(heads) == 31
+    assert 12 <= len(heads) <= 20
 
 
 def test_ai_output_omits_generic_filler_product_joins_seen_in_review():

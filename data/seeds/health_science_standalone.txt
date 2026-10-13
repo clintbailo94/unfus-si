@@ -1,0 +1,13 @@
+# Roots reviewed as plausible short biomedical .si labels.
+genome
+gene
+neuron
+retina
+biopsy
+pharma
+vaccine
+biotech
+longevity
+microbiome
+diagnostics
+proteomics

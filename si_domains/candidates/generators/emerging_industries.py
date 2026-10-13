@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from .common import generate_curated_compounds
+from .common import generate_root_suffix_pool
 from ..schema import Candidate
 
 
@@ -18,10 +18,11 @@ _BLENDS = (
 
 
 def generate() -> list[Candidate]:
-    return generate_curated_compounds(
+    return generate_root_suffix_pool(
         "emerging_industries",
-        "emerging_industries_concepts.txt",
-        "emerging_industries_products.txt",
-        "emerging_industries_pairs.txt",
+        "emerging_industries_roots.txt",
+        "emerging_industries_suffixes.txt",
+        "emerging_industries_compounds.txt",
+        "emerging_industries_standalone.txt",
         blends=_BLENDS,
     )

@@ -1,15 +1,14 @@
-# Self-curated robotics, quantum, storage, materials, and autonomy roots.
+# Robotics, quantum, energy storage, materials, climate, and aerospace roots.
 robotics
 cobot
 robot
 lidar
-autonomous
 drone
 mobility
 propulsion
-mechatronic
+mechatronics
 navigation
-aeronautic
+aeronautics
 autopilot
 fleet
 autonomy
@@ -17,19 +16,14 @@ quantum
 quanta
 qubit
 photon
-photonic
 superconductor
 optics
 laser
 semiconductor
 algorithm
 computation
-energy
 battery
-charge
-storage
 tidal
-solar
 wind
 thermal
 hydrogen
@@ -44,8 +38,6 @@ lithium
 sodiumion
 flowbattery
 solidstate
-power
-electric
 electrolysis
 gridscale
 microgrid
@@ -65,15 +57,9 @@ cellulose
 metamaterial
 climate
 carbon
-circular
 agriculture
-agri
-vertical
-precision
 aquaculture
 desalination
-hydroponic
-aquaponic
 harvest
 crop
 soil
@@ -82,7 +68,6 @@ biomass
 biochar
 carboncapture
 satellite
-orbital
 orbit
 rocket
 spacecraft

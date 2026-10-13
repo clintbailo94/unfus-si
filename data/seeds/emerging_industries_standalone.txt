@@ -1,0 +1,13 @@
+# Roots reviewed as plausible emerging-industry .si labels.
+orbit
+lidar
+qubit
+cobot
+photon
+graphene
+lithium
+tidal
+rocket
+drone
+fusion
+microgrid

@@ -20,12 +20,13 @@ include both generation reasons (`abbr`, `word`, `cvcv`, `phonotactic`) and
 other applicable candidate categories. `quality_score` is a deterministic
 0-100 heuristic, not an availability or resale score.
 
-The committed pool contains 7,323 globally unique rows: 4,785 from T3 and
-2,538 new T4 primary rows. The hard acceptance minimum of 5,000 is met. The
-rework planning target was about 600-900 rows per T4 category and about
-8,000-9,300 rows overall. Four categories are 52-187 rows below the 600-row
-lower bound; consumer_brands is within range. The pool is 677 below the lower
-combined planning target. No rows were added to meet a quota.
+The committed pool contains 6,584 globally unique rows: 4,785 from T3 and
+1,799 new T4 primary rows. The hard acceptance minimum of 5,000 is met. The
+rework planning range was 2,500-3,500 new T4 rows, with roughly 300-800 per
+category. The curated pool is 701 below the lower combined planning range;
+health_science has 271 rows, below the 300-row planning reference. These are
+honest vocabulary limits. No quota, per-category cap, or filler was used to
+raise the counts.
 
 | Category | Rows | Brief target | Generation approach |
 | --- | ---: | ---: | --- |
@@ -34,11 +35,16 @@ combined planning target. No rows were added to meet a quota.
 | `short` | 700 | 500 | Meaningful abbreviations and words, plus pronounceable CVCV labels |
 | `dictionary` | 1,050 | 800 | Screened common English noun/adjective seeds |
 | `invented` | 1,400 | 1,200 | Stem/ending combinations with spelling and repeated-chunk checks |
-| `technology` | 413 | 600-900 | Explicit cloud, security, software, data, hardware, and fintech pairs |
-| `business_finance` | 548 | 600-900 | Explicit investing, banking, insurance, venture, and operations pairs |
-| `health_science` | 426 | 600-900 | Explicit clinical, diagnostic, biotech, pharma, and research pairs |
-| `consumer_brands` | 604 | 600-900 | Explicit fashion, travel, media, education, retail, and lifestyle pairs |
-| `emerging_industries` | 547 | 600-900 | Explicit robotics, quantum, energy, materials, climate, and aerospace pairs |
+| `technology` | 313 | 1,200 in both prior reviewed commits | Explicit technology root/suffix pairs |
+| `business_finance` | 468 | 1,200 in both prior reviewed commits | Explicit finance and business root/suffix pairs |
+| `health_science` | 271 | 1,200 in both prior reviewed commits | Explicit health and science root/suffix pairs |
+| `consumer_brands` | 331 | 1,200 in both prior reviewed commits | Explicit consumer, travel, education, and retail pairs |
+| `emerging_industries` | 416 | 1,200 in both prior reviewed commits | Explicit emerging-technology root/suffix pairs |
+
+Both prior reviewed baselines (`fc0f2b8` and `1696b43`) had 1,200 rows in
+each T4 category. The current changes are respectively -887, -732, -929, -869,
+and -784 rows, for -4,201 combined. Category counts reflect global label and
+supported plural deduplication, shared quality gates, and pair exclusions.
 
 The `domain_hacks` count is below its target. The original SCOWL v2 size 60
 suffix set supplied 293 source words. Semantic and pronunciation review left
@@ -58,12 +64,10 @@ regression test pins the reviewed count at 135
 rather than treating the 700 target as met; additions should pass the same
 human quality review.
 
-The T4 categories have no per-category quota or cap. The target shortfalls are
-187 rows for technology, 52 for business_finance, 174 for health_science, and
-53 for emerging_industries; consumer_brands is within its target range. These
-shortfalls are deliberate: the exact-pair vocabularies and semantic review
-take precedence over count. T3 ceilings and deterministic ranking remain as
-before. Neither a cap nor a score establishes commercial usefulness.
+T4 has no per-category quota or cap. The combined pool clears the hard 5,000
+minimum, but falls short of the 2,500-row T4 planning range by 701. T3 ceilings
+and deterministic ranking remain as before. Neither a cap nor a score
+establishes commercial usefulness.
 
 ## Quality gate
 
@@ -153,62 +157,71 @@ names called out in the brief.
 
 ### T4 sector categories
 
-The five T4 concept and product vocabularies were written for this project.
-Concept files contain distinctive sector roots. Product files contain a
-compact set of suffix heads such as `hub`, `lab`, `works`, `stack`, `scan`,
-`desk`, `grid`, and `forge`. The consumer vocabulary was reduced from 78 to 31
-reviewed heads to keep its broader set of subsectors manageable. Each category
-also has a `*_pairs.txt` file with
-lines of the form `concept|suffix,suffix`. The shared loader validates every
-root and suffix against its source vocabulary, rejects malformed or duplicate
-pairs, and emits only the exact listed combinations. It never infers
-compatibility from matching groups or crosses whole vocabularies. Each row
-records its two source terms in `seed`; selected natural blends keep their
-named source and `blend` method. Substring-redundant joins are dropped before
-the shared spelling, registry, brand, offensive-language, and quality gates.
+The five sector vocabularies were written for this project and have no external
+word-list dependency. Each category has a small `*_roots.txt` list of
+sector-specific terms, a `*_suffixes.txt` list of product heads, a
+`*_standalone.txt` allowlist for roots that work alone, and a
+`*_compounds.txt` explicit whitelist with one `root+suffix` pair per line.
+The generator never forms a Cartesian product. It validates all components,
+rejects duplicate and unknown pairs, rejects exact generic terms from
+`data/blocklist_generic_candidate_terms.txt`, and rejects pairs that repeat a
+component inside the other (`workflow+flow`, `footwear+wear`, and
+`microgrid+grid`). Only listed compounds, listed standalone roots, and a few
+named blends in the generator modules become candidates. The `seed` column
+records the source terms, and the method column distinguishes `root`,
+`compound`, and `blend`. Shared spelling, registry, brand, offensive-language,
+quality, global dedupe, and plural safeguards still apply afterward.
 
-- `technology`: cloud platforms, security, software delivery, data compute,
-  connected hardware, and fintech infrastructure. Pair choices use heads such
-  as `stack`, `mesh`, `vault`, `ops`, `grid`, and `forge`. Natural shorthand
-  includes `devops`, `netops`, and `infosec`.
-- `business_finance`: investment markets, banking and payments, insurance,
-  startup and venture tools, business operations, and professional services.
-  Pairs use finance tools such as `desk`, `flow`, `ledger`, `vault`, and
-  `quote`. Selected blends are `fintech`, `insurtech`, `regtech`, `wealthtech`,
-  and `proptech`.
-- `health_science`: care delivery, diagnostics and imaging, biotech and
-  genomics, pharma trials, longevity and wellness, and research. Clinical
-  heads include `lab`, `scan`, `assay`, `clinic`, `atlas`, and `track`. Selected
-  blends include `biotech`, `medtech`, `healthtech`, `telehealth`, and
-  `neurotech`.
-- `consumer_brands`: fashion and beauty, travel and hospitality, media and
-  entertainment, education, retail and ecommerce, and lifestyle communities.
-  Its 31 reusable product heads include `studio`, `shop`, `house`, `club`,
-  `booking`, `box`, `craft`, `school`, and `gear`; exact root/head pairs are
-  listed individually. Selected blends include `edtech`, `ecommerce`,
-  `staycation`, and `athleisure`.
-- `emerging_industries`: robotics and autonomy, quantum computing, energy
-  storage, advanced materials, climate and agriculture, and aerospace. Pairs
-  name products or infrastructure such as `cell`, `grid`, `plant`, `storage`,
-  `flight`, and `control`. Selected blends include `cleantech`, `greentech`,
-  `climatetech`, `agritech`, `spacetech`, `foodtech`, and `autotech`.
+| Category | Roots | Suffixes | Explicit pairs | Standalone roots | Generated primary rows |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `technology` | 64 | 18 | 394 | 12 | 313 |
+| `business_finance` | 70 | 16 | 530 | 12 | 468 |
+| `health_science` | 56 | 17 | 310 | 12 | 271 |
+| `consumer_brands` | 79 | 17 | 385 | 12 | 331 |
+| `emerging_industries` | 75 | 20 | 473 | 12 | 416 |
 
-All ten seed-1 sample sections were regenerated and read by hand. Fresh random
-draws of 100 candidates per category also used seeds 1, 7, and 42. The three
-T4 review passes initially rejected 7, 2, and 3 names, respectively, across
-the five categories. They led to exact whitelist edits; final T4 draws
-produced no further rejections. The corresponding T3 and AI draws produced no
-additional seed changes after the AI head cleanup described above. Examples
-removed include same-class or redundant pairs (`exam+quiz`, `basket+cart`,
-`festival+show`, `genome+omics`, `soil+plant`), verb or adjective joins
-(`underwrite+works`, `insure+quote`), and weak/mismatched pairs
-(`aquaponic+cell`, `microbiome+cell`, `trial+therapy`, `music+live`,
-`decarbon+plant`, and `additive+cell`). The review also excluded the weak
-examples named in the task such as `region+harbor`, `healthy+care`,
-`water+market`, and `alloy+carbon`. Pair exclusions are category-scoped; words
-are not globally banned. CSV rows and review samples are regenerated from
-inputs, never hand-edited. Review checks spelling and obvious semantic fit; it
-is not a trademark, demand, or availability screen.
+`technology` covers cloud infrastructure, cybersecurity, software delivery,
+fintech, blockchain, and connected systems. Its suffix heads include `stack`,
+`mesh`, `vault`, `ops`, `grid`, `forge`, `scan`, and `works`; selected blends
+are `devops`, `netops`, and `infosec`.
+
+`business_finance` covers investing, trading, banking, insurance, startups,
+venture capital, and business services. Its heads include `desk`, `flow`,
+`track`, `signal`, `ledger`, `vault`, `quote`, and `launch`. Selected blends
+are `fintech`, `insurtech`, `regtech`, `wealthtech`, and `proptech`.
+
+`health_science` covers healthcare delivery, biotech, diagnostics, longevity,
+pharma, and scientific research. Its heads include `lab`, `scan`, `assay`,
+`clinic`, `scope`, `sequence`, `marker`, `atlas`, and `trial`. Selected blends
+are `biotech`, `medtech`, `healthtech`, `telehealth`, and `neurotech`.
+
+`consumer_brands` covers fashion, travel, entertainment, lifestyle, education,
+and ecommerce. Its heads include `studio`, `shop`, `club`, `house`, `box`,
+`craft`, `wear`, `school`, `course`, `booking`, `stay`, and `gear`. Selected
+blends include `edtech`, `ecommerce`, `staycation`, and `athleisure`.
+
+`emerging_industries` covers robotics, quantum systems, energy storage,
+advanced materials, and autonomous systems. Its heads include `cell`, `grid`,
+`dock`, `control`, `mesh`, `engine`, `flight`, `sensor`, `drive`, and
+`storage`. Selected blends include `cleantech`, `greentech`, `climatetech`,
+`agritech`, `spacetech`, `foodtech`, and `autotech`.
+
+The seed-1 `docs/candidate_samples.md` file contains 40 candidates from each
+of all ten categories and was regenerated and reviewed. The additional
+`docs/candidate_review_draws.md` records five deterministic random draws (seeds
+1, 3, 7, 42, and 99), with 40 names from each new category per seed. The final
+manual review rejected zero names in each 40-name category draw; review edits
+before those final draws removed weak exact pairs such as `build+ops`,
+`enterprise+studio`, `basket+box`, `basket+works`, `basket+shop`, `basket+club`,
+`getaway+stay`, `curriculum+course`, `agriculture+grid`, `soil+storage`,
+`crop+ops`, `aerospace+flight`, `lidar+drive`, and `propulsion+drive`. Earlier
+review also excluded the task's examples involving `zone`, `region`, `source`,
+`care`, `life`, `guide`, `measure`, `home`, `ocean`, `solar`, and `energy`.
+These lists apply to exact components and pairs, not substrings, so neutral
+health, technical, identity, religious, and fantasy vocabulary remains
+eligible where it passes category and shared quality rules. Review catches
+obvious spelling and semantic problems; it is not a trademark, demand, or
+availability screen.
 
 ### `dictionary`
 
@@ -239,7 +252,7 @@ two/three-letter chunks. The ranked output ceiling is 1,400.
 
 ## Word-list source and license
 
-The five T4 sector concept/product vocabularies and exact pair whitelists were
+The five T4 sector root/suffix vocabularies and exact pair whitelists were
 authored and reviewed locally for this project. They were not downloaded from
 an external word list, so the ESDB-derived seed notice below applies to the
 earlier dictionary and domain-hack inputs, not to these T4 files.

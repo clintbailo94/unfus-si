@@ -1,18 +1,15 @@
-# Self-curated technical roots. Pair compatibility is recorded separately.
+# Sector roots; every compound pairing is listed separately.
 cloud
 edge
-compute
+kernel
 server
 storage
 network
 dns
-kernel
 container
-platform
 database
 cluster
 cyber
-secure
 privacy
 identity
 auth
@@ -30,21 +27,17 @@ audit
 software
 code
 developer
-build
 release
 workflow
 automation
 api
-module
 config
 version
-data
 algorithm
 vector
 tensor
 neural
 language
-image
 video
 audio
 stream

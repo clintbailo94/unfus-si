@@ -43,6 +43,14 @@ MAX_CANDIDATES = {
     "dictionary": 1_050,
     "invented": 1_400,
 }
+# Preserve the accepted T3 output floors while the T4 vocabularies evolve.
+T3_MIN_CANDIDATES = {
+    "domain_hacks": 135,
+    "ai": 1_300,
+    "short": 500,
+    "dictionary": 800,
+    "invented": 1_200,
+}
 _GENERATORS: dict[str, Callable[[], list[Candidate]]] = {
     "domain_hacks": domain_hacks.generate,
     "ai": ai.generate,

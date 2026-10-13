@@ -94,7 +94,7 @@ numera,domain_hacks,hack-suffix,numeracy,,86
 occupan,domain_hacks,hack-suffix,occupancy,,89
 over,domain_hacks,hack-suffix,oversee,,78
 permanen,domain_hacks,hack-suffix,permanency,,91
-pharma,domain_hacks,hack-suffix,pharmacy,,81
+pharma,domain_hacks,hack-suffix,pharmacy,health_science,81
 piquan,domain_hacks,hack-suffix,piquancy,,86
 please,domain_hacks,hack-phrase,please + see,,82
 plian,domain_hacks,hack-suffix,pliancy,,80

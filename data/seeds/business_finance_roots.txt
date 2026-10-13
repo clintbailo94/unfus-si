@@ -1,4 +1,4 @@
-# Self-curated financial markets, risk, venture, and operations concepts.
+# Distinct financial and business-service roots.
 equity
 stock
 bond
@@ -6,7 +6,6 @@ asset
 wealth
 capital
 broker
-market
 trading
 dividend
 yield
@@ -19,7 +18,6 @@ forex
 commodity
 futures
 option
-share
 exchange
 fund
 investment
@@ -32,13 +30,11 @@ credit
 loan
 lending
 cash
-payment
 banking
 clearing
 remit
 mortgage
 insurance
-policy
 claim
 risk
 hedge
@@ -51,12 +47,10 @@ premium
 actuary
 startup
 venture
-founder
 angel
 growth
 enterprise
 commerce
-sales
 revenue
 profit
 franchise
@@ -64,7 +58,6 @@ contract
 procurement
 vendor
 supplier
-agency
 logistics
 invoice
 accounting
@@ -74,8 +67,5 @@ spend
 expense
 payable
 receivable
-tax
-payroll
 audit
-purchase
 inventory
