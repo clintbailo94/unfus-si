@@ -84,11 +84,18 @@ def test_committed_whois_artifact_has_lf_body_free_rows():
     contents = path.read_bytes()
 
     assert b"\r" not in contents
+    assert contents.endswith(b"\n")
+    lines = contents.splitlines()
+    header = b"domain,category,utc_timestamp,classification,matched_pattern,error"
+    assert lines[0] == header
+    assert lines.count(header) == 1
     with path.open(encoding="utf-8", newline="") as handle:
-        rows = list(csv.DictReader(handle))
+        parsed_rows = list(csv.reader(handle))
 
+    assert tuple(parsed_rows[0]) == WHOIS_FIELDNAMES
+    assert all(len(row) == len(WHOIS_FIELDNAMES) for row in parsed_rows)
+    rows = [dict(zip(WHOIS_FIELDNAMES, row)) for row in parsed_rows[1:]]
     assert len(rows) >= 30
-    assert tuple(rows[0]) == WHOIS_FIELDNAMES
     assert all(row["classification"] in {"not_registered", "registered", "unverified"} for row in rows)
     assert all(
         row["matched_pattern"]
@@ -108,9 +115,12 @@ def test_committed_whois_artifact_has_lf_body_free_rows():
             "no_recognized_pattern",
             "notice:rate_limited",
             "response_cap",
+            "unspecified_pattern",
         }
         for row in rows
     )
+    domain_timestamps = [(row["domain"], row["utc_timestamp"]) for row in rows]
+    assert len(domain_timestamps) == len(set(domain_timestamps))
     assert all(
         row["error"]
         in {
