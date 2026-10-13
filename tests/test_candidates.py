@@ -440,7 +440,9 @@ def test_t4_categories_share_the_compound_length_policy():
         "invented",
         *t4_categories,
     )
-    assert all(evaluate_candidate("infosecuritymesh", category) is not None for category in t4_categories)
+    assert all(evaluate_candidate("containerstack", category) is not None for category in t4_categories)
+    assert all(evaluate_candidate("immunologyworks", category) is None for category in t4_categories)
+    assert all(evaluate_candidate("infosecuritymesh", category) is None for category in t4_categories)
     assert all(evaluate_candidate("infosecuritymeshes", category) is None for category in t4_categories)
 
 
@@ -449,9 +451,123 @@ def test_t4_generators_are_substantive_and_keep_global_pool_above_hard_minimum()
     labels = [row.domain_label for rows in generated.values() for row in rows]
 
     assert all(generated[category] for category in CATEGORIES[5:])
+    assert all(len(generated[category]) >= 250 for category in CATEGORIES[5:])
     assert len(labels) >= 5_000
     assert len(labels) == len(set(labels))
     assert all(generated[category] for category in CATEGORIES)
+    assert all(len(row.domain_label) <= 14 for category in CATEGORIES[5:] for row in generated[category])
+
+
+def test_t4_reviewed_pairs_exclude_tautologies_and_use_short_sector_roots():
+    from si_domains.candidates.generators.common import read_reviewed_compounds
+
+    generated = generate_all()
+    labels = {row.domain_label for rows in generated.values() for row in rows}
+    reviewed_pairs = {
+        (category, f"{root}+{suffix}")
+        for category in CATEGORIES[5:]
+        for root, suffix in read_reviewed_compounds(
+            f"{category}_roots.txt",
+            f"{category}_suffixes.txt",
+            f"{category}_compounds.txt",
+        )
+    }
+    rejected_pairs = {
+        ("emerging_industries", "propulsion+engine"),
+        ("emerging_industries", "agriculture+lab"),
+        ("emerging_industries", "agriculture+hub"),
+        ("emerging_industries", "agriculture+grid"),
+        ("emerging_industries", "desalination+ops"),
+        ("health_science", "tumor+assay"),
+        ("health_science", "tumor+clinic"),
+        ("health_science", "tumor+therapy"),
+        ("health_science", "rehab+therapy"),
+        ("health_science", "neuro+therapy"),
+        ("health_science", "neuron+therapy"),
+        ("health_science", "pharma+therapy"),
+        ("health_science", "pharma+clinic"),
+        ("health_science", "dosage+therapy"),
+        ("health_science", "dosage+clinic"),
+        ("health_science", "antigen+trial"),
+        ("health_science", "stroma+trial"),
+        ("health_science", "chromatin+cell"),
+        ("health_science", "dermatology+works"),
+        ("health_science", "derma+works"),
+        ("health_science", "gynecology+atlas"),
+        ("health_science", "gyn+atlas"),
+        ("health_science", "nephrology+track"),
+        ("health_science", "nephro+track"),
+        ("business_finance", "bookkeeping+works"),
+        ("business_finance", "bookkeeping+tax"),
+        ("business_finance", "underwriting+ops"),
+        ("consumer_brands", "academy+class"),
+        ("consumer_brands", "academy+school"),
+        ("consumer_brands", "campus+course"),
+        ("consumer_brands", "tutoring+course"),
+        ("consumer_brands", "cruise+stay"),
+        ("technology", "index+hub"),
+        ("emerging_industries", "agri+ops"),
+        ("emerging_industries", "agri+works"),
+        ("emerging_industries", "desal+ops"),
+        ("emerging_industries", "aerospace+grid"),
+        ("emerging_industries", "hydro+hub"),
+        ("emerging_industries", "additive+grid"),
+        ("emerging_industries", "cellulose+grid"),
+        ("emerging_industries", "autopilot+drive"),
+        ("emerging_industries", "fission+engine"),
+    }
+    reviewed_short_roots = {
+        ("health_science", "nephro+lab"),
+        ("health_science", "derma+lab"),
+        ("health_science", "hemo+scan"),
+        ("health_science", "physio+lab"),
+        ("health_science", "gyn+clinic"),
+        ("emerging_industries", "agri+lab"),
+        ("emerging_industries", "desal+grid"),
+    }
+
+    assert not rejected_pairs.intersection(reviewed_pairs)
+    assert reviewed_short_roots <= reviewed_pairs
+    assert {"nephrolab", "dermalab", "hemoscan", "physiolab", "gynclinic", "agrilab", "desalgrid"} <= labels
+    assert not {
+        "propulsionengine",
+        "agriculturelab",
+        "agriculturehub",
+        "tumorassay",
+        "rehabtherapy",
+        "dermatologyworks",
+        "dermaworks",
+        "gynecologyatlas",
+        "gynatlas",
+        "nephrologytrack",
+        "nephrotrack",
+        "bookkeepingworks",
+        "underwritingops",
+        "desalinationops",
+        "pharmatherapy",
+        "dosagetherapy",
+        "antigentrial",
+        "stromatrial",
+        "chromatincell",
+        "tumorclinic",
+        "tutoringcourse",
+        "campuscourse",
+        "academyclass",
+        "academyschool",
+        "aerospacegrid",
+        "hydrohub",
+        "additivegrid",
+        "cellulosegrid",
+        "dosageclinic",
+        "pharmaclinic",
+        "tumortherapy",
+        "neurotherapy",
+        "neurontherapy",
+        "cruisestay",
+        "indexhub",
+        "autopilotdrive",
+        "fissionengine",
+    }.intersection(labels)
 
 
 def test_global_dedup_keeps_the_first_primary_category_and_other_category_tags(monkeypatch):

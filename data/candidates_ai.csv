@@ -155,7 +155,7 @@ audiostudio,ai,compound,audio+studio,,76
 audioswitch,ai,compound,audio+switch,,80
 audiosystem,ai,compound,audio+system,,80
 audiovault,ai,compound,audio+vault,,81
-audioworks,ai,compound,audio+works,technology,81
+audioworks,ai,compound,audio+works,,81
 autobeacon,ai,blend,autonomous+beacon,,86
 autocore,ai,blend,autonomous+core,,85
 autocraft,ai,compound,auto+craft,,92
@@ -461,7 +461,7 @@ graphsense,ai,compound,graph+sense,,80
 graphsolve,ai,compound,graph+solve,,80
 graphsystem,ai,compound,graph+system,,75
 graphvault,ai,compound,graph+vault,,80
-graphworks,ai,compound,graph+works,technology,76
+graphworks,ai,compound,graph+works,,76
 imagebeacon,ai,compound,image+beacon,,84
 imagecore,ai,compound,image+core,,91
 imagecraft,ai,compound,image+craft,,88
@@ -833,7 +833,7 @@ neuralspark,ai,compound,neural+spark,,78
 neuralstack,ai,compound,neural+stack,technology,78
 neuralsystem,ai,compound,neural+system,,81
 neuralvault,ai,compound,neural+vault,,84
-neuralworks,ai,compound,neural+works,technology,78
+neuralworks,ai,compound,neural+works,,78
 neuramatrix,ai,compound,neura+matrix,,84
 neuramesh,ai,compound,neura+mesh,,92
 neuranetwork,ai,compound,neura+network,,81
@@ -864,7 +864,7 @@ neurokernel,ai,compound,neuro+kernel,,84
 neurolabs,ai,compound,neuro+labs,,92
 neurolearn,ai,compound,neuro+learn,,85
 neuroledger,ai,compound,neuro+ledger,,84
-neurolink,ai,compound,neuro+link,,92
+neurolink,ai,compound,neuro+link,health_science,92
 neuroloop,ai,compound,neuro+loop,,91
 neuromatrix,ai,compound,neuro+matrix,,84
 neuromesh,ai,compound,neuro+mesh,,92
@@ -923,7 +923,7 @@ promptorbit,ai,compound,prompt+orbit,,75
 quantabeacon,ai,blend,quantum+beacon,,78
 quantacore,ai,blend,quantum+core,,86
 quantacraft,ai,blend,quantum+craft,,83
-quantaengine,ai,blend,quantum+engine,emerging_industries,78
+quantaengine,ai,blend,quantum+engine,,78
 quantafleet,ai,blend,quantum+fleet,,84
 quantaflow,ai,blend,quantum+flow,,89
 quantaforge,ai,blend,quantum+forge,emerging_industries,84
@@ -950,7 +950,7 @@ quantastream,ai,blend,quantum+stream,,77
 quantastudio,ai,blend,quantum+studio,,78
 quantasystem,ai,blend,quantum+system,,81
 quantavault,ai,blend,quantum+vault,,84
-quantaworks,ai,blend,quantum+works,emerging_industries,79
+quantaworks,ai,blend,quantum+works,,79
 quantbeacon,ai,compound,quant+beacon,,80
 quantcore,ai,compound,quant+core,,88
 quantengine,ai,compound,quant+engine,,84
@@ -973,7 +973,7 @@ quantsignal,ai,compound,quant+signal,,78
 quantsolve,ai,compound,quant+solve,,84
 quantsystem,ai,compound,quant+system,,78
 quantumcore,ai,compound,quantum+core,,84
-quantumengine,ai,compound,quantum+engine,emerging_industries,75
+quantumengine,ai,compound,quantum+engine,,75
 quantumfleet,ai,compound,quantum+fleet,,77
 quantumflow,ai,compound,quantum+flow,,78
 quantumforge,ai,compound,quantum+forge,emerging_industries,81
@@ -1126,7 +1126,7 @@ robotstudio,ai,compound,robot+studio,,80
 robotswitch,ai,compound,robot+switch,,75
 robotsystem,ai,compound,robot+system,,82
 robotvault,ai,compound,robot+vault,,88
-robotworks,ai,compound,robot+works,emerging_industries,80
+robotworks,ai,compound,robot+works,,80
 robovault,ai,compound,robo+vault,,92
 roboworks,ai,compound,robo+works,,85
 searchengine,ai,compound,search+engine,,77
@@ -1331,10 +1331,10 @@ synapseflow,ai,compound,synapse+flow,,82
 synapseforge,ai,compound,synapse+forge,,81
 synapsegrid,ai,compound,synapse+grid,,82
 synapsekernel,ai,compound,synapse+kernel,,76
-synapselab,ai,compound,synapse+lab,,88
+synapselab,ai,compound,synapse+lab,health_science,88
 synapselearn,ai,compound,synapse+learn,,81
 synapseledger,ai,compound,synapse+ledger,,76
-synapselink,ai,compound,synapse+link,,82
+synapselink,ai,compound,synapse+link,health_science,82
 synapseloop,ai,compound,synapse+loop,,84
 synapsematrix,ai,compound,synapse+matrix,,76
 synapsemesh,ai,compound,synapse+mesh,,82

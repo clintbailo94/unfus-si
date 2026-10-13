@@ -23,6 +23,13 @@ _CATEGORIES = {
     "consumer_brands",
     "emerging_industries",
 }
+_T4_CATEGORIES = {
+    "technology",
+    "business_finance",
+    "health_science",
+    "consumer_brands",
+    "emerging_industries",
+}
 _ASCII_LABEL = re.compile(r"^[a-z]+$")
 _REPEATED_LETTER = re.compile(r"([a-z])\1\1")
 _REPEATED_CHUNK = re.compile(r"(.{2,3})\1")
@@ -103,14 +110,9 @@ def evaluate_candidate(
         else 9
         if category == "invented"
         else 16
-        if category in {
-            "ai",
-            "technology",
-            "business_finance",
-            "health_science",
-            "consumer_brands",
-            "emerging_industries",
-        }
+        if category == "ai"
+        else 14
+        if category in _T4_CATEGORIES
         else 15
     )
     if not lower_bound <= len(canonical) <= upper_bound:
