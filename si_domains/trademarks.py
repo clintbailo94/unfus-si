@@ -55,7 +55,7 @@ _OFFICIAL_HOSTS = {
     "UKIPO": ("ipo.gov.uk",),
     "USPTO": ("uspto.gov",),
 }
-_PROOF_KINDS = frozenset({"screenshot", "official_export"})
+_PROOF_KINDS = frozenset({"screenshot", "official_export", "api_query_summary"})
 _QUERY_PARAMETER_KEYS = frozenset(
     {"q", "query", "search", "searchterm", "searchtext", "term", "text", "word", "input", "mark"}
 )
@@ -67,6 +67,7 @@ _PHRASE_PREFIXES = {
     "tryto": "try to",
     "waitand": "wait and",
 }
+_QUERY_MODE_SUFFIX = re.compile(r" \[(?:fuzzy-1|whole-word)\]$")
 
 
 def _read_csv(path: str | Path, required: set[str], description: str) -> list[dict[str, str]]:
@@ -103,7 +104,7 @@ def normalize_seed(seed: str) -> str:
 def read_candidate_context(
     path: str | Path = DEFAULT_CANDIDATES_PATH,
 ) -> tuple[dict[str, dict[str, str]], dict[str, tuple[str, ...]]]:
-    """Load candidate metadata and its exact trademark-query manifest."""
+    """Load candidate metadata and the required exact plus near-query manifest."""
 
     rows = _read_csv(path, {"domain_label", "category", "seed"}, "candidate")
     candidates: dict[str, dict[str, str]] = {}
@@ -121,10 +122,10 @@ def read_candidate_context(
             if not normalized_seed:
                 raise ValueError(f"domain-hack candidate has an invalid completion seed: {domain}")
         candidates[domain] = row
-        # The bounded screen covers the exact unspaced domain label only.
-        # Recorded completion seeds remain candidate provenance, not an
-        # automatic second trademark query or a phonetic variant.
-        queries[domain] = (label,)
+        # Candidate names get one exact query and one bounded near query.
+        # Recorded completion seeds remain provenance and are not queried.
+        near_mode = "fuzzy-1" if len(label) >= 5 else "whole-word"
+        queries[domain] = (label, f"{label} [{near_mode}]")
     return candidates, queries
 
 
@@ -134,10 +135,14 @@ def _resolve_proof(row: dict[str, str], proof_root: str | Path | None) -> Path |
     if not kind and not raw_path:
         return None
     evidence_id = row.get("evidence_id", "")
-    if not kind or not raw_path:
+    if not kind or (kind != "api_query_summary" and not raw_path):
         raise ValueError(f"trademark proof needs both proof_kind and proof_path: {evidence_id}")
     if kind not in _PROOF_KINDS:
         raise ValueError(f"invalid trademark proof_kind for {evidence_id}")
+    if kind == "api_query_summary":
+        if raw_path:
+            raise ValueError(f"API query summaries do not use proof files: {evidence_id}")
+        return None
     if proof_root is None:
         raise ValueError(f"trademark proof cannot be resolved without an output directory: {evidence_id}")
     if "\\" in raw_path or re.match(r"^[a-zA-Z]:", raw_path):
@@ -160,9 +165,18 @@ def _query_specific_result(row: dict[str, str]) -> bool:
     result = urlparse(result_url)
     source_path = source.path.rstrip("/") or "/"
     result_path = result.path.rstrip("/") or "/"
-    if result_path != source_path:
+    query = row.get("query", "").strip()
+    mode_suffix = _QUERY_MODE_SUFFIX.search(query)
+    expected = normalize_query(_QUERY_MODE_SUFFIX.sub("", query))
+    if row.get("proof_kind") == "api_query_summary":
+        note = row.get("notes", "").casefold()
+        mode = mode_suffix.group(0).strip(" []") if mode_suffix else "exact"
+        if row.get("source") != "USPTO" or f"mode={mode}" not in note or f"term={expected}" not in note:
+            return False
+        if not row.get("source_url", "").rstrip("/").endswith("/prod-stage-v1-0-0/tmsearch"):
+            return False
+    elif result_path != source_path:
         return True
-    expected = normalize_query(row.get("query", ""))
     for key, value in parse_qsl(result.query, keep_blank_values=True):
         normalized_key = re.sub(r"[^a-z]", "", key.casefold())
         if normalized_key in _QUERY_PARAMETER_KEYS and normalize_query(value) == expected:
@@ -171,7 +185,17 @@ def _query_specific_result(row: dict[str, str]) -> bool:
 
 
 def _has_query_proof(row: dict[str, str]) -> bool:
+    if row.get("proof_kind") == "api_query_summary":
+        return (
+            "http 200 json" in row.get("notes", "").casefold()
+            and bool(row.get("result_url", "").strip())
+            and _query_specific_result(row)
+        )
     return bool(row.get("proof_path", "").strip()) or _query_specific_result(row)
+
+
+def _is_control_row(row: dict[str, str]) -> bool:
+    return row.get("domain", "").casefold() == "*" and "control query" in row.get("notes", "").casefold()
 
 
 def validate_evidence_rows(
@@ -204,11 +228,17 @@ def validate_evidence_rows(
             if not any(host == suffix or host.endswith("." + suffix) for suffix in _OFFICIAL_HOSTS[row["source"]]):
                 raise ValueError(f"trademark evidence URL is not on the official {row['source']} host: {evidence_id}")
         if domain == "*":
-            if row["result_status"] not in {"blocked", "unverified"}:
-                raise ValueError(f"source-wide trademark attempt cannot assert a search result: {evidence_id}")
-            if "no per-domain query ran" not in row.get("notes", "").casefold():
-                raise ValueError(f"source-wide trademark attempt must say no per-domain query ran: {evidence_id}")
-        elif row["result_status"] in {"no_obvious_match", "possible_conflict"}:
+            if _is_control_row(row):
+                if row["source"] != "USPTO" or row.get("proof_kind") != "api_query_summary":
+                    raise ValueError(f"trademark control query must use the USPTO API summary proof: {evidence_id}")
+                if row["result_status"] not in {"no_obvious_match", "possible_conflict"} or not _has_query_proof(row):
+                    raise ValueError(f"trademark control query needs a real query and result: {evidence_id}")
+            else:
+                if row["result_status"] not in {"blocked", "unverified"}:
+                    raise ValueError(f"source-wide trademark attempt cannot assert a search result: {evidence_id}")
+                if "no per-domain query ran" not in row.get("notes", "").casefold():
+                    raise ValueError(f"source-wide trademark attempt must say no per-domain query ran: {evidence_id}")
+        if row["result_status"] in {"no_obvious_match", "possible_conflict"}:
             result_url = row.get("result_url", "").strip()
             if result_url:
                 result_host = (urlparse(result_url).hostname or "").casefold()
@@ -315,9 +345,9 @@ def aggregate_trademark_rows(
     by_source_domain: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
     by_source_global: dict[str, list[dict[str, str]]] = defaultdict(list)
     for row in evidence_rows:
-        if row["domain"] == "*":
+        if row["domain"] == "*" and not _is_control_row(row):
             by_source_global[row["source"]].append(row)
-        else:
+        elif row["domain"] != "*":
             by_source_domain[(row["source"], row["domain"].casefold())].append(row)
 
     summaries: list[dict[str, str]] = []
@@ -422,7 +452,7 @@ def query_coverage_by_source(
     global_rows: dict[str, list[dict[str, str]]] = defaultdict(list)
     domain_rows: dict[str, list[dict[str, str]]] = defaultdict(list)
     for row in indexed.values():
-        if row["domain"] == "*":
+        if row["domain"] == "*" and not _is_control_row(row):
             global_rows[row["source"]].append(row)
         elif row["domain"].casefold() == normalized_domain:
             domain_rows[row["source"]].append(row)
@@ -486,6 +516,7 @@ def write_trademark_summary(
     top_n: int | None = None,
     candidates_path: str | Path = DEFAULT_CANDIDATES_PATH,
 ) -> int:
+    """Write current top-N coverage and retain every domain with prior evidence."""
     evidence_rows, _index = read_trademark_evidence(evidence_path)
     domain_rows = _read_csv(domains_path, {"domain"}, "domain list")
     candidate_map, query_manifest = read_candidate_context(candidates_path)
@@ -496,6 +527,16 @@ def write_trademark_summary(
             domain_rows = sorted(domain_rows, key=lambda row: int(row["rank"]))[:top_n]
         else:
             domain_rows = domain_rows[:top_n]
+        current_domains = {normalize_query(row["domain"]) for row in domain_rows}
+        prior_domains = sorted(
+            {
+                row["domain"].casefold()
+                for row in evidence_rows
+                if row["domain"] != "*" and row["domain"].casefold() in candidate_map
+            }
+            - current_domains
+        )
+        domain_rows.extend({"domain": domain} for domain in prior_domains)
     domains = [normalize_query(row["domain"]) for row in domain_rows]
     unknown = sorted(set(domains) - set(candidate_map))
     if unknown:

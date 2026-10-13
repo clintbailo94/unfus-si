@@ -55,6 +55,8 @@ COMMERCIAL_ROOTS: dict[str, tuple[int, int, int, str]] = {
     "bank": (1, 89, 18, "finance"),
     "finance": (1, 89, 17, "financial services"),
     "trade": (1, 87, 20, "commerce and trade"),
+    "secure": (1, 85, 18, "security and trust"),
+    "ledger": (1, 85, 16, "accounting and financial technology"),
     "invest": (1, 86, 17, "investment"),
     "security": (1, 86, 18, "security and IT"),
     "insurance": (1, 85, 15, "insurance"),
@@ -67,6 +69,7 @@ COMMERCIAL_ROOTS: dict[str, tuple[int, int, int, str]] = {
     "auto": (2, 78, 16, "automotive"),
     "business": (2, 77, 16, "business services"),
     "care": (2, 77, 14, "care services"),
+    "cash": (2, 82, 18, "payments and finance"),
     "credit": (2, 79, 15, "finance"),
     "crypto": (2, 78, 13, "digital finance"),
     "education": (2, 76, 16, "education"),
@@ -78,6 +81,7 @@ COMMERCIAL_ROOTS: dict[str, tuple[int, int, int, str]] = {
     "tech": (2, 77, 17, "technology"),
     "hotel": (2, 73, 13, "hospitality"),
     "office": (2, 72, 13, "workplace services"),
+    "payload": (2, 78, 17, "software data transfer"),
     "bio": (3, 66, 11, "biotechnology"),
     "legal": (3, 66, 11, "legal services"),
     "law": (3, 64, 10, "legal services"),
@@ -87,7 +91,6 @@ COMMERCIAL_ROOTS: dict[str, tuple[int, int, int, str]] = {
     "sport": (3, 65, 13, "sports"),
     "solar": (3, 68, 12, "solar energy"),
     "carbon": (3, 64, 11, "climate technology"),
-    "ledger": (3, 68, 12, "accounting and finance"),
     "medical": (3, 68, 12, "medical services"),
     "pharma": (3, 67, 10, "pharmaceuticals"),
     "genome": (3, 64, 10, "genomics"),
@@ -97,6 +100,7 @@ COMMERCIAL_ROOTS: dict[str, tuple[int, int, int, str]] = {
 }
 _UNKNOWN_ROOT_DEMAND = 48
 _UNKNOWN_ROOT_BREADTH = 4
+_PSEUDO_NAME_DEMAND = 34
 _NEGATIVE_PENALTY = 50
 _AWKWARD_LABELS = frozenset(
     {
@@ -160,6 +164,19 @@ _LOW_BREADTH_DICTIONARY_WORDS = frozenset(
         "walkout",
         "wizened",
     }
+)
+_DICTIONARY_SENSES = {
+    "stoical": "calm under hardship",
+    "leaning": "inclination or preference",
+    "cowhide": "animal hide used as leather",
+    "powdery": "fine and dry like powder",
+    "reveler": "person enjoying a lively event",
+    "gyration": "circular movement",
+    "epaulet": "ornamental shoulder piece",
+    "decorous": "proper and restrained",
+}
+_NAME_LIKE_ENDINGS = (
+    "via", "ium", "ina", "ena", "ora", "aro", "ino", "ali", "ara", "ava", "ella", "io", "al"
 )
 # Per-seed adjustments separate phonetic hack quality from likely buyer breadth.
 # Tuple order is brandability, commercial demand, and resale potential. The
@@ -237,7 +254,13 @@ def _matched_roots(candidate: Mapping[str, object], label: str) -> tuple[str, ..
         root
         for root in COMMERCIAL_ROOTS
         if label == root
-        or label.startswith(root)
+        or (
+            label.startswith(root)
+            and not any(
+                len(other) > len(root) and label.startswith(other)
+                for other in COMMERCIAL_ROOTS
+            )
+        )
         or (len(root) >= 3 and label.endswith(root))
     ]
     return tuple(sorted(edge_matches, key=lambda root: (-len(root), root))[:2])
@@ -252,6 +275,40 @@ def _compound_seed_parts(candidate: Mapping[str, object]) -> tuple[str, ...]:
 
 def _negative_label(label: str) -> bool:
     return label in _negative_connotations()
+
+
+def _rootless_coinage(candidate: Mapping[str, object], label: str) -> bool:
+    category = str(candidate.get("category") or "").casefold()
+    method = str(candidate.get("method") or "").casefold()
+    tags = _tags(candidate)
+    name_like = (
+        category == "invented"
+        or "given_name" in tags
+        or method in {"blend", "invented", "invented-reclassified", "given-name-reclassified"}
+    )
+    return name_like and not _matched_roots(candidate, label) and "real_word" not in tags
+
+
+def _coinage_brandability_cap(label: str) -> int:
+    phonetic = _pronounceability(label)
+    distinct_ratio = len(set(label)) / max(1, len(label))
+    short_bonus = 2 if len(label) <= 6 else 0
+    return _clamp(45 + round(phonetic * 0.13) + round(distinct_ratio * 6) + short_bonus, low=55, high=65)
+
+
+def _coinage_resale_cap(label: str) -> int:
+    length_bonus = 2 if len(label) <= 5 else 1 if len(label) <= 7 else 0
+    ambiguous_penalty = 4 * sum(pair in label for pair in _AMBIGUOUS_PAIRS)
+    distinct_ratio = len(set(label)) / max(1, len(label))
+    score = (
+        42
+        + round(_pronounceability(label) / 10)
+        + round(_phonetic_profile(label) / 15)
+        + round(distinct_ratio * 4)
+        + length_bonus
+        - ambiguous_penalty
+    )
+    return _clamp(score, low=54, high=65)
 
 
 def _clamp(value: float, low: int = 0, high: int = 100) -> int:
@@ -458,7 +515,8 @@ def _brandability(candidate: Mapping[str, object], label: str) -> int:
         candidate
     )
     penalty = _NEGATIVE_PENALTY if _negative_label(label) else 0
-    return _clamp(base + brand_adjustment - penalty)
+    cap = _coinage_brandability_cap(label) if _rootless_coinage(candidate, label) else 100
+    return _clamp(base + brand_adjustment - penalty, high=cap)
 
 
 def _commercial(candidate: Mapping[str, object], label: str) -> int:
@@ -467,38 +525,53 @@ def _commercial(candidate: Mapping[str, object], label: str) -> int:
     tags = _tags(candidate)
     roots = _matched_roots(candidate, label)
     parts = _compound_seed_parts(candidate)
-    if len(parts) > 1:
-        values = [COMMERCIAL_ROOTS.get(part, (0, _UNKNOWN_ROOT_DEMAND, _UNKNOWN_ROOT_BREADTH, ""))[1] for part in parts]
-        base = sum(values) / len(values)
-        if len(roots) >= 2:
-            base += 6
+    root_tier = min((COMMERCIAL_ROOTS[root][0] for root in roots), default=0)
+    known_parts = [part for part in parts if part in COMMERCIAL_ROOTS]
+    if len(parts) > 1 and known_parts:
+        demands = sorted((COMMERCIAL_ROOTS[part][1] for part in known_parts), reverse=True)
+        strongest = demands[0]
+        second = demands[1] if len(demands) > 1 else 42
+        base = strongest * 0.88 + second * 0.12
+        if len(known_parts) >= 2:
+            base += 4
     elif roots:
         base = max(COMMERCIAL_ROOTS[root][1] for root in roots)
-        if len(roots) >= 2:
-            base += 3
     elif category == "dictionary" and method == "dictionary":
-        base = 55
+        base = 34
     elif category == "short" and len(label) <= 4:
-        base = 49
+        base = 42
+    elif category == "invented" or "given_name" in tags:
+        base = _PSEUDO_NAME_DEMAND - (4 if "given_name" in tags else 0)
     else:
-        base = 46
-        if category == "invented" or "given_name" in tags:
-            base -= 4
+        base = 38
 
-    vowel_balance, transition_balance, distinctness, edge_quality = _shape_dimensions(label)
-    shape_adjustment = round((_shape_score(label) - 55) / 3)
-    shape_adjustment += round((vowel_balance - 60) / 12)
-    shape_adjustment += round((transition_balance - 60) / 12)
-    shape_adjustment += round((distinctness - 70) / 12)
-    shape_adjustment += round((edge_quality - 60) / 12)
-    shape_adjustment += 3 if len(label) <= 6 else -min(6, len(label) - 9) if len(label) > 9 else 0
+    shape_adjustment = round((_shape_score(label) - 60) / 10)
+    shape_adjustment += round((_quality(candidate) - 70) / 15)
+    shape_adjustment += 2 if len(label) <= 6 else -min(3, len(label) - 9) if len(label) > 9 else 0
     if "given_name" in tags:
-        shape_adjustment -= 3
+        shape_adjustment -= 4
+    if _rootless_coinage(candidate, label):
+        shape_adjustment += round((_phonetic_profile(label) - 60) / 8)
+        shape_adjustment += 2 if label[-1] in _VOWELS else -1
+        shape_adjustment += round((_ONSET_CLARITY.get(label[0], 0) + _ENDING_CLARITY.get(label[-1], 0)) / 3)
     _brand_adjustment, commercial_adjustment, _resale_adjustment = _hack_seed_adjustment(
         candidate
     )
     negative_penalty = _NEGATIVE_PENALTY if _negative_label(label) else 0
-    return _clamp(base + shape_adjustment + commercial_adjustment - negative_penalty)
+    result = base + shape_adjustment + commercial_adjustment - negative_penalty
+    if root_tier == 1:
+        return _clamp(result, low=85, high=100)
+    if root_tier == 2:
+        return _clamp(result, low=65, high=85)
+    if root_tier == 3:
+        return _clamp(result, low=45, high=65)
+    if category == "dictionary" and method == "dictionary":
+        return _clamp(result, low=25, high=45)
+    if category == "short":
+        return _clamp(result, low=30, high=55)
+    if category == "invented" or "given_name" in tags:
+        return _clamp(result, low=30, high=50)
+    return _clamp(result, low=25, high=50)
 
 
 def _syllable_estimate(label: str) -> int:
@@ -549,12 +622,16 @@ def _hack(candidate: Mapping[str, object]) -> int:
     quality = _quality(candidate)
     phonetic_bonus = round(_pronounceability(_label(candidate)) / 12)
     if method == "hack-suffix" and seed:
-        return _clamp(67 + quality * 0.22 + phonetic_bonus)
-    if method == "hack-phrase" and seed:
-        return _clamp(64 + quality * 0.22 + phonetic_bonus)
-    if category == "domain_hacks" or "domain_hacks" in tags:
-        return _clamp(55 + quality * 0.20 + phonetic_bonus)
-    return 12
+        score = 67 + quality * 0.22 + phonetic_bonus
+    elif method == "hack-phrase" and seed:
+        score = 64 + quality * 0.22 + phonetic_bonus
+    elif category == "domain_hacks" or "domain_hacks" in tags:
+        score = 55 + quality * 0.20 + phonetic_bonus
+    else:
+        score = 12
+    if _negative_label(_label(candidate)):
+        score -= _NEGATIVE_PENALTY
+    return _clamp(score)
 
 
 def _resale(candidate: Mapping[str, object], label: str) -> int:
@@ -626,7 +703,19 @@ def _resale(candidate: Mapping[str, object], label: str) -> int:
         candidate
     )
     negative_penalty = _NEGATIVE_PENALTY if _negative_label(label) else 0
-    return _clamp(score + resale_adjustment - negative_penalty, high=95)
+    cap = _coinage_resale_cap(label) if _rootless_coinage(candidate, label) else 95
+    if method == "compound" and not roots and "real_word" not in tags:
+        cap = min(cap, 65)
+    return _clamp(score + resale_adjustment - negative_penalty, high=cap)
+
+
+def _cv_pattern(label: str) -> str:
+    return "".join("V" if char in _VOWELS else "C" for char in label if char.isalpha())
+
+
+def _repeated_letter_fact(label: str) -> str:
+    repeated = sorted(char for char in set(label) if label.count(char) > 1)
+    return f"repeats {''.join(repeated)}" if repeated else "no repeated letters"
 
 
 def _rationale(
@@ -641,38 +730,43 @@ def _rationale(
     method = str(candidate.get("method") or "").casefold()
     tags = _tags(candidate)
     roots = _matched_roots(candidate, label)
+    parts = _compound_seed_parts(candidate)
+    pattern = _cv_pattern(label)
     if label in _AWKWARD_LABELS:
-        rationale = f"Awkward or truncated label '{label}'; {len(label)} letters; quality penalty."
+        rationale = f"Awkward or truncated label '{label}'; {len(label)} letters; {pattern}; quality penalty."
     elif "technical_term" in tags:
-        rationale = f"Niche technical term '{label}'; {len(label)} letters; not a common word."
+        rationale = f"Technical term '{label}'; {len(label)} letters; {pattern}; specialist buyer pool."
     elif _negative_label(label):
         rationale = f"Negative or medical term '{label}'; {len(label)} letters; buyer-fit penalty."
+    elif method == "compound" and len(parts) >= 2:
+        head, tail = parts[0], parts[-1]
+        root = roots[0] if roots else ""
+        buyer = COMMERCIAL_ROOTS[root][3] if root else "general service"
+        root_note = f"root '{root}'; " if root else "no listed demand root; "
+        rationale = f"Compound '{label}' head '{head}' + tail '{tail}'; {root_note}{buyer}; {len(label)} letters."
+    elif method in {"hack-suffix", "hack-phrase"}:
+        seed = " ".join(str(candidate.get("seed") or "").replace("+", " ").split())
+        root_note = f"; root '{roots[0]}'" if roots else ""
+        rationale = f"Hack '{label}.si' completes seed '{seed}'{root_note}; {len(label)} letters; {pattern}."
     elif roots:
         strongest = max(roots, key=lambda root: COMMERCIAL_ROOTS[root][1])
         buyer = COMMERCIAL_ROOTS[strongest][3]
         if len(roots) > 1:
             root_text = "+".join(f"'{root}'" for root in roots)
-            rationale = f"Commercial roots {root_text}; {len(label)} letters; {buyer} buyers."
+            rationale = f"Roots {root_text} in '{label}'; {len(label)} letters; {buyer} buyers; {pattern}."
         else:
-            rationale = f"Strong root '{strongest}'; {len(label)} letters; {buyer} buyers."
-    elif method in {"hack-suffix", "hack-phrase"}:
-        seed = str(candidate.get("seed") or "").replace("+", " ").strip()
-        rationale = f"Readable wordplay from '{seed[:22]}'; {len(label)} letters; pronounceable form."
+            rationale = f"Root '{strongest}' in '{label}' signals {buyer}; {len(label)} letters; {pattern}."
     elif category == "dictionary" and method == "dictionary":
-        rationale = f"Common word '{label}'; {len(label)} letters; {_syllable_estimate(label)} syllables."
-    elif "given_name" in tags:
-        rationale = f"Name-like label '{label}'; {len(label)} letters; pronounceable form."
+        sense = _DICTIONARY_SENSES.get(label, "established common-word meaning")
+        rationale = f"Common word '{label}' means {sense}; {len(label)} letters; {pattern}."
+    elif category == "short" or len(label) <= 4:
+        rationale = f"Short '{label}' is {pattern}; {len(label)} letters; {_repeated_letter_fact(label)}."
+    elif category == "invented" or "given_name" in tags:
+        ending = next((ending for ending in _NAME_LIKE_ENDINGS if label.endswith(ending)), "")
+        ending_fact = f"ends -{ending}" if ending else f"starts {label[0]}"
+        rationale = f"Coinage '{label}' {ending_fact}; {pattern}; {_repeated_letter_fact(label)}."
     else:
-        rationale = f"{len(label)} letters; {_syllable_estimate(label)} syllables; pronounceable brandable shape."
-
-    if trademark_status == "limited_screen_no_obvious_match":
-        rationale += " TM limited screen, no obvious match; no clearance implied."
-    elif trademark_status == "needs legal review":
-        rationale += " TM needs legal review."
-    elif trademark_status in {"blocked", "unverified", "not yet screened", None}:
-        rationale += " TM unverified (no clearance implied)."
-    else:
-        rationale += f" TM score {trademark_override}."
+        rationale = f"Label '{label}' starts {label[0]}; {len(label)} letters; {pattern}; {_syllable_estimate(label)} syllables."
     return rationale.encode("ascii", "ignore").decode("ascii")[:140]
 
 

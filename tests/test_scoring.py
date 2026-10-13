@@ -1,4 +1,6 @@
 import csv
+import statistics
+from collections import Counter
 from decimal import Decimal
 from pathlib import Path
 
@@ -62,7 +64,7 @@ def test_score_domain_is_deterministic_bounded_and_explainable():
         assert 0 <= first[component] <= 100
     assert 0 <= first["total"] <= 100
     assert first["trademark"] == 40
-    assert "unverified (no clearance implied)" in first["rationale"]
+    assert "TM" not in first["rationale"]
     assert "6 letters" in first["rationale"]
     assert len(first["rationale"]) <= 140
     first["rationale"].encode("ascii")
@@ -162,10 +164,16 @@ def test_commercial_score_uses_secondary_tags_and_recorded_industry_roots():
     assert seeded_root["commercial"] > generic["commercial"]
 
 
-def test_incidental_ai_substrings_do_not_receive_keyword_demand():
+def test_incidental_keyword_substrings_do_not_receive_keyword_demand():
     high_demand = score_domain(_candidate("pay", "dictionary"))["commercial"]
-    for label in ("chair", "rain", "naivety", "naivete"):
+    for label in ("chair", "rain", "naivety", "naivete", "payload"):
         assert score_domain(_candidate(label, "dictionary"))["commercial"] < high_demand
+    payload_demand = score_domain(_candidate("payload", "dictionary"))["commercial"]
+    assert 65 <= payload_demand <= 85
+    payload_compound = score_domain(
+        {**_candidate("payloadhub"), "method": "compound", "seed": "payload+hub"}
+    )
+    assert payload_compound["commercial"] <= 85
 
 
 def test_common_dictionary_nouns_outscore_negative_and_niche_words_on_resale():
@@ -227,7 +235,8 @@ def test_hack_source_seed_changes_buyer_breadth_but_keeps_hack_score_high():
         }
     )
 
-    assert clear["hack"] >= 75 and obscure["hack"] >= 75
+    assert clear["hack"] >= 75
+    assert obscure["hack"] <= 50
     assert clear["commercial"] > obscure["commercial"]
     assert clear["resale"] > obscure["resale"]
     assert conversational["resale"] > narrow_legal["resale"]
@@ -254,13 +263,19 @@ def test_reclassified_invented_names_do_not_receive_common_dictionary_resale_sco
 
     assert reclassified["commercial"] < common["commercial"]
     assert reclassified["resale"] < common["resale"]
+    assert reclassified["brandability"] <= 65
+    assert reclassified["resale"] <= 65
+    strong_compound = score_domain(
+        {**_candidate("payhub"), "method": "compound", "seed": "pay+hub"}
+    )
+    assert strong_compound["resale"] > 65
 
 
 def test_trademark_score_can_be_injected():
     result = score_domain(_candidate("novara"), trademark_status="needs legal review")
 
     assert result["trademark"] == 25
-    assert "needs legal review" in result["rationale"]
+    assert "needs legal review" not in result["rationale"]
 
 
 def test_high_demand_root_outranks_an_unknown_of_equal_shape():
@@ -316,6 +331,35 @@ def test_rationales_name_specific_roots_for_same_category_neighbours():
     assert "'data'" in data["rationale"] and "8 letters" in data["rationale"]
 
 
+def test_real_shortlist_has_specific_rationales_and_commercial_separation():
+    shortlist_path = Path(__file__).resolve().parents[1] / "output" / "shortlist.csv"
+    with shortlist_path.open("r", encoding="utf-8-sig", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+
+    assert len(rows) == 500
+    assert len({row["rationale"] for row in rows}) >= 400
+    assert all(len(row["rationale"]) <= 140 for row in rows)
+    assert all(row["rationale"].isascii() for row in rows)
+    assert len({tuple(row[key] for key in ("brandability", "commercial", "shortness", "hack", "resale")) for row in rows}) >= 350
+    assert max(Counter(row["category"] for row in rows[:100]).values()) <= 35
+    assert sum(row["category"] != "invented" for row in rows[:100]) >= 40
+
+    commercial = {
+        category: [int(row["commercial"]) for row in rows if row["category"] == category]
+        for category in {row["category"] for row in rows}
+    }
+    industry = [
+        score
+        for category in ("ai", "technology", "business_finance")
+        for score in commercial.get(category, [])
+    ]
+    invented = commercial.get("invented", [])
+
+    assert statistics.pstdev(int(row["commercial"]) for row in rows) >= 12
+    assert industry and invented
+    assert statistics.mean(industry) >= statistics.mean(invented) + 15
+
+
 def test_rationales_explain_reviewed_awkward_and_technical_labels():
     awkward = score_domain(_candidate("plian", "domain_hacks"))
     technical = score_domain(
@@ -323,12 +367,16 @@ def test_rationales_explain_reviewed_awkward_and_technical_labels():
     )
 
     assert "Awkward or truncated label 'plian'" in awkward["rationale"]
-    assert "Niche technical term 'galium'" in technical["rationale"]
+    assert awkward["hack"] <= 50
+    assert "Technical term 'galium'" in technical["rationale"]
 
 
 @pytest.mark.parametrize(
     "label",
-    ["venal", "melena", "roguish", "fidgety", "jittery", "naivety", "raucous", "gaseous", "elitism"],
+    [
+        "venal", "melena", "roguish", "fidgety", "jittery", "naivety", "raucous", "gaseous", "elitism",
+        "bloodtrack", "bloodmonitor", "tumormarker", "gynclinic", "hemoclinic",
+    ],
 )
 def test_reviewed_negative_terms_receive_strong_brandability_penalties(label):
     result = score_domain({**_candidate(label, "dictionary"), "method": "dictionary"})

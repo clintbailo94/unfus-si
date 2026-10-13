@@ -1,3 +1,4 @@
+import csv
 import shutil
 
 import pytest
@@ -5,6 +6,7 @@ from openpyxl import load_workbook
 
 from si_domains.cli import main
 from si_domains.delivery import validate_delivery
+from si_domains.trademarks import TRADEMARK_EVIDENCE_FIELDS, write_trademark_summary
 from si_domains.workbook import export_workbook
 
 from test_workbook import make_fixture
@@ -30,8 +32,53 @@ def _cli_inputs(paths):
     return [item for name, flag in flags.items() for item in (flag, str(paths[name]))]
 
 
+def _add_prior_screen_record(paths):
+    evidence_path = paths["trademark_evidence"]
+    with evidence_path.open(encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    source_urls = {
+        "TMview": "https://www.tmdn.org/tmview/",
+        "UKIPO": "https://trademarks.ipo.gov.uk/ipo-tmtext",
+        "USPTO": "https://tmsearch.uspto.gov/",
+    }
+    for source, source_url in source_urls.items():
+        for suffix, query in (("exact", "conflict"), ("near", "conflict [fuzzy-1]")):
+            rows.append(
+                {
+                    "evidence_id": f"history-{source}-{suffix}",
+                    "domain": "conflict.si",
+                    "source": source,
+                    "jurisdiction": "synthetic history",
+                    "query": query,
+                    "utc_timestamp": "2026-10-13T05:00:00Z",
+                    "result_status": "blocked" if source == "UKIPO" else "unverified",
+                    "source_url": source_url,
+                    "result_url": "",
+                    "mark_number": "",
+                    "mark_name": "",
+                    "mark_status": "",
+                    "classes": "",
+                    "notes": "Historical per-name coverage; no clearance implied.",
+                    "proof_kind": "",
+                    "proof_path": "",
+                }
+            )
+    with evidence_path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=TRADEMARK_EVIDENCE_FIELDS, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+    assert write_trademark_summary(
+        evidence_path,
+        paths["shortlist"],
+        paths["trademark_summary"],
+        top_n=100,
+        candidates_path=paths["candidates"],
+    ) == 2
+
+
 def test_delivery_validation_passes_honest_blocked_workbook_and_says_so(tmp_path, capsys):
     paths = make_fixture(tmp_path)
+    _add_prior_screen_record(paths)
     workbook = tmp_path / "ranked.xlsx"
     export_workbook(paths, workbook)
 

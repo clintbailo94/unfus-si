@@ -45,7 +45,11 @@ SAMPLE_FIELDS = (
 )
 SHORTLIST_LIMIT = 500
 CATEGORY_LIMIT = 100
+TOP_100_CATEGORY_LIMIT = 35
 REVIEW_SAMPLE_SIZE = 30
+GIVEN_NAME_SUFFIX_LIMIT = 6
+GIVEN_NAME_PREFIX_LIMIT = 6
+COMPOUND_FAMILY_LIMIT = 10
 
 _SPECIAL_REASONS = {
     "invalid_syntax": "invalid",
@@ -118,6 +122,67 @@ def _total(row: dict[str, str]) -> float:
         domain = row.get("domain", "unknown domain")
         raise ValueError(f"score total must be between 0 and 100 for {domain}")
     return value
+
+
+def _family_keys(candidate: dict[str, str]) -> tuple[tuple[str, str, int], ...]:
+    label = candidate.get("domain_label", "").strip().casefold()
+    category = candidate.get("category", "").casefold()
+    tags = {tag.strip().casefold() for tag in candidate.get("tags", "").split(";") if tag.strip()}
+    keys: list[tuple[str, str, int]] = []
+    if category == "invented" or "given_name" in tags:
+        if len(label) >= 3:
+            keys.append(("given-name suffix", label[-3:], GIVEN_NAME_SUFFIX_LIMIT))
+        if len(label) >= 4:
+            keys.append(("given-name prefix", label[:4], GIVEN_NAME_PREFIX_LIMIT))
+    if candidate.get("method", "").casefold() in {"compound", "blend"}:
+        parts = [part.strip().casefold() for part in candidate.get("seed", "").split("+") if part.strip()]
+        if len(parts) >= 2:
+            keys.append(("compound head", parts[0], COMPOUND_FAMILY_LIMIT))
+            keys.append(("compound tail", parts[-1], COMPOUND_FAMILY_LIMIT))
+    return tuple(keys)
+
+
+def select_eligible(
+    eligible: list[tuple[str, dict[str, str], dict[str, str], object]],
+) -> tuple[list[tuple[str, dict[str, str], dict[str, str], object]], dict[str, str]]:
+    """Select score-ranked rows under category and lexical-family limits."""
+
+    ranked = sorted(
+        eligible,
+        key=lambda item: (
+            -_total(item[2]),
+            len(item[1].get("domain_label", "").strip()),
+            item[1].get("domain_label", "").strip().casefold(),
+        ),
+    )
+    selected: list[tuple[str, dict[str, str], dict[str, str], object]] = []
+    reasons: dict[str, str] = {}
+    category_counts: Counter[str] = Counter()
+    family_counts: Counter[tuple[str, str]] = Counter()
+    for item in ranked:
+        domain, candidate = item[0], item[1]
+        family_overflow = any(
+            family_counts[(kind, key)] >= limit
+            for kind, key, limit in _family_keys(candidate)
+        )
+        if family_overflow:
+            reasons[domain] = "family cap"
+            continue
+        category = candidate.get("category", "")
+        if len(selected) < 100 and category_counts[category] >= TOP_100_CATEGORY_LIMIT:
+            reasons[domain] = "top-100 category cap"
+            continue
+        if category_counts[category] >= CATEGORY_LIMIT:
+            reasons[domain] = "outside_shortlist_cap"
+            continue
+        if len(selected) >= SHORTLIST_LIMIT:
+            reasons[domain] = "outside_shortlist_cap"
+            continue
+        selected.append(item)
+        category_counts[category] += 1
+        for kind, key, _limit in _family_keys(candidate):
+            family_counts[(kind, key)] += 1
+    return selected, reasons
 
 
 def _write_csv(path: Path, fieldnames: tuple[str, ...], rows: list[dict[str, str]]) -> None:
@@ -239,23 +304,12 @@ def build_outputs(
         _total(score_row)
         eligible.append((candidate, rdap_row or {}, whois_row or {}, score_row))
 
-    eligible.sort(
-        key=lambda item: (
-            -_total(item[3]),
-            len(item[0]["domain_label"].strip()),
-            item[0]["domain_label"].strip().casefold(),
-        )
-    )
-    selected: list[tuple[dict[str, str], dict[str, str], dict[str, str], dict[str, str]]] = []
-    category_counts: Counter[str] = Counter()
-    for item in eligible:
-        category = item[0].get("category", "")
-        if category_counts[category] >= CATEGORY_LIMIT:
-            continue
-        selected.append(item)
-        category_counts[category] += 1
-        if len(selected) == SHORTLIST_LIMIT:
-            break
+    selection_input = [
+        (f"{item[0]['domain_label'].strip().casefold()}.si", item[0], item[3], item)
+        for item in eligible
+    ]
+    selected_rows, _selection_reasons = select_eligible(selection_input)
+    selected = [item[3] for item in selected_rows]
 
     shortlist_rows: list[dict[str, str]] = []
     for rank, (candidate, rdap_row, whois_row, score_row) in enumerate(selected, start=1):

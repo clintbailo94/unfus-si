@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
-from statistics import median
+from statistics import mean, median, pstdev
 from typing import Mapping, Sequence
 
 from openpyxl import Workbook, load_workbook
@@ -37,7 +37,7 @@ from .scoring import (
     trademark_score_for_status,
     weighted_total,
 )
-from .shortlist import EXCLUDED_FIELDS, SHORTLIST_FIELDS, SHORTLIST_LIMIT, CATEGORY_LIMIT
+from .shortlist import EXCLUDED_FIELDS, SHORTLIST_FIELDS, SHORTLIST_LIMIT, CATEGORY_LIMIT, select_eligible
 from .trademarks import (
     REQUIRED_SOURCES,
     TRADEMARK_EVIDENCE_FIELDS,
@@ -400,8 +400,8 @@ def _validate_shortlist_and_excluded(
     excluded_rows: Sequence[dict[str, str]],
     reserved: dict[str, dict[str, str]],
     restricted: dict[str, dict[str, str]],
-) -> tuple[dict[str, dict[str, str]], dict[str, dict[str, str]], set[str]]:
-    eligible: list[tuple[str, dict[str, str], dict[str, str]]] = []
+) -> tuple[dict[str, dict[str, str]], dict[str, dict[str, str]], set[str], dict[str, str]]:
+    eligible: list[tuple[str, dict[str, str], dict[str, str], object]] = []
     expected_excluded: list[dict[str, str]] = []
     special_by_domain: dict[str, str] = {}
     for candidate in candidate_rows:
@@ -428,25 +428,8 @@ def _validate_shortlist_and_excluded(
         score = scores.get(domain)
         if score is None:
             raise ValueError(f"eligible domain {domain} is missing from scores")
-        eligible.append((domain, candidate, score))
-
-    eligible.sort(
-        key=lambda item: (
-            -_decimal(item[2]["total"], f"score total for {item[0]}"),
-            len(item[1]["domain_label"].strip()),
-            item[1]["domain_label"].strip().casefold(),
-        )
-    )
-    selected: list[tuple[str, dict[str, str], dict[str, str]]] = []
-    category_counts: Counter[str] = Counter()
-    for item in eligible:
-        category = item[1]["category"]
-        if category_counts[category] >= CATEGORY_LIMIT:
-            continue
-        selected.append(item)
-        category_counts[category] += 1
-        if len(selected) == SHORTLIST_LIMIT:
-            break
+        eligible.append((domain, candidate, score, None))
+    selected, selection_reasons = select_eligible(eligible)
     if len(shortlist_rows) > SHORTLIST_LIMIT:
         raise ValueError(f"shortlist exceeds the {SHORTLIST_LIMIT}-domain cap")
     if any(count > CATEGORY_LIMIT for count in Counter(row["category"] for row in shortlist_rows).values()):
@@ -454,12 +437,12 @@ def _validate_shortlist_and_excluded(
     expected_domains = [item[0] for item in selected]
     actual_domains = [_domain(row["domain"], "shortlist") for row in shortlist_rows]
     if actual_domains != expected_domains:
-        raise ValueError("shortlist membership/order does not match score ranking and category cap")
+        raise ValueError("shortlist membership/order does not match score ranking, category and family caps")
     if [row["rank"] for row in shortlist_rows] != [str(rank) for rank in range(1, len(selected) + 1)]:
         raise ValueError("shortlist ranks must be contiguous and match row order")
 
     shortlist = _index_unique(shortlist_rows, "domain", "shortlist", normalize_domain=True)
-    for rank, (domain, candidate, score) in enumerate(selected, start=1):
+    for rank, (domain, candidate, score, _payload) in enumerate(selected, start=1):
         row = shortlist[domain]
         rdap_row = rdap_latest[domain]
         whois_row = whois_latest[domain]
@@ -481,7 +464,7 @@ def _validate_shortlist_and_excluded(
     if actual_excluded != expected_excluded:
         raise ValueError("excluded rows do not match every current ineligible candidate")
     excluded = _index_unique(actual_excluded, "domain", "excluded", normalize_domain=True)
-    return shortlist, excluded, set(expected_domains)
+    return shortlist, excluded, set(expected_domains), selection_reasons
 
 
 def _validate_research_tables(
@@ -521,8 +504,18 @@ def _validate_research_tables(
         for row in tables["shortlist"].rows[: min(100, len(tables["shortlist"].rows))]
     ]
     summary_domains = [_domain(row["domain"], "trademark summary") for row in summary_rows]
-    if summary_domains != summary_expected_domains:
-        raise ValueError("trademark summary must cover the final ranked top 100 in rank order")
+    if summary_domains[:len(summary_expected_domains)] != summary_expected_domains:
+        raise ValueError("trademark summary must begin with the final ranked top 100 in rank order")
+    historical_domains = summary_domains[len(summary_expected_domains):]
+    per_name_evidence_domains = {
+        row["domain"].casefold()
+        for row in trademark_evidence_rows
+        if row["domain"] != "*"
+    }
+    if historical_domains != sorted(historical_domains) or any(
+        domain not in per_name_evidence_domains for domain in historical_domains
+    ):
+        raise ValueError("historical trademark summaries must be sorted and backed by per-name evidence")
     recomputed_summaries = aggregate_trademark_rows(
         trademark_evidence_rows,
         summary_domains,
@@ -779,6 +772,7 @@ def _methodology_rows(
     selected_categories = Counter(row["category"] for row in tables["shortlist"].rows)
     score_by_domain = {row["domain"].casefold(): row for row in tables["scores"].rows}
     eligible_rows: list[tuple[str, str, dict[str, str]]] = []
+    eligible_for_selection: list[tuple[str, dict[str, str], dict[str, str], object]] = []
     for candidate in candidate_rows:
         label = candidate["domain_label"].strip().casefold()
         domain = f"{label}.si"
@@ -793,6 +787,9 @@ def _methodology_rows(
             and domain in score_by_domain
         ):
             eligible_rows.append((domain, candidate["category"], score_by_domain[domain]))
+            eligible_for_selection.append(
+                (domain, candidate, score_by_domain[domain], candidate)
+            )
     eligible_rows.sort(
         key=lambda item: (
             -Decimal(item[2]["total"]),
@@ -811,6 +808,8 @@ def _methodology_rows(
             f"{selected_categories.get(category, 0)} | {median(ranks) if ranks else ''} | "
             f"{min(ranks) if ranks else ''}",
         )
+    _selected_for_methodology, family_reasons = select_eligible(eligible_for_selection)
+    family_cap_count = sum(reason == "family cap" for reason in family_reasons.values())
     add(
         "Latest RDAP counts",
         "; ".join(f"{key}: {rdap_latest_counts.get(key, 0)}" for key in ("registered", "potentially_unregistered", "unverified")),
@@ -822,12 +821,20 @@ def _methodology_rows(
     add("Unverified sheet", "Zero rows means no latest RDAP result is unverified or missing and no necessary WHOIS second check is pending; trademark uncertainty remains shown separately.")
     add("Scores", f"{metrics['scores']} RDAP-404 rows; no score is fabricated for names outside the score artifact.")
     add("Ranking weights", weights)
-    add("Score convention", f"Total is a 0–100 heuristic; higher is stronger. Components are integer 0–100; total uses Decimal ROUND_HALF_EVEN to one decimal. Trademark scores: {TRADEMARK_CLEAR_SCORE} complete limited screen/no obvious match; {TRADEMARK_CONFLICT_SCORE} possible conflict; {TRADEMARK_UNVERIFIED_SCORE} incomplete, blocked, unverified, or not yet screened. Unknown risk is penalized without weight renormalization; clear screening can add up to 4.5 weighted points over an unscreened name. No score implies clearance.")
+    add("Score convention", f"Total is a 0-100 heuristic; higher is stronger. Components are integer 0-100; total uses Decimal ROUND_HALF_EVEN to one decimal. Trademark scores: {TRADEMARK_CLEAR_SCORE} complete limited screen/no obvious match; {TRADEMARK_CONFLICT_SCORE} possible conflict; {TRADEMARK_UNVERIFIED_SCORE} incomplete, blocked, unverified, or not yet screened. Unknown risk is penalized without weight renormalization; clear screening can add up to 4.5 weighted points over an unscreened name. No score implies clearance.")
     add("Brandability factors", "Label length 25%, pronounceability 22%, spelling clarity 15%, candidate quality 15%, letter-shape score 10%, vowel balance 4%, transition balance 3%, distinct letters 3%, onset/ending clarity 3%; reviewed phrase-hack adjustments and exact negative-label penalty apply.")
-    add("Commercial scoring factors", "Tiered exact roots score their own demand and buyer breadth. Compounds average recorded head/tail demand and gain 6 when both are commercial. Unmatched roots start at 48 demand/4 breadth; label shape, length, and given-name status adjust the score. Exact negative labels receive a 50-point penalty.")
-    add("Resale heuristic factors", "Per label: length, estimated syllables, pronounceability, vowel/consonant shape, letter distinctness, edge clarity, root demand and buyer breadth, exact-word/commonness, hack rarity, repeated letters and ambiguous pairs; given names and reviewed low-breadth dictionary words are penalized. This is not a price estimate.")
-    add("Shortness and hack factors", "Shortness responds to label length, syllables, pronounceability/shape, letter variety, and edge clarity. Phrase/suffix hacks combine seed quality and pronunciation; short names and true hacks receive within-component bonuses. All six eligible CVCV short names are selected; no 3-letter short name was eligible. Three of 15 eligible hacks are selected: the three higher-quality hacks rank 1-3, while 12 awkward, weak, or narrow-seed labels were penalized and rank below the cut. Hack count is quality/scoring constrained, not category-cap constrained.")
+    add("Commercial scoring factors", "Tier bands: 1=85-100, 2=65-85, 3=45-65; no-root/name-like=30-50; dictionary words without industry roots=25-45. Compound demand is strongest root x 0.88 + second root x 0.12, plus 4 when both are listed commercial roots. Rootless coinages use a 34 base and per-label shape/quality adjustments; exact reviewed negative labels lose 50. See the complete demand-root table below.")
+    add("Resale heuristic factors", "Per label: length, syllables, phonetic ease, shape, distinct letters, edge clarity, root demand/breadth, exact-word commonness, memorability, hack rarity, and ambiguity/repetition penalties. Rootless invented/name-like labels cap at 65; brandability caps at 65. Strong roots and broad-buyer common words can exceed that cap. This is not a price estimate.")
+    add("Shortness and hack factors", "Shortness uses length, syllables, pronunciation/shape, letter variety and edge clarity. Short names and readable hacks get within-component bonuses. All six eligible CVCV shorts are selected at ranks 14, 15, 16, 18, 19, and 28; no three-letter short name was eligible. Three of 15 eligible hacks rank 1-3; hack selection remains quality constrained.")
+    add("Rationale specificity", "Each shortlist rationale is <=140 ASCII characters and names a concrete fact: matched root and buyer pool, compound head/tail, common-word sense, hack completion, or label ending/letter shape.")
     add("Negative-label penalties", ", ".join(sorted(_negative_connotations())))
+    dictionary_labels = sorted(
+        row["domain"].removesuffix(".si")
+        for row in tables["shortlist"].rows
+        if row["category"] == "dictionary"
+    )
+    add("Dictionary and given-name classification", f"The exact curated data/given_names.txt list moves reviewed given names and pseudo-names to invented with tag given_name; endings alone are not sufficient evidence. Final dictionary rows ({len(dictionary_labels)}): {', '.join(dictionary_labels)}. Candidate labels remain in the 6,204-row pool.")
+    add("Additional reviewed penalties", "Added after the final-label review: bloodmonitor, bloodtrack, gynclinic, hemoclinic, tumormarker. The nine named negative/medical/pejorative terms are absent from the final 500. Penalties change scores, not pool membership.")
     for root, (tier, demand, breadth, buyer_summary) in sorted(
         COMMERCIAL_ROOTS.items(), key=lambda item: (item[1][0], item[0])
     ):
@@ -836,13 +843,46 @@ def _methodology_rows(
             f"tier={tier}; demand={demand}/100; buyer breadth={breadth}; buyer pool={buyer_summary}",
         )
     add("Eligibility", "A shortlist row requires known rules to pass, latest RDAP potentially_unregistered (HTTP 404), and latest WHOIS not_registered. WHOIS is a separate channel of the same registry, not another registrar/operator.")
-    add("Ranking and ties", "Total descending, label length ascending, then case-folded domain ascending. Selection walks that order, with at most 500 rows overall and 100 per category (20% maximum per category) to preserve category diversity. Short/hack counts are availability-bounded in this snapshot, not suppressed by scores.")
-    add("Exclusions", f"{metrics['excluded']} ineligible rows are in the exclusion artifact; {metrics['outside_shortlist_cap']} eligible rows fall outside the final ranked cap.")
+    top100_counts = Counter(row["category"] for row in tables["shortlist"].rows[:100])
+    top100_noninvented = sum(
+        row["category"] != "invented" for row in tables["shortlist"].rows[:100]
+    )
+    add("Ranking and ties", "Total descending, label length ascending, then case-folded domain ascending. Selection has a 500-row limit, 100 per category (20% of the shortlist), and a 35-per-category top-100 limit. Family caps: at most 6 invented/given-name labels per final-three-letter ending and per first-four-letter prefix; at most 10 compound/blend labels per head or tail. Overflow remains eligible and is shown in All candidates as family cap. These limits diversify selection without removing pool labels.")
+    add("Family-cap exclusions", f"{family_cap_count} eligible labels were not selected because an invented/given-name or compound/blend family cap was reached; they remain in All candidates with exclusion reason 'family cap'.")
+    add("Top-100 diversity", f"Category counts: {'; '.join(f'{key} {value}' for key, value in sorted(top100_counts.items()))}. Non-invented keyword/real-word/short/hack rows: {top100_noninvented}/100. Maximum category count: {max(top100_counts.values(), default=0)}/35.")
+    score_tuples = {
+        tuple(row[name] for name in ("brandability", "commercial", "shortness", "hack", "resale"))
+        for row in tables["shortlist"].rows
+    }
+    commercial_scores = [int(row["commercial"]) for row in tables["shortlist"].rows]
+    industry_scores = [
+        int(row["commercial"])
+        for row in tables["shortlist"].rows
+        if row["category"] in {"ai", "technology", "business_finance"}
+    ]
+    invented_scores = [
+        int(row["commercial"])
+        for row in tables["shortlist"].rows
+        if row["category"] == "invented"
+    ]
+    commercial_spread = f"{pstdev(commercial_scores):.2f}" if commercial_scores else "n/a"
+    industry_mean = f"{mean(industry_scores):.2f}" if industry_scores else "n/a"
+    invented_mean = f"{mean(invented_scores):.2f}" if invented_scores else "n/a"
+    add("Score diversity metrics", f"Final {len(tables['shortlist'].rows)}: {len(score_tuples)} distinct five-component tuples and {len({row['rationale'] for row in tables['shortlist'].rows})} distinct rationales. Commercial population standard deviation={commercial_spread}; AI/technology/business_finance mean={industry_mean}; invented mean={invented_mean}.")
+    for category in sorted({row["category"] for row in tables["shortlist"].rows}):
+        category_rows = [
+            row for row in tables["shortlist"].rows if row["category"] == category
+        ]
+        add(
+            f"Score means: {category}",
+            f"rows={len(category_rows)}; commercial={mean(int(row['commercial']) for row in category_rows):.2f}; resale={mean(int(row['resale']) for row in category_rows):.2f}",
+        )
+    add("Exclusions", f"{metrics['excluded']} ineligible rows are in the exclusion artifact; {metrics['outside_shortlist_cap']} eligible rows fall outside the final ranked selection.")
     add("Trademark query coverage", coverage)
-    add("Trademark status", "Per-name rows preserve the source-wide outcome for each final top-100 label; these are coverage records, not per-domain requests. No trademark result was parseable and no per-domain query ran in this snapshot. All 300 required source/name pairs remain incomplete.")
+    add("Trademark status", "The final top 100 have per-source query outcome records. Round 1 screened 100; Round 2 added 3 entrants; Round 3 added 9. The loop stopped after three rounds. Names leaving the top 100 keep their evidence. USPTO conflicts take precedence over incomplete other sources and score 25; otherwise missing or blocked source coverage scores 40.")
     add("Trademark mapping rationale", f"One source of truth: limited_screen_no_obvious_match={TRADEMARK_CLEAR_SCORE}; needs legal review={TRADEMARK_CONFLICT_SCORE}; blocked/unverified/not yet screened={TRADEMARK_UNVERIFIED_SCORE}. The documented {TRADEMARK_UNVERIFIED_SCORE} is below clear and above conflict; no renormalization is used. Unknown risk loses up to 4.5 weighted points versus a clear result; a finding loses more.")
     add("Trademark similarity rule", "Flag legal review for identical word marks, whole-word containment, edit distance <=1 for labels of 5+ characters, or identical stem, in any class. Classes 9, 35, 36, 38, 41, and 42 are higher relevance. Uncertain is never clear.")
-    add("Trademark probe outcome", "Two ranking rounds. TMview: 1 POST attempt, connection closed before HTTP response, final top 100 each have an unverified coverage row, 0 completed. UKIPO: 1 GET, HTTP 403 Service Captcha, final top 100 each have a blocked row, 0 completed. USPTO: 1 GET, HTTP 200 JavaScript shell with no parseable results, final top 100 each have an unverified row, 0 completed. Round 2 recorded six new entrants using the existing source-wide outcomes; no additional requests ran. No name was flagged for legal review because no marks were returned; final membership then stabilized.")
+    add("Trademark probe outcome", "TMview had one earlier POST plus three new probes (two POST shapes and one GET) to /tmview/api/search/results; all four API connections closed before an HTTP response. UKIPO: one GET returned HTTP 403 Service Captcha; stopped. USPTO had an earlier UI-shell GET (HTTP 200 JavaScript HTML, no parseable search data) plus 139 JSON POSTs; controls were google (194 hits) and qzxwvk (0). POSTs comprised three initial API/field probes, two controls, and 134 candidate attempts (133 HTTP 200 JSON, one HTTP 403 at bankingdesk). The remaining 66 query slots were blocked without requests. Pace was <=1 per second. Final top-100 source coverage is stated above; 24 domains have a possible conflict and score 25.")
     add("Trademark limitations", "Exact public-query coverage is not comprehensive phonetic, class, national-office, or worldwide clearance. Possible conflicts need professional legal review; unknown risk scores 40, below a complete no-obvious-match screen at 85 and above a conflict at 25.")
     add("Valuation evidence", f"Evidence records: {val_summary}. No current evidence meets the direct-comparable rule for any shortlist row; unsupported valuations have blank currency and low/high cells.")
     add("Availability limits", "RDAP and WHOIS are timestamped registry-channel observations, not registrar checkout confirmation, eligibility confirmation, or a guarantee of successful registration.")
@@ -851,7 +891,7 @@ def _methodology_rows(
     add("Rule source URLs", "; ".join(source_urls) if source_urls else "No reserved/restricted inventory rows.")
     add("Special-sheet alias", "Excel sheet name `Special classes` is the documented alias for `Reserved/Restricted/Invalid/Premium` because Excel forbids `/` and limits names to 31 characters. Scope marks candidate rows separately from rule-reference inventory rows.")
     add("Provenance notes", "See docs/si_registry_rules.md, docs/special_classes.md, output/research_methodology.md, and output/valuation_sources_notes.md.")
-    add("Research exit", "validate-research remains a separate completion command. It reports structure and then exits 2 while the required top-100 trademark query coverage is unresolved; that exit is not treated as delivery certification.")
+    add("Research exit", "validate-research exits 2 after structure passes because exact-plus-near coverage is incomplete: " + coverage + ". Blocked/unverified rows do not complete a search. Delivery validation is separate and does not imply trademark clearance.")
     for name in _INPUT_ORDER:
         path = paths[name]
         rows.append((f"Source CSV: {name}", "Byte-level SHA-256 of the exact input file.", _display_path(path), hashes[name]))
@@ -920,7 +960,7 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
     scores = _score_index(
         tables["scores"].rows, candidates, rdap_latest, summary_map
     )
-    shortlist, excluded, shortlisted_domains = _validate_shortlist_and_excluded(
+    shortlist, excluded, shortlisted_domains, selection_reasons = _validate_shortlist_and_excluded(
         candidate_rows,
         candidates,
         rdap_latest,
@@ -985,7 +1025,7 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
                 }
             )
 
-        reason = excluded_reason.get(domain)
+        reason = excluded_reason.get(domain) or selection_reasons.get(domain)
         if domain in selected:
             reason = ""
         elif reason is None and rule_class == "ok" and _reason_for(label, rule_class, rdap_row, whois_row) is None:
