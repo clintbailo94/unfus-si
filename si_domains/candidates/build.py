@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import hashlib
 from collections import defaultdict
+from functools import lru_cache
 from pathlib import Path
 from typing import Callable
 
@@ -63,6 +64,62 @@ _GENERATORS: dict[str, Callable[[], list[Candidate]]] = {
     "consumer_brands": consumer_brands.generate,
     "emerging_industries": emerging_industries.generate,
 }
+
+
+@lru_cache(maxsize=1)
+def _dictionary_reclassifications() -> dict[str, str]:
+    """Load exact reviewed labels that are not common-word candidates."""
+
+    terms: dict[str, str] = {}
+    with (DATA_DIR / "given_names.txt").open("r", encoding="utf-8") as handle:
+        for line in handle:
+            label = line.strip().casefold()
+            if label and not label.startswith("#"):
+                terms[label] = "given_name"
+    with (DATA_DIR / "reclassify_invented.txt").open("r", encoding="utf-8") as handle:
+        for line in handle:
+            value = line.strip().casefold()
+            if not value or value.startswith("#"):
+                continue
+            try:
+                label, tag = value.split(";", maxsplit=1)
+            except ValueError as exc:
+                raise ValueError(f"invalid non-common dictionary reclassification: {value}") from exc
+            if not label or not tag or label in terms:
+                raise ValueError(f"duplicate or incomplete dictionary reclassification: {value}")
+            terms[label] = tag
+    return terms
+
+
+def _reclassify_non_dictionary_labels(
+    grouped: dict[str, list[Candidate]],
+) -> dict[str, list[Candidate]]:
+    """Retag reviewed names and technical terms without changing the label pool."""
+
+    labels_to_reclassify = _dictionary_reclassifications()
+    dictionary_rows: list[Candidate] = []
+    invented_rows = list(grouped["invented"])
+    for candidate in grouped["dictionary"]:
+        tag = labels_to_reclassify.get(candidate.domain_label)
+        if tag is None:
+            dictionary_rows.append(candidate)
+            continue
+        tags = set(candidate.tags)
+        tags.difference_update({"dictionary", "invented", "real_word"})
+        tags.add(tag)
+        invented_rows.append(
+            Candidate(
+                candidate.domain_label,
+                "invented",
+                f"{tag.replace('_', '-')}-reclassified",
+                candidate.seed,
+                tuple(sorted(tags)),
+                candidate.quality_score,
+            )
+        )
+    grouped["dictionary"] = dictionary_rows
+    grouped["invented"] = sorted(invented_rows, key=lambda item: item.domain_label)
+    return grouped
 
 
 def _plural_rank(candidate: Candidate) -> tuple[int, int, int, str]:
@@ -236,7 +293,10 @@ def generate_all() -> dict[str, list[Candidate]]:
 
     for candidate in _remove_trivial_plurals(combined):
         grouped[candidate.category].append(candidate)
-    return {category: _rank_within_limit(category, rows) for category, rows in grouped.items()}
+    limited = {category: _rank_within_limit(category, rows) for category, rows in grouped.items()}
+    # Classification is a retag of the already selected label pool. Do this
+    # after per-category candidate limits so no domain is silently displaced.
+    return _reclassify_non_dictionary_labels(limited)
 
 
 def generate_category(category: str) -> list[Candidate]:

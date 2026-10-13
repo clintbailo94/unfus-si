@@ -1,501 +1,501 @@
 rank,domain,category,total,brandability,commercial,shortness,hack,resale,trademark,rdap_timestamp,whois_timestamp,rationale
-1,unfus.si,domain_hacks,82.0,90,72,95,78,81,70,2026-10-13T04:44:30Z,2026-10-13T09:46:53Z,"Strengths: brand 90, demand 72; weakness: trademark 70. TM screen unverified. Seed: unfussy."
-2,tryto.si,domain_hacks,81.6,90,72,95,74,82,70,2026-10-13T04:43:36Z,2026-10-13T09:46:21Z,"Strengths: brand 90, demand 72; weakness: trademark 70. TM screen unverified. Seed: tryto + see."
-3,newsagen.si,domain_hacks,80.6,85,82,78,82,80,70,2026-10-13T03:30:01Z,2026-10-13T08:27:10Z,"Strengths: brand 85, demand 82; weakness: trademark 70. TM screen unverified. Seed: newsagency."
-4,floun.si,domain_hacks,73.4,75,70,95,78,51,70,2026-10-13T01:47:48Z,2026-10-13T07:16:22Z,"Strengths: brand 75, shortness 95; weakness: resale 51. TM screen unverified. Seed: flouncy."
-5,cizo.si,short,73.0,87,76,100,12,82,70,2026-10-13T01:30:49Z,2026-10-13T06:12:52Z,"Strengths: brand 87, demand 76; weakness: hack 12. TM screen unverified. Seed: ci+zo."
-6,fuve.si,short,73.0,87,76,100,12,82,70,2026-10-13T01:49:13Z,2026-10-13T07:17:47Z,"Strengths: brand 87, demand 76; weakness: hack 12. TM screen unverified. Seed: fu+ve."
-7,guve.si,short,73.0,87,76,100,12,82,70,2026-10-13T02:19:06Z,2026-10-13T07:20:56Z,"Strengths: brand 87, demand 76; weakness: hack 12. TM screen unverified. Seed: gu+ve."
-8,guza.si,short,73.0,87,76,100,12,82,70,2026-10-13T02:19:07Z,2026-10-13T07:20:58Z,"Strengths: brand 87, demand 76; weakness: hack 12. TM screen unverified. Seed: gu+za."
-9,kuzo.si,short,73.0,87,76,100,12,82,70,2026-10-13T02:37:42Z,2026-10-13T07:28:47Z,"Strengths: brand 87, demand 76; weakness: hack 12. TM screen unverified. Seed: ku+zo."
-10,puve.si,short,73.0,87,76,100,12,82,70,2026-10-13T03:49:14Z,2026-10-13T08:59:36Z,"Strengths: brand 87, demand 76; weakness: hack 12. TM screen unverified. Seed: pu+ve."
-11,piquan.si,domain_hacks,72.6,76,68,90,80,50,70,2026-10-13T03:44:48Z,2026-10-13T08:57:45Z,"Strengths: brand 76, demand 68; weakness: resale 50. TM screen unverified. Seed: piquancy."
-12,keyscan.si,technology,72.6,91,86,85,12,74,70,2026-10-13T02:35:55Z,2026-10-13T07:28:35Z,"Strengths: brand 91, demand 86; weakness: hack 12. TM screen unverified. Seed: key+scan."
-13,audithub.si,technology,72.6,88,95,78,12,74,70,2026-10-13T01:21:44Z,2026-10-13T05:28:42Z,"Strengths: brand 88, demand 95; weakness: hack 12. TM screen unverified. Seed: audit+hub."
-14,memolab.si,ai,72.5,89,88,83,12,76,70,2026-10-13T03:11:19Z,2026-10-13T07:40:36Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: memo+lab."
-15,semalab.si,ai,72.5,89,88,83,12,76,70,2026-10-13T04:11:28Z,2026-10-13T09:12:35Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: semantic+lab."
-16,visilab.si,ai,72.5,89,88,83,12,76,70,2026-10-13T04:52:57Z,2026-10-13T09:58:02Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: vision+lab."
-17,plian.si,domain_hacks,72.4,75,65,95,78,51,70,2026-10-13T03:45:37Z,2026-10-13T08:58:01Z,"Strengths: brand 75, shortness 95; weakness: resale 51. TM screen unverified. Seed: pliancy."
-18,cashops.si,business_finance,72.2,89,86,85,12,75,70,2026-10-13T01:28:26Z,2026-10-13T07:04:05Z,"Strengths: brand 89, demand 86; weakness: hack 12. TM screen unverified. Seed: cash+ops."
-19,ferven.si,domain_hacks,72.0,76,68,90,78,48,70,2026-10-13T01:46:27Z,2026-10-13T07:15:16Z,"Strengths: brand 76, demand 68; weakness: resale 48. TM screen unverified. Seed: fervency."
-20,pungen.si,domain_hacks,72.0,76,68,90,78,48,70,2026-10-13T03:49:06Z,2026-10-13T08:59:34Z,"Strengths: brand 76, demand 68; weakness: resale 48. TM screen unverified. Seed: pungency."
-21,absorben.si,domain_hacks,72.0,78,70,78,82,50,70,2026-10-13T01:11:44Z,2026-10-13T05:12:13Z,"Strengths: brand 78, demand 70; weakness: resale 50. TM screen unverified. Seed: absorbency."
-22,algomesh.si,ai,72.0,90,88,78,12,76,70,2026-10-13T01:18:48Z,2026-10-13T05:19:39Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+mesh."
-23,chatlink.si,ai,72.0,89,88,80,12,76,70,2026-10-13T01:29:51Z,2026-10-13T06:09:28Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: chat+link."
-24,chatloop.si,ai,72.0,89,88,80,12,76,70,2026-10-13T01:29:52Z,2026-10-13T06:09:34Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: chat+loop."
-25,examhub.si,consumer_brands,71.8,91,81,83,12,77,70,2026-10-13T01:44:35Z,2026-10-13T07:12:51Z,"Strengths: brand 91, demand 81; weakness: hack 12. TM screen unverified. Seed: exam+hub."
-26,soilhub.si,emerging_industries,71.8,91,84,85,12,71,70,2026-10-13T04:19:39Z,2026-10-13T09:20:19Z,"Strengths: brand 91, demand 84; weakness: hack 12. TM screen unverified. Seed: soil+hub."
-27,algogrid.si,ai,71.8,89,88,78,12,76,70,2026-10-13T01:18:40Z,2026-10-13T05:19:27Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+grid."
-28,algoport.si,ai,71.8,89,88,78,12,76,70,2026-10-13T01:18:52Z,2026-10-13T05:19:47Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+port."
-29,chatmesh.si,ai,71.8,88,88,80,12,76,70,2026-10-13T01:29:54Z,2026-10-13T06:09:46Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM screen unverified. Seed: chat+mesh."
-30,chatport.si,ai,71.8,88,88,80,12,76,70,2026-10-13T01:29:58Z,2026-10-13T06:10:04Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM screen unverified. Seed: chat+port."
-31,deepport.si,ai,71.8,88,88,80,12,76,70,2026-10-13T01:38:54Z,2026-10-13T07:06:34Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM screen unverified. Seed: deep+port."
-32,gynlab.si,health_science,71.7,90,82,90,12,70,70,2026-10-13T02:19:12Z,2026-10-13T07:21:02Z,"Strengths: brand 90, demand 82; weakness: hack 12. TM screen unverified. Seed: gyn+lab."
-33,soillab.si,emerging_industries,71.5,90,84,85,12,71,70,2026-10-13T04:19:41Z,2026-10-13T09:20:31Z,"Strengths: brand 90, demand 84; weakness: hack 12. TM screen unverified. Seed: soil+lab."
-34,omniloop.si,ai,71.5,88,88,78,12,76,70,2026-10-13T03:35:32Z,2026-10-13T08:32:42Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM screen unverified. Seed: omni+loop."
-35,agrihub.si,emerging_industries,71.4,91,84,83,12,71,70,2026-10-13T01:18:25Z,2026-10-13T05:19:08Z,"Strengths: brand 91, demand 84; weakness: hack 12. TM screen unverified. Seed: agri+hub."
-36,crophub.si,emerging_industries,71.2,89,84,85,12,71,70,2026-10-13T01:35:39Z,2026-10-13T06:47:25Z,"Strengths: brand 89, demand 84; weakness: hack 12. TM screen unverified. Seed: crop+hub."
-37,croplab.si,emerging_industries,71.2,89,84,85,12,71,70,2026-10-13T01:35:40Z,2026-10-13T06:47:31Z,"Strengths: brand 89, demand 84; weakness: hack 12. TM screen unverified. Seed: crop+lab."
-38,algoloop.si,ai,71.2,87,88,78,12,76,70,2026-10-13T01:18:46Z,2026-10-13T05:19:35Z,"Strengths: brand 87, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+loop."
-39,semaflow.si,ai,71.2,87,88,78,12,76,70,2026-10-13T04:11:18Z,2026-10-13T09:12:25Z,"Strengths: brand 87, demand 88; weakness: hack 12. TM screen unverified. Seed: semantic+flow."
-40,semagrid.si,ai,71.2,87,88,78,12,76,70,2026-10-13T04:11:24Z,2026-10-13T09:12:31Z,"Strengths: brand 87, demand 88; weakness: hack 12. TM screen unverified. Seed: semantic+grid."
-41,semalink.si,ai,71.2,87,88,78,12,76,70,2026-10-13T04:11:34Z,2026-10-13T09:12:41Z,"Strengths: brand 87, demand 88; weakness: hack 12. TM screen unverified. Seed: semantic+link."
-42,semaport.si,ai,71.2,87,88,78,12,76,70,2026-10-13T04:12:44Z,2026-10-13T09:13:50Z,"Strengths: brand 87, demand 88; weakness: hack 12. TM screen unverified. Seed: semantic+port."
-43,memogrid.si,ai,71.0,86,88,78,12,76,70,2026-10-13T03:11:15Z,2026-10-13T07:40:32Z,"Strengths: brand 86, demand 88; weakness: hack 12. TM screen unverified. Seed: memo+grid."
-44,memolink.si,ai,71.0,86,88,78,12,76,70,2026-10-13T03:11:25Z,2026-10-13T07:41:26Z,"Strengths: brand 86, demand 88; weakness: hack 12. TM screen unverified. Seed: memo+link."
-45,semacore.si,ai,71.0,86,88,78,12,76,70,2026-10-13T04:11:10Z,2026-10-13T09:12:17Z,"Strengths: brand 86, demand 88; weakness: hack 12. TM screen unverified. Seed: semantic+core."
-46,visicore.si,ai,71.0,86,88,78,12,76,70,2026-10-13T04:52:39Z,2026-10-13T09:57:24Z,"Strengths: brand 86, demand 88; weakness: hack 12. TM screen unverified. Seed: vision+core."
-47,visiflow.si,ai,71.0,86,88,78,12,76,70,2026-10-13T04:52:47Z,2026-10-13T09:57:42Z,"Strengths: brand 86, demand 88; weakness: hack 12. TM screen unverified. Seed: vision+flow."
-48,visiport.si,ai,71.0,86,88,78,12,76,70,2026-10-13T04:53:15Z,2026-10-13T09:58:50Z,"Strengths: brand 86, demand 88; weakness: hack 12. TM screen unverified. Seed: vision+port."
-49,edgelink.si,technology,70.8,88,86,78,12,74,70,2026-10-13T01:42:22Z,2026-10-13T07:10:02Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM screen unverified. Seed: edge+link."
-50,memoflow.si,ai,70.8,85,88,78,12,76,70,2026-10-13T03:11:09Z,2026-10-13T07:39:46Z,"Strengths: brand 85, demand 88; weakness: hack 12. TM screen unverified. Seed: memo+flow."
-51,memoport.si,ai,70.8,85,88,78,12,76,70,2026-10-13T03:11:39Z,2026-10-13T07:43:00Z,"Strengths: brand 85, demand 88; weakness: hack 12. TM screen unverified. Seed: memo+port."
-52,opticlab.si,technology,70.8,88,86,78,12,74,70,2026-10-13T03:36:36Z,2026-10-13T08:33:49Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM screen unverified. Seed: optic+lab."
-53,visigrid.si,ai,70.8,85,88,78,12,76,70,2026-10-13T04:52:53Z,2026-10-13T09:57:58Z,"Strengths: brand 85, demand 88; weakness: hack 12. TM screen unverified. Seed: vision+grid."
-54,visilink.si,ai,70.8,85,88,78,12,76,70,2026-10-13T04:53:03Z,2026-10-13T09:58:18Z,"Strengths: brand 85, demand 88; weakness: hack 12. TM screen unverified. Seed: vision+link."
-55,visiloop.si,ai,70.8,85,88,78,12,76,70,2026-10-13T04:53:05Z,2026-10-13T09:58:30Z,"Strengths: brand 85, demand 88; weakness: hack 12. TM screen unverified. Seed: vision+loop."
-56,visimesh.si,ai,70.8,85,88,78,12,76,70,2026-10-13T04:53:09Z,2026-10-13T09:58:34Z,"Strengths: brand 85, demand 88; weakness: hack 12. TM screen unverified. Seed: vision+mesh."
-57,omnivault.si,ai,70.8,91,88,73,12,71,70,2026-10-13T03:36:06Z,2026-10-13T08:33:27Z,"Strengths: brand 91, demand 88; weakness: hack 12. TM screen unverified. Seed: omni+vault."
-58,semaorbit.si,ai,70.8,91,88,73,12,71,70,2026-10-13T04:12:40Z,2026-10-13T09:13:46Z,"Strengths: brand 91, demand 88; weakness: hack 12. TM screen unverified. Seed: semantic+orbit."
-59,autoorbit.si,ai,70.6,88,91,73,12,71,70,2026-10-13T01:22:27Z,2026-10-13T05:29:39Z,"Strengths: brand 88, demand 91; weakness: hack 12. TM screen unverified. Seed: auto+orbit."
-60,datafleet.si,ai,70.6,88,91,73,12,71,70,2026-10-13T01:37:17Z,2026-10-13T07:05:21Z,"Strengths: brand 88, demand 91; weakness: hack 12. TM screen unverified. Seed: data+fleet."
-61,datalearn.si,ai,70.6,88,91,73,12,71,70,2026-10-13T01:37:31Z,2026-10-13T07:05:26Z,"Strengths: brand 88, demand 91; weakness: hack 12. TM screen unverified. Seed: data+learn."
-62,robotloop.si,ai,70.6,88,91,73,12,71,70,2026-10-13T04:06:43Z,2026-10-13T09:10:41Z,"Strengths: brand 88, demand 91; weakness: hack 12. TM screen unverified. Seed: robot+loop."
-63,memocore.si,ai,70.5,84,88,78,12,76,70,2026-10-13T03:11:01Z,2026-10-13T07:39:38Z,"Strengths: brand 84, demand 88; weakness: hack 12. TM screen unverified. Seed: memory+core."
-64,memoloop.si,ai,70.5,84,88,78,12,76,70,2026-10-13T03:11:27Z,2026-10-13T07:41:28Z,"Strengths: brand 84, demand 88; weakness: hack 12. TM screen unverified. Seed: memory+loop."
-65,memomesh.si,ai,70.5,84,88,78,12,76,70,2026-10-13T03:11:31Z,2026-10-13T07:42:12Z,"Strengths: brand 84, demand 88; weakness: hack 12. TM screen unverified. Seed: memo+mesh."
-66,roboloop.si,ai,70.5,84,88,78,12,76,70,2026-10-13T04:04:49Z,2026-10-13T09:09:27Z,"Strengths: brand 84, demand 88; weakness: hack 12. TM screen unverified. Seed: robotic+loop."
-67,roboport.si,ai,70.5,84,88,78,12,76,70,2026-10-13T04:05:01Z,2026-10-13T09:09:35Z,"Strengths: brand 84, demand 88; weakness: hack 12. TM screen unverified. Seed: robo+port."
-68,semamesh.si,ai,70.5,84,88,78,12,76,70,2026-10-13T04:11:40Z,2026-10-13T09:12:45Z,"Strengths: brand 84, demand 88; weakness: hack 12. TM screen unverified. Seed: semantic+mesh."
-69,algoorbit.si,ai,70.5,90,88,73,12,71,70,2026-10-13T01:18:50Z,2026-10-13T05:19:43Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+orbit."
-70,audiomesh.si,ai,70.5,90,88,73,12,71,70,2026-10-13T01:21:22Z,2026-10-13T05:22:52Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: audio+mesh."
-71,chatsolve.si,ai,70.5,90,88,73,12,71,70,2026-10-13T01:30:02Z,2026-10-13T06:10:28Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: chat+solve."
-72,cognimesh.si,ai,70.5,90,88,73,12,71,70,2026-10-13T01:32:23Z,2026-10-13T06:16:46Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: cogni+mesh."
-73,memovault.si,ai,70.5,90,88,73,12,71,70,2026-10-13T03:13:03Z,2026-10-13T07:50:52Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: memo+vault."
-74,neuraport.si,ai,70.5,90,88,73,12,71,70,2026-10-13T03:28:02Z,2026-10-13T08:24:58Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: neura+port."
-75,omnicraft.si,ai,70.5,90,88,73,12,71,70,2026-10-13T03:35:07Z,2026-10-13T08:32:10Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: omni+craft."
-76,omnifleet.si,ai,70.5,90,88,73,12,71,70,2026-10-13T03:35:11Z,2026-10-13T08:32:24Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: omni+fleet."
-77,omnisolve.si,ai,70.5,90,88,73,12,71,70,2026-10-13T03:35:52Z,2026-10-13T08:33:04Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: omni+solve."
-78,semavault.si,ai,70.5,90,88,73,12,71,70,2026-10-13T04:13:06Z,2026-10-13T09:14:12Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: semantic+vault."
-79,sentiflow.si,ai,70.5,90,88,73,12,71,70,2026-10-13T04:13:46Z,2026-10-13T09:14:36Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: senti+flow."
-80,sentiloop.si,ai,70.5,90,88,73,12,71,70,2026-10-13T04:14:04Z,2026-10-13T09:14:52Z,"Strengths: brand 90, demand 88; weakness: hack 12. TM screen unverified. Seed: senti+loop."
-81,gerilab.si,health_science,70.4,89,82,83,12,70,70,2026-10-13T02:14:17Z,2026-10-13T07:19:50Z,"Strengths: brand 89, demand 82; weakness: hack 12. TM screen unverified. Seed: geri+lab."
-82,hemolab.si,health_science,70.4,89,82,83,12,70,70,2026-10-13T02:21:58Z,2026-10-13T07:22:44Z,"Strengths: brand 89, demand 82; weakness: hack 12. TM screen unverified. Seed: hemo+lab."
-83,forexhub.si,business_finance,70.4,86,86,78,12,75,70,2026-10-13T01:48:16Z,2026-10-13T07:16:44Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM screen unverified. Seed: forex+hub."
-84,remithub.si,business_finance,70.4,86,86,78,12,75,70,2026-10-13T03:58:53Z,2026-10-13T09:05:49Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM screen unverified. Seed: remit+hub."
-85,datasolve.si,ai,70.4,87,91,73,12,71,70,2026-10-13T01:37:44Z,2026-10-13T07:05:30Z,"Strengths: brand 87, demand 91; weakness: hack 12. TM screen unverified. Seed: data+solve."
-86,trekgear.si,consumer_brands,70.3,87,81,80,12,77,70,2026-10-13T04:43:11Z,2026-10-13T09:46:19Z,"Strengths: brand 87, demand 81; weakness: hack 12. TM screen unverified. Seed: trek+gear."
-87,chatlearn.si,ai,70.3,88,88,75,12,71,70,2026-10-13T01:29:49Z,2026-10-13T06:09:16Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM screen unverified. Seed: chat+learn."
-88,chatvault.si,ai,70.3,88,88,75,12,71,70,2026-10-13T01:30:08Z,2026-10-13T06:10:52Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM screen unverified. Seed: chat+vault."
-89,yogaclub.si,consumer_brands,70.2,88,81,78,12,77,70,2026-10-13T04:58:29Z,2026-10-13T10:07:06Z,"Strengths: brand 88, demand 81; weakness: hack 12. TM screen unverified. Seed: yoga+club."
-90,algocraft.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:18:34Z,2026-10-13T05:19:12Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+craft."
-91,algofleet.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:18:36Z,2026-10-13T05:19:16Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+fleet."
-92,algoforge.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:18:38Z,2026-10-13T05:19:18Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+forge."
-93,algosense.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:18:54Z,2026-10-13T05:19:51Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+sense."
-94,algosolve.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:18:56Z,2026-10-13T05:19:55Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+solve."
-95,algospark.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:18:57Z,2026-10-13T05:19:57Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+spark."
-96,algostack.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:18:58Z,2026-10-13T05:19:59Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+stack."
-97,algovault.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:19:03Z,2026-10-13T05:20:09Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: algorithm+vault."
-98,audioport.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:21:27Z,2026-10-13T05:23:00Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: audio+port."
-99,chatorbit.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:29:56Z,2026-10-13T06:09:58Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: chat+orbit."
-100,cogniloop.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:32:21Z,2026-10-13T06:16:40Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM screen unverified. Seed: cogni+loop."
-101,cogniport.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:32:27Z,2026-10-13T06:17:10Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: cogni+port."
-102,deeppilot.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:38:53Z,2026-10-13T07:06:32Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: deep+pilot."
-103,embedcore.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:42:46Z,2026-10-13T07:10:12Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: embed+core."
-104,embedlink.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:42:58Z,2026-10-13T07:10:36Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: embed+link."
-105,embedloop.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:42:59Z,2026-10-13T07:10:38Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: embed+loop."
-106,embedport.si,ai,70.2,89,88,73,12,71,70,2026-10-13T01:43:06Z,2026-10-13T07:10:50Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: embed+port."
-107,inferport.si,ai,70.2,89,88,73,12,71,70,2026-10-13T02:29:11Z,2026-10-13T07:25:47Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: infer+port."
-108,lingualab.si,ai,70.2,89,88,73,12,71,70,2026-10-13T02:48:32Z,2026-10-13T07:33:46Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: lingua+lab."
-109,logicport.si,ai,70.2,89,88,73,12,71,70,2026-10-13T03:03:53Z,2026-10-13T07:36:27Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: logic+port."
-110,memocraft.si,ai,70.2,89,88,73,12,71,70,2026-10-13T03:11:03Z,2026-10-13T07:39:40Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: memo+craft."
-111,memoorbit.si,ai,70.2,89,88,73,12,71,70,2026-10-13T03:11:35Z,2026-10-13T07:42:56Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: memo+orbit."
-112,memospark.si,ai,70.2,89,88,73,12,71,70,2026-10-13T03:12:51Z,2026-10-13T07:49:07Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: memo+spark."
-113,memostack.si,ai,70.2,89,88,73,12,71,70,2026-10-13T03:12:53Z,2026-10-13T07:49:09Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: memo+stack."
-114,modelport.si,ai,70.2,89,88,73,12,71,70,2026-10-13T03:17:45Z,2026-10-13T08:09:20Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: model+port."
-115,multigrid.si,ai,70.2,89,88,73,12,71,70,2026-10-13T03:21:26Z,2026-10-13T08:16:38Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: multi+grid."
-116,multimesh.si,ai,70.2,89,88,73,12,71,70,2026-10-13T03:21:42Z,2026-10-13T08:16:58Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: multi+mesh."
-117,neuroloop.si,ai,70.2,89,88,73,12,71,70,2026-10-13T03:28:59Z,2026-10-13T08:26:14Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: neuro+loop."
-118,neuroport.si,ai,70.2,89,88,73,12,71,70,2026-10-13T03:29:21Z,2026-10-13T08:26:48Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: neuro+port."
-119,omniorbit.si,ai,70.2,89,88,73,12,71,70,2026-10-13T03:35:40Z,2026-10-13T08:32:58Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: omni+orbit."
-120,semacraft.si,ai,70.2,89,88,73,12,71,70,2026-10-13T04:11:12Z,2026-10-13T09:12:19Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: semantic+craft."
-121,semafleet.si,ai,70.2,89,88,73,12,71,70,2026-10-13T04:11:16Z,2026-10-13T09:12:23Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: semantic+fleet."
-122,sentigrid.si,ai,70.2,89,88,73,12,71,70,2026-10-13T04:13:52Z,2026-10-13T09:14:42Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: senti+grid."
-123,sentilabs.si,ai,70.2,89,88,73,12,71,70,2026-10-13T04:13:56Z,2026-10-13T09:14:46Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: senti+labs."
-124,sentiport.si,ai,70.2,89,88,73,12,71,70,2026-10-13T04:14:16Z,2026-10-13T09:15:04Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: senti+port."
-125,synaplink.si,ai,70.2,89,88,73,12,71,70,2026-10-13T04:25:36Z,2026-10-13T09:27:06Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: synap+link."
-126,synaploop.si,ai,70.2,89,88,73,12,71,70,2026-10-13T04:25:38Z,2026-10-13T09:27:08Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: synap+loop."
-127,synapmesh.si,ai,70.2,89,88,73,12,71,70,2026-10-13T04:25:42Z,2026-10-13T09:27:12Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: synap+mesh."
-128,synapport.si,ai,70.2,89,88,73,12,71,70,2026-10-13T04:25:50Z,2026-10-13T09:27:40Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: synap+port."
-129,visicraft.si,ai,70.2,89,88,73,12,71,70,2026-10-13T04:52:41Z,2026-10-13T09:57:26Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: vision+craft."
-130,visifleet.si,ai,70.2,89,88,73,12,71,70,2026-10-13T04:52:45Z,2026-10-13T09:57:40Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: vision+fleet."
-131,visivault.si,ai,70.2,89,88,73,12,71,70,2026-10-13T04:53:41Z,2026-10-13T09:59:43Z,"Strengths: brand 89, demand 88; weakness: hack 12. TM not yet screened. Seed: vision+vault."
-132,quantagrid.si,ai,70.1,85,96,68,12,71,70,2026-10-13T03:49:34Z,2026-10-13T08:59:52Z,"Strengths: brand 85, demand 96; weakness: hack 12. TM not yet screened. Seed: quantum+grid."
-133,quantamesh.si,ai,70.1,85,96,68,12,71,70,2026-10-13T03:49:50Z,2026-10-13T09:00:06Z,"Strengths: brand 85, demand 96; weakness: hack 12. TM not yet screened. Seed: quantum+mesh."
-134,delio.si,invented,70.0,91,68,95,12,71,70,2026-10-13T01:39:23Z,2026-10-13T07:07:02Z,"Strengths: brand 91, shortness 95; weakness: hack 12. TM not yet screened. Seed: del+io."
-135,meria.si,invented,70.0,91,68,95,12,71,70,2026-10-13T03:13:43Z,2026-10-13T07:54:01Z,"Strengths: brand 91, shortness 95; weakness: hack 12. TM not yet screened. Seed: mer+ia."
-136,raleo.si,invented,70.0,91,68,95,12,71,70,2026-10-13T03:53:07Z,2026-10-13T09:01:58Z,"Strengths: brand 91, shortness 95; weakness: hack 12. TM not yet screened. Seed: ral+eo."
-137,wenio.si,invented,70.0,91,68,95,12,71,70,2026-10-13T04:56:53Z,2026-10-13T10:04:04Z,"Strengths: brand 91, shortness 95; weakness: hack 12. TM not yet screened. Seed: wen+io."
-138,cardhub.si,business_finance,70.0,83,86,85,12,70,70,2026-10-13T01:28:09Z,2026-10-13T05:54:28Z,"Strengths: brand 83, demand 86; weakness: hack 12. TM not yet screened. Seed: card+hub."
-139,fiberhub.si,technology,70.0,85,86,78,12,74,70,2026-10-13T01:46:37Z,2026-10-13T07:15:28Z,"Strengths: brand 85, demand 86; weakness: hack 12. TM not yet screened. Seed: fiber+hub."
-140,fiberlab.si,technology,70.0,85,86,78,12,74,70,2026-10-13T01:46:38Z,2026-10-13T07:15:30Z,"Strengths: brand 85, demand 86; weakness: hack 12. TM not yet screened. Seed: fiber+lab."
-141,hedgehub.si,business_finance,70.0,84,86,78,12,75,70,2026-10-13T02:20:18Z,2026-10-13T07:21:44Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: hedge+hub."
-142,algolearn.si,ai,70.0,88,88,73,12,71,70,2026-10-13T01:18:43Z,2026-10-13T05:19:31Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: algorithm+learn."
-143,audiogrid.si,ai,70.0,88,88,73,12,71,70,2026-10-13T01:21:13Z,2026-10-13T05:22:40Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: audio+grid."
-144,chatsense.si,ai,70.0,88,88,73,12,71,70,2026-10-13T01:30:00Z,2026-10-13T06:10:16Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: chat+sense."
-145,cognigrid.si,ai,70.0,88,88,73,12,71,70,2026-10-13T01:32:15Z,2026-10-13T06:16:16Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: cogni+grid."
-146,embedlabs.si,ai,70.0,88,88,73,12,71,70,2026-10-13T01:42:55Z,2026-10-13T07:10:30Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: embed+labs."
-147,imageport.si,ai,70.0,88,88,73,12,71,70,2026-10-13T02:26:07Z,2026-10-13T07:24:40Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: image+port."
-148,memofleet.si,ai,70.0,88,88,73,12,71,70,2026-10-13T03:11:07Z,2026-10-13T07:39:44Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: memo+fleet."
-149,memolearn.si,ai,70.0,88,88,73,12,71,70,2026-10-13T03:11:21Z,2026-10-13T07:41:18Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: memo+learn."
-150,robospark.si,ai,70.0,88,88,73,12,71,70,2026-10-13T04:05:11Z,2026-10-13T09:09:43Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: robo+spark."
-151,semalearn.si,ai,70.0,88,88,73,12,71,70,2026-10-13T04:11:30Z,2026-10-13T09:12:37Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: semantic+learn."
-152,semapilot.si,ai,70.0,88,88,73,12,71,70,2026-10-13T04:12:42Z,2026-10-13T09:13:48Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: semantic+pilot."
-153,semaspark.si,ai,70.0,88,88,73,12,71,70,2026-10-13T04:12:54Z,2026-10-13T09:14:00Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: semantic+spark."
-154,semastack.si,ai,70.0,88,88,73,12,71,70,2026-10-13T04:12:56Z,2026-10-13T09:14:02Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: semantic+stack."
-155,sentimesh.si,ai,70.0,88,88,73,12,71,70,2026-10-13T04:14:08Z,2026-10-13T09:14:56Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: senti+mesh."
-156,synapcore.si,ai,70.0,88,88,73,12,71,70,2026-10-13T04:25:08Z,2026-10-13T09:26:01Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: synap+core."
-157,synaplabs.si,ai,70.0,88,88,73,12,71,70,2026-10-13T04:25:30Z,2026-10-13T09:26:49Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: synap+labs."
-158,tokenport.si,ai,70.0,88,88,73,12,71,70,2026-10-13T04:34:22Z,2026-10-13T09:40:44Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: token+port."
-159,vendorhub.si,business_finance,70.0,90,86,73,12,70,70,2026-10-13T04:49:14Z,2026-10-13T09:52:57Z,"Strengths: brand 90, demand 86; weakness: hack 12. TM not yet screened. Seed: vendor+hub."
-160,visilearn.si,ai,70.0,88,88,73,12,71,70,2026-10-13T04:52:59Z,2026-10-13T09:58:14Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: vision+learn."
-161,visispark.si,ai,70.0,88,88,73,12,71,70,2026-10-13T04:53:27Z,2026-10-13T09:59:21Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: vision+spark."
-162,visistack.si,ai,70.0,88,88,73,12,71,70,2026-10-13T04:53:29Z,2026-10-13T09:59:23Z,"Strengths: brand 88, demand 88; weakness: hack 12. TM not yet screened. Seed: vision+stack."
-163,doreo.si,invented,69.8,90,68,95,12,71,70,2026-10-13T01:41:09Z,2026-10-13T07:08:53Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: dor+eo."
-164,falia.si,invented,69.8,90,68,95,12,71,70,2026-10-13T01:45:11Z,2026-10-13T07:13:42Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: fal+ia."
-165,fenal.si,invented,69.8,90,68,95,12,71,70,2026-10-13T01:45:46Z,2026-10-13T07:14:06Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: fen+al."
-166,lania.si,invented,69.8,90,68,95,12,71,70,2026-10-13T02:39:28Z,2026-10-13T07:30:01Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: lan+ia."
-167,meleo.si,invented,69.8,90,68,95,12,71,70,2026-10-13T03:10:21Z,2026-10-13T07:39:13Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: mel+eo."
-168,milio.si,invented,69.8,90,68,95,12,71,70,2026-10-13T03:15:15Z,2026-10-13T08:01:26Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: mil+io."
-169,mirio.si,invented,69.8,90,68,95,12,71,70,2026-10-13T03:16:27Z,2026-10-13T08:06:01Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: mir+io."
-170,neleo.si,invented,69.8,90,68,95,12,71,70,2026-10-13T03:24:40Z,2026-10-13T08:21:20Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: nel+eo."
-171,niral.si,invented,69.8,90,68,95,12,71,70,2026-10-13T03:30:55Z,2026-10-13T08:28:04Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: nir+al."
-172,nirio.si,invented,69.8,90,68,95,12,71,70,2026-10-13T03:31:23Z,2026-10-13T08:29:00Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: nir+io."
-173,noral.si,invented,69.8,90,68,95,12,71,70,2026-10-13T03:32:15Z,2026-10-13T08:29:57Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: nor+al."
-174,peleo.si,invented,69.8,90,68,95,12,71,70,2026-10-13T03:41:57Z,2026-10-13T08:55:58Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: pel+eo."
-175,peral.si,invented,69.8,90,68,95,12,71,70,2026-10-13T03:42:57Z,2026-10-13T08:56:44Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: per+al."
-176,rinal.si,invented,69.8,90,68,95,12,71,70,2026-10-13T04:02:24Z,2026-10-13T09:08:06Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: rin+al."
-177,rinia.si,invented,69.8,90,68,95,12,71,70,2026-10-13T04:02:44Z,2026-10-13T09:08:26Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: rin+ia."
-178,teral.si,invented,69.8,90,68,95,12,71,70,2026-10-13T04:31:19Z,2026-10-13T09:36:50Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: ter+al."
-179,toral.si,invented,69.8,90,68,95,12,71,70,2026-10-13T04:35:39Z,2026-10-13T09:43:00Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: tor+al."
-180,veneo.si,invented,69.8,90,68,95,12,71,70,2026-10-13T04:49:27Z,2026-10-13T09:53:17Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: ven+eo."
-181,veral.si,invented,69.8,90,68,95,12,71,70,2026-10-13T04:50:15Z,2026-10-13T09:54:37Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: ver+al."
-182,voral.si,invented,69.8,90,68,95,12,71,70,2026-10-13T04:54:49Z,2026-10-13T10:00:36Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: vor+al."
-183,wenal.si,invented,69.8,90,68,95,12,71,70,2026-10-13T04:56:29Z,2026-10-13T10:03:09Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: wen+al."
-184,winal.si,invented,69.8,90,68,95,12,71,70,2026-10-13T04:57:13Z,2026-10-13T10:04:52Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: win+al."
-185,zenal.si,invented,69.8,90,68,95,12,71,70,2026-10-13T04:59:47Z,2026-10-13T10:08:58Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: zen+al."
-186,bondhub.si,business_finance,69.8,82,86,85,12,70,70,2026-10-13T01:25:22Z,2026-10-13T05:45:52Z,"Strengths: brand 82, demand 86; weakness: hack 12. TM not yet screened. Seed: bond+hub."
-187,confighub.si,technology,69.8,90,86,73,12,69,70,2026-10-13T01:33:35Z,2026-10-13T06:30:33Z,"Strengths: brand 90, demand 86; weakness: hack 12. TM not yet screened. Seed: config+hub."
-188,configlab.si,technology,69.8,90,86,73,12,69,70,2026-10-13T01:33:36Z,2026-10-13T06:30:39Z,"Strengths: brand 90, demand 86; weakness: hack 12. TM not yet screened. Seed: config+lab."
-189,cypherlab.si,technology,69.8,90,86,73,12,69,70,2026-10-13T01:36:28Z,2026-10-13T06:49:01Z,"Strengths: brand 90, demand 86; weakness: hack 12. TM not yet screened. Seed: cypher+lab."
-190,embedmesh.si,ai,69.8,87,88,73,12,71,70,2026-10-13T01:43:02Z,2026-10-13T07:10:42Z,"Strengths: brand 87, demand 88; weakness: hack 12. TM not yet screened. Seed: embed+mesh."
-191,imagelink.si,ai,69.8,87,88,73,12,71,70,2026-10-13T02:25:48Z,2026-10-13T07:24:26Z,"Strengths: brand 87, demand 88; weakness: hack 12. TM not yet screened. Seed: image+link."
-192,loanvault.si,business_finance,69.8,88,86,75,12,70,70,2026-10-13T03:03:03Z,2026-10-13T07:36:05Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM not yet screened. Seed: loan+vault."
-193,queryflow.si,technology,69.8,90,86,73,12,69,70,2026-10-13T03:52:13Z,2026-10-13T09:01:30Z,"Strengths: brand 90, demand 86; weakness: hack 12. TM not yet screened. Seed: query+flow."
-194,roboorbit.si,ai,69.8,87,88,73,12,71,70,2026-10-13T04:04:57Z,2026-10-13T09:09:33Z,"Strengths: brand 87, demand 88; weakness: hack 12. TM not yet screened. Seed: robo+orbit."
-195,semaforge.si,ai,69.8,87,88,73,12,71,70,2026-10-13T04:11:20Z,2026-10-13T09:12:27Z,"Strengths: brand 87, demand 88; weakness: hack 12. TM not yet screened. Seed: semantic+forge."
-196,senticore.si,ai,69.8,87,88,73,12,71,70,2026-10-13T04:13:38Z,2026-10-13T09:14:28Z,"Strengths: brand 87, demand 88; weakness: hack 12. TM not yet screened. Seed: senti+core."
-197,brena.si,dictionary,69.7,92,68,95,12,67,70,2026-10-13T01:25:57Z,2026-10-13T05:46:58Z,"Strengths: brand 92, shortness 95; weakness: hack 12. TM not yet screened. Seed: bren+a."
-198,auditdesk.si,business_finance,69.7,89,86,73,12,70,70,2026-10-13T01:21:41Z,2026-10-13T05:28:36Z,"Strengths: brand 89, demand 86; weakness: hack 12. TM not yet screened. Seed: audit+desk."
-199,optionhub.si,business_finance,69.7,89,86,73,12,70,70,2026-10-13T03:36:52Z,2026-10-13T08:34:21Z,"Strengths: brand 89, demand 86; weakness: hack 12. TM not yet screened. Seed: option+hub."
-200,locklab.si,technology,69.6,82,86,85,12,69,70,2026-10-13T03:03:05Z,2026-10-13T07:36:07Z,"Strengths: brand 82, demand 86; weakness: hack 12. TM not yet screened. Seed: lock+lab."
-201,querygrid.si,technology,69.6,89,86,73,12,69,70,2026-10-13T03:52:15Z,2026-10-13T09:01:32Z,"Strengths: brand 89, demand 86; weakness: hack 12. TM not yet screened. Seed: query+grid."
-202,jewelbox.si,consumer_brands,69.5,85,81,78,12,77,70,2026-10-13T02:31:54Z,2026-10-13T07:26:39Z,"Strengths: brand 85, demand 81; weakness: hack 12. TM not yet screened. Seed: jewel+box."
-203,belium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T01:23:55Z,2026-10-13T05:36:36Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: bel+ium."
-204,calium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T01:27:18Z,2026-10-13T05:51:40Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: cal+ium."
-205,darium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T01:36:54Z,2026-10-13T07:04:53Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: dar+ium."
-206,delium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T01:39:24Z,2026-10-13T07:07:04Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: del+ium."
-207,dorium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T01:41:16Z,2026-10-13T07:09:05Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: dor+ium."
-208,falium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T01:45:15Z,2026-10-13T07:13:50Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: fal+ium."
-209,fenium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T01:45:58Z,2026-10-13T07:14:30Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: fen+ium."
-210,ferium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T01:46:18Z,2026-10-13T07:15:04Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: fer+ium."
-211,herium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T02:22:38Z,2026-10-13T07:23:10Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: her+ium."
-212,karium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T02:33:27Z,2026-10-13T07:27:13Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: kar+ium."
-213,kelium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T02:34:55Z,2026-10-13T07:28:15Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: kel+ium."
-214,larium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T02:40:38Z,2026-10-13T07:30:41Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: lar+ium."
-215,lenium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T02:45:04Z,2026-10-13T07:32:27Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: len+ium."
-216,lorium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T03:05:13Z,2026-10-13T07:37:11Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: lor+ium."
-217,narium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T03:23:44Z,2026-10-13T08:19:52Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: nar+ium."
-218,nelium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T03:24:52Z,2026-10-13T08:21:43Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: nel+ium."
-219,norium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T03:32:47Z,2026-10-13T08:30:53Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: nor+ium."
-220,palium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T03:38:50Z,2026-10-13T08:36:19Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: pal+ium."
-221,parium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T03:40:06Z,2026-10-13T08:38:02Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: par+ium."
-222,pelium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T03:42:11Z,2026-10-13T08:56:10Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: pel+ium."
-223,ralium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T03:53:19Z,2026-10-13T09:02:10Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: ral+ium."
-224,ranium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T03:54:09Z,2026-10-13T09:02:52Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: ran+ium."
-225,relium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T03:58:29Z,2026-10-13T09:05:31Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: rel+ium."
-226,revium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:01:46Z,2026-10-13T09:07:46Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: rev+ium."
-227,selium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:10:50Z,2026-10-13T09:12:03Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: sel+ium."
-228,talium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:28:13Z,2026-10-13T09:32:26Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: tal+ium."
-229,telium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:29:55Z,2026-10-13T09:34:48Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: tel+ium."
-230,terium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:31:45Z,2026-10-13T09:37:55Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: ter+ium."
-231,tolium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:35:12Z,2026-10-13T09:42:26Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: tol+ium."
-232,torium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:36:07Z,2026-10-13T09:44:05Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: tor+ium."
-233,varium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:46:44Z,2026-10-13T09:50:16Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: var+ium."
-234,velium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:48:38Z,2026-10-13T09:52:09Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: vel+ium."
-235,venium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:49:41Z,2026-10-13T09:53:47Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: ven+ium."
-236,verium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:50:43Z,2026-10-13T09:55:27Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: ver+ium."
-237,vorium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:55:15Z,2026-10-13T10:01:50Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: vor+ium."
-238,wenium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:56:55Z,2026-10-13T10:04:16Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: wen+ium."
-239,zalium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T04:59:09Z,2026-10-13T10:08:24Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: zal+ium."
-240,zenium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T05:00:11Z,2026-10-13T10:10:00Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: zen+ium."
-241,zorium.si,invented,69.4,93,68,90,12,68,70,2026-10-13T05:01:43Z,2026-10-13T10:11:25Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: zor+ium."
-242,bondindex.si,business_finance,69.4,88,86,73,12,70,70,2026-10-13T01:25:23Z,2026-10-13T05:45:58Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM not yet screened. Seed: bond+index."
-243,budgethub.si,business_finance,69.4,88,86,73,12,70,70,2026-10-13T01:26:39Z,2026-10-13T05:50:04Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM not yet screened. Seed: budget+hub."
-244,coverdesk.si,business_finance,69.4,88,86,73,12,70,70,2026-10-13T01:34:56Z,2026-10-13T06:39:50Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM not yet screened. Seed: cover+desk."
-245,forexdesk.si,business_finance,69.4,88,86,73,12,70,70,2026-10-13T01:48:13Z,2026-10-13T07:16:38Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM not yet screened. Seed: forex+desk."
-246,hedgeflow.si,business_finance,69.4,88,86,73,12,70,70,2026-10-13T02:20:15Z,2026-10-13T07:21:42Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM not yet screened. Seed: hedge+flow."
-247,remitdesk.si,business_finance,69.4,88,86,73,12,70,70,2026-10-13T03:58:49Z,2026-10-13T09:05:45Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM not yet screened. Seed: remit+desk."
-248,walletlab.si,technology,69.4,86,89,73,12,69,70,2026-10-13T04:55:59Z,2026-10-13T10:02:35Z,"Strengths: brand 86, demand 89; weakness: hack 12. TM not yet screened. Seed: wallet+lab."
-249,daral.si,invented,69.3,88,68,95,12,71,70,2026-10-13T01:36:42Z,2026-10-13T07:04:33Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: dar+al."
-250,helal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T02:20:32Z,2026-10-13T07:21:54Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: hel+al."
-251,karal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T02:32:55Z,2026-10-13T07:26:53Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: kar+al."
-252,kelal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T02:34:15Z,2026-10-13T07:27:51Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: kel+al."
-253,lanal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T02:38:04Z,2026-10-13T07:28:49Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: lan+al."
-254,laral.si,invented,69.3,88,68,95,12,71,70,2026-10-13T02:39:58Z,2026-10-13T07:30:21Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: lar+al."
-255,lenal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T02:44:06Z,2026-10-13T07:31:51Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: len+al."
-256,linal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T02:47:12Z,2026-10-13T07:32:55Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: lin+al."
-257,lisal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T02:50:21Z,2026-10-13T07:34:50Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: lis+al."
-258,melal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T03:10:07Z,2026-10-13T07:39:01Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: mel+al."
-259,milal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T03:14:47Z,2026-10-13T07:58:55Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: mil+al."
-260,molal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T03:18:21Z,2026-10-13T08:11:38Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: mol+al."
-261,naral.si,invented,69.3,88,68,95,12,71,70,2026-10-13T03:23:18Z,2026-10-13T08:18:58Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: nar+al."
-262,nelal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T03:24:26Z,2026-10-13T08:20:46Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: nel+al."
-263,pelal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T03:41:43Z,2026-10-13T08:55:44Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: pel+al."
-264,ranal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T03:53:41Z,2026-10-13T09:02:26Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: ran+al."
-265,relal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T03:57:47Z,2026-10-13T09:04:54Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: rel+al."
-266,selal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T04:10:26Z,2026-10-13T09:11:45Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: sel+al."
-267,silal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T04:17:04Z,2026-10-13T09:16:56Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: sil+al."
-268,solal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T04:19:43Z,2026-10-13T09:20:33Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: sol+al."
-269,telal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T04:29:27Z,2026-10-13T09:33:54Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: tel+al."
-270,tolal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T04:34:44Z,2026-10-13T09:41:18Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: tol+al."
-271,varal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T04:46:14Z,2026-10-13T09:48:52Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: var+al."
-272,velal.si,invented,69.3,88,68,95,12,71,70,2026-10-13T04:48:12Z,2026-10-13T09:51:18Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: vel+al."
-273,audioscan.si,technology,69.3,88,86,73,12,69,70,2026-10-13T01:21:28Z,2026-10-13T05:23:02Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM not yet screened. Seed: audio+scan."
-274,ledgerhub.si,technology,69.3,88,86,73,12,69,70,2026-10-13T02:43:34Z,2026-10-13T07:31:45Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM not yet screened. Seed: ledger+hub."
-275,sensorhub.si,technology,69.3,88,86,73,12,69,70,2026-10-13T04:13:24Z,2026-10-13T09:14:18Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM not yet screened. Seed: sensor+hub."
-276,sensorlab.si,technology,69.3,88,86,73,12,69,70,2026-10-13T04:13:26Z,2026-10-13T09:14:20Z,"Strengths: brand 88, demand 86; weakness: hack 12. TM not yet screened. Seed: sensor+lab."
-277,genal.si,dictionary,69.2,90,68,95,12,67,70,2026-10-13T01:50:12Z,2026-10-13T07:18:33Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: gen+al."
-278,neral.si,dictionary,69.2,90,68,95,12,67,70,2026-10-13T03:25:26Z,2026-10-13T08:22:38Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: ner+al."
-279,venal.si,dictionary,69.2,90,68,95,12,67,70,2026-10-13T04:49:00Z,2026-10-13T09:52:27Z,"Strengths: brand 90, shortness 95; weakness: hack 12. TM not yet screened. Seed: ven+al."
-280,alloylab.si,emerging_industries,69.2,85,84,78,12,71,70,2026-10-13T01:19:10Z,2026-10-13T05:20:19Z,"Strengths: brand 85, demand 84; weakness: hack 12. TM not yet screened. Seed: alloy+lab."
-281,desalhub.si,emerging_industries,69.2,85,84,78,12,71,70,2026-10-13T01:39:59Z,2026-10-13T07:08:09Z,"Strengths: brand 85, demand 84; weakness: hack 12. TM not yet screened. Seed: desal+hub."
-282,hydrolab.si,emerging_industries,69.2,85,84,78,12,71,70,2026-10-13T02:24:38Z,2026-10-13T07:23:56Z,"Strengths: brand 85, demand 84; weakness: hack 12. TM not yet screened. Seed: hydro+lab."
-283,lidarhub.si,emerging_industries,69.2,85,84,78,12,71,70,2026-10-13T02:46:48Z,2026-10-13T07:32:47Z,"Strengths: brand 85, demand 84; weakness: hack 12. TM not yet screened. Seed: lidar+hub."
-284,tidalhub.si,emerging_industries,69.2,85,84,78,12,71,70,2026-10-13T04:33:13Z,2026-10-13T09:39:51Z,"Strengths: brand 85, demand 84; weakness: hack 12. TM not yet screened. Seed: tidal+hub."
-285,yogawear.si,consumer_brands,69.2,84,81,78,12,77,70,2026-10-13T04:58:35Z,2026-10-13T10:07:20Z,"Strengths: brand 84, demand 81; weakness: hack 12. TM not yet screened. Seed: yoga+wear."
-286,parcelbox.si,consumer_brands,69.2,90,81,73,12,72,70,2026-10-13T03:39:38Z,2026-10-13T08:36:56Z,"Strengths: brand 90, demand 81; weakness: hack 12. TM not yet screened. Seed: parcel+box."
-287,parcelhub.si,consumer_brands,69.2,90,81,73,12,72,70,2026-10-13T03:39:42Z,2026-10-13T08:37:10Z,"Strengths: brand 90, demand 81; weakness: hack 12. TM not yet screened. Seed: parcel+hub."
-288,belvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T01:24:04Z,2026-10-13T05:37:03Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: bel+via."
-289,brenal.si,invented,69.1,92,68,90,12,68,70,2026-10-13T01:25:58Z,2026-10-13T05:47:04Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: bren+al."
-290,brenia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T01:26:08Z,2026-10-13T05:48:04Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: bren+ia."
-291,brenio.si,invented,69.1,92,68,90,12,68,70,2026-10-13T01:26:12Z,2026-10-13T05:48:28Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: bren+io."
-292,celvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T01:29:05Z,2026-10-13T06:07:52Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: cel+via."
-293,delvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T01:39:33Z,2026-10-13T07:07:14Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: del+via."
-294,dorvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T01:41:30Z,2026-10-13T07:09:17Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: dor+via."
-295,fenvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T01:46:05Z,2026-10-13T07:14:42Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: fen+via."
-296,fervia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T01:46:28Z,2026-10-13T07:15:18Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: fer+via."
-297,finium.si,invented,69.1,92,68,90,12,68,70,2026-10-13T01:47:05Z,2026-10-13T07:15:52Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: fin+ium."
-298,genvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T02:13:59Z,2026-10-13T07:19:40Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: gen+via."
-299,hervia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T02:23:07Z,2026-10-13T07:23:24Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: her+via."
-300,kelvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T02:35:17Z,2026-10-13T07:28:27Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: kel+via."
-301,lenvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T02:45:24Z,2026-10-13T07:32:33Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: len+via."
-302,linium.si,invented,69.1,92,68,90,12,68,70,2026-10-13T02:49:40Z,2026-10-13T07:34:34Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: lin+ium."
-303,lisium.si,invented,69.1,92,68,90,12,68,70,2026-10-13T02:50:59Z,2026-10-13T07:35:16Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: lis+ium."
-304,lorvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:05:28Z,2026-10-13T07:37:21Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: lor+via."
-305,lumvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:06:34Z,2026-10-13T07:37:45Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: lum+via."
-306,marium.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:08:54Z,2026-10-13T07:38:45Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: mar+ium."
-307,melium.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:10:33Z,2026-10-13T07:39:26Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: mel+ium."
-308,melvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:10:51Z,2026-10-13T07:39:34Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: mel+via."
-309,merium.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:13:53Z,2026-10-13T07:54:45Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: mer+ium."
-310,mervia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:14:11Z,2026-10-13T07:56:20Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: mer+via."
-311,molium.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:18:49Z,2026-10-13T08:12:41Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: mol+ium."
-312,molvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:19:03Z,2026-10-13T08:13:15Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: mol+via."
-313,monium.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:19:37Z,2026-10-13T08:13:56Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: mon+ium."
-314,morium.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:20:23Z,2026-10-13T08:15:10Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: mor+ium."
-315,morvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:20:49Z,2026-10-13T08:16:06Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: mor+via."
-316,nelvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:25:06Z,2026-10-13T08:22:18Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: nel+via."
-317,nirium.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:31:25Z,2026-10-13T08:29:02Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: nir+ium."
-318,pelvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:42:25Z,2026-10-13T08:56:22Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: pel+via."
-319,pervia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:43:46Z,2026-10-13T08:57:18Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: per+via."
-320,relvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:58:45Z,2026-10-13T09:05:43Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: rel+via."
-321,renvia.si,invented,69.1,92,68,90,12,68,70,2026-10-13T03:59:52Z,2026-10-13T09:06:29Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: ren+via."
-322,rinium.si,invented,69.1,92,68,90,12,68,70,2026-10-13T04:02:48Z,2026-10-13T09:08:30Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: rin+ium."
-323,yogagear.si,consumer_brands,69.0,83,81,78,12,77,70,2026-10-13T04:58:31Z,2026-10-13T10:07:18Z,"Strengths: brand 83, demand 81; weakness: hack 12. TM not yet screened. Seed: yoga+gear."
-324,assetdesk.si,business_finance,69.0,86,86,73,12,70,70,2026-10-13T01:20:19Z,2026-10-13T05:21:07Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM not yet screened. Seed: asset+desk."
-325,denimwear.si,consumer_brands,69.0,89,81,73,12,72,70,2026-10-13T01:39:41Z,2026-10-13T07:07:47Z,"Strengths: brand 89, demand 81; weakness: hack 12. TM not yet screened. Seed: denim+wear."
-326,hedgedesk.si,business_finance,69.0,86,86,73,12,70,70,2026-10-13T02:20:14Z,2026-10-13T07:21:40Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM not yet screened. Seed: hedge+desk."
-327,opticlink.si,technology,69.0,87,86,73,12,69,70,2026-10-13T03:36:38Z,2026-10-13T08:33:51Z,"Strengths: brand 87, demand 86; weakness: hack 12. TM not yet screened. Seed: optic+link."
-328,geriscan.si,health_science,68.9,86,82,78,12,70,70,2026-10-13T02:14:18Z,2026-10-13T07:19:52Z,"Strengths: brand 86, demand 82; weakness: hack 12. TM not yet screened. Seed: geri+scan."
-329,hemoscan.si,health_science,68.9,86,82,78,12,70,70,2026-10-13T02:22:01Z,2026-10-13T07:22:46Z,"Strengths: brand 86, demand 82; weakness: hack 12. TM not yet screened. Seed: hemo+scan."
-330,serumlab.si,health_science,68.9,86,82,78,12,70,70,2026-10-13T04:15:22Z,2026-10-13T09:16:06Z,"Strengths: brand 86, demand 82; weakness: hack 12. TM not yet screened. Seed: serum+lab."
-331,tumorlab.si,health_science,68.9,86,82,78,12,70,70,2026-10-13T04:43:44Z,2026-10-13T09:46:33Z,"Strengths: brand 86, demand 82; weakness: hack 12. TM not yet screened. Seed: tumor+lab."
-332,galium.si,dictionary,68.8,93,68,90,12,64,70,2026-10-13T01:49:37Z,2026-10-13T07:18:05Z,"Strengths: brand 93, demand 68; weakness: hack 12. TM not yet screened. Seed: gal+ium."
-333,windhub.si,emerging_industries,68.8,82,84,85,12,66,70,2026-10-13T04:57:25Z,2026-10-13T10:05:24Z,"Strengths: brand 82, demand 84; weakness: hack 12. TM not yet screened. Seed: wind+hub."
-334,windlab.si,emerging_industries,68.8,82,84,85,12,66,70,2026-10-13T04:57:27Z,2026-10-13T10:05:26Z,"Strengths: brand 82, demand 84; weakness: hack 12. TM not yet screened. Seed: wind+lab."
-335,authlink.si,technology,68.8,82,86,80,12,69,70,2026-10-13T01:21:51Z,2026-10-13T05:28:54Z,"Strengths: brand 82, demand 86; weakness: hack 12. TM not yet screened. Seed: auth+link."
-336,spendhub.si,business_finance,68.8,81,86,80,12,70,70,2026-10-13T04:21:53Z,2026-10-13T09:22:49Z,"Strengths: brand 81, demand 86; weakness: hack 12. TM not yet screened. Seed: spend+hub."
-337,campushub.si,consumer_brands,68.8,88,81,73,12,72,70,2026-10-13T01:27:34Z,2026-10-13T05:52:40Z,"Strengths: brand 88, demand 81; weakness: hack 12. TM not yet screened. Seed: campus+hub."
-338,dramashow.si,consumer_brands,68.8,88,81,73,12,72,70,2026-10-13T01:41:41Z,2026-10-13T07:09:48Z,"Strengths: brand 88, demand 81; weakness: hack 12. TM not yet screened. Seed: drama+show."
-339,fleetdock.si,emerging_industries,68.8,88,84,75,12,66,70,2026-10-13T01:47:38Z,2026-10-13T07:16:10Z,"Strengths: brand 88, demand 84; weakness: hack 12. TM not yet screened. Seed: fleet+dock."
-340,linenwear.si,consumer_brands,68.8,88,81,73,12,72,70,2026-10-13T02:47:54Z,2026-10-13T07:33:24Z,"Strengths: brand 88, demand 81; weakness: hack 12. TM not yet screened. Seed: linen+wear."
-341,serverops.si,technology,68.8,86,86,73,12,69,70,2026-10-13T04:15:42Z,2026-10-13T09:16:16Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM not yet screened. Seed: server+ops."
-342,belal.si,dictionary,68.7,88,68,95,12,67,70,2026-10-13T01:23:42Z,2026-10-13T05:30:51Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: bel+al."
-343,celal.si,dictionary,68.7,88,68,95,12,67,70,2026-10-13T01:28:39Z,2026-10-13T06:00:52Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: cel+al."
-344,delal.si,dictionary,68.7,88,68,95,12,67,70,2026-10-13T01:39:08Z,2026-10-13T07:06:38Z,"Strengths: brand 88, shortness 95; weakness: hack 12. TM not yet screened. Seed: del+al."
-345,cobothub.si,emerging_industries,68.7,83,84,78,12,71,70,2026-10-13T01:31:44Z,2026-10-13T06:14:52Z,"Strengths: brand 83, demand 84; weakness: hack 12. TM not yet screened. Seed: cobot+hub."
-346,cobotops.si,emerging_industries,68.7,83,84,78,12,71,70,2026-10-13T01:31:47Z,2026-10-13T06:15:04Z,"Strengths: brand 83, demand 84; weakness: hack 12. TM not yet screened. Seed: cobot+ops."
-347,desallab.si,emerging_industries,68.7,83,84,78,12,71,70,2026-10-13T01:40:00Z,2026-10-13T07:08:11Z,"Strengths: brand 83, demand 84; weakness: hack 12. TM not yet screened. Seed: desal+lab."
-348,lidarlab.si,emerging_industries,68.7,83,84,78,12,71,70,2026-10-13T02:46:51Z,2026-10-13T07:32:49Z,"Strengths: brand 83, demand 84; weakness: hack 12. TM not yet screened. Seed: lidar+lab."
-349,tidallab.si,emerging_industries,68.7,83,84,78,12,71,70,2026-10-13T04:33:15Z,2026-10-13T09:39:53Z,"Strengths: brand 83, demand 84; weakness: hack 12. TM not yet screened. Seed: tidal+lab."
-350,lidarmesh.si,emerging_industries,68.7,89,84,73,12,66,70,2026-10-13T02:46:55Z,2026-10-13T07:32:51Z,"Strengths: brand 89, demand 84; weakness: hack 12. TM not yet screened. Seed: lidar+mesh."
-351,helixlab.si,health_science,68.6,85,82,78,12,70,70,2026-10-13T02:21:20Z,2026-10-13T07:22:22Z,"Strengths: brand 85, demand 82; weakness: hack 12. TM not yet screened. Seed: helix+lab."
-352,bonddesk.si,business_finance,68.5,80,86,80,12,70,70,2026-10-13T01:25:21Z,2026-10-13T05:45:46Z,"Strengths: brand 80, demand 86; weakness: hack 12. TM not yet screened. Seed: bond+desk."
-353,carddesk.si,business_finance,68.5,80,86,80,12,70,70,2026-10-13T01:28:08Z,2026-10-13T05:54:22Z,"Strengths: brand 80, demand 86; weakness: hack 12. TM not yet screened. Seed: card+desk."
-354,funddesk.si,business_finance,68.5,80,86,80,12,70,70,2026-10-13T01:48:44Z,2026-10-13T07:17:10Z,"Strengths: brand 80, demand 86; weakness: hack 12. TM not yet screened. Seed: fund+desk."
-355,loanflow.si,business_finance,68.5,80,86,80,12,70,70,2026-10-13T03:02:53Z,2026-10-13T07:35:57Z,"Strengths: brand 80, demand 86; weakness: hack 12. TM not yet screened. Seed: loan+flow."
-356,bakerybox.si,consumer_brands,68.5,87,81,73,12,72,70,2026-10-13T01:22:56Z,2026-10-13T05:30:06Z,"Strengths: brand 87, demand 81; weakness: hack 12. TM not yet screened. Seed: bakery+box."
-357,coffeebox.si,consumer_brands,68.5,87,81,73,12,72,70,2026-10-13T01:32:00Z,2026-10-13T06:15:28Z,"Strengths: brand 87, demand 81; weakness: hack 12. TM not yet screened. Seed: coffee+box."
-358,dramaclub.si,consumer_brands,68.5,87,81,73,12,72,70,2026-10-13T01:41:39Z,2026-10-13T07:09:44Z,"Strengths: brand 87, demand 81; weakness: hack 12. TM not yet screened. Seed: drama+club."
-359,recipebox.si,consumer_brands,68.5,87,81,73,12,72,70,2026-10-13T03:56:40Z,2026-10-13T09:04:14Z,"Strengths: brand 87, demand 81; weakness: hack 12. TM not yet screened. Seed: recipe+box."
-360,pedslab.si,health_science,68.4,83,82,85,12,65,70,2026-10-13T03:41:37Z,2026-10-13T08:55:42Z,"Strengths: brand 83, demand 82; weakness: hack 12. TM not yet screened. Seed: peds+lab."
-361,reveler.si,dictionary,68.4,88,73,83,12,70,70,2026-10-13T04:01:06Z,2026-10-13T09:07:03Z,"Strengths: brand 88, demand 73; weakness: hack 12. TM not yet screened. Seed: reveler."
-362,graphhub.si,technology,68.4,80,86,80,12,69,70,2026-10-13T02:17:29Z,2026-10-13T07:20:16Z,"Strengths: brand 80, demand 86; weakness: hack 12. TM not yet screened. Seed: graph+hub."
-363,hemocell.si,health_science,68.4,84,82,78,12,70,70,2026-10-13T02:21:53Z,2026-10-13T07:22:40Z,"Strengths: brand 84, demand 82; weakness: hack 12. TM not yet screened. Seed: hemo+cell."
-364,rehablab.si,health_science,68.4,84,82,78,12,70,70,2026-10-13T03:57:37Z,2026-10-13T09:04:44Z,"Strengths: brand 84, demand 82; weakness: hack 12. TM not yet screened. Seed: rehab+lab."
-365,alloygrid.si,emerging_industries,68.4,88,84,73,12,66,70,2026-10-13T01:19:09Z,2026-10-13T05:20:17Z,"Strengths: brand 88, demand 84; weakness: hack 12. TM not yet screened. Seed: alloy+grid."
-366,alloymesh.si,emerging_industries,68.4,88,84,73,12,66,70,2026-10-13T01:19:11Z,2026-10-13T05:20:21Z,"Strengths: brand 88, demand 84; weakness: hack 12. TM not yet screened. Seed: alloy+mesh."
-367,carbonhub.si,emerging_industries,68.4,88,84,73,12,66,70,2026-10-13T01:28:05Z,2026-10-13T05:54:16Z,"Strengths: brand 88, demand 84; weakness: hack 12. TM not yet screened. Seed: carbon+hub."
-368,cobotmesh.si,emerging_industries,68.4,88,84,73,12,66,70,2026-10-13T01:31:46Z,2026-10-13T06:14:58Z,"Strengths: brand 88, demand 84; weakness: hack 12. TM not yet screened. Seed: cobot+mesh."
-369,dronescan.si,emerging_industries,68.4,88,84,73,12,66,70,2026-10-13T01:41:53Z,2026-10-13T07:09:56Z,"Strengths: brand 88, demand 84; weakness: hack 12. TM not yet screened. Seed: drone+scan."
-370,fusionhub.si,emerging_industries,68.4,88,84,73,12,66,70,2026-10-13T01:49:02Z,2026-10-13T07:17:31Z,"Strengths: brand 88, demand 84; weakness: hack 12. TM not yet screened. Seed: fusion+hub."
-371,hydrocell.si,emerging_industries,68.4,88,84,73,12,66,70,2026-10-13T02:24:17Z,2026-10-13T07:23:44Z,"Strengths: brand 88, demand 84; weakness: hack 12. TM not yet screened. Seed: hydro+cell."
-372,orbitdock.si,emerging_industries,68.4,88,84,73,12,66,70,2026-10-13T03:37:12Z,2026-10-13T08:34:41Z,"Strengths: brand 88, demand 84; weakness: hack 12. TM not yet screened. Seed: orbit+dock."
-373,tidaldock.si,emerging_industries,68.4,88,84,73,12,66,70,2026-10-13T04:33:09Z,2026-10-13T09:39:37Z,"Strengths: brand 88, demand 84; weakness: hack 12. TM not yet screened. Seed: tidal+dock."
-374,silkwear.si,consumer_brands,68.3,82,81,80,12,72,70,2026-10-13T04:17:52Z,2026-10-13T09:18:25Z,"Strengths: brand 82, demand 81; weakness: hack 12. TM not yet screened. Seed: silk+wear."
-375,querystack.si,technology,68.3,87,86,68,12,69,70,2026-10-13T03:52:21Z,2026-10-13T09:01:34Z,"Strengths: brand 87, demand 86; weakness: hack 12. TM not yet screened. Seed: query+stack."
-376,videostack.si,technology,68.3,87,86,68,12,69,70,2026-10-13T04:51:27Z,2026-10-13T09:56:02Z,"Strengths: brand 87, demand 86; weakness: hack 12. TM not yet screened. Seed: video+stack."
-377,gynscan.si,health_science,68.2,82,82,85,12,65,70,2026-10-13T02:19:13Z,2026-10-13T07:21:04Z,"Strengths: brand 82, demand 82; weakness: hack 12. TM not yet screened. Seed: gyn+scan."
-378,riskdesk.si,business_finance,68.2,79,86,80,12,70,70,2026-10-13T04:03:10Z,2026-10-13T09:08:44Z,"Strengths: brand 79, demand 86; weakness: hack 12. TM not yet screened. Seed: risk+desk."
-379,biopsylab.si,health_science,68.2,89,82,73,12,65,70,2026-10-13T01:24:47Z,2026-10-13T05:39:09Z,"Strengths: brand 89, demand 82; weakness: hack 12. TM not yet screened. Seed: biopsy+lab."
-380,cardiolab.si,health_science,68.2,89,82,73,12,65,70,2026-10-13T01:28:12Z,2026-10-13T05:54:40Z,"Strengths: brand 89, demand 82; weakness: hack 12. TM not yet screened. Seed: cardio+lab."
-381,dronedock.si,emerging_industries,68.2,87,84,73,12,66,70,2026-10-13T01:41:48Z,2026-10-13T07:09:52Z,"Strengths: brand 87, demand 84; weakness: hack 12. TM not yet screened. Seed: drone+dock."
-382,hydrogrid.si,emerging_industries,68.2,87,84,73,12,66,70,2026-10-13T02:24:35Z,2026-10-13T07:23:54Z,"Strengths: brand 87, demand 84; weakness: hack 12. TM not yet screened. Seed: hydro+grid."
-383,lasermesh.si,emerging_industries,68.2,87,84,73,12,66,70,2026-10-13T02:41:19Z,2026-10-13T07:31:01Z,"Strengths: brand 87, demand 84; weakness: hack 12. TM not yet screened. Seed: laser+mesh."
-384,myelinlab.si,health_science,68.2,89,82,73,12,65,70,2026-10-13T03:22:52Z,2026-10-13T08:18:35Z,"Strengths: brand 89, demand 82; weakness: hack 12. TM not yet screened. Seed: myelin+lab."
-385,covervault.si,business_finance,68.2,86,86,68,12,70,70,2026-10-13T01:35:02Z,2026-10-13T06:40:14Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM not yet screened. Seed: cover+vault."
-386,hedgevault.si,business_finance,68.2,86,86,68,12,70,70,2026-10-13T02:20:29Z,2026-10-13T07:21:52Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM not yet screened. Seed: hedge+vault."
-387,optiondesk.si,business_finance,68.2,86,86,68,12,70,70,2026-10-13T03:36:48Z,2026-10-13T08:34:07Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM not yet screened. Seed: option+desk."
-388,pensionhub.si,business_finance,68.2,86,86,68,12,70,70,2026-10-13T03:42:35Z,2026-10-13T08:56:28Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM not yet screened. Seed: pension+hub."
-389,profitdesk.si,business_finance,68.2,86,86,68,12,70,70,2026-10-13T03:47:58Z,2026-10-13T08:58:53Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM not yet screened. Seed: profit+desk."
-390,remitvault.si,business_finance,68.2,86,86,68,12,70,70,2026-10-13T03:58:59Z,2026-10-13T09:05:55Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM not yet screened. Seed: remit+vault."
-391,walletlink.si,technology,68.2,84,89,68,12,69,70,2026-10-13T04:56:01Z,2026-10-13T10:02:37Z,"Strengths: brand 84, demand 89; weakness: hack 12. TM not yet screened. Seed: wallet+link."
-392,roguish.si,dictionary,68.0,94,73,85,12,56,70,2026-10-13T04:07:40Z,2026-10-13T09:11:07Z,"Strengths: brand 94, demand 73; weakness: hack 12. TM not yet screened. Seed: roguish."
-393,stoical.si,dictionary,68.0,94,73,85,12,56,70,2026-10-13T04:22:43Z,2026-10-13T09:23:47Z,"Strengths: brand 94, demand 73; weakness: hack 12. TM not yet screened. Seed: stoical."
-394,walkout.si,dictionary,68.0,94,73,85,12,56,70,2026-10-13T04:55:53Z,2026-10-13T10:02:20Z,"Strengths: brand 94, demand 73; weakness: hack 12. TM not yet screened. Seed: walkout."
-395,scentbox.si,consumer_brands,68.0,81,81,80,12,72,70,2026-10-13T04:09:44Z,2026-10-13T09:11:33Z,"Strengths: brand 81, demand 81; weakness: hack 12. TM not yet screened. Seed: scent+box."
-396,alloycell.si,emerging_industries,68.0,86,84,73,12,66,70,2026-10-13T01:19:07Z,2026-10-13T05:20:13Z,"Strengths: brand 86, demand 84; weakness: hack 12. TM not yet screened. Seed: alloy+cell."
-397,angelforge.si,business_finance,68.0,85,86,68,12,70,70,2026-10-13T01:19:28Z,2026-10-13T05:20:31Z,"Strengths: brand 85, demand 86; weakness: hack 12. TM not yet screened. Seed: angel+forge."
-398,assetindex.si,business_finance,68.0,85,86,68,12,70,70,2026-10-13T01:20:22Z,2026-10-13T05:21:09Z,"Strengths: brand 85, demand 86; weakness: hack 12. TM not yet screened. Seed: asset+index."
-399,claimquote.si,business_finance,68.0,85,86,68,12,70,70,2026-10-13T01:30:54Z,2026-10-13T06:12:58Z,"Strengths: brand 85, demand 86; weakness: hack 12. TM not yet screened. Seed: claim+quote."
-400,claimvault.si,business_finance,68.0,84,86,70,12,70,70,2026-10-13T01:30:56Z,2026-10-13T06:13:10Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: claim+vault."
-401,equitydesk.si,business_finance,68.0,85,86,68,12,70,70,2026-10-13T01:44:09Z,2026-10-13T07:12:27Z,"Strengths: brand 85, demand 86; weakness: hack 12. TM not yet screened. Seed: equity+desk."
-402,expensehub.si,business_finance,68.0,85,86,68,12,70,70,2026-10-13T01:44:52Z,2026-10-13T07:13:17Z,"Strengths: brand 85, demand 86; weakness: hack 12. TM not yet screened. Seed: expense+hub."
-403,hedgetrack.si,business_finance,68.0,85,86,68,12,70,70,2026-10-13T02:20:28Z,2026-10-13T07:21:50Z,"Strengths: brand 85, demand 86; weakness: hack 12. TM not yet screened. Seed: hedge+track."
-404,loanledger.si,business_finance,68.0,85,86,68,12,70,70,2026-10-13T03:02:57Z,2026-10-13T07:35:59Z,"Strengths: brand 85, demand 86; weakness: hack 12. TM not yet screened. Seed: loan+ledger."
-405,opticforge.si,technology,68.0,86,86,68,12,69,70,2026-10-13T03:36:32Z,2026-10-13T08:33:45Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM not yet screened. Seed: optic+forge."
-406,paymentops.si,technology,68.0,86,86,68,12,69,70,2026-10-13T03:41:29Z,2026-10-13T08:55:40Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM not yet screened. Seed: payment+ops."
-407,privacyops.si,technology,68.0,86,86,68,12,69,70,2026-10-13T03:47:38Z,2026-10-13T08:58:45Z,"Strengths: brand 86, demand 86; weakness: hack 12. TM not yet screened. Seed: privacy+ops."
-408,serumcell.si,health_science,67.9,88,82,73,12,65,70,2026-10-13T04:15:20Z,2026-10-13T09:16:04Z,"Strengths: brand 88, demand 82; weakness: hack 12. TM not yet screened. Seed: serum+cell."
-409,cowhide.si,dictionary,67.8,94,73,83,12,56,70,2026-10-13T01:35:04Z,2026-10-13T06:40:20Z,"Strengths: brand 94, demand 73; weakness: hack 12. TM not yet screened. Seed: cowhide."
-410,fidgety.si,dictionary,67.8,94,73,83,12,56,70,2026-10-13T01:46:42Z,2026-10-13T07:15:34Z,"Strengths: brand 94, demand 73; weakness: hack 12. TM not yet screened. Seed: fidgety."
-411,leaning.si,dictionary,67.8,93,73,85,12,56,70,2026-10-13T02:42:51Z,2026-10-13T07:31:25Z,"Strengths: brand 93, demand 73; weakness: hack 12. TM not yet screened. Seed: leaning."
-412,powdery.si,dictionary,67.8,94,73,83,12,56,70,2026-10-13T03:46:43Z,2026-10-13T08:58:25Z,"Strengths: brand 94, demand 73; weakness: hack 12. TM not yet screened. Seed: powdery."
-413,shadowy.si,dictionary,67.8,94,73,83,12,56,70,2026-10-13T04:15:54Z,2026-10-13T09:16:20Z,"Strengths: brand 94, demand 73; weakness: hack 12. TM not yet screened. Seed: shadowy."
-414,networkops.si,technology,67.8,85,86,68,12,69,70,2026-10-13T03:26:20Z,2026-10-13T08:23:48Z,"Strengths: brand 85, demand 86; weakness: hack 12. TM not yet screened. Seed: network+ops."
-415,belami.si,dictionary,67.7,90,68,88,12,64,70,2026-10-13T01:23:43Z,2026-10-13T05:30:54Z,"Strengths: brand 90, demand 68; weakness: hack 12. TM not yet screened. Seed: bel+ami."
-416,belona.si,dictionary,67.7,90,68,88,12,64,70,2026-10-13T01:23:58Z,2026-10-13T05:36:45Z,"Strengths: brand 90, demand 68; weakness: hack 12. TM not yet screened. Seed: bel+ona."
-417,belova.si,dictionary,67.7,90,68,88,12,64,70,2026-10-13T01:24:00Z,2026-10-13T05:36:50Z,"Strengths: brand 90, demand 68; weakness: hack 12. TM not yet screened. Seed: bel+ova."
-418,delina.si,dictionary,67.7,90,68,88,12,64,70,2026-10-13T01:39:21Z,2026-10-13T07:06:58Z,"Strengths: brand 90, demand 68; weakness: hack 12. TM not yet screened. Seed: del+ina."
-419,dorina.si,dictionary,67.7,90,68,88,12,64,70,2026-10-13T01:41:14Z,2026-10-13T07:09:01Z,"Strengths: brand 90, demand 68; weakness: hack 12. TM not yet screened. Seed: dor+ina."
-420,genaro.si,dictionary,67.7,90,68,88,12,64,70,2026-10-13T01:50:15Z,2026-10-13T07:18:39Z,"Strengths: brand 90, demand 68; weakness: hack 12. TM not yet screened. Seed: gen+aro."
-421,lorina.si,dictionary,67.7,90,68,88,12,64,70,2026-10-13T03:05:09Z,2026-10-13T07:37:07Z,"Strengths: brand 90, demand 68; weakness: hack 12. TM not yet screened. Seed: lor+ina."
-422,merina.si,dictionary,67.7,90,68,88,12,64,70,2026-10-13T03:13:47Z,2026-10-13T07:54:43Z,"Strengths: brand 90, demand 68; weakness: hack 12. TM not yet screened. Seed: mer+ina."
-423,actuaryhub.si,business_finance,67.7,84,86,68,12,70,70,2026-10-13T01:12:05Z,2026-10-13T05:12:39Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: actuary+hub."
-424,budgetdesk.si,business_finance,67.7,84,86,68,12,70,70,2026-10-13T01:26:37Z,2026-10-13T05:49:52Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: budget+desk."
-425,creditdesk.si,business_finance,67.7,84,86,68,12,70,70,2026-10-13T01:35:29Z,2026-10-13T06:46:55Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: credit+desk."
-426,deposithub.si,business_finance,67.7,84,86,68,12,70,70,2026-10-13T01:39:47Z,2026-10-13T07:07:55Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: deposit+hub."
-427,invoiceops.si,business_finance,67.7,84,86,68,12,70,70,2026-10-13T02:31:28Z,2026-10-13T07:26:33Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: invoice+ops."
-428,loansignal.si,business_finance,67.7,84,86,68,12,70,70,2026-10-13T03:02:59Z,2026-10-13T07:36:01Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: loan+signal."
-429,payablehub.si,business_finance,67.7,84,86,68,12,70,70,2026-10-13T03:41:04Z,2026-10-13T08:55:21Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: payable+hub."
-430,vendordesk.si,business_finance,67.7,84,86,68,12,70,70,2026-10-13T04:49:10Z,2026-10-13T09:52:55Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: vendor+desk."
-431,gaseous.si,dictionary,67.6,92,73,85,12,56,70,2026-10-13T01:49:58Z,2026-10-13T07:18:31Z,"Strengths: brand 92, demand 73; weakness: hack 12. TM not yet screened. Seed: gaseous."
-432,raucous.si,dictionary,67.6,92,73,85,12,56,70,2026-10-13T03:54:33Z,2026-10-13T09:03:06Z,"Strengths: brand 92, demand 73; weakness: hack 12. TM not yet screened. Seed: raucous."
-433,tenuous.si,dictionary,67.6,92,73,85,12,56,70,2026-10-13T04:31:17Z,2026-10-13T09:36:48Z,"Strengths: brand 92, demand 73; weakness: hack 12. TM not yet screened. Seed: tenuous."
-434,subtenan.si,domain_hacks,67.6,72,60,78,82,44,70,2026-10-13T04:23:34Z,2026-10-13T09:24:37Z,"Strengths: brand 72, hack 82; weakness: resale 44. TM not yet screened. Seed: subtenancy."
-435,trekclub.si,consumer_brands,67.6,79,81,80,12,72,70,2026-10-13T04:43:09Z,2026-10-13T09:46:17Z,"Strengths: brand 79, demand 81; weakness: hack 12. TM not yet screened. Seed: trek+club."
-436,dosagelab.si,health_science,67.6,87,82,73,12,65,70,2026-10-13T01:41:31Z,2026-10-13T07:09:19Z,"Strengths: brand 87, demand 82; weakness: hack 12. TM not yet screened. Seed: dosage+lab."
-437,genomelab.si,health_science,67.6,87,82,73,12,65,70,2026-10-13T03:02:03Z,2026-10-13T07:19:12Z,"Strengths: brand 87, demand 82; weakness: hack 12. TM not yet screened. Seed: genome+lab."
-438,retinalab.si,health_science,67.6,87,82,73,12,65,70,2026-10-13T04:00:30Z,2026-10-13T09:06:35Z,"Strengths: brand 87, demand 82; weakness: hack 12. TM not yet screened. Seed: retina+lab."
-439,circuithub.si,technology,67.6,84,86,68,12,69,70,2026-10-13T01:30:38Z,2026-10-13T06:12:34Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: circuit+hub."
-440,clusterhub.si,technology,67.6,84,86,68,12,69,70,2026-10-13T01:31:35Z,2026-10-13T06:14:22Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: cluster+hub."
-441,clusterlab.si,technology,67.6,84,86,68,12,69,70,2026-10-13T01:31:36Z,2026-10-13T06:14:28Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: cluster+lab."
-442,ledgerlink.si,technology,67.6,84,86,68,12,69,70,2026-10-13T02:43:36Z,2026-10-13T07:31:47Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: ledger+link."
-443,sensorlink.si,technology,67.6,84,86,68,12,69,70,2026-10-13T04:13:28Z,2026-10-13T09:14:22Z,"Strengths: brand 84, demand 86; weakness: hack 12. TM not yet screened. Seed: sensor+link."
-444,askance.si,dictionary,67.5,93,73,83,12,56,70,2026-10-13T01:20:17Z,2026-10-13T05:21:05Z,"Strengths: brand 93, demand 73; weakness: hack 12. TM not yet screened. Seed: askance."
-445,elitism.si,dictionary,67.5,93,73,83,12,56,70,2026-10-13T01:42:38Z,2026-10-13T07:10:06Z,"Strengths: brand 93, demand 73; weakness: hack 12. TM not yet screened. Seed: elitism."
-446,jittery.si,dictionary,67.5,93,73,83,12,56,70,2026-10-13T02:32:12Z,2026-10-13T07:26:49Z,"Strengths: brand 93, demand 73; weakness: hack 12. TM not yet screened. Seed: jittery."
-447,naivety.si,dictionary,67.5,93,73,83,12,56,70,2026-10-13T03:23:04Z,2026-10-13T08:18:56Z,"Strengths: brand 93, demand 73; weakness: hack 12. TM not yet screened. Seed: naivety."
-448,soilgrid.si,emerging_industries,67.5,80,84,80,12,66,70,2026-10-13T04:19:37Z,2026-10-13T09:20:17Z,"Strengths: brand 80, demand 84; weakness: hack 12. TM not yet screened. Seed: soil+grid."
-449,stringen.si,domain_hacks,67.5,67,68,80,79,42,70,2026-10-13T04:23:11Z,2026-10-13T09:24:01Z,"Strengths: brand 67, demand 68; weakness: resale 42. TM not yet screened. Seed: stringency."
-450,riskvault.si,business_finance,67.5,82,86,75,12,65,70,2026-10-13T04:03:18Z,2026-10-13T09:08:48Z,"Strengths: brand 82, demand 86; weakness: hack 12. TM not yet screened. Seed: risk+vault."
-451,belara.si,dictionary,67.4,89,68,88,12,64,70,2026-10-13T01:23:44Z,2026-10-13T05:30:57Z,"Strengths: brand 89, demand 68; weakness: hack 12. TM not yet screened. Seed: bel+ara."
-452,calami.si,dictionary,67.4,89,68,88,12,64,70,2026-10-13T01:27:03Z,2026-10-13T05:50:22Z,"Strengths: brand 89, demand 68; weakness: hack 12. TM not yet screened. Seed: cal+ami."
-453,dorino.si,dictionary,67.4,89,68,88,12,64,70,2026-10-13T01:41:15Z,2026-10-13T07:09:03Z,"Strengths: brand 89, demand 68; weakness: hack 12. TM not yet screened. Seed: dor+ino."
-454,elette.si,dictionary,67.4,89,68,88,12,64,70,2026-10-13T01:42:37Z,2026-10-13T07:10:04Z,"Strengths: brand 89, demand 68; weakness: hack 12. TM not yet screened. Seed: el+ette."
-455,karena.si,dictionary,67.4,89,68,88,12,64,70,2026-10-13T02:33:10Z,2026-10-13T07:27:01Z,"Strengths: brand 89, demand 68; weakness: hack 12. TM not yet screened. Seed: kar+ena."
-456,larena.si,dictionary,67.4,89,68,88,12,64,70,2026-10-13T02:40:15Z,2026-10-13T07:30:29Z,"Strengths: brand 89, demand 68; weakness: hack 12. TM not yet screened. Seed: lar+ena."
-457,marena.si,dictionary,67.4,89,68,88,12,64,70,2026-10-13T03:08:30Z,2026-10-13T07:38:29Z,"Strengths: brand 89, demand 68; weakness: hack 12. TM not yet screened. Seed: mar+ena."
-458,melena.si,dictionary,67.4,89,68,88,12,64,70,2026-10-13T03:10:17Z,2026-10-13T07:39:09Z,"Strengths: brand 89, demand 68; weakness: hack 12. TM not yet screened. Seed: mel+ena."
-459,monina.si,dictionary,67.4,89,68,88,12,64,70,2026-10-13T03:19:33Z,2026-10-13T08:13:52Z,"Strengths: brand 89, demand 68; weakness: hack 12. TM not yet screened. Seed: mon+ina."
-460,dorelle.si,dictionary,67.4,92,68,83,12,64,70,2026-10-13T01:41:05Z,2026-10-13T07:08:45Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: dor+elle."
-461,monette.si,dictionary,67.4,92,68,83,12,64,70,2026-10-13T03:19:27Z,2026-10-13T08:13:38Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: mon+ette."
-462,valette.si,dictionary,67.4,92,68,83,12,64,70,2026-10-13T04:45:40Z,2026-10-13T09:48:14Z,"Strengths: brand 92, demand 68; weakness: hack 12. TM not yet screened. Seed: val+ette."
-463,gyration.si,dictionary,67.4,87,73,78,12,70,70,2026-10-13T02:19:17Z,2026-10-13T07:21:06Z,"Strengths: brand 87, demand 73; weakness: hack 12. TM not yet screened. Seed: gyration."
-464,enzymelab.si,health_science,67.4,86,82,73,12,65,70,2026-10-13T01:43:55Z,2026-10-13T07:12:11Z,"Strengths: brand 86, demand 82; weakness: hack 12. TM not yet screened. Seed: enzyme+lab."
-465,helixcell.si,health_science,67.4,86,82,73,12,65,70,2026-10-13T02:21:19Z,2026-10-13T07:22:20Z,"Strengths: brand 86, demand 82; weakness: hack 12. TM not yet screened. Seed: helix+cell."
-466,immunolab.si,health_science,67.4,86,82,73,12,65,70,2026-10-13T02:27:00Z,2026-10-13T07:25:04Z,"Strengths: brand 86, demand 82; weakness: hack 12. TM not yet screened. Seed: immuno+lab."
-467,plasmalab.si,health_science,67.4,86,82,73,12,65,70,2026-10-13T03:45:12Z,2026-10-13T08:57:51Z,"Strengths: brand 86, demand 82; weakness: hack 12. TM not yet screened. Seed: plasma+lab."
-468,brokerdesk.si,business_finance,67.4,83,86,68,12,70,70,2026-10-13T01:26:29Z,2026-10-13T05:49:22Z,"Strengths: brand 83, demand 86; weakness: hack 12. TM not yet screened. Seed: broker+desk."
-469,yieldindex.si,business_finance,67.4,83,86,68,12,70,70,2026-10-13T04:58:21Z,2026-10-13T10:06:50Z,"Strengths: brand 83, demand 86; weakness: hack 12. TM not yet screened. Seed: yield+index."
-470,privacylab.si,technology,67.3,83,86,68,12,69,70,2026-10-13T03:47:34Z,2026-10-13T08:58:41Z,"Strengths: brand 83, demand 86; weakness: hack 12. TM not yet screened. Seed: privacy+lab."
-471,storagelab.si,technology,67.3,83,86,68,12,69,70,2026-10-13T04:22:53Z,2026-10-13T09:23:53Z,"Strengths: brand 83, demand 86; weakness: hack 12. TM not yet screened. Seed: storage+lab."
-472,epaulet.si,dictionary,67.2,92,73,83,12,56,70,2026-10-13T01:44:01Z,2026-10-13T07:12:23Z,"Strengths: brand 92, demand 73; weakness: hack 12. TM not yet screened. Seed: epaulet."
-473,naivete.si,dictionary,67.2,92,73,83,12,56,70,2026-10-13T03:23:02Z,2026-10-13T08:18:54Z,"Strengths: brand 92, demand 73; weakness: hack 12. TM not yet screened. Seed: naivete."
-474,cropgrid.si,emerging_industries,67.2,79,84,80,12,66,70,2026-10-13T01:35:38Z,2026-10-13T06:47:19Z,"Strengths: brand 79, demand 84; weakness: hack 12. TM not yet screened. Seed: crop+grid."
-475,cardvault.si,business_finance,67.2,81,86,75,12,65,70,2026-10-13T01:28:17Z,2026-10-13T05:55:10Z,"Strengths: brand 81, demand 86; weakness: hack 12. TM not yet screened. Seed: card+vault."
-476,escrowhub.si,business_finance,67.2,82,86,73,12,65,70,2026-10-13T01:44:24Z,2026-10-13T07:12:41Z,"Strengths: brand 82, demand 86; weakness: hack 12. TM not yet screened. Seed: escrow+hub."
-477,fundvault.si,business_finance,67.2,81,86,75,12,65,70,2026-10-13T01:48:49Z,2026-10-13T07:17:18Z,"Strengths: brand 81, demand 86; weakness: hack 12. TM not yet screened. Seed: fund+vault."
-478,loantrack.si,business_finance,67.2,81,86,75,12,65,70,2026-10-13T03:03:01Z,2026-10-13T07:36:03Z,"Strengths: brand 81, demand 86; weakness: hack 12. TM not yet screened. Seed: loan+track."
-479,remitflow.si,business_finance,67.2,82,86,73,12,65,70,2026-10-13T03:58:51Z,2026-10-13T09:05:47Z,"Strengths: brand 82, demand 86; weakness: hack 12. TM not yet screened. Seed: remit+flow."
-480,yielddesk.si,business_finance,67.2,81,86,75,12,65,70,2026-10-13T04:58:17Z,2026-10-13T10:06:48Z,"Strengths: brand 81, demand 86; weakness: hack 12. TM not yet screened. Seed: yield+desk."
-481,benefithub.si,business_finance,67.2,82,86,68,12,70,70,2026-10-13T01:24:10Z,2026-10-13T05:37:12Z,"Strengths: brand 82, demand 86; weakness: hack 12. TM not yet screened. Seed: benefit+hub."
-482,denimhouse.si,consumer_brands,67.2,85,81,68,12,72,70,2026-10-13T01:39:38Z,2026-10-13T07:07:18Z,"Strengths: brand 85, demand 81; weakness: hack 12. TM not yet screened. Seed: denim+house."
-483,dramahouse.si,consumer_brands,67.2,85,81,68,12,72,70,2026-10-13T01:41:40Z,2026-10-13T07:09:46Z,"Strengths: brand 85, demand 81; weakness: hack 12. TM not yet screened. Seed: drama+house."
-484,examcourse.si,consumer_brands,67.2,85,81,68,12,72,70,2026-10-13T01:44:34Z,2026-10-13T07:12:49Z,"Strengths: brand 85, demand 81; weakness: hack 12. TM not yet screened. Seed: exam+course."
-485,futureshub.si,business_finance,67.2,82,86,68,12,70,70,2026-10-13T01:49:09Z,2026-10-13T07:17:39Z,"Strengths: brand 82, demand 86; weakness: hack 12. TM not yet screened. Seed: futures+hub."
-486,qubitforge.si,emerging_industries,67.2,86,84,68,12,66,70,2026-10-13T03:52:01Z,2026-10-13T09:01:24Z,"Strengths: brand 86, demand 84; weakness: hack 12. TM not yet screened. Seed: qubit+forge."
-487,voyageclub.si,consumer_brands,67.2,85,81,68,12,72,70,2026-10-13T04:55:43Z,2026-10-13T10:02:16Z,"Strengths: brand 85, demand 81; weakness: hack 12. TM not yet screened. Seed: voyage+club."
-488,lockvault.si,technology,67.1,81,86,75,12,64,70,2026-10-13T03:03:07Z,2026-10-13T07:36:09Z,"Strengths: brand 81, demand 86; weakness: hack 12. TM not yet screened. Seed: lock+vault."
-489,shieldlab.si,technology,67.1,81,86,75,12,64,70,2026-10-13T04:16:00Z,2026-10-13T09:16:24Z,"Strengths: brand 81, demand 86; weakness: hack 12. TM not yet screened. Seed: shield+lab."
-490,karaya.si,dictionary,67.0,86,68,90,12,64,70,2026-10-13T02:33:00Z,2026-10-13T07:26:55Z,"Strengths: brand 86, demand 68; weakness: hack 12. TM not yet screened. Seed: kar+aya."
-491,maraya.si,dictionary,67.0,86,68,90,12,64,70,2026-10-13T03:08:24Z,2026-10-13T07:38:23Z,"Strengths: brand 86, demand 68; weakness: hack 12. TM not yet screened. Seed: mar+aya."
-492,angelflow.si,business_finance,67.0,81,86,73,12,65,70,2026-10-13T01:19:27Z,2026-10-13T05:20:29Z,"Strengths: brand 81, demand 86; weakness: hack 12. TM not yet screened. Seed: angel+flow."
-493,auditscan.si,technology,67.0,82,86,73,12,64,70,2026-10-13T01:21:48Z,2026-10-13T05:28:48Z,"Strengths: brand 82, demand 86; weakness: hack 12. TM not yet screened. Seed: audit+scan."
-494,coverflow.si,business_finance,67.0,81,86,73,12,65,70,2026-10-13T01:34:57Z,2026-10-13T06:39:56Z,"Strengths: brand 81, demand 86; weakness: hack 12. TM not yet screened. Seed: cover+flow."
-495,forexgrid.si,business_finance,67.0,81,86,73,12,65,70,2026-10-13T01:48:15Z,2026-10-13T07:16:42Z,"Strengths: brand 81, demand 86; weakness: hack 12. TM not yet screened. Seed: forex+grid."
-496,fundforge.si,business_finance,67.0,81,86,73,12,65,70,2026-10-13T01:48:45Z,2026-10-13T07:17:12Z,"Strengths: brand 81, demand 86; weakness: hack 12. TM not yet screened. Seed: fund+forge."
-497,indexflow.si,technology,67.0,82,86,73,12,64,70,2026-10-13T02:27:35Z,2026-10-13T07:25:10Z,"Strengths: brand 82, demand 86; weakness: hack 12. TM not yet screened. Seed: index+flow."
-498,bakeryshop.si,consumer_brands,67.0,84,81,68,12,72,70,2026-10-13T01:23:00Z,2026-10-13T05:30:18Z,"Strengths: brand 84, demand 81; weakness: hack 12. TM not yet screened. Seed: bakery+shop."
-499,batteryops.si,emerging_industries,67.0,85,84,68,12,66,70,2026-10-13T01:23:28Z,2026-10-13T05:30:45Z,"Strengths: brand 85, demand 84; weakness: hack 12. TM not yet screened. Seed: battery+ops."
-500,cinemashow.si,consumer_brands,67.0,84,81,68,12,72,70,2026-10-13T01:30:25Z,2026-10-13T06:11:46Z,"Strengths: brand 84, demand 81; weakness: hack 12. TM not yet screened. Seed: cinema+show."
+1,newsagen.si,domain_hacks,81.0,85,85,82,93,93,25,2026-10-13T03:30:01Z,2026-10-13T08:27:10Z,Hack 'newsagen.si' completes seed 'newsagency'; root 'news'; 8 letters; CVCCVCVC.
+2,unfus.si,domain_hacks,77.0,90,46,98,92,95,25,2026-10-13T04:44:30Z,2026-10-13T09:46:53Z,Hack 'unfus.si' completes seed 'unfussy'; 5 letters; VCCVC.
+3,tryto.si,domain_hacks,76.8,90,46,100,89,95,25,2026-10-13T04:43:36Z,2026-10-13T09:46:21Z,Hack 'tryto.si' completes seed 'tryto see'; 5 letters; CCVCV.
+4,cashops.si,business_finance,70.4,88,79,90,12,89,40,2026-10-13T01:28:26Z,2026-10-13T07:04:05Z,Compound 'cashops' head 'cash' + tail 'ops'; root 'cash'; payments and finance; 7 letters.
+5,paymentops.si,technology,68.4,87,97,74,12,79,25,2026-10-13T03:41:29Z,2026-10-13T08:55:40Z,Compound 'paymentops' head 'payment' + tail 'ops'; root 'pay'; fintech and payments; 10 letters.
+6,datafleet.si,ai,67.9,87,90,77,12,82,25,2026-10-13T01:37:17Z,2026-10-13T07:05:21Z,Compound 'datafleet' head 'data' + tail 'fleet'; root 'data'; cross-industry analytics; 9 letters.
+7,ledgerhub.si,technology,67.9,88,85,77,12,77,40,2026-10-13T02:43:34Z,2026-10-13T07:31:45Z,Compound 'ledgerhub' head 'ledger' + tail 'hub'; root 'ledger'; accounting and financial technology; 9 letters.
+8,payablehub.si,business_finance,67.9,84,96,71,12,75,40,2026-10-13T03:41:04Z,2026-10-13T08:55:21Z,Compound 'payablehub' head 'payable' + tail 'hub'; root 'pay'; fintech and payments; 10 letters.
+9,datalearn.si,ai,66.9,88,89,77,12,75,25,2026-10-13T01:37:31Z,2026-10-13T07:05:26Z,Compound 'datalearn' head 'data' + tail 'learn'; root 'data'; cross-industry analytics; 9 letters.
+10,payabledesk.si,business_finance,66.7,81,96,67,12,76,40,2026-10-13T03:41:00Z,2026-10-13T08:55:17Z,Compound 'payabledesk' head 'payable' + tail 'desk'; root 'pay'; fintech and payments; 11 letters.
+11,payableflow.si,business_finance,66.7,81,96,67,12,76,40,2026-10-13T03:41:02Z,2026-10-13T08:55:19Z,Compound 'payableflow' head 'payable' + tail 'flow'; root 'pay'; fintech and payments; 11 letters.
+12,datasolve.si,ai,66.6,87,89,78,12,74,25,2026-10-13T01:37:44Z,2026-10-13T07:05:30Z,Compound 'datasolve' head 'data' + tail 'solve'; root 'data'; cross-industry analytics; 9 letters.
+13,walletlab.si,technology,66.6,85,85,76,12,74,40,2026-10-13T04:55:59Z,2026-10-13T10:02:35Z,Compound 'walletlab' head 'wallet' + tail 'lab'; root 'wallet'; payments; 9 letters.
+14,fuve.si,short,66.4,88,47,100,12,95,40,2026-10-13T01:49:13Z,2026-10-13T07:17:47Z,Short 'fuve' is CVCV; 4 letters; no repeated letters.
+15,guve.si,short,66.4,88,47,100,12,95,40,2026-10-13T02:19:06Z,2026-10-13T07:20:56Z,Short 'guve' is CVCV; 4 letters; no repeated letters.
+16,puve.si,short,66.4,88,47,100,12,95,40,2026-10-13T03:49:14Z,2026-10-13T08:59:36Z,Short 'puve' is CVCV; 4 letters; no repeated letters.
+17,chatledger.si,ai,66.4,85,85,74,12,75,40,2026-10-13T01:29:50Z,2026-10-13T06:09:22Z,Compound 'chatledger' head 'chat' + tail 'ledger'; root 'ledger'; accounting and financial technology; 10 letters.
+18,kuzo.si,short,66.2,87,47,100,12,95,40,2026-10-13T02:37:42Z,2026-10-13T07:28:47Z,Short 'kuzo' is CVCV; 4 letters; no repeated letters.
+19,guza.si,short,66.0,87,47,100,12,94,40,2026-10-13T02:19:07Z,2026-10-13T07:20:58Z,Short 'guza' is CVCV; 4 letters; no repeated letters.
+20,dataledger.si,ai,65.6,81,97,72,12,72,25,2026-10-13T01:37:32Z,2026-10-13T07:05:28Z,Compound 'dataledger' head 'data' + tail 'ledger'; root 'data'; cross-industry analytics; 10 letters.
+21,omniledger.si,ai,65.6,86,85,74,12,68,40,2026-10-13T03:35:28Z,2026-10-13T08:32:40Z,Compound 'omniledger' head 'omni' + tail 'ledger'; root 'ledger'; accounting and financial technology; 10 letters.
+22,loanledger.si,business_finance,65.4,87,85,73,12,76,25,2026-10-13T03:02:57Z,2026-10-13T07:35:59Z,Compound 'loanledger' head 'loan' + tail 'ledger'; root 'ledger'; accounting and financial technology; 10 letters.
+23,databaseops.si,technology,65.0,80,94,67,12,69,40,2026-10-13T01:37:11Z,2026-10-13T07:05:17Z,Compound 'databaseops' head 'database' + tail 'ops'; root 'data'; cross-industry analytics; 11 letters.
+24,autoorbit.si,ai,64.9,86,77,76,12,72,40,2026-10-13T01:22:27Z,2026-10-13T05:29:39Z,Compound 'autoorbit' head 'auto' + tail 'orbit'; root 'auto'; automotive; 9 letters.
+25,cashledger.si,business_finance,64.7,80,91,73,12,75,25,2026-10-13T01:28:25Z,2026-10-13T05:55:16Z,Compound 'cashledger' head 'cash' + tail 'ledger'; root 'cash'; payments and finance; 10 letters.
+26,robotloop.si,ai,64.4,87,77,77,12,76,25,2026-10-13T04:06:43Z,2026-10-13T09:10:41Z,Compound 'robotloop' head 'robot' + tail 'loop'; root 'robot'; robotics; 9 letters.
+27,algoledger.si,ai,64.4,84,85,72,12,65,40,2026-10-13T01:18:44Z,2026-10-13T05:19:33Z,Root 'ledger' in 'algoledger' signals accounting and financial technology; 10 letters; VCCVCVCCVC.
+28,cizo.si,short,64.2,87,46,100,12,93,25,2026-10-13T01:30:49Z,2026-10-13T06:12:52Z,Short 'cizo' is CVCV; 4 letters; no repeated letters.
+29,semaledger.si,ai,64.1,83,85,72,12,65,40,2026-10-13T04:11:32Z,2026-10-13T09:12:39Z,Root 'ledger' in 'semaledger' signals accounting and financial technology; 10 letters; CVCVCVCCVC.
+30,payloadhub.si,emerging_industries,64.0,85,77,72,12,72,40,2026-10-13T03:41:16Z,2026-10-13T08:55:34Z,Compound 'payloadhub' head 'payload' + tail 'hub'; root 'payload'; software data transfer; 10 letters.
+31,riskledger.si,business_finance,64.0,79,85,73,12,70,40,2026-10-13T04:03:14Z,2026-10-13T09:08:46Z,Compound 'riskledger' head 'risk' + tail 'ledger'; root 'ledger'; accounting and financial technology; 10 letters.
+32,synapledger.si,ai,63.8,82,85,69,12,68,40,2026-10-13T04:25:34Z,2026-10-13T09:26:54Z,Root 'ledger' in 'synapledger' signals accounting and financial technology; 11 letters; CVCVCCVCCVC.
+33,bondledger.si,business_finance,63.7,79,85,72,12,69,40,2026-10-13T01:25:24Z,2026-10-13T05:46:04Z,Compound 'bondledger' head 'bond' + tail 'ledger'; root 'ledger'; accounting and financial technology; 10 letters.
+34,ledgerlink.si,technology,63.6,84,85,71,12,71,25,2026-10-13T02:43:36Z,2026-10-13T07:31:47Z,Compound 'ledgerlink' head 'ledger' + tail 'link'; root 'ledger'; accounting and financial technology; 10 letters.
+35,walletlink.si,technology,63.2,83,85,71,12,70,25,2026-10-13T04:56:01Z,2026-10-13T10:02:37Z,Compound 'walletlink' head 'wallet' + tail 'link'; root 'wallet'; payments; 10 letters.
+36,datakernel.si,ai,63.0,81,88,72,12,57,40,2026-10-13T01:37:29Z,2026-10-13T07:05:24Z,Compound 'datakernel' head 'data' + tail 'kernel'; root 'data'; cross-industry analytics; 10 letters.
+37,robotsolve.si,ai,63.0,85,76,73,12,65,40,2026-10-13T04:07:03Z,2026-10-13T09:10:49Z,Compound 'robotsolve' head 'robot' + tail 'solve'; root 'robot'; robotics; 10 letters.
+38,databasehub.si,technology,63.0,77,93,66,12,63,40,2026-10-13T01:37:09Z,2026-10-13T07:05:13Z,Compound 'databasehub' head 'database' + tail 'hub'; root 'data'; cross-industry analytics; 11 letters.
+39,payabletrack.si,business_finance,63.0,78,95,53,12,72,40,2026-10-13T03:41:08Z,2026-10-13T08:55:28Z,Compound 'payabletrack' head 'payable' + tail 'track'; root 'pay'; fintech and payments; 12 letters.
+40,payloadlab.si,emerging_industries,62.9,83,76,71,12,70,40,2026-10-13T03:41:18Z,2026-10-13T08:55:36Z,Compound 'payloadlab' head 'payload' + tail 'lab'; root 'payload'; software data transfer; 10 letters.
+41,payloadmesh.si,emerging_industries,62.9,83,76,68,12,73,40,2026-10-13T03:41:20Z,2026-10-13T08:55:38Z,Compound 'payloadmesh' head 'payload' + tail 'mesh'; root 'payload'; software data transfer; 11 letters.
+42,bankinghub.si,business_finance,62.6,78,91,70,12,67,25,2026-10-13T01:23:09Z,2026-10-13T05:30:24Z,Compound 'bankinghub' head 'banking' + tail 'hub'; root 'bank'; finance; 10 letters.
+43,walletvault.si,technology,62.6,78,85,66,12,69,40,2026-10-13T04:56:05Z,2026-10-13T10:02:51Z,Compound 'walletvault' head 'wallet' + tail 'vault'; root 'wallet'; payments; 11 letters.
+44,stoical.si,dictionary,62.4,94,40,91,12,86,25,2026-10-13T04:22:43Z,2026-10-13T09:23:47Z,Common word 'stoical' means calm under hardship; 7 letters; CCVVCVC.
+45,autosystem.si,ai,62.4,83,80,71,12,61,40,2026-10-13T01:22:43Z,2026-10-13T05:30:03Z,Root 'auto' in 'autosystem' signals automotive; 10 letters; VVCVCVCCVC.
+46,databaselab.si,technology,62.4,75,93,65,12,63,40,2026-10-13T01:37:10Z,2026-10-13T07:05:15Z,Compound 'databaselab' head 'database' + tail 'lab'; root 'data'; cross-industry analytics; 11 letters.
+47,dataswitch.si,ai,62.2,77,88,70,12,70,25,2026-10-13T01:37:49Z,2026-10-13T07:05:32Z,Compound 'dataswitch' head 'data' + tail 'switch'; root 'data'; cross-industry analytics; 10 letters.
+48,denimshop.si,consumer_brands,62.0,83,65,77,12,73,40,2026-10-13T01:39:39Z,2026-10-13T07:07:43Z,Compound 'denimshop' head 'denim' + tail 'shop'; root 'shop'; retail; 9 letters.
+49,creditdesk.si,business_finance,62.0,84,78,72,12,69,25,2026-10-13T01:35:29Z,2026-10-13T06:46:55Z,Compound 'creditdesk' head 'credit' + tail 'desk'; root 'credit'; finance; 10 letters.
+50,walletflow.si,technology,61.9,76,85,70,12,64,40,2026-10-13T04:55:55Z,2026-10-13T10:02:33Z,Compound 'walletflow' head 'wallet' + tail 'flow'; root 'wallet'; payments; 10 letters.
+51,bankingdesk.si,business_finance,61.8,73,90,65,12,67,40,2026-10-13T01:23:08Z,2026-10-13T05:30:21Z,Compound 'bankingdesk' head 'banking' + tail 'desk'; root 'bank'; finance; 11 letters.
+52,roboticmesh.si,ai,61.8,81,79,69,12,64,40,2026-10-13T04:06:09Z,2026-10-13T09:10:17Z,Compound 'roboticmesh' head 'robotic' + tail 'mesh'; root 'robot'; robotics; 11 letters.
+53,agenticport.si,ai,61.7,81,80,68,12,63,40,2026-10-13T01:17:59Z,2026-10-13T05:18:56Z,Compound 'agenticport' head 'agentic' + tail 'port'; root 'agent'; automation and services; 11 letters.
+54,powdery.si,dictionary,61.6,93,39,88,12,77,40,2026-10-13T03:46:43Z,2026-10-13T08:58:25Z,Common word 'powdery' means fine and dry like powder; 7 letters; CVCCVCV.
+55,robotsignal.si,ai,61.6,82,75,69,12,66,40,2026-10-13T04:07:01Z,2026-10-13T09:10:47Z,Compound 'robotsignal' head 'robot' + tail 'signal'; root 'robot'; robotics; 11 letters.
+56,decorshop.si,consumer_brands,61.4,82,65,77,12,70,40,2026-10-13T01:38:31Z,2026-10-13T07:06:24Z,Compound 'decorshop' head 'decor' + tail 'shop'; root 'shop'; retail; 9 letters.
+57,linenshop.si,consumer_brands,61.4,82,65,77,12,70,40,2026-10-13T02:47:47Z,2026-10-13T07:33:17Z,Compound 'linenshop' head 'linen' + tail 'shop'; root 'shop'; retail; 9 letters.
+58,autostream.si,ai,61.4,77,80,71,12,65,40,2026-10-13T01:22:40Z,2026-10-13T05:29:57Z,Root 'auto' in 'autostream' signals automotive; 10 letters; VVCVCCCVVC.
+59,ledgerstack.si,technology,61.4,74,85,67,12,67,40,2026-10-13T02:43:37Z,2026-10-13T07:31:49Z,Compound 'ledgerstack' head 'ledger' + tail 'stack'; root 'ledger'; accounting and financial technology; 11 letters.
+60,autokernel.si,ai,61.3,83,80,72,12,53,40,2026-10-13T01:22:02Z,2026-10-13T05:29:06Z,Root 'auto' in 'autokernel' signals automotive; 10 letters; VVCVCVCCVC.
+61,biocharlab.si,emerging_industries,61.2,85,65,72,12,69,40,2026-10-13T01:24:26Z,2026-10-13T05:37:48Z,Compound 'biocharlab' head 'biochar' + tail 'lab'; root 'bio'; biotechnology; 10 letters.
+62,leaning.si,dictionary,61.0,93,39,90,12,81,25,2026-10-13T02:42:51Z,2026-10-13T07:31:25Z,Common word 'leaning' means inclination or preference; 7 letters; CVVCVCC.
+63,carbonhub.si,emerging_industries,61.0,87,64,77,12,71,25,2026-10-13T01:28:05Z,2026-10-13T05:54:16Z,Compound 'carbonhub' head 'carbon' + tail 'hub'; root 'carbon'; climate technology; 9 letters.
+64,robotspark.si,ai,61.0,78,75,72,12,66,40,2026-10-13T04:07:05Z,2026-10-13T09:10:51Z,Compound 'robotspark' head 'robot' + tail 'spark'; root 'robot'; robotics; 10 letters.
+65,robotbeacon.si,ai,61.0,80,75,69,12,66,40,2026-10-13T04:05:23Z,2026-10-13T09:09:53Z,Compound 'robotbeacon' head 'robot' + tail 'beacon'; root 'robot'; robotics; 11 letters.
+66,autoswitch.si,ai,60.9,79,80,72,12,67,25,2026-10-13T01:22:42Z,2026-10-13T05:30:00Z,Root 'auto' in 'autoswitch' signals automotive; 10 letters; VVCVCCVCCC.
+67,biocharhub.si,emerging_industries,60.9,85,65,71,12,68,40,2026-10-13T01:24:25Z,2026-10-13T05:37:44Z,Compound 'biocharhub' head 'biochar' + tail 'hub'; root 'bio'; biotechnology; 10 letters.
+68,pharmascan.si,health_science,60.9,85,65,72,12,67,40,2026-10-13T03:44:00Z,2026-10-13T08:57:20Z,Compound 'pharmascan' head 'pharma' + tail 'scan'; root 'pharma'; pharmaceuticals; 10 letters.
+69,roboticsops.si,emerging_industries,60.9,80,78,67,12,63,40,2026-10-13T04:06:25Z,2026-10-13T09:10:31Z,Compound 'roboticsops' head 'robotics' + tail 'ops'; root 'robot'; robotics; 11 letters.
+70,autobeacon.si,ai,60.8,83,80,72,12,60,25,2026-10-13T01:21:53Z,2026-10-13T05:29:00Z,Root 'auto' in 'autobeacon' signals automotive; 10 letters; VVCVCVVCVC.
+71,autosearch.si,ai,60.8,79,80,72,12,66,25,2026-10-13T01:22:34Z,2026-10-13T05:29:54Z,Root 'auto' in 'autosearch' signals automotive; 10 letters; VVCVCVVCCC.
+72,keyscan.si,technology,60.6,92,42,91,12,65,40,2026-10-13T02:35:55Z,2026-10-13T07:28:35Z,Compound 'keyscan' head 'key' + tail 'scan'; no listed demand root; general service; 7 letters.
+73,jewelshop.si,consumer_brands,60.5,81,65,76,12,67,40,2026-10-13T02:32:07Z,2026-10-13T07:26:45Z,Compound 'jewelshop' head 'jewel' + tail 'shop'; root 'shop'; retail; 9 letters.
+74,autonetwork.si,ai,60.5,80,76,67,12,63,40,2026-10-13T01:22:12Z,2026-10-13T05:29:15Z,Compound 'autonetwork' head 'auto' + tail 'network'; root 'auto'; automotive; 11 letters.
+75,databaseflow.si,technology,60.4,75,93,52,12,63,40,2026-10-13T01:37:07Z,2026-10-13T07:05:09Z,Compound 'databaseflow' head 'database' + tail 'flow'; root 'data'; cross-industry analytics; 12 letters.
+76,cowhide.si,dictionary,60.2,93,39,88,12,78,25,2026-10-13T01:35:04Z,2026-10-13T06:40:20Z,Common word 'cowhide' means animal hide used as leather; 7 letters; CVCCVCV.
+77,reveler.si,dictionary,60.2,87,38,87,12,80,40,2026-10-13T04:01:06Z,2026-10-13T09:07:03Z,Common word 'reveler' means person enjoying a lively event; 7 letters; CVCVCVC.
+78,carboncell.si,emerging_industries,60.2,84,63,72,12,67,40,2026-10-13T01:28:01Z,2026-10-13T05:53:52Z,Compound 'carboncell' head 'carbon' + tail 'cell'; root 'carbon'; climate technology; 10 letters.
+79,walletstack.si,technology,60.2,72,85,65,12,64,40,2026-10-13T04:56:03Z,2026-10-13T10:02:39Z,Compound 'walletstack' head 'wallet' + tail 'stack'; root 'wallet'; payments; 11 letters.
+80,genomelab.si,health_science,60.1,85,64,76,12,59,40,2026-10-13T03:02:03Z,2026-10-13T07:19:12Z,Compound 'genomelab' head 'genome' + tail 'lab'; root 'genome'; genomics; 9 letters.
+81,roboticport.si,ai,60.1,78,78,67,12,61,40,2026-10-13T04:06:15Z,2026-10-13T09:10:23Z,Compound 'roboticport' head 'robotic' + tail 'port'; root 'robot'; robotics; 11 letters.
+82,soilhub.si,emerging_industries,60.0,91,41,90,12,65,40,2026-10-13T04:19:39Z,2026-10-13T09:20:19Z,Compound 'soilhub' head 'soil' + tail 'hub'; no listed demand root; general service; 7 letters.
+83,bakeryshop.si,consumer_brands,60.0,84,65,72,12,63,40,2026-10-13T01:23:00Z,2026-10-13T05:30:18Z,Compound 'bakeryshop' head 'bakery' + tail 'shop'; root 'shop'; retail; 10 letters.
+84,tailorshop.si,consumer_brands,59.9,81,65,72,12,67,40,2026-10-13T04:27:33Z,2026-10-13T09:31:07Z,Compound 'tailorshop' head 'tailor' + tail 'shop'; root 'shop'; retail; 10 letters.
+85,robotsystem.si,ai,59.9,79,75,67,12,62,40,2026-10-13T04:07:13Z,2026-10-13T09:10:55Z,Compound 'robotsystem' head 'robot' + tail 'system'; root 'robot'; robotics; 11 letters.
+86,soillab.si,emerging_industries,59.8,90,41,90,12,65,40,2026-10-13T04:19:41Z,2026-10-13T09:20:31Z,Compound 'soillab' head 'soil' + tail 'lab'; no listed demand root; general service; 7 letters.
+87,gyration.si,dictionary,59.6,87,37,83,12,81,40,2026-10-13T02:19:17Z,2026-10-13T07:21:06Z,Common word 'gyration' means circular movement; 8 letters; CVCVCVVC.
+88,payloadgrid.si,emerging_industries,59.6,75,75,66,12,68,40,2026-10-13T03:41:14Z,2026-10-13T08:55:32Z,Compound 'payloadgrid' head 'payload' + tail 'grid'; root 'payload'; software data transfer; 11 letters.
+89,crophub.si,emerging_industries,59.5,89,41,90,12,65,40,2026-10-13T01:35:39Z,2026-10-13T06:47:25Z,Compound 'crophub' head 'crop' + tail 'hub'; no listed demand root; general service; 7 letters.
+90,croplab.si,emerging_industries,59.5,89,41,90,12,65,40,2026-10-13T01:35:40Z,2026-10-13T06:47:31Z,Compound 'croplab' head 'crop' + tail 'lab'; no listed demand root; general service; 7 letters.
+91,robotorbit.si,ai,59.5,78,75,71,12,57,40,2026-10-13T04:06:51Z,2026-10-13T09:10:43Z,Compound 'robotorbit' head 'robot' + tail 'orbit'; root 'robot'; robotics; 10 letters.
+92,databasegrid.si,technology,59.5,74,92,51,12,61,40,2026-10-13T01:37:08Z,2026-10-13T07:05:11Z,Compound 'databasegrid' head 'database' + tail 'grid'; root 'data'; cross-industry analytics; 12 letters.
+93,agrihub.si,emerging_industries,59.3,90,41,87,12,65,40,2026-10-13T01:18:25Z,2026-10-13T05:19:08Z,Compound 'agrihub' head 'agri' + tail 'hub'; no listed demand root; general service; 7 letters.
+94,agentlearn.si,ai,59.2,76,76,71,12,57,40,2026-10-13T01:18:07Z,2026-10-13T05:19:06Z,Compound 'agentlearn' head 'agent' + tail 'learn'; root 'agent'; automation and services; 10 letters.
+95,roboticcore.si,ai,59.2,75,78,67,12,60,40,2026-10-13T04:05:45Z,2026-10-13T09:09:55Z,Compound 'roboticcore' head 'robotic' + tail 'core'; root 'robot'; robotics; 11 letters.
+96,robotsearch.si,ai,59.2,74,74,67,12,67,40,2026-10-13T04:06:57Z,2026-10-13T09:10:45Z,Compound 'robotsearch' head 'robot' + tail 'search'; root 'robot'; robotics; 11 letters.
+97,cryptoworks.si,technology,59.1,74,75,67,12,65,40,2026-10-13T01:35:54Z,2026-10-13T06:47:49Z,Compound 'cryptoworks' head 'crypto' + tail 'works'; root 'crypto'; digital finance; 11 letters.
+98,chatloop.si,ai,59.0,89,42,85,12,65,40,2026-10-13T01:29:52Z,2026-10-13T06:09:34Z,Compound 'chatloop' head 'chat' + tail 'loop'; no listed demand root; general service; 8 letters.
+99,parcelshop.si,consumer_brands,59.0,79,65,72,12,64,40,2026-10-13T03:39:44Z,2026-10-13T08:37:12Z,Compound 'parcelshop' head 'parcel' + tail 'shop'; root 'shop'; retail; 10 letters.
+100,recipeshop.si,consumer_brands,59.0,82,65,72,12,59,40,2026-10-13T03:56:48Z,2026-10-13T09:04:22Z,Compound 'recipeshop' head 'recipe' + tail 'shop'; root 'shop'; retail; 10 letters.
+101,bankingvault.si,business_finance,59.0,71,88,53,12,66,40,2026-10-13T01:23:11Z,2026-10-13T05:30:30Z,Compound 'bankingvault' head 'banking' + tail 'vault'; root 'bank'; finance; 12 letters.
+102,roboticlink.si,ai,58.9,78,78,67,12,53,40,2026-10-13T04:06:03Z,2026-10-13T09:10:11Z,Compound 'roboticlink' head 'robotic' + tail 'link'; root 'robot'; robotics; 11 letters.
+103,roboticloop.si,ai,58.9,78,78,67,12,53,40,2026-10-13T04:06:05Z,2026-10-13T09:10:13Z,Compound 'roboticloop' head 'robotic' + tail 'loop'; root 'robot'; robotics; 11 letters.
+104,memolab.si,ai,58.8,88,41,87,12,65,40,2026-10-13T03:11:19Z,2026-10-13T07:40:36Z,Compound 'memolab' head 'memo' + tail 'lab'; no listed demand root; general service; 7 letters.
+105,pharmatrial.si,health_science,58.8,80,65,67,12,66,40,2026-10-13T03:44:02Z,2026-10-13T08:57:25Z,Compound 'pharmatrial' head 'pharma' + tail 'trial'; root 'pharma'; pharmaceuticals; 11 letters.
+106,roboticflow.si,ai,58.8,74,78,67,12,59,40,2026-10-13T04:05:49Z,2026-10-13T09:09:59Z,Compound 'roboticflow' head 'robotic' + tail 'flow'; root 'robot'; robotics; 11 letters.
+107,epaulet.si,dictionary,58.7,89,37,87,12,68,40,2026-10-13T01:44:01Z,2026-10-13T07:12:23Z,Common word 'epaulet' means ornamental shoulder piece; 7 letters; VCVVCVC.
+108,trekgear.si,consumer_brands,58.7,88,42,85,12,65,40,2026-10-13T04:43:11Z,2026-10-13T09:46:19Z,Compound 'trekgear' head 'trek' + tail 'gear'; no listed demand root; general service; 8 letters.
+109,gerilab.si,health_science,58.6,88,41,86,12,65,40,2026-10-13T02:14:17Z,2026-10-13T07:19:50Z,Compound 'gerilab' head 'geri' + tail 'lab'; no listed demand root; general service; 7 letters.
+110,chatlink.si,ai,58.6,88,42,84,12,65,40,2026-10-13T01:29:51Z,2026-10-13T06:09:28Z,Compound 'chatlink' head 'chat' + tail 'link'; no listed demand root; general service; 8 letters.
+111,agenticsolve.si,ai,58.6,79,79,53,12,62,40,2026-10-13T01:18:02Z,2026-10-13T05:19:02Z,Compound 'agenticsolve' head 'agentic' + tail 'solve'; root 'agent'; automation and services; 12 letters.
+112,omnivault.si,ai,58.4,91,42,78,12,65,40,2026-10-13T03:36:06Z,2026-10-13T08:33:27Z,Compound 'omnivault' head 'omni' + tail 'vault'; no listed demand root; general service; 9 letters.
+113,biomasslab.si,emerging_industries,58.4,78,65,71,12,63,40,2026-10-13T01:24:39Z,2026-10-13T05:38:38Z,Compound 'biomasslab' head 'biomass' + tail 'lab'; root 'bio'; biotechnology; 10 letters.
+114,credittrack.si,business_finance,58.4,72,76,66,12,63,40,2026-10-13T01:35:34Z,2026-10-13T06:47:13Z,Compound 'credittrack' head 'credit' + tail 'track'; root 'credit'; finance; 11 letters.
+115,deepport.si,ai,58.3,87,42,84,12,65,40,2026-10-13T01:38:54Z,2026-10-13T07:06:34Z,Compound 'deepport' head 'deep' + tail 'port'; no listed demand root; general service; 8 letters.
+116,chatsolve.si,ai,58.3,90,42,79,12,65,40,2026-10-13T01:30:02Z,2026-10-13T06:10:28Z,Compound 'chatsolve' head 'chat' + tail 'solve'; no listed demand root; general service; 9 letters.
+117,denimwear.si,consumer_brands,58.3,90,42,79,12,65,40,2026-10-13T01:39:41Z,2026-10-13T07:07:47Z,Compound 'denimwear' head 'denim' + tail 'wear'; no listed demand root; general service; 9 letters.
+118,memovault.si,ai,58.3,90,42,79,12,65,40,2026-10-13T03:13:03Z,2026-10-13T07:50:52Z,Compound 'memovault' head 'memo' + tail 'vault'; no listed demand root; general service; 9 letters.
+119,neuraport.si,ai,58.3,90,42,79,12,65,40,2026-10-13T03:28:02Z,2026-10-13T08:24:58Z,Compound 'neuraport' head 'neura' + tail 'port'; no listed demand root; general service; 9 letters.
+120,robotswitch.si,ai,58.3,73,73,66,12,65,40,2026-10-13T04:07:11Z,2026-10-13T09:10:53Z,Compound 'robotswitch' head 'robot' + tail 'switch'; root 'robot'; robotics; 11 letters.
+121,roboticvault.si,ai,58.3,78,78,54,12,62,40,2026-10-13T04:06:31Z,2026-10-13T09:10:35Z,Compound 'roboticvault' head 'robotic' + tail 'vault'; root 'robot'; robotics; 12 letters.
+122,omnicraft.si,ai,58.2,90,42,78,12,65,40,2026-10-13T03:35:07Z,2026-10-13T08:32:10Z,Compound 'omnicraft' head 'omni' + tail 'craft'; no listed demand root; general service; 9 letters.
+123,omnifleet.si,ai,58.2,90,42,78,12,65,40,2026-10-13T03:35:11Z,2026-10-13T08:32:24Z,Compound 'omnifleet' head 'omni' + tail 'fleet'; no listed demand root; general service; 9 letters.
+124,sentiflow.si,ai,58.2,90,42,78,12,65,40,2026-10-13T04:13:46Z,2026-10-13T09:14:36Z,Compound 'sentiflow' head 'senti' + tail 'flow'; no listed demand root; general service; 9 letters.
+125,sentiloop.si,ai,58.2,90,42,78,12,65,40,2026-10-13T04:14:04Z,2026-10-13T09:14:52Z,Compound 'sentiloop' head 'senti' + tail 'loop'; no listed demand root; general service; 9 letters.
+126,genomescan.si,health_science,58.2,82,63,72,12,57,40,2026-10-13T03:02:07Z,2026-10-13T07:19:16Z,Compound 'genomescan' head 'genome' + tail 'scan'; root 'genome'; genomics; 10 letters.
+127,roboticgrid.si,ai,58.2,73,78,67,12,57,40,2026-10-13T04:05:53Z,2026-10-13T09:10:03Z,Compound 'roboticgrid' head 'robotic' + tail 'grid'; root 'robot'; robotics; 11 letters.
+128,roboticsolve.si,ai,58.2,78,78,54,12,61,40,2026-10-13T04:06:23Z,2026-10-13T09:10:29Z,Compound 'roboticsolve' head 'robotic' + tail 'solve'; root 'robot'; robotics; 12 letters.
+129,chatport.si,ai,58.1,87,41,84,12,65,40,2026-10-13T01:29:58Z,2026-10-13T06:10:04Z,Compound 'chatport' head 'chat' + tail 'port'; no listed demand root; general service; 8 letters.
+130,robotkernel.si,ai,58.1,78,74,67,12,53,40,2026-10-13T04:06:33Z,2026-10-13T09:10:37Z,Compound 'robotkernel' head 'robot' + tail 'kernel'; root 'robot'; robotics; 11 letters.
+131,edgelink.si,technology,58.0,87,42,82,12,65,40,2026-10-13T01:42:22Z,2026-10-13T07:10:02Z,Compound 'edgelink' head 'edge' + tail 'link'; no listed demand root; general service; 8 letters.
+132,dronescan.si,emerging_industries,58.0,89,42,79,12,65,40,2026-10-13T01:41:53Z,2026-10-13T07:09:56Z,Compound 'dronescan' head 'drone' + tail 'scan'; no listed demand root; general service; 9 letters.
+133,memocraft.si,ai,58.0,89,42,79,12,65,40,2026-10-13T03:11:03Z,2026-10-13T07:39:40Z,Compound 'memocraft' head 'memo' + tail 'craft'; no listed demand root; general service; 9 letters.
+134,modelport.si,ai,58.0,89,42,79,12,65,40,2026-10-13T03:17:45Z,2026-10-13T08:09:20Z,Compound 'modelport' head 'model' + tail 'port'; no listed demand root; general service; 9 letters.
+135,sentilabs.si,ai,58.0,89,42,79,12,65,40,2026-10-13T04:13:56Z,2026-10-13T09:14:46Z,Compound 'sentilabs' head 'senti' + tail 'labs'; no listed demand root; general service; 9 letters.
+136,sentiport.si,ai,58.0,89,42,79,12,65,40,2026-10-13T04:14:16Z,2026-10-13T09:15:04Z,Compound 'sentiport' head 'senti' + tail 'port'; no listed demand root; general service; 9 letters.
+137,carbongrid.si,emerging_industries,58.0,78,63,72,12,62,40,2026-10-13T01:28:04Z,2026-10-13T05:54:10Z,Compound 'carbongrid' head 'carbon' + tail 'grid'; root 'carbon'; climate technology; 10 letters.
+138,biopsyscope.si,health_science,58.0,80,65,67,12,61,40,2026-10-13T01:24:49Z,2026-10-13T05:39:18Z,Compound 'biopsyscope' head 'biopsy' + tail 'scope'; root 'bio'; biotechnology; 11 letters.
+139,carbonforge.si,emerging_industries,58.0,81,63,68,12,61,40,2026-10-13T01:28:03Z,2026-10-13T05:54:04Z,Compound 'carbonforge' head 'carbon' + tail 'forge'; root 'carbon'; climate technology; 11 letters.
+140,creditsignal.si,business_finance,58.0,78,76,54,12,63,40,2026-10-13T01:35:33Z,2026-10-13T06:47:07Z,Compound 'creditsignal' head 'credit' + tail 'signal'; root 'credit'; finance; 12 letters.
+141,auditdesk.si,business_finance,57.9,89,42,78,12,65,40,2026-10-13T01:21:41Z,2026-10-13T05:28:36Z,Compound 'auditdesk' head 'audit' + tail 'desk'; no listed demand root; general service; 9 letters.
+142,chatorbit.si,ai,57.9,89,42,78,12,65,40,2026-10-13T01:29:56Z,2026-10-13T06:09:58Z,Compound 'chatorbit' head 'chat' + tail 'orbit'; no listed demand root; general service; 9 letters.
+143,inferport.si,ai,57.9,89,42,78,12,65,40,2026-10-13T02:29:11Z,2026-10-13T07:25:47Z,Compound 'inferport' head 'infer' + tail 'port'; no listed demand root; general service; 9 letters.
+144,lidarmesh.si,emerging_industries,57.9,89,42,78,12,65,40,2026-10-13T02:46:55Z,2026-10-13T07:32:51Z,Compound 'lidarmesh' head 'lidar' + tail 'mesh'; no listed demand root; general service; 9 letters.
+145,linenwear.si,consumer_brands,57.9,89,42,78,12,65,40,2026-10-13T02:47:54Z,2026-10-13T07:33:24Z,Compound 'linenwear' head 'linen' + tail 'wear'; no listed demand root; general service; 9 letters.
+146,logicport.si,ai,57.9,89,42,78,12,65,40,2026-10-13T03:03:53Z,2026-10-13T07:36:27Z,Compound 'logicport' head 'logic' + tail 'port'; no listed demand root; general service; 9 letters.
+147,memoorbit.si,ai,57.9,89,42,78,12,65,40,2026-10-13T03:11:35Z,2026-10-13T07:42:56Z,Compound 'memoorbit' head 'memo' + tail 'orbit'; no listed demand root; general service; 9 letters.
+148,memospark.si,ai,57.9,89,42,78,12,65,40,2026-10-13T03:12:51Z,2026-10-13T07:49:07Z,Compound 'memospark' head 'memo' + tail 'spark'; no listed demand root; general service; 9 letters.
+149,neuroport.si,ai,57.9,89,42,78,12,65,40,2026-10-13T03:29:21Z,2026-10-13T08:26:48Z,Compound 'neuroport' head 'neuro' + tail 'port'; no listed demand root; general service; 9 letters.
+150,chatmesh.si,ai,57.8,86,41,84,12,65,40,2026-10-13T01:29:54Z,2026-10-13T06:09:46Z,Compound 'chatmesh' head 'chat' + tail 'mesh'; no listed demand root; general service; 8 letters.
+151,audiomesh.si,ai,57.8,89,42,77,12,65,40,2026-10-13T01:21:22Z,2026-10-13T05:22:52Z,Compound 'audiomesh' head 'audio' + tail 'mesh'; no listed demand root; general service; 9 letters.
+152,cognimesh.si,ai,57.8,89,42,77,12,65,40,2026-10-13T01:32:23Z,2026-10-13T06:16:46Z,Compound 'cognimesh' head 'cogni' + tail 'mesh'; no listed demand root; general service; 9 letters.
+153,loanvault.si,business_finance,57.8,88,42,79,12,65,40,2026-10-13T03:03:03Z,2026-10-13T07:36:05Z,Compound 'loanvault' head 'loan' + tail 'vault'; no listed demand root; general service; 9 letters.
+154,memostack.si,ai,57.8,89,42,77,12,65,40,2026-10-13T03:12:53Z,2026-10-13T07:49:09Z,Compound 'memostack' head 'memo' + tail 'stack'; no listed demand root; general service; 9 letters.
+155,multigrid.si,ai,57.8,89,42,77,12,65,40,2026-10-13T03:21:26Z,2026-10-13T08:16:38Z,Compound 'multigrid' head 'multi' + tail 'grid'; no listed demand root; general service; 9 letters.
+156,multimesh.si,ai,57.8,89,42,77,12,65,40,2026-10-13T03:21:42Z,2026-10-13T08:16:58Z,Compound 'multimesh' head 'multi' + tail 'mesh'; no listed demand root; general service; 9 letters.
+157,remitdesk.si,business_finance,57.8,88,42,79,12,65,40,2026-10-13T03:58:49Z,2026-10-13T09:05:45Z,Compound 'remitdesk' head 'remit' + tail 'desk'; no listed demand root; general service; 9 letters.
+158,sentigrid.si,ai,57.8,89,42,77,12,65,40,2026-10-13T04:13:52Z,2026-10-13T09:14:42Z,Compound 'sentigrid' head 'senti' + tail 'grid'; no listed demand root; general service; 9 letters.
+159,synaplink.si,ai,57.8,89,42,77,12,65,40,2026-10-13T04:25:36Z,2026-10-13T09:27:06Z,Compound 'synaplink' head 'synap' + tail 'link'; no listed demand root; general service; 9 letters.
+160,agenticvault.si,ai,57.8,77,79,53,12,60,40,2026-10-13T01:18:04Z,2026-10-13T05:19:04Z,Compound 'agenticvault' head 'agentic' + tail 'vault'; root 'agent'; automation and services; 12 letters.
+161,geriscan.si,health_science,57.7,86,41,83,12,65,40,2026-10-13T02:14:18Z,2026-10-13T07:19:52Z,Compound 'geriscan' head 'geri' + tail 'scan'; no listed demand root; general service; 8 letters.
+162,fleetdock.si,emerging_industries,57.7,87,42,80,12,65,40,2026-10-13T01:47:38Z,2026-10-13T07:16:10Z,Compound 'fleetdock' head 'fleet' + tail 'dock'; no listed demand root; general service; 9 letters.
+163,coutureshop.si,consumer_brands,57.7,80,65,66,12,60,40,2026-10-13T01:34:52Z,2026-10-13T06:39:38Z,Compound 'coutureshop' head 'couture' + tail 'shop'; root 'shop'; retail; 11 letters.
+164,groceryshop.si,consumer_brands,57.7,80,65,67,12,59,40,2026-10-13T02:18:38Z,2026-10-13T07:20:54Z,Compound 'groceryshop' head 'grocery' + tail 'shop'; root 'shop'; retail; 11 letters.
+165,memolink.si,ai,57.6,86,41,82,12,65,40,2026-10-13T03:11:25Z,2026-10-13T07:41:26Z,Compound 'memolink' head 'memo' + tail 'link'; no listed demand root; general service; 8 letters.
+166,alloygrid.si,emerging_industries,57.6,88,42,78,12,65,40,2026-10-13T01:19:09Z,2026-10-13T05:20:17Z,Compound 'alloygrid' head 'alloy' + tail 'grid'; no listed demand root; general service; 9 letters.
+167,alloymesh.si,emerging_industries,57.6,88,42,78,12,65,40,2026-10-13T01:19:11Z,2026-10-13T05:20:21Z,Compound 'alloymesh' head 'alloy' + tail 'mesh'; no listed demand root; general service; 9 letters.
+168,audioscan.si,technology,57.6,88,42,78,12,65,40,2026-10-13T01:21:28Z,2026-10-13T05:23:02Z,Compound 'audioscan' head 'audio' + tail 'scan'; no listed demand root; general service; 9 letters.
+169,chatsense.si,ai,57.6,88,42,78,12,65,40,2026-10-13T01:30:00Z,2026-10-13T06:10:16Z,Compound 'chatsense' head 'chat' + tail 'sense'; no listed demand root; general service; 9 letters.
+170,dramashow.si,consumer_brands,57.6,88,42,78,12,65,40,2026-10-13T01:41:41Z,2026-10-13T07:09:48Z,Compound 'dramashow' head 'drama' + tail 'show'; no listed demand root; general service; 9 letters.
+171,memofleet.si,ai,57.6,88,42,78,12,65,40,2026-10-13T03:11:07Z,2026-10-13T07:39:44Z,Compound 'memofleet' head 'memo' + tail 'fleet'; no listed demand root; general service; 9 letters.
+172,queryflow.si,technology,57.6,89,42,76,12,65,40,2026-10-13T03:52:13Z,2026-10-13T09:01:30Z,Compound 'queryflow' head 'query' + tail 'flow'; no listed demand root; general service; 9 letters.
+173,roboticsense.si,ai,57.6,77,78,53,12,60,40,2026-10-13T04:06:17Z,2026-10-13T09:10:25Z,Compound 'roboticsense' head 'robotic' + tail 'sense'; root 'robot'; robotics; 12 letters.
+174,databasestack.si,technology,57.6,73,92,41,12,60,40,2026-10-13T01:37:12Z,2026-10-13T07:05:19Z,Compound 'databasestack' head 'database' + tail 'stack'; root 'data'; cross-industry analytics; 13 letters.
+175,silkwear.si,consumer_brands,57.5,84,41,85,12,65,40,2026-10-13T04:17:52Z,2026-10-13T09:18:25Z,Compound 'silkwear' head 'silk' + tail 'wear'; no listed demand root; general service; 8 letters.
+176,coverdesk.si,business_finance,57.5,88,42,77,12,65,40,2026-10-13T01:34:56Z,2026-10-13T06:39:50Z,Compound 'coverdesk' head 'cover' + tail 'desk'; no listed demand root; general service; 9 letters.
+177,deeppilot.si,ai,57.5,88,42,77,12,65,40,2026-10-13T01:38:53Z,2026-10-13T07:06:32Z,Compound 'deeppilot' head 'deep' + tail 'pilot'; no listed demand root; general service; 9 letters.
+178,embedlink.si,ai,57.5,88,42,77,12,65,40,2026-10-13T01:42:58Z,2026-10-13T07:10:36Z,Compound 'embedlink' head 'embed' + tail 'link'; no listed demand root; general service; 9 letters.
+179,forexdesk.si,business_finance,57.5,88,42,77,12,65,40,2026-10-13T01:48:13Z,2026-10-13T07:16:38Z,Compound 'forexdesk' head 'forex' + tail 'desk'; no listed demand root; general service; 9 letters.
+180,omniorbit.si,ai,57.5,88,42,77,12,65,40,2026-10-13T03:35:40Z,2026-10-13T08:32:58Z,Compound 'omniorbit' head 'omni' + tail 'orbit'; no listed demand root; general service; 9 letters.
+181,robospark.si,ai,57.5,88,42,77,12,65,40,2026-10-13T04:05:11Z,2026-10-13T09:09:43Z,Compound 'robospark' head 'robo' + tail 'spark'; no listed demand root; general service; 9 letters.
+182,synaploop.si,ai,57.5,88,42,77,12,65,40,2026-10-13T04:25:38Z,2026-10-13T09:27:08Z,Compound 'synaploop' head 'synap' + tail 'loop'; no listed demand root; general service; 9 letters.
+183,synapmesh.si,ai,57.5,88,42,77,12,65,40,2026-10-13T04:25:42Z,2026-10-13T09:27:12Z,Compound 'synapmesh' head 'synap' + tail 'mesh'; no listed demand root; general service; 9 letters.
+184,agenticorbit.si,ai,57.5,77,79,53,12,58,40,2026-10-13T01:17:57Z,2026-10-13T05:18:54Z,Compound 'agenticorbit' head 'agentic' + tail 'orbit'; root 'agent'; automation and services; 12 letters.
+185,omniloop.si,ai,57.4,86,41,81,12,65,40,2026-10-13T03:35:32Z,2026-10-13T08:32:42Z,Compound 'omniloop' head 'omni' + tail 'loop'; no listed demand root; general service; 8 letters.
+186,cogniloop.si,ai,57.4,88,42,76,12,65,40,2026-10-13T01:32:21Z,2026-10-13T06:16:40Z,Compound 'cogniloop' head 'cogni' + tail 'loop'; no listed demand root; general service; 9 letters.
+187,embedloop.si,ai,57.4,88,42,76,12,65,40,2026-10-13T01:42:59Z,2026-10-13T07:10:38Z,Compound 'embedloop' head 'embed' + tail 'loop'; no listed demand root; general service; 9 letters.
+188,omnisolve.si,ai,57.4,90,42,78,12,60,40,2026-10-13T03:35:52Z,2026-10-13T08:33:04Z,Compound 'omnisolve' head 'omni' + tail 'solve'; no listed demand root; general service; 9 letters.
+189,insuranceflow.si,business_finance,57.4,77,85,43,12,59,40,2026-10-13T02:30:06Z,2026-10-13T07:26:05Z,Compound 'insuranceflow' head 'insurance' + tail 'flow'; root 'insurance'; insurance; 13 letters.
+190,memogrid.si,ai,57.3,85,41,82,12,65,40,2026-10-13T03:11:15Z,2026-10-13T07:40:32Z,Compound 'memogrid' head 'memo' + tail 'grid'; no listed demand root; general service; 8 letters.
+191,chatlearn.si,ai,57.3,88,41,80,12,62,40,2026-10-13T01:29:49Z,2026-10-13T06:09:16Z,Compound 'chatlearn' head 'chat' + tail 'learn'; no listed demand root; general service; 9 letters.
+192,synaplabs.si,ai,57.3,88,41,77,12,65,40,2026-10-13T04:25:30Z,2026-10-13T09:26:49Z,Compound 'synaplabs' head 'synap' + tail 'labs'; no listed demand root; general service; 9 letters.
+193,autofoundry.si,ai,57.3,73,74,66,12,57,40,2026-10-13T01:22:00Z,2026-10-13T05:29:03Z,Compound 'autofoundry' head 'auto' + tail 'foundry'; root 'auto'; automotive; 11 letters.
+194,decorous.si,dictionary,57.2,86,37,83,12,67,40,2026-10-13T01:38:30Z,2026-10-13T07:06:22Z,Common word 'decorous' means proper and restrained; 8 letters; CVCVCVVC.
+195,chatvault.si,ai,57.2,87,41,78,12,65,40,2026-10-13T01:30:08Z,2026-10-13T06:10:52Z,Compound 'chatvault' head 'chat' + tail 'vault'; no listed demand root; general service; 9 letters.
+196,cobotmesh.si,emerging_industries,57.2,87,42,77,12,65,40,2026-10-13T01:31:46Z,2026-10-13T06:14:58Z,Compound 'cobotmesh' head 'cobot' + tail 'mesh'; no listed demand root; general service; 9 letters.
+197,hydrocell.si,emerging_industries,57.2,87,42,77,12,65,40,2026-10-13T02:24:17Z,2026-10-13T07:23:44Z,Compound 'hydrocell' head 'hydro' + tail 'cell'; no listed demand root; general service; 9 letters.
+198,orbitdock.si,emerging_industries,57.2,87,42,77,12,65,40,2026-10-13T03:37:12Z,2026-10-13T08:34:41Z,Compound 'orbitdock' head 'orbit' + tail 'dock'; no listed demand root; general service; 9 letters.
+199,parcelbox.si,consumer_brands,57.2,88,41,76,12,65,40,2026-10-13T03:39:38Z,2026-10-13T08:36:56Z,Compound 'parcelbox' head 'parcel' + tail 'box'; no listed demand root; general service; 9 letters.
+200,tidaldock.si,emerging_industries,57.2,87,42,77,12,65,40,2026-10-13T04:33:09Z,2026-10-13T09:39:37Z,Compound 'tidaldock' head 'tidal' + tail 'dock'; no listed demand root; general service; 9 letters.
+201,biopsyassay.si,health_science,57.1,77,65,65,12,62,40,2026-10-13T01:24:46Z,2026-10-13T05:39:05Z,Compound 'biopsyassay' head 'biopsy' + tail 'assay'; root 'bio'; biotechnology; 11 letters.
+202,genomeatlas.si,health_science,57.1,80,62,67,12,59,40,2026-10-13T03:02:01Z,2026-10-13T07:19:10Z,Compound 'genomeatlas' head 'genome' + tail 'atlas'; root 'genome'; genomics; 11 letters.
+203,dronedock.si,emerging_industries,57.0,86,42,77,12,65,40,2026-10-13T01:41:48Z,2026-10-13T07:09:52Z,Compound 'dronedock' head 'drone' + tail 'dock'; no listed demand root; general service; 9 letters.
+204,serumcell.si,health_science,57.0,87,41,77,12,65,40,2026-10-13T04:15:20Z,2026-10-13T09:16:04Z,Compound 'serumcell' head 'serum' + tail 'cell'; no listed demand root; general service; 9 letters.
+205,synapcore.si,ai,57.0,88,42,78,12,61,40,2026-10-13T04:25:08Z,2026-10-13T09:26:01Z,Compound 'synapcore' head 'synap' + tail 'core'; no listed demand root; general service; 9 letters.
+206,filmhouse.si,consumer_brands,56.9,85,42,78,12,65,40,2026-10-13T01:46:46Z,2026-10-13T07:15:36Z,Compound 'filmhouse' head 'film' + tail 'house'; no listed demand root; general service; 9 letters.
+207,hedgeflow.si,business_finance,56.9,87,41,77,12,64,40,2026-10-13T02:20:15Z,2026-10-13T07:21:42Z,Compound 'hedgeflow' head 'hedge' + tail 'flow'; no listed demand root; general service; 9 letters.
+208,biochargrid.si,emerging_industries,56.9,75,65,66,12,63,40,2026-10-13T01:24:24Z,2026-10-13T05:37:39Z,Compound 'biochargrid' head 'biochar' + tail 'grid'; root 'bio'; biotechnology; 11 letters.
+209,authlink.si,technology,56.8,82,41,84,12,65,40,2026-10-13T01:21:51Z,2026-10-13T05:28:54Z,Compound 'authlink' head 'auth' + tail 'link'; no listed demand root; general service; 8 letters.
+210,memoflow.si,ai,56.8,84,41,81,12,64,40,2026-10-13T03:11:09Z,2026-10-13T07:39:46Z,Compound 'memoflow' head 'memo' + tail 'flow'; no listed demand root; general service; 8 letters.
+211,yogaclub.si,consumer_brands,56.8,86,41,81,12,61,40,2026-10-13T04:58:29Z,2026-10-13T10:07:06Z,Compound 'yogaclub' head 'yoga' + tail 'club'; no listed demand root; general service; 8 letters.
+212,yogawear.si,consumer_brands,56.8,83,41,82,12,65,40,2026-10-13T04:58:35Z,2026-10-13T10:07:20Z,Compound 'yogawear' head 'yoga' + tail 'wear'; no listed demand root; general service; 8 letters.
+213,alloycell.si,emerging_industries,56.8,86,42,76,12,65,40,2026-10-13T01:19:07Z,2026-10-13T05:20:13Z,Compound 'alloycell' head 'alloy' + tail 'cell'; no listed demand root; general service; 9 letters.
+214,embedlabs.si,ai,56.8,87,41,76,12,64,40,2026-10-13T01:42:55Z,2026-10-13T07:10:30Z,Compound 'embedlabs' head 'embed' + tail 'labs'; no listed demand root; general service; 9 letters.
+215,agenticsense.si,ai,56.8,75,79,51,12,59,40,2026-10-13T01:18:00Z,2026-10-13T05:18:58Z,Compound 'agenticsense' head 'agentic' + tail 'sense'; root 'agent'; automation and services; 12 letters.
+216,cobotops.si,emerging_industries,56.6,83,41,82,12,64,40,2026-10-13T01:31:47Z,2026-10-13T06:15:04Z,Compound 'cobotops' head 'cobot' + tail 'ops'; no listed demand root; general service; 8 letters.
+217,auditscan.si,technology,56.6,84,42,78,12,65,40,2026-10-13T01:21:48Z,2026-10-13T05:28:48Z,Compound 'auditscan' head 'audit' + tail 'scan'; no listed demand root; general service; 9 letters.
+218,cognigrid.si,ai,56.6,87,41,76,12,63,40,2026-10-13T01:32:15Z,2026-10-13T06:16:16Z,Compound 'cognigrid' head 'cogni' + tail 'grid'; no listed demand root; general service; 9 letters.
+219,neuroloop.si,ai,56.6,87,41,76,12,63,40,2026-10-13T03:28:59Z,2026-10-13T08:26:14Z,Compound 'neuroloop' head 'neuro' + tail 'loop'; no listed demand root; general service; 9 letters.
+220,roboorbit.si,ai,56.6,86,41,76,12,65,40,2026-10-13T04:04:57Z,2026-10-13T09:09:33Z,Compound 'roboorbit' head 'robo' + tail 'orbit'; no listed demand root; general service; 9 letters.
+221,serverops.si,technology,56.6,86,41,77,12,64,40,2026-10-13T04:15:42Z,2026-10-13T09:16:16Z,Compound 'serverops' head 'server' + tail 'ops'; no listed demand root; general service; 9 letters.
+222,physioscan.si,health_science,56.6,87,41,74,12,65,40,2026-10-13T03:44:28Z,2026-10-13T08:57:43Z,Compound 'physioscan' head 'physio' + tail 'scan'; no listed demand root; general service; 10 letters.
+223,riskvault.si,business_finance,56.5,83,41,80,12,65,40,2026-10-13T04:03:18Z,2026-10-13T09:08:48Z,Compound 'riskvault' head 'risk' + tail 'vault'; no listed demand root; general service; 9 letters.
+224,loanflow.si,business_finance,56.4,81,41,83,12,65,40,2026-10-13T03:02:53Z,2026-10-13T07:35:57Z,Compound 'loanflow' head 'loan' + tail 'flow'; no listed demand root; general service; 8 letters.
+225,rehabscan.si,health_science,56.4,83,41,79,12,65,40,2026-10-13T03:57:39Z,2026-10-13T09:04:46Z,Compound 'rehabscan' head 'rehab' + tail 'scan'; no listed demand root; general service; 9 letters.
+226,batteryops.si,emerging_industries,56.4,87,41,74,12,64,40,2026-10-13T01:23:28Z,2026-10-13T05:30:45Z,Compound 'batteryops' head 'battery' + tail 'ops'; no listed demand root; general service; 10 letters.
+227,fusioncell.si,emerging_industries,56.4,87,41,74,12,64,40,2026-10-13T01:48:58Z,2026-10-13T07:17:27Z,Compound 'fusioncell' head 'fusion' + tail 'cell'; no listed demand root; general service; 10 letters.
+228,privacyops.si,technology,56.4,87,41,74,12,64,40,2026-10-13T03:47:38Z,2026-10-13T08:58:45Z,Compound 'privacyops' head 'privacy' + tail 'ops'; no listed demand root; general service; 10 letters.
+229,remitvault.si,business_finance,56.4,87,41,74,12,64,40,2026-10-13T03:58:59Z,2026-10-13T09:05:55Z,Compound 'remitvault' head 'remit' + tail 'vault'; no listed demand root; general service; 10 letters.
+230,videostack.si,technology,56.4,87,41,73,12,65,40,2026-10-13T04:51:27Z,2026-10-13T09:56:02Z,Compound 'videostack' head 'video' + tail 'stack'; no listed demand root; general service; 10 letters.
+231,pharmaworks.si,health_science,56.4,74,65,66,12,61,40,2026-10-13T03:44:04Z,2026-10-13T08:57:27Z,Compound 'pharmaworks' head 'pharma' + tail 'works'; root 'pharma'; pharmaceuticals; 11 letters.
+232,silkhouse.si,consumer_brands,56.3,84,41,78,12,64,40,2026-10-13T04:17:50Z,2026-10-13T09:18:13Z,Compound 'silkhouse' head 'silk' + tail 'house'; no listed demand root; general service; 9 letters.
+233,profitdesk.si,business_finance,56.3,87,41,73,12,64,40,2026-10-13T03:47:58Z,2026-10-13T08:58:53Z,Compound 'profitdesk' head 'profit' + tail 'desk'; no listed demand root; general service; 10 letters.
+234,scentbox.si,consumer_brands,56.2,81,40,83,12,65,40,2026-10-13T04:09:44Z,2026-10-13T09:11:33Z,Compound 'scentbox' head 'scent' + tail 'box'; no listed demand root; general service; 8 letters.
+235,helixscan.si,health_science,56.2,83,41,78,12,65,40,2026-10-13T02:21:29Z,2026-10-13T07:22:26Z,Compound 'helixscan' head 'helix' + tail 'scan'; no listed demand root; general service; 9 letters.
+236,autopilotops.si,emerging_industries,56.2,75,78,51,12,56,40,2026-10-13T01:22:32Z,2026-10-13T05:29:51Z,Compound 'autopilotops' head 'autopilot' + tail 'ops'; root 'auto'; automotive; 12 letters.
+237,insurancedesk.si,business_finance,56.2,74,85,41,12,58,40,2026-10-13T02:30:05Z,2026-10-13T07:26:03Z,Compound 'insurancedesk' head 'insurance' + tail 'desk'; root 'insurance'; insurance; 13 letters.
+238,yogagear.si,consumer_brands,56.1,82,41,81,12,63,40,2026-10-13T04:58:31Z,2026-10-13T10:07:18Z,Compound 'yogagear' head 'yoga' + tail 'gear'; no listed demand root; general service; 8 letters.
+239,loantrack.si,business_finance,56.1,82,41,79,12,65,40,2026-10-13T03:03:01Z,2026-10-13T07:36:03Z,Compound 'loantrack' head 'loan' + tail 'track'; no listed demand root; general service; 9 letters.
+240,nomadstay.si,consumer_brands,56.1,83,42,77,12,64,40,2026-10-13T03:32:03Z,2026-10-13T08:29:55Z,Compound 'nomadstay' head 'nomad' + tail 'stay'; no listed demand root; general service; 9 letters.
+241,bonddesk.si,business_finance,56.0,80,40,83,12,65,40,2026-10-13T01:25:21Z,2026-10-13T05:45:46Z,Compound 'bonddesk' head 'bond' + tail 'desk'; no listed demand root; general service; 8 letters.
+242,helixcell.si,health_science,56.0,85,41,76,12,62,40,2026-10-13T02:21:19Z,2026-10-13T07:22:20Z,Compound 'helixcell' head 'helix' + tail 'cell'; no listed demand root; general service; 9 letters.
+243,reactorops.si,emerging_industries,56.0,86,41,73,12,64,40,2026-10-13T03:54:53Z,2026-10-13T09:03:16Z,Compound 'reactorops' head 'reactor' + tail 'ops'; no listed demand root; general service; 10 letters.
+244,bondindex.si,business_finance,55.9,86,41,75,12,61,40,2026-10-13T01:25:23Z,2026-10-13T05:45:58Z,Compound 'bondindex' head 'bond' + tail 'index'; no listed demand root; general service; 9 letters.
+245,fundforge.si,business_finance,55.9,83,41,78,12,63,40,2026-10-13T01:48:45Z,2026-10-13T07:17:12Z,Compound 'fundforge' head 'fund' + tail 'forge'; no listed demand root; general service; 9 letters.
+246,jewelbox.si,consumer_brands,55.8,83,41,80,12,60,40,2026-10-13T02:31:54Z,2026-10-13T07:26:39Z,Compound 'jewelbox' head 'jewel' + tail 'box'; no listed demand root; general service; 8 letters.
+247,dramaclub.si,consumer_brands,55.8,87,41,77,12,57,40,2026-10-13T01:41:39Z,2026-10-13T07:09:44Z,Compound 'dramaclub' head 'drama' + tail 'club'; no listed demand root; general service; 9 letters.
+248,windforge.si,emerging_industries,55.8,83,40,77,12,65,40,2026-10-13T04:57:23Z,2026-10-13T10:05:22Z,Compound 'windforge' head 'wind' + tail 'forge'; no listed demand root; general service; 9 letters.
+249,trekclub.si,consumer_brands,55.6,80,40,83,12,62,40,2026-10-13T04:43:09Z,2026-10-13T09:46:17Z,Compound 'trekclub' head 'trek' + tail 'club'; no listed demand root; general service; 8 letters.
+250,coffeebox.si,consumer_brands,55.6,85,41,75,12,61,40,2026-10-13T01:32:00Z,2026-10-13T06:15:28Z,Compound 'coffeebox' head 'coffee' + tail 'box'; no listed demand root; general service; 9 letters.
+251,tailorwear.si,consumer_brands,55.5,85,41,73,12,62,40,2026-10-13T04:27:37Z,2026-10-13T09:31:11Z,Compound 'tailorwear' head 'tailor' + tail 'wear'; no listed demand root; general service; 10 letters.
+252,biocharforge.si,emerging_industries,55.5,79,65,54,12,59,40,2026-10-13T01:24:23Z,2026-10-13T05:37:35Z,Compound 'biocharforge' head 'biochar' + tail 'forge'; root 'bio'; biotechnology; 12 letters.
+253,geneworks.si,health_science,55.4,82,41,77,12,62,40,2026-10-13T01:50:34Z,2026-10-13T07:19:00Z,Compound 'geneworks' head 'gene' + tail 'works'; no listed demand root; general service; 9 letters.
+254,loansignal.si,business_finance,55.4,85,41,73,12,61,40,2026-10-13T03:02:59Z,2026-10-13T07:36:01Z,Compound 'loansignal' head 'loan' + tail 'signal'; no listed demand root; general service; 10 letters.
+255,querystack.si,technology,55.4,86,41,72,12,61,40,2026-10-13T03:52:21Z,2026-10-13T09:01:34Z,Compound 'querystack' head 'query' + tail 'stack'; no listed demand root; general service; 10 letters.
+256,genomescope.si,health_science,55.4,76,62,66,12,55,40,2026-10-13T03:02:09Z,2026-10-13T07:19:18Z,Compound 'genomescope' head 'genome' + tail 'scope'; root 'genome'; genomics; 11 letters.
+257,opticlink.si,technology,55.3,86,41,77,12,55,40,2026-10-13T03:36:38Z,2026-10-13T08:33:51Z,Compound 'opticlink' head 'optic' + tail 'link'; no listed demand root; general service; 9 letters.
+258,autonomydrive.si,emerging_industries,55.3,76,79,43,12,55,40,2026-10-13T01:22:14Z,2026-10-13T05:29:18Z,Compound 'autonomydrive' head 'autonomy' + tail 'drive'; root 'auto'; automotive; 13 letters.
+259,filmworks.si,consumer_brands,55.2,79,40,79,12,65,40,2026-10-13T01:46:47Z,2026-10-13T07:15:38Z,Compound 'filmworks' head 'film' + tail 'works'; no listed demand root; general service; 9 letters.
+260,dermascope.si,health_science,55.2,87,41,74,12,56,40,2026-10-13T01:39:56Z,2026-10-13T07:08:05Z,Compound 'dermascope' head 'derma' + tail 'scope'; no listed demand root; general service; 10 letters.
+261,myelincell.si,health_science,55.2,85,41,72,12,61,40,2026-10-13T03:22:50Z,2026-10-13T08:18:33Z,Compound 'myelincell' head 'myelin' + tail 'cell'; no listed demand root; general service; 10 letters.
+262,sleepatlas.si,health_science,55.1,84,41,73,12,61,40,2026-10-13T04:18:52Z,2026-10-13T09:19:41Z,Compound 'sleepatlas' head 'sleep' + tail 'atlas'; no listed demand root; general service; 10 letters.
+263,opticforge.si,technology,55.0,87,41,73,12,55,40,2026-10-13T03:36:32Z,2026-10-13T08:33:45Z,Compound 'opticforge' head 'optic' + tail 'forge'; no listed demand root; general service; 10 letters.
+264,dramahouse.si,consumer_brands,54.8,86,41,74,12,55,40,2026-10-13T01:41:40Z,2026-10-13T07:09:46Z,Compound 'dramahouse' head 'drama' + tail 'house'; no listed demand root; general service; 10 letters.
+265,plasmacell.si,health_science,54.8,84,41,73,12,59,40,2026-10-13T03:45:10Z,2026-10-13T08:57:49Z,Compound 'plasmacell' head 'plasma' + tail 'cell'; no listed demand root; general service; 10 letters.
+266,hedgetrack.si,business_finance,54.7,85,40,72,12,59,40,2026-10-13T02:20:28Z,2026-10-13T07:21:50Z,Compound 'hedgetrack' head 'hedge' + tail 'track'; no listed demand root; general service; 10 letters.
+267,genomeworks.si,health_science,54.7,74,62,66,12,54,40,2026-10-13T03:02:13Z,2026-10-13T07:19:26Z,Compound 'genomeworks' head 'genome' + tail 'works'; root 'genome'; genomics; 11 letters.
+268,recipebox.si,consumer_brands,54.6,85,41,77,12,52,40,2026-10-13T03:56:40Z,2026-10-13T09:04:14Z,Compound 'recipebox' head 'recipe' + tail 'box'; no listed demand root; general service; 9 letters.
+269,alloystack.si,emerging_industries,54.6,84,41,71,12,60,40,2026-10-13T01:19:12Z,2026-10-13T05:20:23Z,Compound 'alloystack' head 'alloy' + tail 'stack'; no listed demand root; general service; 10 letters.
+270,denimhouse.si,consumer_brands,54.6,86,41,73,12,54,40,2026-10-13T01:39:38Z,2026-10-13T07:07:18Z,Compound 'denimhouse' head 'denim' + tail 'house'; no listed demand root; general service; 10 letters.
+271,delio.si,invented,54.4,64,43,100,12,60,40,2026-10-13T01:39:23Z,2026-10-13T07:07:02Z,Coinage 'delio' ends -io; CVCVV; no repeated letters.
+272,meria.si,invented,54.4,64,43,100,12,60,40,2026-10-13T03:13:43Z,2026-10-13T07:54:01Z,Coinage 'meria' starts m; CVCVV; no repeated letters.
+273,raleo.si,invented,54.4,64,43,100,12,60,40,2026-10-13T03:53:07Z,2026-10-13T09:01:58Z,Coinage 'raleo' starts r; CVCVV; no repeated letters.
+274,angelforge.si,business_finance,54.4,86,41,72,12,54,40,2026-10-13T01:19:28Z,2026-10-13T05:20:31Z,Compound 'angelforge' head 'angel' + tail 'forge'; no listed demand root; general service; 10 letters.
+275,examcourse.si,consumer_brands,54.4,86,41,72,12,54,40,2026-10-13T01:44:34Z,2026-10-13T07:12:49Z,Compound 'examcourse' head 'exam' + tail 'course'; no listed demand root; general service; 10 letters.
+276,biopsyscreen.si,health_science,54.4,73,65,53,12,63,40,2026-10-13T01:24:50Z,2026-10-13T07:04:03Z,Compound 'biopsyscreen' head 'biopsy' + tail 'screen'; root 'bio'; biotechnology; 12 letters.
+277,bakerybox.si,consumer_brands,54.3,85,41,76,12,51,40,2026-10-13T01:22:56Z,2026-10-13T05:30:06Z,Compound 'bakerybox' head 'bakery' + tail 'box'; no listed demand root; general service; 9 letters.
+278,laserforge.si,emerging_industries,54.3,85,41,73,12,54,40,2026-10-13T02:41:10Z,2026-10-13T07:30:57Z,Compound 'laserforge' head 'laser' + tail 'forge'; no listed demand root; general service; 10 letters.
+279,nomadclub.si,consumer_brands,54.2,82,41,76,12,55,40,2026-10-13T03:31:59Z,2026-10-13T08:29:43Z,Compound 'nomadclub' head 'nomad' + tail 'club'; no listed demand root; general service; 9 letters.
+280,claimquote.si,business_finance,54.2,85,40,73,12,55,40,2026-10-13T01:30:54Z,2026-10-13T06:12:58Z,Compound 'claimquote' head 'claim' + tail 'quote'; no listed demand root; general service; 10 letters.
+281,cobotforge.si,emerging_industries,54.2,85,41,72,12,54,40,2026-10-13T01:31:43Z,2026-10-13T06:14:46Z,Compound 'cobotforge' head 'cobot' + tail 'forge'; no listed demand root; general service; 10 letters.
+282,denimcraft.si,consumer_brands,54.2,81,40,73,12,61,40,2026-10-13T01:39:37Z,2026-10-13T07:07:16Z,Compound 'denimcraft' head 'denim' + tail 'craft'; no listed demand root; general service; 10 letters.
+283,qubitforge.si,emerging_industries,54.2,86,41,71,12,54,40,2026-10-13T03:52:01Z,2026-10-13T09:01:24Z,Compound 'qubitforge' head 'qubit' + tail 'forge'; no listed demand root; general service; 10 letters.
+284,serumtrial.si,health_science,54.2,81,41,73,12,60,40,2026-10-13T04:15:32Z,2026-10-13T09:16:14Z,Compound 'serumtrial' head 'serum' + tail 'trial'; no listed demand root; general service; 10 letters.
+285,nirio.si,invented,54.0,63,43,99,12,60,40,2026-10-13T03:31:23Z,2026-10-13T08:29:00Z,Coinage 'nirio' ends -io; CVCVV; repeats i.
+286,brenia.si,invented,54.0,64,44,96,12,60,40,2026-10-13T01:26:08Z,2026-10-13T05:48:04Z,Coinage 'brenia' starts b; CCVCVV; no repeated letters.
+287,brenio.si,invented,54.0,64,44,96,12,60,40,2026-10-13T01:26:12Z,2026-10-13T05:48:28Z,Coinage 'brenio' ends -io; CCVCVV; no repeated letters.
+288,denimworks.si,consumer_brands,54.0,81,40,73,12,60,40,2026-10-13T01:39:42Z,2026-10-13T07:07:49Z,Compound 'denimworks' head 'denim' + tail 'works'; no listed demand root; general service; 10 letters.
+289,hikingwear.si,consumer_brands,54.0,81,40,73,12,60,40,2026-10-13T02:23:14Z,2026-10-13T07:23:28Z,Compound 'hikingwear' head 'hiking' + tail 'wear'; no listed demand root; general service; 10 letters.
+290,neuroscope.si,health_science,54.0,85,41,72,12,53,40,2026-10-13T03:29:25Z,2026-10-13T08:26:50Z,Compound 'neuroscope' head 'neuro' + tail 'scope'; no listed demand root; general service; 10 letters.
+291,cardiopulse.si,health_science,53.9,83,40,69,12,60,40,2026-10-13T01:28:14Z,2026-10-13T05:54:52Z,Compound 'cardiopulse' head 'cardio' + tail 'pulse'; no listed demand root; general service; 11 letters.
+292,biotechworks.si,health_science,53.9,72,65,53,12,61,40,2026-10-13T01:24:57Z,2026-10-13T05:44:58Z,Compound 'biotechworks' head 'biotech' + tail 'works'; root 'bio'; biotechnology; 12 letters.
+293,doreo.si,invented,53.8,63,43,99,12,59,40,2026-10-13T01:41:09Z,2026-10-13T07:08:53Z,Coinage 'doreo' starts d; CVCVV; repeats o.
+294,lania.si,invented,53.8,63,43,99,12,59,40,2026-10-13T02:39:28Z,2026-10-13T07:30:01Z,Coinage 'lania' starts l; CVCVV; repeats a.
+295,meleo.si,invented,53.8,63,43,99,12,59,40,2026-10-13T03:10:21Z,2026-10-13T07:39:13Z,Coinage 'meleo' starts m; CVCVV; repeats e.
+296,milio.si,invented,53.8,63,43,99,12,59,40,2026-10-13T03:15:15Z,2026-10-13T08:01:26Z,Coinage 'milio' ends -io; CVCVV; repeats i.
+297,mirio.si,invented,53.8,63,43,99,12,59,40,2026-10-13T03:16:27Z,2026-10-13T08:06:01Z,Coinage 'mirio' ends -io; CVCVV; repeats i.
+298,neleo.si,invented,53.8,63,43,99,12,59,40,2026-10-13T03:24:40Z,2026-10-13T08:21:20Z,Coinage 'neleo' starts n; CVCVV; repeats e.
+299,rinia.si,invented,53.8,63,43,99,12,59,40,2026-10-13T04:02:44Z,2026-10-13T09:08:26Z,Coinage 'rinia' starts r; CVCVV; repeats i.
+300,wenio.si,invented,53.8,64,41,99,12,60,40,2026-10-13T04:56:53Z,2026-10-13T10:04:04Z,Coinage 'wenio' ends -io; CVCVV; no repeated letters.
+301,fleetdrive.si,emerging_industries,53.8,80,41,73,12,59,40,2026-10-13T01:47:39Z,2026-10-13T07:16:12Z,Compound 'fleetdrive' head 'fleet' + tail 'drive'; no listed demand root; general service; 10 letters.
+302,immunocell.si,health_science,53.8,85,41,71,12,53,40,2026-10-13T02:26:59Z,2026-10-13T07:25:02Z,Compound 'immunocell' head 'immuno' + tail 'cell'; no listed demand root; general service; 10 letters.
+303,rocketdock.si,emerging_industries,53.8,82,40,72,12,58,40,2026-10-13T04:07:26Z,2026-10-13T09:10:57Z,Compound 'rocketdock' head 'rocket' + tail 'dock'; no listed demand root; general service; 10 letters.
+304,stromacell.si,health_science,53.8,80,41,74,12,58,40,2026-10-13T04:23:15Z,2026-10-13T09:24:05Z,Compound 'stromacell' head 'stroma' + tail 'cell'; no listed demand root; general service; 10 letters.
+305,voyageclub.si,consumer_brands,53.8,85,40,72,12,53,40,2026-10-13T04:55:43Z,2026-10-13T10:02:16Z,Compound 'voyageclub' head 'voyage' + tail 'club'; no listed demand root; general service; 10 letters.
+306,softwarestack.si,technology,53.8,68,85,41,12,52,40,2026-10-13T04:19:33Z,2026-10-13T09:20:13Z,Compound 'softwarestack' head 'software' + tail 'stack'; root 'software'; software; 13 letters.
+307,noral.si,invented,53.7,62,42,100,12,60,40,2026-10-13T03:32:15Z,2026-10-13T08:29:57Z,Coinage 'noral' ends -al; CVCVC; no repeated letters.
+308,insurancetrack.si,business_finance,53.7,72,85,33,12,53,40,2026-10-13T02:30:12Z,2026-10-13T07:26:07Z,Compound 'insurancetrack' head 'insurance' + tail 'track'; root 'insurance'; insurance; 14 letters.
+309,falia.si,invented,53.6,63,42,99,12,59,40,2026-10-13T01:45:11Z,2026-10-13T07:13:42Z,Coinage 'falia' starts f; CVCVV; repeats a.
+310,peleo.si,invented,53.6,63,42,99,12,59,40,2026-10-13T03:41:57Z,2026-10-13T08:55:58Z,Coinage 'peleo' starts p; CVCVV; repeats e.
+311,brenal.si,invented,53.6,64,42,96,12,60,40,2026-10-13T01:25:58Z,2026-10-13T05:47:04Z,Coinage 'brenal' ends -al; CCVCVC; no repeated letters.
+312,breneo.si,invented,53.6,63,44,96,12,59,40,2026-10-13T01:26:05Z,2026-10-13T05:47:46Z,Coinage 'breneo' starts b; CCVCVV; repeats e.
+313,relvia.si,invented,53.6,64,43,96,12,59,40,2026-10-13T03:58:45Z,2026-10-13T09:05:43Z,Coinage 'relvia' ends -via; CVCCVV; no repeated letters.
+314,renvia.si,invented,53.6,64,43,96,12,59,40,2026-10-13T03:59:52Z,2026-10-13T09:06:29Z,Coinage 'renvia' ends -via; CVCCVV; no repeated letters.
+315,alloyforge.si,emerging_industries,53.6,84,41,71,12,53,40,2026-10-13T01:19:08Z,2026-10-13T05:20:15Z,Compound 'alloyforge' head 'alloy' + tail 'forge'; no listed demand root; general service; 10 letters.
+316,decorhouse.si,consumer_brands,53.6,84,40,72,12,53,40,2026-10-13T01:38:29Z,2026-10-13T07:06:20Z,Compound 'decorhouse' head 'decor' + tail 'house'; no listed demand root; general service; 10 letters.
+317,linenhouse.si,consumer_brands,53.6,84,40,72,12,53,40,2026-10-13T02:47:46Z,2026-10-13T07:33:15Z,Compound 'linenhouse' head 'linen' + tail 'house'; no listed demand root; general service; 10 letters.
+318,marinastay.si,consumer_brands,53.6,84,41,72,12,52,40,2026-10-13T03:08:46Z,2026-10-13T07:38:43Z,Compound 'marinastay' head 'marina' + tail 'stay'; no listed demand root; general service; 10 letters.
+319,scenthouse.si,consumer_brands,53.6,80,41,72,12,59,40,2026-10-13T04:09:46Z,2026-10-13T09:11:35Z,Compound 'scenthouse' head 'scent' + tail 'house'; no listed demand root; general service; 10 letters.
+320,sleeptrack.si,health_science,53.6,79,40,74,12,60,40,2026-10-13T04:19:06Z,2026-10-13T09:19:51Z,Compound 'sleeptrack' head 'sleep' + tail 'track'; no listed demand root; general service; 10 letters.
+321,rinal.si,invented,53.5,62,41,100,12,60,40,2026-10-13T04:02:24Z,2026-10-13T09:08:06Z,Coinage 'rinal' ends -al; CVCVC; no repeated letters.
+322,belvia.si,invented,53.5,64,43,95,12,59,40,2026-10-13T01:24:04Z,2026-10-13T05:37:03Z,Coinage 'belvia' ends -via; CVCCVV; no repeated letters.
+323,delvia.si,invented,53.5,64,43,95,12,59,40,2026-10-13T01:39:33Z,2026-10-13T07:07:14Z,Coinage 'delvia' ends -via; CVCCVV; no repeated letters.
+324,dorvia.si,invented,53.5,64,43,95,12,59,40,2026-10-13T01:41:30Z,2026-10-13T07:09:17Z,Coinage 'dorvia' ends -via; CVCCVV; no repeated letters.
+325,fenvia.si,invented,53.5,64,43,95,12,59,40,2026-10-13T01:46:05Z,2026-10-13T07:14:42Z,Coinage 'fenvia' ends -via; CVCCVV; no repeated letters.
+326,softwareworks.si,technology,53.5,67,85,41,12,52,40,2026-10-13T04:19:35Z,2026-10-13T09:20:15Z,Compound 'softwareworks' head 'software' + tail 'works'; root 'software'; software; 13 letters.
+327,cinemashow.si,consumer_brands,53.4,84,40,72,12,52,40,2026-10-13T01:30:25Z,2026-10-13T06:11:46Z,Compound 'cinemashow' head 'cinema' + tail 'show'; no listed demand root; general service; 10 letters.
+328,forexsignal.si,business_finance,53.4,83,40,69,12,57,40,2026-10-13T01:48:18Z,2026-10-13T07:16:48Z,Compound 'forexsignal' head 'forex' + tail 'signal'; no listed demand root; general service; 11 letters.
+329,trekbooking.si,consumer_brands,53.4,81,40,67,12,62,40,2026-10-13T04:43:07Z,2026-10-13T09:46:05Z,Compound 'trekbooking' head 'trek' + tail 'booking'; no listed demand root; general service; 11 letters.
+330,fenal.si,invented,53.3,62,40,100,12,60,40,2026-10-13T01:45:46Z,2026-10-13T07:14:06Z,Coinage 'fenal' ends -al; CVCVC; no repeated letters.
+331,niral.si,invented,53.3,62,40,100,12,60,40,2026-10-13T03:30:55Z,2026-10-13T08:28:04Z,Coinage 'niral' ends -al; CVCVC; no repeated letters.
+332,peral.si,invented,53.3,62,40,100,12,60,40,2026-10-13T03:42:57Z,2026-10-13T08:56:44Z,Coinage 'peral' ends -al; CVCVC; no repeated letters.
+333,teral.si,invented,53.3,62,40,100,12,60,40,2026-10-13T04:31:19Z,2026-10-13T09:36:50Z,Coinage 'teral' ends -al; CVCVC; no repeated letters.
+334,toral.si,invented,53.3,62,40,100,12,60,40,2026-10-13T04:35:39Z,2026-10-13T09:43:00Z,Coinage 'toral' ends -al; CVCVC; no repeated letters.
+335,veneo.si,invented,53.3,63,41,98,12,59,40,2026-10-13T04:49:27Z,2026-10-13T09:53:17Z,Coinage 'veneo' starts v; CVCVV; repeats e.
+336,bondsignal.si,business_finance,53.3,80,40,73,12,57,40,2026-10-13T01:25:25Z,2026-10-13T05:46:10Z,Compound 'bondsignal' head 'bond' + tail 'signal'; no listed demand root; general service; 10 letters.
+337,cruiseclub.si,consumer_brands,53.3,84,41,71,12,51,40,2026-10-13T01:35:45Z,2026-10-13T06:47:43Z,Compound 'cruiseclub' head 'cruise' + tail 'club'; no listed demand root; general service; 10 letters.
+338,fiberworks.si,technology,53.3,80,40,73,12,57,40,2026-10-13T01:46:40Z,2026-10-13T07:15:32Z,Compound 'fiberworks' head 'fiber' + tail 'works'; no listed demand root; general service; 10 letters.
+339,fundsignal.si,business_finance,53.3,80,40,73,12,57,40,2026-10-13T01:48:48Z,2026-10-13T07:17:16Z,Compound 'fundsignal' head 'fund' + tail 'signal'; no listed demand root; general service; 10 letters.
+340,hikinggear.si,consumer_brands,53.3,80,40,72,12,58,40,2026-10-13T02:23:10Z,2026-10-13T07:23:26Z,Compound 'hikinggear' head 'hiking' + tail 'gear'; no listed demand root; general service; 10 letters.
+341,linencraft.si,consumer_brands,53.3,80,40,73,12,57,40,2026-10-13T02:47:44Z,2026-10-13T07:33:11Z,Compound 'linencraft' head 'linen' + tail 'craft'; no listed demand root; general service; 10 letters.
+342,brena.si,invented,53.2,64,36,100,12,61,40,2026-10-13T01:25:57Z,2026-10-13T05:46:58Z,Coinage 'brena' ends -ena; CCVCV; no repeated letters.
+343,ranal.si,invented,53.2,61,42,99,12,59,40,2026-10-13T03:53:41Z,2026-10-13T09:02:26Z,Coinage 'ranal' ends -al; CVCVC; repeats a.
+344,ranium.si,invented,53.2,64,41,96,12,59,40,2026-10-13T03:54:09Z,2026-10-13T09:02:52Z,Coinage 'ranium' ends -ium; CVCVVC; no repeated letters.
+345,indexstack.si,technology,53.2,80,40,72,12,57,40,2026-10-13T02:27:38Z,2026-10-13T07:25:14Z,Compound 'indexstack' head 'index' + tail 'stack'; no listed demand root; general service; 10 letters.
+346,voyagestay.si,consumer_brands,53.2,82,40,71,12,55,40,2026-10-13T04:55:47Z,2026-10-13T10:02:18Z,Compound 'voyagestay' head 'voyage' + tail 'stay'; no listed demand root; general service; 10 letters.
+347,plasmatrial.si,health_science,53.2,80,40,68,12,61,40,2026-10-13T03:45:20Z,2026-10-13T08:57:59Z,Compound 'plasmatrial' head 'plasma' + tail 'trial'; no listed demand root; general service; 11 letters.
+348,narium.si,invented,53.1,64,41,95,12,59,40,2026-10-13T03:23:44Z,2026-10-13T08:19:52Z,Coinage 'narium' ends -ium; CVCVVC; no repeated letters.
+349,norium.si,invented,53.1,64,41,95,12,59,40,2026-10-13T03:32:47Z,2026-10-13T08:30:53Z,Coinage 'norium' ends -ium; CVCVVC; no repeated letters.
+350,ralium.si,invented,53.1,64,41,95,12,59,40,2026-10-13T03:53:19Z,2026-10-13T09:02:10Z,Coinage 'ralium' ends -ium; CVCVVC; no repeated letters.
+351,relium.si,invented,53.1,64,41,95,12,59,40,2026-10-13T03:58:29Z,2026-10-13T09:05:31Z,Coinage 'relium' ends -ium; CVCVVC; no repeated letters.
+352,naral.si,invented,53.0,61,41,99,12,59,40,2026-10-13T03:23:18Z,2026-10-13T08:18:58Z,Coinage 'naral' ends -al; CVCVC; repeats a.
+353,relal.si,invented,53.0,61,41,99,12,59,40,2026-10-13T03:57:47Z,2026-10-13T09:04:54Z,Coinage 'relal' ends -al; CVCVC; repeats l.
+354,wenal.si,invented,53.0,62,40,99,12,59,40,2026-10-13T04:56:29Z,2026-10-13T10:03:09Z,Coinage 'wenal' ends -al; CVCVC; no repeated letters.
+355,winal.si,invented,53.0,62,40,99,12,59,40,2026-10-13T04:57:13Z,2026-10-13T10:04:52Z,Coinage 'winal' ends -al; CVCVC; no repeated letters.
+356,fenium.si,invented,53.0,64,41,94,12,59,40,2026-10-13T01:45:58Z,2026-10-13T07:14:30Z,Coinage 'fenium' ends -ium; CVCVVC; no repeated letters.
+357,helixassay.si,health_science,53.0,84,40,71,12,50,40,2026-10-13T02:21:14Z,2026-10-13T07:22:16Z,Compound 'helixassay' head 'helix' + tail 'assay'; no listed demand root; general service; 10 letters.
+358,jewelhouse.si,consumer_brands,53.0,84,40,71,12,50,40,2026-10-13T02:32:00Z,2026-10-13T07:26:43Z,Compound 'jewelhouse' head 'jewel' + tail 'house'; no listed demand root; general service; 10 letters.
+359,safaristay.si,consumer_brands,53.0,83,41,71,12,51,40,2026-10-13T04:08:32Z,2026-10-13T09:11:11Z,Compound 'safaristay' head 'safari' + tail 'stay'; no listed demand root; general service; 10 letters.
+360,dramastudio.si,consumer_brands,53.0,82,40,68,12,57,40,2026-10-13T01:41:42Z,2026-10-13T07:09:50Z,Compound 'dramastudio' head 'drama' + tail 'studio'; no listed demand root; general service; 11 letters.
+361,fenaro.si,invented,52.9,62,44,93,12,59,40,2026-10-13T01:45:49Z,2026-10-13T07:14:12Z,Coinage 'fenaro' ends -aro; CVCVCV; no repeated letters.
+362,lenaro.si,invented,52.9,62,44,93,12,59,40,2026-10-13T02:44:11Z,2026-10-13T07:31:57Z,Coinage 'lenaro' ends -aro; CVCVCV; no repeated letters.
+363,merona.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:14:01Z,2026-10-13T07:55:29Z,Coinage 'merona' starts m; CVCVCV; no repeated letters.
+364,narelo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:23:26Z,2026-10-13T08:19:16Z,Coinage 'narelo' starts n; CVCVCV; no repeated letters.
+365,nelaro.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:24:32Z,2026-10-13T08:21:02Z,Coinage 'nelaro' ends -aro; CVCVCV; no repeated letters.
+366,nelora.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:24:58Z,2026-10-13T08:21:59Z,Coinage 'nelora' ends -ora; CVCVCV; no repeated letters.
+367,ralino.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:53:17Z,2026-10-13T09:02:08Z,Coinage 'ralino' ends -ino; CVCVCV; no repeated letters.
+368,raluno.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:53:31Z,2026-10-13T09:02:20Z,Coinage 'raluno' starts r; CVCVCV; no repeated letters.
+369,ranelo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:53:53Z,2026-10-13T09:02:38Z,Coinage 'ranelo' starts r; CVCVCV; no repeated letters.
+370,ranilo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:54:03Z,2026-10-13T09:02:46Z,Coinage 'ranilo' starts r; CVCVCV; no repeated letters.
+371,relami.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:57:49Z,2026-10-13T09:04:56Z,Coinage 'relami' starts r; CVCVCV; no repeated letters.
+372,relina.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:58:25Z,2026-10-13T09:05:27Z,Coinage 'relina' ends -ina; CVCVCV; no repeated letters.
+373,relino.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:58:27Z,2026-10-13T09:05:29Z,Coinage 'relino' ends -ino; CVCVCV; no repeated letters.
+374,relona.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:58:35Z,2026-10-13T09:05:33Z,Coinage 'relona' starts r; CVCVCV; no repeated letters.
+375,reluno.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:58:41Z,2026-10-13T09:05:39Z,Coinage 'reluno' starts r; CVCVCV; no repeated letters.
+376,renami.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:59:05Z,2026-10-13T09:05:57Z,Coinage 'renami' starts r; CVCVCV; no repeated letters.
+377,renilo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:59:32Z,2026-10-13T09:06:17Z,Coinage 'renilo' starts r; CVCVCV; no repeated letters.
+378,rinelo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T04:02:36Z,2026-10-13T09:08:18Z,Coinage 'rinelo' starts r; CVCVCV; no repeated letters.
+379,terona.si,invented,52.9,62,44,93,12,59,40,2026-10-13T04:31:51Z,2026-10-13T09:38:09Z,Coinage 'terona' starts t; CVCVCV; no repeated letters.
+380,torena.si,invented,52.9,62,44,93,12,59,40,2026-10-13T04:35:51Z,2026-10-13T09:43:32Z,Coinage 'torena' ends -ena; CVCVCV; no repeated letters.
+381,leatherwear.si,consumer_brands,52.9,79,40,67,12,62,40,2026-10-13T02:43:22Z,2026-10-13T07:31:41Z,Compound 'leatherwear' head 'leather' + tail 'wear'; no listed demand root; general service; 11 letters.
+382,elova.si,invented,52.8,62,41,96,12,59,40,2026-10-13T01:42:41Z,2026-10-13T07:10:08Z,Coinage 'elova' starts e; VCVCV; no repeated letters.
+383,lisal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T02:50:21Z,2026-10-13T07:34:50Z,Coinage 'lisal' ends -al; CVCVC; repeats l.
+384,melal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:10:07Z,2026-10-13T07:39:01Z,Coinage 'melal' ends -al; CVCVC; repeats l.
+385,milal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:14:47Z,2026-10-13T07:58:55Z,Coinage 'milal' ends -al; CVCVC; repeats l.
+386,molal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:18:21Z,2026-10-13T08:11:38Z,Coinage 'molal' ends -al; CVCVC; repeats l.
+387,nelal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:24:26Z,2026-10-13T08:20:46Z,Coinage 'nelal' ends -al; CVCVC; repeats l.
+388,pelal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:41:43Z,2026-10-13T08:55:44Z,Coinage 'pelal' ends -al; CVCVC; repeats l.
+389,angelpitch.si,business_finance,52.8,79,40,71,12,57,40,2026-10-13T01:19:31Z,2026-10-13T05:20:33Z,Compound 'angelpitch' head 'angel' + tail 'pitch'; no listed demand root; general service; 10 letters.
+390,assetindex.si,business_finance,52.8,84,41,70,12,49,40,2026-10-13T01:20:22Z,2026-10-13T05:21:09Z,Compound 'assetindex' head 'asset' + tail 'index'; no listed demand root; general service; 10 letters.
+391,comedyshow.si,consumer_brands,52.8,83,40,72,12,50,40,2026-10-13T01:33:01Z,2026-10-13T07:04:11Z,Compound 'comedyshow' head 'comedy' + tail 'show'; no listed demand root; general service; 10 letters.
+392,forextrack.si,business_finance,52.8,79,40,72,12,56,40,2026-10-13T01:48:19Z,2026-10-13T07:16:50Z,Compound 'forextrack' head 'forex' + tail 'track'; no listed demand root; general service; 10 letters.
+393,serumassay.si,health_science,52.8,83,40,71,12,51,40,2026-10-13T04:15:18Z,2026-10-13T09:16:02Z,Compound 'serumassay' head 'serum' + tail 'assay'; no listed demand root; general service; 10 letters.
+394,belaro.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:23:45Z,2026-10-13T05:31:00Z,Coinage 'belaro' ends -aro; CVCVCV; no repeated letters.
+395,belino.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:23:54Z,2026-10-13T05:36:32Z,Coinage 'belino' ends -ino; CVCVCV; no repeated letters.
+396,beluno.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:24:02Z,2026-10-13T05:36:54Z,Coinage 'beluno' starts b; CVCVCV; no repeated letters.
+397,belura.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:24:03Z,2026-10-13T05:36:59Z,Coinage 'belura' starts b; CVCVCV; no repeated letters.
+398,darelo.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:36:46Z,2026-10-13T07:04:41Z,Coinage 'darelo' starts d; CVCVCV; no repeated letters.
+399,darino.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:36:53Z,2026-10-13T07:04:51Z,Coinage 'darino' ends -ino; CVCVCV; no repeated letters.
+400,daruno.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:37:00Z,2026-10-13T07:05:03Z,Coinage 'daruno' starts d; CVCVCV; no repeated letters.
+401,delami.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:09Z,2026-10-13T07:06:40Z,Coinage 'delami' starts d; CVCVCV; no repeated letters.
+402,delaro.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:11Z,2026-10-13T07:06:44Z,Coinage 'delaro' ends -aro; CVCVCV; no repeated letters.
+403,delino.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:22Z,2026-10-13T07:07:00Z,Coinage 'delino' ends -ino; CVCVCV; no repeated letters.
+404,delora.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:28Z,2026-10-13T07:07:06Z,Coinage 'delora' ends -ora; CVCVCV; no repeated letters.
+405,delova.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:29Z,2026-10-13T07:07:08Z,Coinage 'delova' starts d; CVCVCV; no repeated letters.
+406,deluno.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:30Z,2026-10-13T07:07:10Z,Coinage 'deluno' starts d; CVCVCV; no repeated letters.
+407,delura.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:31Z,2026-10-13T07:07:12Z,Coinage 'delura' starts d; CVCVCV; no repeated letters.
+408,dorami.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:41:02Z,2026-10-13T07:08:39Z,Coinage 'dorami' starts d; CVCVCV; no repeated letters.
+409,dorena.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:41:07Z,2026-10-13T07:08:49Z,Coinage 'dorena' ends -ena; CVCVCV; no repeated letters.
+410,doriva.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:41:17Z,2026-10-13T07:09:07Z,Coinage 'doriva' starts d; CVCVCV; no repeated letters.
+411,falino.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:14Z,2026-10-13T07:13:48Z,Coinage 'falino' ends -ino; CVCVCV; no repeated letters.
+412,faluno.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:21Z,2026-10-13T07:14:00Z,Coinage 'faluno' starts f; CVCVCV; no repeated letters.
+413,fenami.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:47Z,2026-10-13T07:14:08Z,Coinage 'fenami' starts f; CVCVCV; no repeated letters.
+414,fenilo.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:55Z,2026-10-13T07:14:24Z,Coinage 'fenilo' starts f; CVCVCV; no repeated letters.
+415,feniva.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:59Z,2026-10-13T07:14:32Z,Coinage 'feniva' starts f; CVCVCV; no repeated letters.
+416,fenova.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:02Z,2026-10-13T07:14:36Z,Coinage 'fenova' starts f; CVCVCV; no repeated letters.
+417,fenura.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:04Z,2026-10-13T07:14:40Z,Coinage 'fenura' starts f; CVCVCV; no repeated letters.
+418,ferami.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:07Z,2026-10-13T07:14:44Z,Coinage 'ferami' starts f; CVCVCV; no repeated letters.
+419,ferilo.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:15Z,2026-10-13T07:15:00Z,Coinage 'ferilo' starts f; CVCVCV; no repeated letters.
+420,feriva.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:19Z,2026-10-13T07:15:06Z,Coinage 'feriva' starts f; CVCVCV; no repeated letters.
+421,ferova.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:23Z,2026-10-13T07:15:10Z,Coinage 'ferova' starts f; CVCVCV; no repeated letters.
+422,linaro.si,invented,52.7,62,43,93,12,59,40,2026-10-13T02:47:23Z,2026-10-13T07:33:01Z,Coinage 'linaro' ends -aro; CVCVCV; no repeated letters.
+423,audittrack.si,business_finance,52.6,79,40,71,12,56,40,2026-10-13T01:21:49Z,2026-10-13T05:28:51Z,Compound 'audittrack' head 'audit' + tail 'track'; no listed demand root; general service; 10 letters.
+424,examstudio.si,consumer_brands,52.6,81,40,72,12,52,40,2026-10-13T01:44:37Z,2026-10-13T07:12:53Z,Compound 'examstudio' head 'exam' + tail 'studio'; no listed demand root; general service; 10 letters.
+425,hostelstay.si,consumer_brands,52.6,79,40,71,12,56,40,2026-10-13T02:23:57Z,2026-10-13T07:23:42Z,Compound 'hostelstay' head 'hostel' + tail 'stay'; no listed demand root; general service; 10 letters.
+426,genemarker.si,health_science,52.5,81,40,72,12,51,40,2026-10-13T01:50:21Z,2026-10-13T07:18:48Z,Compound 'genemarker' head 'gene' + tail 'marker'; no listed demand root; general service; 10 letters.
+427,laserworks.si,emerging_industries,52.5,78,40,72,12,56,40,2026-10-13T02:41:26Z,2026-10-13T07:31:05Z,Compound 'laserworks' head 'laser' + tail 'works'; no listed demand root; general service; 10 letters.
+428,remittrack.si,business_finance,52.5,78,40,72,12,56,40,2026-10-13T03:58:57Z,2026-10-13T09:05:53Z,Compound 'remittrack' head 'remit' + tail 'track'; no listed demand root; general service; 10 letters.
+429,yieldindex.si,business_finance,52.5,81,40,70,12,53,40,2026-10-13T04:58:21Z,2026-10-13T10:06:50Z,Compound 'yieldindex' head 'yield' + tail 'index'; no listed demand root; general service; 10 letters.
+430,helixatlas.si,health_science,52.4,82,40,71,12,50,40,2026-10-13T02:21:18Z,2026-10-13T07:22:18Z,Compound 'helixatlas' head 'helix' + tail 'atlas'; no listed demand root; general service; 10 letters.
+431,kitchenbox.si,consumer_brands,52.4,79,40,71,12,55,40,2026-10-13T02:36:30Z,2026-10-13T07:28:37Z,Compound 'kitchenbox' head 'kitchen' + tail 'box'; no listed demand root; general service; 10 letters.
+432,rehabtrack.si,health_science,52.4,78,40,72,12,55,40,2026-10-13T03:57:41Z,2026-10-13T09:04:48Z,Compound 'rehabtrack' head 'rehab' + tail 'track'; no listed demand root; general service; 10 letters.
+433,neuronatlas.si,health_science,52.4,81,40,68,12,54,40,2026-10-13T03:29:04Z,2026-10-13T08:26:16Z,Compound 'neuronatlas' head 'neuron' + tail 'atlas'; no listed demand root; general service; 11 letters.
+434,skincarebox.si,consumer_brands,52.4,82,40,67,12,54,40,2026-10-13T04:18:36Z,2026-10-13T09:18:47Z,Compound 'skincarebox' head 'skincare' + tail 'box'; no listed demand root; general service; 11 letters.
+435,tailorhouse.si,consumer_brands,52.4,81,40,68,12,54,40,2026-10-13T04:27:31Z,2026-10-13T09:30:55Z,Compound 'tailorhouse' head 'tailor' + tail 'house'; no listed demand root; general service; 11 letters.
+436,coffeeclub.si,consumer_brands,52.3,82,40,71,12,49,40,2026-10-13T01:32:01Z,2026-10-13T06:15:34Z,Compound 'coffeeclub' head 'coffee' + tail 'club'; no listed demand root; general service; 10 letters.
+437,jewelcraft.si,consumer_brands,52.3,79,40,71,12,54,40,2026-10-13T02:31:55Z,2026-10-13T07:26:41Z,Compound 'jewelcraft' head 'jewel' + tail 'craft'; no listed demand root; general service; 10 letters.
+438,musicclub.si,consumer_brands,52.2,79,40,75,12,49,40,2026-10-13T03:22:22Z,2026-10-13T08:17:57Z,Compound 'musicclub' head 'music' + tail 'club'; no listed demand root; general service; 9 letters.
+439,decorcraft.si,consumer_brands,52.2,78,40,71,12,55,40,2026-10-13T01:38:27Z,2026-10-13T07:06:18Z,Compound 'decorcraft' head 'decor' + tail 'craft'; no listed demand root; general service; 10 letters.
+440,laserstack.si,emerging_industries,52.2,78,40,71,12,55,40,2026-10-13T02:41:24Z,2026-10-13T07:31:03Z,Compound 'laserstack' head 'laser' + tail 'stack'; no listed demand root; general service; 10 letters.
+441,droneflight.si,emerging_industries,52.2,77,39,68,12,61,40,2026-10-13T01:41:49Z,2026-10-13T07:09:54Z,Compound 'droneflight' head 'drone' + tail 'flight'; no listed demand root; general service; 11 letters.
+442,helixmarker.si,health_science,52.2,81,40,68,12,53,40,2026-10-13T02:21:25Z,2026-10-13T07:22:24Z,Compound 'helixmarker' head 'helix' + tail 'marker'; no listed demand root; general service; 11 letters.
+443,myelinatlas.si,health_science,52.2,81,40,67,12,54,40,2026-10-13T03:22:48Z,2026-10-13T08:18:21Z,Compound 'myelinatlas' head 'myelin' + tail 'atlas'; no listed demand root; general service; 11 letters.
+444,helixscope.si,health_science,52.1,80,40,72,12,50,40,2026-10-13T02:21:30Z,2026-10-13T07:22:28Z,Compound 'helixscope' head 'helix' + tail 'scope'; no listed demand root; general service; 10 letters.
+445,serumscope.si,health_science,52.1,80,40,72,12,50,40,2026-10-13T04:15:30Z,2026-10-13T09:16:12Z,Compound 'serumscope' head 'serum' + tail 'scope'; no listed demand root; general service; 10 letters.
+446,plasmascope.si,health_science,52.1,80,40,68,12,54,40,2026-10-13T03:45:18Z,2026-10-13T08:57:57Z,Compound 'plasmascope' head 'plasma' + tail 'scope'; no listed demand root; general service; 11 letters.
+447,retinascope.si,health_science,52.1,80,40,68,12,54,40,2026-10-13T04:00:34Z,2026-10-13T09:06:39Z,Compound 'retinascope' head 'retina' + tail 'scope'; no listed demand root; general service; 11 letters.
+448,galleryshow.si,consumer_brands,51.9,81,40,67,12,52,40,2026-10-13T01:49:44Z,2026-10-13T07:18:17Z,Compound 'galleryshow' head 'gallery' + tail 'show'; no listed demand root; general service; 11 letters.
+449,bakerycraft.si,consumer_brands,51.8,80,40,67,12,53,40,2026-10-13T01:22:58Z,2026-10-13T05:30:12Z,Compound 'bakerycraft' head 'bakery' + tail 'craft'; no listed demand root; general service; 11 letters.
+450,campingwear.si,consumer_brands,51.8,76,39,68,12,60,40,2026-10-13T01:27:31Z,2026-10-13T05:52:22Z,Compound 'campingwear' head 'camping' + tail 'wear'; no listed demand root; general service; 11 letters.
+451,serummarker.si,health_science,51.7,79,40,68,12,53,40,2026-10-13T04:15:26Z,2026-10-13T09:16:08Z,Compound 'serummarker' head 'serum' + tail 'marker'; no listed demand root; general service; 11 letters.
+452,mentorclub.si,consumer_brands,51.6,79,40,71,12,49,40,2026-10-13T03:13:11Z,2026-10-13T07:51:39Z,Compound 'mentorclub' head 'mentor' + tail 'club'; no listed demand root; general service; 10 letters.
+453,enzymescope.si,health_science,51.6,80,40,66,12,53,40,2026-10-13T01:43:58Z,2026-10-13T07:12:17Z,Compound 'enzymescope' head 'enzyme' + tail 'scope'; no listed demand root; general service; 11 letters.
+454,linendesign.si,consumer_brands,51.6,79,40,67,12,53,40,2026-10-13T02:47:45Z,2026-10-13T07:33:13Z,Compound 'linendesign' head 'linen' + tail 'design'; no listed demand root; general service; 11 letters.
+455,recipecraft.si,consumer_brands,51.6,80,40,67,12,52,40,2026-10-13T03:56:44Z,2026-10-13T09:04:18Z,Compound 'recipecraft' head 'recipe' + tail 'craft'; no listed demand root; general service; 11 letters.
+456,sailingwear.si,consumer_brands,51.6,76,39,67,12,60,40,2026-10-13T04:08:40Z,2026-10-13T09:11:15Z,Compound 'sailingwear' head 'sailing' + tail 'wear'; no listed demand root; general service; 11 letters.
+457,canyonstay.si,consumer_brands,51.5,77,40,70,12,53,40,2026-10-13T01:27:42Z,2026-10-13T05:52:58Z,Compound 'canyonstay' head 'canyon' + tail 'stay'; no listed demand root; general service; 10 letters.
+458,plasmaassay.si,health_science,51.5,77,40,65,12,58,40,2026-10-13T03:45:08Z,2026-10-13T08:57:47Z,Compound 'plasmaassay' head 'plasma' + tail 'assay'; no listed demand root; general service; 11 letters.
+459,weddingbox.si,consumer_brands,51.4,78,40,70,12,51,40,2026-10-13T04:56:19Z,2026-10-13T10:02:53Z,Compound 'weddingbox' head 'wedding' + tail 'box'; no listed demand root; general service; 10 letters.
+460,hedgesignal.si,business_finance,51.3,80,39,66,12,52,40,2026-10-13T02:20:27Z,2026-10-13T07:21:48Z,Compound 'hedgesignal' head 'hedge' + tail 'signal'; no listed demand root; general service; 11 letters.
+461,marinaclub.si,consumer_brands,51.2,82,40,72,12,41,40,2026-10-13T03:08:44Z,2026-10-13T07:38:41Z,Compound 'marinaclub' head 'marina' + tail 'club'; no listed demand root; general service; 10 letters.
+462,assetsignal.si,business_finance,51.2,79,40,66,12,52,40,2026-10-13T01:20:24Z,2026-10-13T05:21:13Z,Compound 'assetsignal' head 'asset' + tail 'signal'; no listed demand root; general service; 11 letters.
+463,sailinggear.si,consumer_brands,51.1,75,39,67,12,58,40,2026-10-13T04:08:38Z,2026-10-13T09:11:13Z,Compound 'sailinggear' head 'sailing' + tail 'gear'; no listed demand root; general service; 11 letters.
+464,myelinscope.si,health_science,51.0,77,39,68,12,53,40,2026-10-13T03:22:58Z,2026-10-13T08:18:52Z,Compound 'myelinscope' head 'myelin' + tail 'scope'; no listed demand root; general service; 11 letters.
+465,bakeryhouse.si,consumer_brands,50.6,78,39,68,12,49,40,2026-10-13T01:22:59Z,2026-10-13T05:30:15Z,Compound 'bakeryhouse' head 'bakery' + tail 'house'; no listed demand root; general service; 11 letters.
+466,cookwarebox.si,consumer_brands,50.6,79,39,65,12,50,40,2026-10-13T01:34:09Z,2026-10-13T06:32:27Z,Compound 'cookwarebox' head 'cookware' + tail 'box'; no listed demand root; general service; 11 letters.
+467,tailorcraft.si,consumer_brands,50.6,74,39,67,12,56,40,2026-10-13T04:27:27Z,2026-10-13T09:30:51Z,Compound 'tailorcraft' head 'tailor' + tail 'craft'; no listed demand root; general service; 11 letters.
+468,theatershow.si,consumer_brands,50.6,74,40,66,12,56,40,2026-10-13T04:32:39Z,2026-10-13T09:39:01Z,Compound 'theatershow' head 'theater' + tail 'show'; no listed demand root; general service; 11 letters.
+469,optionquote.si,business_finance,50.4,78,39,66,12,49,40,2026-10-13T03:36:56Z,2026-10-13T08:34:25Z,Compound 'optionquote' head 'option' + tail 'quote'; no listed demand root; general service; 11 letters.
+470,biomarkeratlas.si,health_science,50.4,74,65,35,12,52,40,2026-10-13T01:24:30Z,2026-10-13T05:38:02Z,Compound 'biomarkeratlas' head 'biomarker' + tail 'atlas'; root 'bio'; biotechnology; 14 letters.
+471,payloadcontrol.si,emerging_industries,50.3,68,73,34,12,52,40,2026-10-13T03:41:12Z,2026-10-13T08:55:30Z,Compound 'payloadcontrol' head 'payload' + tail 'control'; root 'payload'; software data transfer; 14 letters.
+472,decorstudio.si,consumer_brands,50.2,75,39,67,12,52,40,2026-10-13T01:38:32Z,2026-10-13T07:06:26Z,Compound 'decorstudio' head 'decor' + tail 'studio'; no listed demand root; general service; 11 letters.
+473,jewelstudio.si,consumer_brands,50.2,76,39,67,12,50,40,2026-10-13T02:32:11Z,2026-10-13T07:26:47Z,Compound 'jewelstudio' head 'jewel' + tail 'studio'; no listed demand root; general service; 11 letters.
+474,lidarflight.si,emerging_industries,50.2,74,39,66,12,55,40,2026-10-13T02:46:44Z,2026-10-13T07:32:45Z,Compound 'lidarflight' head 'lidar' + tail 'flight'; no listed demand root; general service; 11 letters.
+475,linenstudio.si,consumer_brands,50.2,75,39,67,12,52,40,2026-10-13T02:47:50Z,2026-10-13T07:33:19Z,Compound 'linenstudio' head 'linen' + tail 'studio'; no listed demand root; general service; 11 letters.
+476,stromaassay.si,health_science,50.2,73,39,66,12,56,40,2026-10-13T04:23:13Z,2026-10-13T09:24:03Z,Compound 'stromaassay' head 'stroma' + tail 'assay'; no listed demand root; general service; 11 letters.
+477,yieldsignal.si,business_finance,50.2,74,39,66,12,55,40,2026-10-13T04:58:25Z,2026-10-13T10:07:04Z,Compound 'yieldsignal' head 'yield' + tail 'signal'; no listed demand root; general service; 11 letters.
+478,sleepmonitor.si,health_science,50.2,80,40,55,12,54,40,2026-10-13T04:19:00Z,2026-10-13T09:19:45Z,Compound 'sleepmonitor' head 'sleep' + tail 'monitor'; no listed demand root; general service; 12 letters.
+479,denimstudio.si,consumer_brands,50.0,75,39,67,12,51,40,2026-10-13T01:39:40Z,2026-10-13T07:07:45Z,Compound 'denimstudio' head 'denim' + tail 'studio'; no listed demand root; general service; 11 letters.
+480,enzymeassay.si,health_science,50.0,77,39,66,12,48,40,2026-10-13T01:43:54Z,2026-10-13T07:12:09Z,Compound 'enzymeassay' head 'enzyme' + tail 'assay'; no listed demand root; general service; 11 letters.
+481,equityindex.si,business_finance,49.8,78,39,65,12,46,40,2026-10-13T01:44:12Z,2026-10-13T07:12:29Z,Compound 'equityindex' head 'equity' + tail 'index'; no listed demand root; general service; 11 letters.
+482,tailordesign.si,consumer_brands,49.8,80,39,54,12,54,40,2026-10-13T04:27:29Z,2026-10-13T09:30:53Z,Compound 'tailordesign' head 'tailor' + tail 'design'; no listed demand root; general service; 12 letters.
+483,dermaclinic.si,health_science,49.6,79,39,66,12,42,40,2026-10-13T01:39:53Z,2026-10-13T07:08:03Z,Compound 'dermaclinic' head 'derma' + tail 'clinic'; no listed demand root; general service; 11 letters.
+484,brokersignal.si,business_finance,49.4,79,39,54,12,53,40,2026-10-13T01:26:34Z,2026-10-13T05:49:40Z,Compound 'brokersignal' head 'broker' + tail 'signal'; no listed demand root; general service; 12 letters.
+485,proteinatlas.si,health_science,49.4,79,39,54,12,53,40,2026-10-13T03:48:28Z,2026-10-13T08:59:07Z,Compound 'proteinatlas' head 'protein' + tail 'atlas'; no listed demand root; general service; 12 letters.
+486,gericlinic.si,health_science,49.2,79,39,70,12,36,40,2026-10-13T02:14:13Z,2026-10-13T07:19:48Z,Compound 'gericlinic' head 'geri' + tail 'clinic'; no listed demand root; general service; 10 letters.
+487,caravanstay.si,consumer_brands,49.2,74,39,66,12,48,40,2026-10-13T01:28:00Z,2026-10-13T05:53:46Z,Compound 'caravanstay' head 'caravan' + tail 'stay'; no listed demand root; general service; 11 letters.
+488,cyclingwear.si,consumer_brands,49.2,74,38,67,12,48,40,2026-10-13T01:36:25Z,2026-10-13T06:48:49Z,Compound 'cyclingwear' head 'cycling' + tail 'wear'; no listed demand root; general service; 11 letters.
+489,mentorclass.si,consumer_brands,49.2,74,39,67,12,47,40,2026-10-13T03:13:09Z,2026-10-13T07:50:56Z,Compound 'mentorclass' head 'mentor' + tail 'class'; no listed demand root; general service; 11 letters.
+490,synapsetrial.si,health_science,49.2,79,39,54,12,52,40,2026-10-13T04:26:54Z,2026-10-13T09:29:47Z,Compound 'synapsetrial' head 'synapse' + tail 'trial'; no listed demand root; general service; 12 letters.
+491,biomarkerassay.si,health_science,49.2,72,65,34,12,49,40,2026-10-13T01:24:29Z,2026-10-13T05:37:57Z,Compound 'biomarkerassay' head 'biomarker' + tail 'assay'; root 'bio'; biotechnology; 14 letters.
+492,myelinmarker.si,health_science,48.8,78,39,53,12,52,40,2026-10-13T03:22:54Z,2026-10-13T08:18:37Z,Compound 'myelinmarker' head 'myelin' + tail 'marker'; no listed demand root; general service; 12 letters.
+493,mentorcourse.si,consumer_brands,48.7,78,39,53,12,51,40,2026-10-13T03:13:13Z,2026-10-13T07:51:41Z,Compound 'mentorcourse' head 'mentor' + tail 'course'; no listed demand root; general service; 12 letters.
+494,proteinassay.si,health_science,48.6,78,39,53,12,50,40,2026-10-13T03:48:26Z,2026-10-13T08:59:05Z,Compound 'proteinassay' head 'protein' + tail 'assay'; no listed demand root; general service; 12 letters.
+495,biocharstorage.si,emerging_industries,48.5,69,65,34,12,49,40,2026-10-13T01:24:27Z,2026-10-13T05:37:53Z,Compound 'biocharstorage' head 'biochar' + tail 'storage'; root 'bio'; biotechnology; 14 letters.
+496,cyclinggear.si,consumer_brands,48.4,73,38,66,12,46,40,2026-10-13T01:36:24Z,2026-10-13T06:48:43Z,Compound 'cyclinggear' head 'cycling' + tail 'gear'; no listed demand root; general service; 11 letters.
+497,hydrostorage.si,emerging_industries,48.4,78,39,53,12,49,40,2026-10-13T02:24:42Z,2026-10-13T07:23:58Z,Compound 'hydrostorage' head 'hydro' + tail 'storage'; no listed demand root; general service; 12 letters.
+498,nomadbooking.si,consumer_brands,48.2,77,39,52,12,50,40,2026-10-13T03:31:57Z,2026-10-13T08:29:41Z,Compound 'nomadbooking' head 'nomad' + tail 'booking'; no listed demand root; general service; 12 letters.
+499,plasmamarker.si,health_science,48.2,76,39,53,12,51,40,2026-10-13T03:45:14Z,2026-10-13T08:57:53Z,Compound 'plasmamarker' head 'plasma' + tail 'marker'; no listed demand root; general service; 12 letters.
+500,recipestudio.si,consumer_brands,48.2,77,39,53,12,49,40,2026-10-13T03:56:50Z,2026-10-13T09:04:24Z,Compound 'recipestudio' head 'recipe' + tail 'studio'; no listed demand root; general service; 12 letters.

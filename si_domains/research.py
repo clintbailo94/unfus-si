@@ -8,7 +8,7 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 from .shortlist import CATEGORY_LIMIT, SHORTLIST_FIELDS, SHORTLIST_LIMIT
-from .scoring import SCORE_FIELDS, SCORE_WEIGHTS, weighted_total
+from .scoring import SCORE_FIELDS, SCORE_WEIGHTS, trademark_score_for_status, weighted_total
 from .trademarks import (
     DEFAULT_CANDIDATES_PATH,
     REQUIRED_SOURCES,
@@ -178,6 +178,8 @@ def _screening_counts(
             unresolved = True
         if source_counts["query_blocked"]:
             unresolved = True
+        if source_counts["sourcewide_blocked"]:
+            unresolved = True
         if source_counts["completed"] and source_counts["completed"] < len(shortlist_top):
             unresolved = True
     if shortlist_top and not any(counts[source]["completed"] for source in REQUIRED_SOURCES):
@@ -273,7 +275,11 @@ def validate_research(
                     raise ValueError(f"{name} score is out of bounds for {row['domain']}")
             domain = row["domain"].casefold()
             summary = summary_map.get(domain)
-            expected_trademark = int(summary["trademark_score"]) if summary else 70
+            expected_trademark = (
+                int(summary["trademark_score"])
+                if summary
+                else trademark_score_for_status("not yet screened")
+            )
             if components["trademark"] != expected_trademark:
                 expected_state = summary["status"] if summary else "not yet screened"
                 raise ValueError(

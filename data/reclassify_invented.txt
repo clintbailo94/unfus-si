@@ -1,0 +1,5 @@
+# Exact labels found to be technical or niche terms rather than common words,
+# from the PKG-D manual review of final dictionary-ranked candidates.
+# Format: exact-label;tag. These labels remain in the candidate pool.
+galium;technical_term
+karaya;technical_term

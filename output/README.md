@@ -6,11 +6,31 @@ Open [si_domains_ranked.xlsx](si_domains_ranked.xlsx) for the ranked workbook. I
 
 The snapshot date is **2026-10-13 UTC**. RDAP history has 6,219 rows timestamped from `2026-10-13T01:11:41Z` through `2026-10-13T05:02:17Z`; the latest-row view covers 6,204 candidates, with 2,803 `registered` and 3,401 `potentially_unregistered`. WHOIS history has 3,401 rows from `2026-10-13T05:12:13Z` through `2026-10-13T10:11:47Z`; latest results are 3,395 `not_registered` and six `registered` conflicts. These are dated registry-channel observations, not a registrar checkout guarantee or assurance that registration will succeed.
 
-Candidate counts by category are: AI 1,500; invented 1,400; dictionary 1,050; short 700; business and finance 359; emerging industries 289; consumer brands 265; technology 254; health and science 252; domain hacks 135. The pipeline scored 3,401 RDAP-404 rows, excluded 2,809 registered/conflict rows, selected 500 opportunities, and left 2,895 otherwise eligible rows outside the workbook's 500-name/125-per-category selection cap. The review sample contains 30 rows.
+Candidate counts by category are: AI 1,500; invented 1,454; dictionary 996; short 700; business and finance 359; emerging industries 289; consumer brands 265; technology 254; health and science 252; domain hacks 135. The pipeline scored 3,401 RDAP-404 rows, excluded 2,809 registered/conflict rows, selected 500 opportunities, and left 2,895 otherwise eligible rows outside the 500-name selection. The review sample contains 30 rows and uses seed 20261013.
 
 The six WHOIS conflicts are **embedengine.si, geve.si, identityhub.si, lanova.si, shallwe.si, and swarmpilot.si**. Each remains excluded and labelled as a conflict in `All candidates`; none is in `Shortlist`.
 
-Ranking uses brandability 25%, commercial relevance 20%, shortness 15%, domain-hack creativity 15%, resale heuristic 15%, and trademark risk 10%. The weighted total is out of 100; higher trademark scores mean lower estimated risk. Rows sort by total descending, label length ascending, then case-folded domain ascending. Selection is capped at 500 overall and 125 per category. Heuristic scores guide review and do not establish market demand or legal safety.
+The score weights remain brandability 25%, commercial demand 20%, shortness 15%, hack creativity 15%, resale heuristic 15%, and trademark 10%. Final data has 358 distinct five-component tuples and 500 distinct rationales. Commercial-score standard deviation is 16.57; mean commercial score for AI/technology/business-finance rows is 60.02 versus 42.48 for invented rows. Rootless invented/name-like resale scores cap at 65. Higher trademark scores indicate lower estimated risk. Ties sort by total descending, label length ascending, then case-folded domain.
+Per-category mean commercial and resale components are listed in the [research methodology](research_methodology.md).
+
+The final 500 category limit is **100 per category (20%)**. Selection also limits any top-100 category to 35 names, six invented/given-name labels per final-three-letter ending and per first-four-letter prefix, and ten compound/blend labels per head or tail. There are 1,364 eligible labels marked `family cap`; they stay eligible and visible in `All candidates`.
+
+| Category | Pool | Eligible | Final 500 | Median eligible rank | Minimum eligible rank |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| ai | 1,500 | 991 | 100 | 2362 | 6 |
+| business_finance | 359 | 288 | 51 | 1946.5 | 4 |
+| consumer_brands | 265 | 226 | 90 | 2361.5 | 66 |
+| dictionary | 996 | 26 | 8 | 3356.5 | 59 |
+| domain_hacks | 135 | 15 | 3 | 3351 | 1 |
+| emerging_industries | 289 | 232 | 51 | 2238.5 | 30 |
+| health_science | 252 | 221 | 59 | 2541 | 94 |
+| invented | 1,454 | 1,247 | 100 | 1403 | 517 |
+| short | 700 | 6 | 6 | 17 | 14 |
+| technology | 254 | 143 | 32 | 1068 | 5 |
+
+Top-100 category counts: ai: 33; business_finance: 12; consumer_brands: 8; dictionary: 6; domain_hacks: 3; emerging_industries: 14; health_science: 2; short: 6; technology: 16. The largest category contributes 33/100 and there are 100/100 non-invented keyword, common-word, short, or hack names. All six eligible four-letter CVCV shorts are selected at ranks 14 fuve.si, 15 guve.si, 16 puve.si, 18 kuzo.si, 19 guza.si, 28 cizo.si; no three-letter short name was registry-eligible. The three selected hacks rank 1 newsagen.si, 2 unfus.si, 3 tryto.si; 15 hacks were eligible, so hack availability exceeds selection and quality/scoring determines the selected three. Strongest root-bearing compounds include ranks 4 cashops.si, 5 paymentops.si, 6 datafleet.si, 7 ledgerhub.si, 8 payablehub.si, 9 datalearn.si, 10 payabledesk.si, 11 payableflow.si, 12 datasolve.si, 13 walletlab.si, 17 chatledger.si, 20 dataledger.si. Methodology and root-level values are in [research methodology](research_methodology.md).
+
+The 21 audited false-dictionary labels in `data/given_names.txt` (including brena, genal, neral, belal, celal, delal, belami, belona, belova, delina, dorina, genaro, lorina, merina, belara, calami, dorino, elette, karena, larena, and marena) are category `invented` with `given_name`; the candidate pool is unchanged. The final dictionary labels are stoical, powdery, leaning, cowhide, reveler, gyration, epaulet, and decorous. Five additional exact penalties were added after label review: bloodmonitor, bloodtrack, gynclinic, hemoclinic, and tumormarker. `floun` and `plian` are also below the cut after applying the exact penalty to hack scoring. Full dictionary meanings, clinical borderline keeps, and the existing removed-label history are in the methodology.
 
 ## Workbook sheets
 
@@ -28,6 +48,8 @@ Ranking uses brandability 25%, commercial relevance 20%, shortness 15%, domain-h
 | File | Role in this delivery |
 | --- | --- |
 | `data/candidates.csv` | Candidate labels, category membership, and scoring/query metadata. |
+| `data/given_names.txt`, `data/reclassify_invented.txt` | Curated exact-name and technical-term reclassification inputs; labels stay in the candidate pool. |
+| `data/scoring_penalties.txt` | Exact-label penalties for reviewed negative, medical, pejorative, bodily, and awkward terms. |
 | `data/reserved_names.csv`, `data/restricted_names.csv` | Evidence-backed rule inventories used by the special-class sheet. |
 | `output/rdap_evidence.csv` | Append-only registry RDAP history; current state uses the last row per domain. |
 | `output/whois_evidence.csv` | Append-only WHOIS second-check history; current state uses the last row per domain. |
@@ -36,6 +58,7 @@ Ranking uses brandability 25%, commercial relevance 20%, shortness 15%, domain-h
 | `output/opportunities.csv` | Joined shortlist, valuation, and trademark fields used by the workbook. |
 | `output/valuations.csv`, `output/valuation_evidence.csv` | Per-opportunity valuation state and the distinct sale, asking-price, and unsupported records. |
 | `output/trademark_summary.csv`, `output/trademark_evidence.csv` | Per-domain coverage state and the source-wide/domain-query evidence records. |
+| `si_domains/uspto.py` | Bounded public USPTO JSON query builder and distilled mark parser; network use was limited to the recorded screen. |
 | `output/sample_404_for_review.csv` | The deterministic 30-row review sample counted in Methodology. |
 | `output/research_methodology.md`, `output/valuation_sources_notes.md` | Research provenance, coverage rules, valuation limits, and source descriptions. |
 | `docs/si_registry_rules.md`, `docs/special_classes.md` | Registry rule sources and the special-sheet schema/known-list limits. |
@@ -44,13 +67,21 @@ The RDAP and WHOIS channels are separate checks run against the same `.si` regis
 
 ## Trademark and valuation limits
 
-Trademark coverage is **BLOCKED**, with **zero completed required-query sets** for each of the final top 100 names at TMview, UKIPO and USPTO. No domain-specific search ran. TMview and USPTO each have 100 affected top-100 names marked unverified. UKIPO has 100 names affected by one source-wide HTTP 403 refusal; that refusal is not 100 completed searches. A source-wide access attempt never counts as a completed domain query. The 100 summary rows remain unverified; the other 400 opportunities say `not yet screened`.
+The final top 100 have per-source outcome rows. Screening followed the ranking for three rounds: Round 1 processed 100 labels, Round 2 added 3 new entrants, and Round 3 added 9. Names that later left the top 100 keep their evidence. Source refusal rows are blocked or unverified and never count as completed searches.
 
-The heuristic trademark score of 70 is a placeholder for unverified/not-yet-screened evidence. It does not imply legal safety, clearance, or a low probability of infringement. The recorded method is not comprehensive phonetic, class, national-office, or worldwide legal clearance. Any possible conflict needs qualified legal review.
+| Source | Requests and HTTP outcomes | Final top-100 outcome |
+| --- | --- | --- |
+| TMview | One earlier POST plus three rework API probes (two POST shapes, one GET); all four API connections closed before an HTTP response. The UI shell was readable but did not yield search results. | 0/100 complete; 100 unverified |
+| UKIPO | One recorded GET returned HTTP 403 `Service Captcha`; stopped, no retry. | 0/100 complete; 100 blocked |
+| USPTO | One earlier UI-shell GET returned HTTP 200 JavaScript HTML without parseable search results; plus 139 JSON API POSTs total: two recorded controls (google = 194 hits; qzxwvk = 0), three initial API/field-shape probes, and 134 candidate attempts. Candidate attempts: 133 HTTP 200 JSON, one HTTP 403 on bankingdesk near query; stopped. The remaining 66 query slots were recorded blocked without requests. | 56/100 complete; 44 query-blocked |
+
+USPTO exact-label queries used an exact phrase, then one near query (fuzziness 1 for labels >=5 characters, whole-word mode for shorter names), paced at no more than one request per second. Results store only distilled serial number, wordmark, live/dead flag, status, classes, result URL, exact URL/query, and UTC timestamp; owner and attorney fields were not copied. Similarity review covers identical marks, whole-word containment, edit distance <=1 for labels >=5 characters, or an identical stem in any class. Classes 9, 35, 36, 38, 41, and 42 are higher relevance; live and dead matches are both flagged. Any uncertainty requires legal review.
+
+**24 names** were flagged for USPTO legal review: newsagen, unfus, tryto, paymentops, datafleet, datalearn, datasolve, dataledger, loanledger, cashledger, robotloop, cizo, ledgerlink, walletlink, bankinghub, stoical, dataswitch, creditdesk, leaning, carbonhub, autoswitch, autobeacon, autosearch, cowhide. A possible conflict in any source scores 25 even when the others are blocked. Trademark scores map to 85 only when all three sources complete with no obvious similar mark, 25 for a possible conflict, and 40 for incomplete, blocked, unverified, or not-yet-screened status. The 40 is explicitly lower than clear and higher than a conflict; weights are not renormalized. Unknown risk is penalized relative to a clean screen, and a conflict is penalized most. A screened-clear name could gain up to 4.5 weighted points over an unscreened name, so new top-100 entrants are screened in later rounds when access permits. These limited queries imply no clearance.
+
+`validate-research` exits **2** because required coverage is incomplete: TMview 0 completed, 0 query-blocked, 100 unverified; UKIPO 0 completed, 100 query-blocked, 0 unverified; USPTO 56 completed, 44 query-blocked, 0 unverified. In particular TMview and UKIPO were inaccessible and USPTO stopped after an HTTP 403 with 44 top-100 labels still incomplete. Its output separates those exact states. The final top 100 are not legally cleared; the screen is not comprehensive phonetic, class, national-office, or worldwide clearance.
 
 All **500 valuations** are literally `insufficiently supported`; currency, low, and high are blank. The evidence file separately records ten reported completed sales, two asking prices, and three unsupported source attempts. None qualified as a direct comparable for a current shortlist name. Asking prices are not sales, and the unsupported source attempts did not become market evidence. These entries are not appraisals.
-
-See [research methodology](research_methodology.md), [valuation source notes](valuation_sources_notes.md), [registry rules](../docs/si_registry_rules.md), and [special class schema](../docs/special_classes.md). The 2026-10-13 research notes record the access outcomes and the fact that no per-domain trademark search ran; they are historical observations, not permanent statements about current browser or source access.
 
 ## Rebuild from the recorded source snapshot (offline)
 
@@ -61,12 +92,14 @@ python --version
 python -m pip install -r requirements.txt
 ```
 
-The following PowerShell sequence copies the committed candidate, registry, rule, curated-research, and review-sample snapshots into `output/rebuild/source/`. It rebuilds research files in `output/rebuild/`, leaving the committed source CSVs untouched. All commands in this section are offline. They do not recheck the registry, WHOIS, trademark databases, or sales sources.
+The following PowerShell sequence regenerates candidate CSVs from curated inputs and rebuilds research artifacts under ignored `output/rebuild/`, leaving committed source snapshots untouched. Commands in this section are offline: they do not recheck RDAP/WHOIS, TMview, USPTO, UKIPO, or sales sources. The current trademark evidence can only represent the recorded results; it cannot complete blocked sources.
 
 ```powershell
 $Build = 'output/rebuild'
 $Source = "$Build/source"
 New-Item -ItemType Directory -Force -Path $Build, $Source | Out-Null
+python -m si_domains candidates --all
+python -m si_domains candidates --all --out data/candidates.csv
 Copy-Item data/candidates.csv, data/reserved_names.csv, data/restricted_names.csv, output/rdap_evidence.csv, output/whois_evidence.csv, output/shortlist.csv, output/valuation_evidence.csv, output/trademark_evidence.csv, output/sample_404_for_review.csv -Destination $Source -Force
 
 # Seed the first top-100 summary from the committed ranked list, then rebuild scores and shortlist.
@@ -91,7 +124,7 @@ python -m si_domains export --out "$Build/si_domains_ranked.xlsx" --candidates "
 python -m si_domains validate-delivery --workbook "$Build/si_domains_ranked.xlsx" --candidates "$Source/candidates.csv" --reserved-names "$Source/reserved_names.csv" --restricted-names "$Source/restricted_names.csv" --rdap-evidence "$Source/rdap_evidence.csv" --whois-evidence "$Source/whois_evidence.csv" --scores "$Build/scores.csv" --shortlist "$Build/shortlist.csv" --excluded "$Build/excluded.csv" --opportunities "$Build/opportunities.csv" --valuations "$Build/valuations.csv" --valuation-evidence "$Source/valuation_evidence.csv" --trademark-summary "$Build/trademark_summary_2.csv" --trademark-evidence "$Source/trademark_evidence.csv" --sample "$Source/sample_404_for_review.csv"
 ```
 
-For this snapshot the second summary is built only from the existing evidence. It cannot add completed searches. If ranked membership changes later, rerun the offline aggregation to expose the new names' unverified/source-wide state, then acquire actual permitted public-query evidence separately before claiming screening coverage. `validate-delivery` checks every workbook cell against the named CSVs and may exit 0 while reporting **Research screening BLOCKED**; it is not the separate `validate-research` completion check.
+The summary preserves prior evidence for names that leave the top 100 and records incomplete results for new entrants. A refusal never becomes a completed query. Do not run beyond three screening rounds without a new authorization. `validate-delivery` checks workbook and CSV consistency and may exit 0 while reporting **Research screening BLOCKED**; `validate-research` is the separate coverage check and exits 2 on the current snapshot.
 
 ## Optional fresh live verification
 

@@ -19,7 +19,8 @@ python -m si_domains validate-delivery --workbook output/si_domains_ranked.xlsx
 It can report structural delivery PASS while saying research screening BLOCKED;
 `python -m si_domains validate-research --candidates data/candidates.csv`
 remains separate and exits 2 while the required top-100 trademark query sets
-are unresolved. Neither command certifies project completion or owner acceptance.
+are unresolved: TMview 0/100 complete, UKIPO 0/100, and USPTO 0/100. Neither
+command certifies project completion or owner acceptance.
 
 ## Running the verification
 
@@ -107,23 +108,26 @@ RDAP-404 candidates to `output/scores.csv`. The score uses candidate category,
 method, tags, quality score, and label. Its six weights are brandability 25%,
 commercial relevance 20%, shortness 15%, domain-hack creativity 15%, resale
 potential 15%, and trademark risk 10%. Scores do not use network access or
-estimate sale prices. Trademark is a fixed placeholder score of 70 with a
-"not yet screened" note when no trademark summary is supplied. To inject a
+estimate sale prices. Unscreened candidates score 40 for trademark status and
+carry a "not yet screened" note when no summary is supplied. To inject a
 curated summary, pass `--trademark-evidence output/trademark_summary.csv`; the
 command also validates its evidence IDs against
 `output/trademark_evidence.csv` (override that path with
-`--trademark-source-evidence`). Screened rows show their limited, review-needed,
-blocked, or unverified state in the rationale. The weighted total is
-calculated with decimal arithmetic and rounded once to one decimal using
-`ROUND_HALF_EVEN` (ties to even). Commercial keyword bonuses require exact tags,
-labels, or recorded seed components. Resale uses curated common-noun and
-low-breadth dictionary signals plus reviewed hack-seed adjustments; these are
-buyer-breadth heuristics, not valuation evidence.
+`--trademark-source-evidence`). Trademark maps to 85 for a complete limited
+screen with no obvious match, 25 when a mark needs legal review, and 40 for
+blocked, unverified, incomplete, or not-yet-screened states. Unknown risk is
+penalized without renormalizing the weights. The weighted total is calculated
+with decimal arithmetic and rounded once to one decimal using
+`ROUND_HALF_EVEN` (ties to even). Commercial roots use per-name demand tiers
+and buyer breadth; compounds combine head and tail. Length, syllables,
+pronounceability, word/commonness, ambiguity, and root breadth differentiate
+resale scores. These are buyer-breadth heuristics, not valuation evidence.
 
 `python -m si_domains shortlist` combines the candidate CSV, latest RDAP and
 WHOIS evidence, and `output/scores.csv`. Only domains with RDAP
 `potentially_unregistered` and WHOIS `not_registered` enter
-`output/shortlist.csv`; it is capped at 500 domains, with at most 125 per category.
+`output/shortlist.csv`; it is capped at 500 domains, with at most 100 per category
+(20% of the shortlist).
 Other candidates, including rule-based special classes and evidence conflicts,
 are written to `output/excluded.csv` with a reason. A seeded sample of up to 30
 RDAP-404 domains, including available WHOIS status groups, is written to
@@ -177,14 +181,14 @@ that a mark is legally relevant, or that a domain is legally clear; those need
 human evidence review.
 
 For the 2026-10-13 research snapshot, TMview has 0/100 completed required-query
-sets and 100 unverified domains; UKIPO has 0/100 completed sets and 100 domains
-affected by one source-wide HTTP 403; USPTO has 0/100 completed sets and 100
-unverified domains. An independent browser-surface check returned `apps=[]`,
-`browsers=[]`, and
-`Browser is not available: iab` for an in-app browser attempt. No per-domain
-search ran. The validator therefore reports structural checks as passed, marks
-query coverage BLOCKED, and exits non-zero; a source-wide access attempt never
-counts as a completed query.
+sets and 100 unverified final-top-100 domains after the source closed its first
+POST before an HTTP response. UKIPO has 0/100 completed sets and 100 blocked
+domains after the first GET returned HTTP 403 Service Captcha. USPTO has 0/100
+completed sets and 100 unverified domains after its first GET returned an
+unparseable JavaScript shell. Six new entrants were recorded in a second
+ranking round from the existing source-wide outcomes; no per-domain request ran.
+The validator passes structural checks, marks query coverage BLOCKED, and exits
+2; blocked or unverified evidence never counts as a completed query.
 
 RDAP and WHOIS outcomes are timestamped observations from the registry's
 channels. They are not registrar checkout confirmation and do not guarantee

@@ -1,0 +1,57 @@
+# Curated exact-label review, 2026-10-13.
+# Source: the reviewed name/proper-name candidates in invented_real_words.txt,
+# plus the false-dictionary examples audited in PKG-D. These are exact labels;
+# no suffix-only inference is used. The list is intentionally reviewable and
+# should be extended only after lexical review.
+belal
+belami
+belara
+belona
+belova
+brena
+breno
+calami
+celal
+celena
+celina
+corina
+darina
+delal
+delina
+dorelle
+dorina
+dorino
+elena
+elette
+galia
+galina
+genal
+genaro
+helena
+helene
+karena
+karina
+larena
+lisette
+lorena
+lorene
+lorina
+maraya
+marena
+melina
+meral
+merina
+monette
+milena
+miraya
+mirena
+monina
+morena
+neral
+valette
+valera
+selena
+selene
+selina
+silvia
+verena

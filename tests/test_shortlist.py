@@ -3,6 +3,7 @@ from collections import Counter
 from pathlib import Path
 
 from si_domains.cli import main
+from si_domains.shortlist import select_eligible
 
 
 CANDIDATE_FIELDS = [
@@ -125,7 +126,7 @@ def _score(label: str, total: str = "80.0") -> dict[str, str]:
         "shortness": "80",
         "hack": "12",
         "resale": "70",
-        "trademark": "70",
+        "trademark": "40",
         "total": total,
         "rationale": "Strengths: demand 80, brand 80; weakness: hack 12. TM not yet screened.",
     }
@@ -280,14 +281,22 @@ def test_shortlist_ranks_by_score_then_label_length_then_alphabetically(tmp_path
     assert [row["rank"] for row in rows] == ["1", "2", "3", "4"]
 
 
-def test_shortlist_caps_each_category_and_fills_to_500(tmp_path):
-    groups = [("a", "ai"), ("d", "dictionary"), ("i", "invented"), ("t", "technology")]
+def test_shortlist_caps_each_category_at_100_and_fills_to_500(tmp_path):
+    groups = [
+        ("a", "ai"),
+        ("d", "dictionary"),
+        ("i", "consumer_brands"),
+        ("t", "technology"),
+        ("h", "health_science"),
+        ("b", "business_finance"),
+        ("e", "emerging_industries"),
+    ]
     candidates = []
     rdap_rows = []
     whois_rows = []
     score_rows = []
     for prefix, category in groups:
-        for index in range(130):
+        for index in range(105):
             label = f"{prefix}{index:04d}"
             candidate = _candidate(label, category)
             candidates.append(candidate)
@@ -299,14 +308,62 @@ def test_shortlist_caps_each_category_and_fills_to_500(tmp_path):
     _header, rows = _read_rows(paths["shortlist"])
 
     assert len(rows) == 500
-    assert Counter(row["category"] for row in rows) == {
-        "ai": 125,
-        "dictionary": 125,
-        "invented": 125,
-        "technology": 125,
-    }
+    assert max(Counter(row["category"] for row in rows).values()) <= 100
+    assert max(Counter(row["category"] for row in rows[:100]).values()) <= 35
     assert all(row["rank"] == str(index) for index, row in enumerate(rows, start=1))
-    assert all(row["category"] == "ai" for row in rows[:125])
+
+
+def test_shortlist_limits_given_name_and_compound_families():
+    candidates = []
+    for label in (
+        "brelvia", "krelvia", "mrelvia", "nrelvia", "qrelvia", "srelvia", "trelvia", "vrelvia",
+    ):
+        candidates.append({**_candidate(label, "invented"), "method": "given-name-reclassified", "tags": "given_name"})
+    for label in (
+        "lumara", "lumabi", "lumace", "lumada", "lumafo", "lumage", "lumaha", "lumaji",
+    ):
+        candidates.append({**_candidate(label, "invented"), "method": "given-name-reclassified", "tags": "given_name"})
+
+    for head in ("pay", "data", "health", "cloud", "bank", "trade", "secure", "market", "credit", "robot", "solar"):
+        label = f"{head}lab"
+        candidates.append({**_candidate(label), "method": "compound", "seed": f"{head}+lab"})
+    for tail in ("hub", "scan", "pay", "data", "ledger", "flow", "ware", "tech", "shop", "care"):
+        label = f"cloud{tail}"
+        candidates.append({**_candidate(label), "method": "compound", "seed": f"cloud+{tail}"})
+    for head in (
+        "chat", "data", "omni", "algo", "cash", "sema", "risk", "synap", "bond", "fund", "vision",
+    ):
+        label = f"{head}ledger"
+        candidates.append({**_candidate(label), "method": "blend", "seed": f"{head}+ledger"})
+
+    eligible = [
+        (
+            f"{candidate['domain_label']}.si",
+            candidate,
+            {**_score(candidate["domain_label"], "90.0"), "total": "90.0"},
+            None,
+        )
+        for candidate in candidates
+    ]
+    selected, selection_reasons = select_eligible(eligible)
+    selected_domains = {item[0] for item in selected}
+
+    def selected_count(labels):
+        return sum(f"{label}.si" in selected_domains for label in labels)
+
+    via = [row["domain_label"] for row in candidates if row["domain_label"].endswith("via")]
+    luma = [row["domain_label"] for row in candidates if row["domain_label"].startswith("luma")]
+    lab_tail = [row["domain_label"] for row in candidates if row["domain_label"].endswith("lab")]
+    cloud_head = [row["domain_label"] for row in candidates if row["domain_label"].startswith("cloud")]
+    ledger_tail = [row["domain_label"] for row in candidates if row["domain_label"].endswith("ledger")]
+
+    assert selected_count(via) == 6
+    assert selected_count(luma) == 6
+    assert selected_count(lab_tail) == 10
+    assert selected_count(cloud_head) == 10
+    assert selected_count(ledger_tail) == 10
+    assert len([reason for reason in selection_reasons.values() if reason == "family cap"]) == 7
+    assert all(reason == "family cap" for reason in selection_reasons.values())
 
 
 def test_sample_404_has_seeded_deterministic_30_rows_and_status_mix(tmp_path):

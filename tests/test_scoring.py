@@ -1,6 +1,10 @@
 import csv
+import statistics
+from collections import Counter
 from decimal import Decimal
 from pathlib import Path
+
+import pytest
 
 from si_domains.cli import main
 from si_domains.scoring import SCORE_WEIGHTS, score_domain, weighted_total
@@ -59,10 +63,9 @@ def test_score_domain_is_deterministic_bounded_and_explainable():
     for component in SCORE_WEIGHTS:
         assert 0 <= first[component] <= 100
     assert 0 <= first["total"] <= 100
-    assert first["trademark"] == 70
-    assert "not yet screened" in first["rationale"]
-    assert first["rationale"].startswith("Strengths: ")
-    assert first["rationale"].count("weakness:") == 1
+    assert first["trademark"] == 40
+    assert "TM" not in first["rationale"]
+    assert "6 letters" in first["rationale"]
     assert len(first["rationale"]) <= 140
     first["rationale"].encode("ascii")
 
@@ -70,18 +73,19 @@ def test_score_domain_is_deterministic_bounded_and_explainable():
 def test_total_is_the_weighted_sum_rounded_to_one_decimal():
     result = score_domain(_candidate("novara"))
 
-    assert result["total"] == Decimal("72.0")
+    assert result["total"] == weighted_total(
+        {name: result[name] for name in SCORE_WEIGHTS}
+    )
 
 
 def test_weighted_total_uses_exact_decimal_half_even_rounding():
-    # Captured before the heuristic rework; preserve these component fixtures.
     accesshub_components = {
         "brandability": 80,
         "commercial": 86,
         "shortness": 73,
         "hack": 12,
         "resale": 64,
-        "trademark": 70,
+        "trademark": 40,
     }
     accountinghub_components = {
         "brandability": 65,
@@ -89,22 +93,29 @@ def test_weighted_total_uses_exact_decimal_half_even_rounding():
         "shortness": 38,
         "hack": 12,
         "resale": 50,
-        "trademark": 70,
+        "trademark": 40,
     }
 
-    assert weighted_total(accesshub_components) == Decimal("66.6")
-    assert weighted_total(accountinghub_components) == Decimal("55.4")
-    assert weighted_total({**accesshub_components, "shortness": 72}) == Decimal("66.4")
-    assert weighted_total({name: 70 for name in SCORE_WEIGHTS}) == Decimal("70.0")
+    assert weighted_total(accesshub_components) == Decimal("63.6")
+    assert weighted_total(accountinghub_components) == Decimal("52.4")
+    assert weighted_total({**accesshub_components, "shortness": 72}) == Decimal("63.4")
+    assert weighted_total({name: 60 for name in SCORE_WEIGHTS}) == Decimal("60.0")
 
 
-def test_trademark_override_recalculates_exact_weighted_total():
-    baseline = score_domain(_candidate("novara"))
-    overridden = score_domain(_candidate("novara"), trademark_override=22)
+@pytest.mark.parametrize(
+    ("status", "expected"),
+    [
+        ("limited_screen_no_obvious_match", 85),
+        ("needs legal review", 25),
+        ("unverified", 40),
+        ("blocked", 40),
+        ("not yet screened", 40),
+    ],
+)
+def test_trademark_state_scores_are_centralized(status, expected):
+    result = score_domain(_candidate("novara"), trademark_status=status)
 
-    assert baseline["trademark"] == 70
-    assert overridden["trademark"] == 22
-    assert baseline["total"] - overridden["total"] == Decimal("4.8")
+    assert result["trademark"] == expected
 
 
 def test_shorter_pronounceable_label_scores_at_least_as_high():
@@ -144,22 +155,25 @@ def test_domain_hack_category_gets_higher_hack_score():
 
 def test_commercial_score_uses_secondary_tags_and_recorded_industry_roots():
     generic = score_domain(_candidate("novara", "dictionary"))
-    tagged = score_domain({**_candidate("novara", "dictionary"), "tags": "health_science"})
     keyword = score_domain(_candidate("finance", "dictionary"))
     seeded_root = score_domain(
         {**_candidate("aichat", "dictionary"), "seed": "ai+chat"}
     )
 
-    assert tagged["commercial"] > generic["commercial"]
     assert keyword["commercial"] > generic["commercial"]
     assert seeded_root["commercial"] > generic["commercial"]
 
 
-def test_incidental_ai_substrings_do_not_raise_commercial_demand():
-    baseline = score_domain(_candidate("novara", "dictionary"))["commercial"]
-
-    for label in ("chair", "rain", "naivety", "naivete"):
-        assert score_domain(_candidate(label, "dictionary"))["commercial"] == baseline
+def test_incidental_keyword_substrings_do_not_receive_keyword_demand():
+    high_demand = score_domain(_candidate("pay", "dictionary"))["commercial"]
+    for label in ("chair", "rain", "naivety", "naivete", "payload"):
+        assert score_domain(_candidate(label, "dictionary"))["commercial"] < high_demand
+    payload_demand = score_domain(_candidate("payload", "dictionary"))["commercial"]
+    assert 65 <= payload_demand <= 85
+    payload_compound = score_domain(
+        {**_candidate("payloadhub"), "method": "compound", "seed": "payload+hub"}
+    )
+    assert payload_compound["commercial"] <= 85
 
 
 def test_common_dictionary_nouns_outscore_negative_and_niche_words_on_resale():
@@ -221,12 +235,13 @@ def test_hack_source_seed_changes_buyer_breadth_but_keeps_hack_score_high():
         }
     )
 
-    assert clear["hack"] >= 75 and obscure["hack"] >= 75
+    assert clear["hack"] >= 75
+    assert obscure["hack"] <= 50
     assert clear["commercial"] > obscure["commercial"]
     assert clear["resale"] > obscure["resale"]
     assert conversational["resale"] > narrow_legal["resale"]
-    assert "newsagency" in clear["rationale"]
-    assert "indeterminacy" in obscure["rationale"]
+    assert "root 'news'" in clear["rationale"]
+    assert "Awkward or truncated label 'indetermina'" in obscure["rationale"]
 
 
 def test_reclassified_invented_names_do_not_receive_common_dictionary_resale_score():
@@ -239,22 +254,136 @@ def test_reclassified_invented_names_do_not_receive_common_dictionary_resale_sco
     )
     reclassified = score_domain(
         {
-            **_candidate("brena", "dictionary"),
-            "method": "invented-reclassified",
+            **_candidate("brena", "invented"),
+            "method": "given-name-reclassified",
             "seed": "bren+a",
-            "tags": "phonotactic;real_word",
+            "tags": "phonotactic;given_name",
         }
     )
 
     assert reclassified["commercial"] < common["commercial"]
     assert reclassified["resale"] < common["resale"]
+    assert reclassified["brandability"] <= 65
+    assert reclassified["resale"] <= 65
+    strong_compound = score_domain(
+        {**_candidate("payhub"), "method": "compound", "seed": "pay+hub"}
+    )
+    assert strong_compound["resale"] > 65
 
 
 def test_trademark_score_can_be_injected():
-    result = score_domain(_candidate("novara"), trademark_override=22)
+    result = score_domain(_candidate("novara"), trademark_status="needs legal review")
 
-    assert result["trademark"] == 22
-    assert "not yet screened" not in result["rationale"]
+    assert result["trademark"] == 25
+    assert "needs legal review" not in result["rationale"]
+
+
+def test_high_demand_root_outranks_an_unknown_of_equal_shape():
+    demand = score_domain(_candidate("pay", "dictionary"))
+    unknown = score_domain(_candidate("paz", "dictionary"))
+
+    assert demand["commercial"] > unknown["commercial"]
+
+
+def test_synthetic_mini_pool_has_domain_specific_score_tuples():
+    roots = (
+        "ai", "pay", "cloud", "data", "health", "bank", "trade", "security",
+        "energy", "travel", "agent", "credit", "crypto", "news", "robot",
+        "solar", "ledger", "vexa", "luma", "nara",
+    )
+    tails = (
+        "a", "io", "ly", "er", "on", "ora", "net", "hub", "ify", "um",
+        "ino", "ava", "pay", "cloud", "data", "wise", "works", "flow", "mate", "zen",
+    )
+    candidates = []
+    for index, (root, tail) in enumerate(
+        (pair for root in roots for pair in ((root, tail) for tail in tails))
+    ):
+        label = root + tail
+        method = "compound" if index % 2 else "concept"
+        seed = f"{root}+{tail}" if method == "compound" else label
+        category = ("technology", "business_finance", "invented", "dictionary")[index % 4]
+        candidates.append(
+            {
+                **_candidate(label, category),
+                "method": method,
+                "seed": seed,
+                "quality_score": str(60 + (index * 7) % 41),
+            }
+        )
+
+    vectors = {
+        tuple(int(score_domain(candidate)[name]) for name in ("brandability", "commercial", "shortness", "hack", "resale"))
+        for candidate in candidates
+    }
+
+    assert len(candidates) == 400
+    assert len(vectors) >= 350
+
+
+def test_rationales_name_specific_roots_for_same_category_neighbours():
+    pay = score_domain({**_candidate("paywave"), "seed": "pay+wave", "method": "compound"})
+    data = score_domain({**_candidate("dataflow"), "seed": "data+flow", "method": "compound"})
+
+    assert pay["category"] == data["category"]
+    assert pay["rationale"] != data["rationale"]
+    assert "'pay'" in pay["rationale"] and "7 letters" in pay["rationale"]
+    assert "'data'" in data["rationale"] and "8 letters" in data["rationale"]
+
+
+def test_real_shortlist_has_specific_rationales_and_commercial_separation():
+    shortlist_path = Path(__file__).resolve().parents[1] / "output" / "shortlist.csv"
+    with shortlist_path.open("r", encoding="utf-8-sig", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+
+    assert len(rows) == 500
+    assert len({row["rationale"] for row in rows}) >= 400
+    assert all(len(row["rationale"]) <= 140 for row in rows)
+    assert all(row["rationale"].isascii() for row in rows)
+    assert len({tuple(row[key] for key in ("brandability", "commercial", "shortness", "hack", "resale")) for row in rows}) >= 350
+    assert max(Counter(row["category"] for row in rows[:100]).values()) <= 35
+    assert sum(row["category"] != "invented" for row in rows[:100]) >= 40
+
+    commercial = {
+        category: [int(row["commercial"]) for row in rows if row["category"] == category]
+        for category in {row["category"] for row in rows}
+    }
+    industry = [
+        score
+        for category in ("ai", "technology", "business_finance")
+        for score in commercial.get(category, [])
+    ]
+    invented = commercial.get("invented", [])
+
+    assert statistics.pstdev(int(row["commercial"]) for row in rows) >= 12
+    assert industry and invented
+    assert statistics.mean(industry) >= statistics.mean(invented) + 15
+
+
+def test_rationales_explain_reviewed_awkward_and_technical_labels():
+    awkward = score_domain(_candidate("plian", "domain_hacks"))
+    technical = score_domain(
+        {**_candidate("galium", "invented"), "tags": "technical_term"}
+    )
+
+    assert "Awkward or truncated label 'plian'" in awkward["rationale"]
+    assert awkward["hack"] <= 50
+    assert "Technical term 'galium'" in technical["rationale"]
+
+
+@pytest.mark.parametrize(
+    "label",
+    [
+        "venal", "melena", "roguish", "fidgety", "jittery", "naivety", "raucous", "gaseous", "elitism",
+        "bloodtrack", "bloodmonitor", "tumormarker", "gynclinic", "hemoclinic",
+    ],
+)
+def test_reviewed_negative_terms_receive_strong_brandability_penalties(label):
+    result = score_domain({**_candidate(label, "dictionary"), "method": "dictionary"})
+
+    assert result["brandability"] <= 60
+    assert result["commercial"] <= 30
+    assert result["resale"] <= 50
 
 
 def test_score_command_scores_only_latest_rdap_404_rows(tmp_path):

@@ -1,0 +1,56 @@
+# Exact-label commercial-quality penalties, PKG-D review, 2026-10-13.
+# These labels stay in the 6,204-candidate pool and score artifact; the penalty
+# pushes reviewed negative, bodily, medical, pejorative, or awkward truncated
+# labels below the cut.
+absorben
+askance
+astringen
+belated
+biopsylab
+biopsyscan
+biopsytrack
+bloodassay
+bloodmarker
+bloodmonitor
+bloodpulse
+bloodscan
+bloodtrack
+elitism
+ferven
+fidgety
+floun
+gaseous
+galium
+gynclinic
+gynlab
+gynscan
+hemocell
+hemoclinic
+hemolab
+hemoscan
+indetermina
+interagen
+intermitten
+jittery
+jugular
+karaya
+melena
+naivete
+naivety
+orifice
+pedslab
+piquan
+plian
+pungen
+raucous
+roguish
+shadowy
+stringen
+subtenan
+tenuous
+tumorlab
+tumormarker
+tumorscan
+venal
+walkout
+wizened
