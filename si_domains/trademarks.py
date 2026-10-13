@@ -378,10 +378,12 @@ def aggregate_trademark_rows(
             source for source in REQUIRED_SOURCES if source_coverage[source]["sourcewide_blocked"]
         ]
         sourcewide_only_sources = [
-            source for source in sourcewide_blocked_sources if source not in query_blocked_sources
+            source for source in sourcewide_blocked_sources
+            if not source_coverage[source]["domain_query_attempted"]
         ]
         sourcewide_mixed_sources = [
-            source for source in sourcewide_blocked_sources if source in query_blocked_sources
+            source for source in sourcewide_blocked_sources
+            if source_coverage[source]["domain_query_attempted"]
         ]
         limitations = "Exact-word/public UI screen only; no comprehensive phonetic, class, or global coverage."
         if query_blocked_sources:
@@ -481,6 +483,7 @@ def query_coverage_by_source(
             "missing_queries": missing_queries,
             "sourcewide_blocked": sourcewide_blocked,
             "query_blocked": query_blocked,
+            "domain_query_attempted": bool(domain_rows[source]),
         }
     return coverage
 

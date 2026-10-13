@@ -165,6 +165,8 @@ def _screening_counts(
             )[source]
             if coverage["status"] in {"no_obvious_match", "possible_conflict"} and coverage["completed"] == coverage["required"]:
                 counts[source]["completed"] += 1
+            elif coverage["status"] == "unverified":
+                counts[source]["unverified"] += 1
             elif coverage["query_blocked"]:
                 counts[source]["query_blocked"] += 1
             elif coverage["sourcewide_blocked"]:

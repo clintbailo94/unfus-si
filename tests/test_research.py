@@ -407,6 +407,8 @@ def test_validator_rejects_research_join_drift(tmp_path, capsys, defect, expecte
         ("per_query", 2, "blocked", "70"),
         ("sourcewide", 0, "limited_screen_no_obvious_match", "80"),
         ("mixed", 2, "blocked", "70"),
+        ("mixed_unverified", 2, "unverified", "70"),
+        ("mixed_unproven", 2, "unverified", "70"),
     ],
 )
 def test_query_specific_refusals_remain_unresolved_with_sourcewide_context(
@@ -428,7 +430,7 @@ def test_query_specific_refusals_remain_unresolved_with_sourcewide_context(
             result_url="",
             notes="Synthetic query-specific refusal; no real search was performed.",
         )
-    if scope == "mixed":
+    if scope in {"mixed", "mixed_unverified", "mixed_unproven"}:
         candidate = artifacts["candidate"]
         candidate.update(category="domain_hacks", seed="novarasee")
         _write_csv(artifacts["candidates"], CANDIDATE_FIELDS, [candidate])
@@ -443,6 +445,17 @@ def test_query_specific_refusals_remain_unresolved_with_sourcewide_context(
             "query": "source access check",
             "notes": "Synthetic source-wide refusal; no per-domain query ran.",
         })
+        if scope == "mixed_unverified":
+            evidence[0].update(
+                result_status="unverified",
+                notes="Synthetic explicit per-query unknown; not source-wide.",
+            )
+        elif scope == "mixed_unproven":
+            evidence[0].update(
+                result_status="no_obvious_match",
+                result_url=f"{evidence[0]['source_url']}?tracking=novara",
+                notes="Synthetic claimed query with unusable proof.",
+            )
 
     _write_csv(artifacts["evidence"], list(evidence[0]), evidence)
     write_trademark_summary(
@@ -454,12 +467,6 @@ def test_query_specific_refusals_remain_unresolved_with_sourcewide_context(
     summary = _read(artifacts["summary"])[0]
     assert summary["status"] == expected_status
     assert summary["trademark_score"] == expected_score
-    if scope == "sourcewide":
-        assert "Blocked sources: TMview; no per-domain query ran there." in summary["limitations"]
-    else:
-        assert "Required per-domain queries blocked: TMview." in summary["limitations"]
-    if scope == "mixed":
-        assert "Source-wide refusal also prevented missing required queries for: TMview." in summary["limitations"]
 
     score = score_domain(
         artifacts["candidate"],
@@ -481,10 +488,20 @@ def test_query_specific_refusals_remain_unresolved_with_sourcewide_context(
     report = capsys.readouterr()
     assert result == expected_exit
     sourcewide_count = int(scope == "sourcewide")
-    query_blocked_count = int(scope != "sourcewide")
+    query_blocked_count = int(scope in {"per_query", "mixed"})
+    unverified_count = int(scope in {"mixed_unverified", "mixed_unproven"})
+    if scope == "sourcewide":
+        assert "Blocked sources: TMview; no per-domain query ran there." in summary["limitations"]
+    elif scope in {"per_query", "mixed"}:
+        assert "Required per-domain queries blocked: TMview." in summary["limitations"]
+    if scope in {"mixed", "mixed_unverified", "mixed_unproven"}:
+        assert "Source-wide refusal also prevented missing required queries for: TMview." in summary["limitations"]
+    if scope in {"mixed_unverified", "mixed_unproven"}:
+        assert "Unverified sources: TMview; no no-match conclusion." in summary["limitations"]
+        assert "Blocked sources: TMview; no per-domain query ran there." not in summary["limitations"]
     assert (
         f"TMview: completed_queries=0, sourcewide_blocked_domains={sourcewide_count}, "
-        f"query_blocked_domains={query_blocked_count}, unverified_or_missing_domains=0"
+        f"query_blocked_domains={query_blocked_count}, unverified_or_missing_domains={unverified_count}"
     ) in report.out
     if expected_exit == 2:
         assert "BLOCKED: required trademark query coverage is unresolved" in report.err
