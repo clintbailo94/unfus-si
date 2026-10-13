@@ -1,5 +1,26 @@
 # AI
 
+## Ranked workbook delivery (offline)
+
+The owner-facing guide is [output/README.md](output/README.md), and the generated
+workbook is [output/si_domains_ranked.xlsx](output/si_domains_ranked.xlsx). The
+guide records the snapshot counts and limits, all source CSVs, and a complete
+PowerShell sequence to rebuild research outputs and the workbook from local
+snapshots without registry or trademark requests.
+
+For the committed CSV snapshot, export and check the workbook with:
+
+```powershell
+python -m si_domains export --out output/si_domains_ranked.xlsx
+python -m si_domains validate-delivery --workbook output/si_domains_ranked.xlsx
+```
+
+`validate-delivery` compares every workbook row and cell to the current sources.
+It can report structural delivery PASS while saying research screening BLOCKED;
+`python -m si_domains validate-research --candidates data/candidates.csv`
+remains separate and exits 2 while the required top-100 trademark query sets
+are unresolved. Neither command certifies project completion or owner acceptance.
+
 ## Running the verification
 
 Run a small, polite live smoke check and inspect its body-free evidence:
