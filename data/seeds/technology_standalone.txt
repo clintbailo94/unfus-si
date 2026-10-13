@@ -1,0 +1,13 @@
+# Roots reviewed as plausible short technology .si labels.
+cloud
+edge
+kernel
+crypto
+cipher
+graph
+query
+vector
+silicon
+ledger
+token
+cyber

@@ -2,7 +2,7 @@ domain_label,category,method,seed,tags,quality_score
 abdomen,dictionary,dictionary,abdomen,,93
 ability,dictionary,dictionary,ability,,90
 abreast,dictionary,dictionary,abreast,,93
-academy,dictionary,dictionary,academy,,90
+academy,dictionary,dictionary,academy,consumer_brands,90
 acidity,dictionary,dictionary,acidity,,90
 acrobat,dictionary,dictionary,acrobat,,93
 acronym,dictionary,dictionary,acronym,,93
@@ -131,7 +131,7 @@ canine,dictionary,dictionary,canine,,89
 cannery,dictionary,dictionary,cannery,,93
 canteen,dictionary,dictionary,canteen,,93
 capable,dictionary,dictionary,capable,,93
-capital,dictionary,dictionary,capital,,97
+capital,dictionary,dictionary,capital,business_finance,97
 caprice,dictionary,dictionary,caprice,,93
 capsule,dictionary,dictionary,capsule,,93
 captive,dictionary,dictionary,captive,,93
@@ -220,6 +220,7 @@ custody,dictionary,dictionary,custody,,93
 cuticle,dictionary,dictionary,cuticle,,93
 cutlery,dictionary,dictionary,cutlery,,93
 cyclone,dictionary,dictionary,cyclone,,93
+database,dictionary,dictionary,database,,89
 daytime,dictionary,dictionary,daytime,,90
 deacon,dictionary,dictionary,deacon,,89
 debonair,dictionary,dictionary,debonair,,89
@@ -537,7 +538,7 @@ literacy,dictionary,dictionary,literacy,,89
 literal,dictionary,dictionary,literal,,97
 literary,dictionary,dictionary,literary,,89
 literate,dictionary,dictionary,literate,,89
-lithium,dictionary,dictionary,lithium,,93
+lithium,dictionary,dictionary,lithium,emerging_industries,93
 liturgy,dictionary,dictionary,liturgy,,93
 livable,dictionary,dictionary,livable,,93
 lively,dictionary,dictionary,lively,,89
@@ -780,7 +781,6 @@ quinine,dictionary,dictionary,quinine,,90
 quintet,dictionary,dictionary,quintet,,93
 quorum,dictionary,dictionary,quorum,,89
 raccoon,dictionary,dictionary,raccoon,,93
-racial,dictionary,dictionary,racial,,89
 radiant,dictionary,dictionary,radiant,,93
 radical,dictionary,dictionary,radical,,97
 radium,dictionary,dictionary,radium,,89
@@ -879,7 +879,7 @@ session,dictionary,dictionary,session,,93
 severe,dictionary,dictionary,severe,,89
 shadowy,dictionary,dictionary,shadowy,,93
 shapely,dictionary,dictionary,shapely,,93
-silicon,dictionary,dictionary,silicon,,97
+silicon,dictionary,dictionary,silicon,technology,97
 silvery,dictionary,dictionary,silvery,,93
 similar,dictionary,dictionary,similar,,97
 sincere,dictionary,dictionary,sincere,,93
@@ -996,7 +996,7 @@ urgency,dictionary,dictionary,urgency,,93
 utensil,dictionary,dictionary,utensil,,93
 utility,dictionary,dictionary,utility,,90
 vacancy,dictionary,dictionary,vacancy,,93
-vaccine,dictionary,dictionary,vaccine,,93
+vaccine,dictionary,dictionary,vaccine,health_science,93
 vacuum,dictionary,dictionary,vacuum,,89
 valiant,dictionary,dictionary,valiant,,93
 vampire,dictionary,dictionary,vampire,,93

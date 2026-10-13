@@ -1,0 +1,13 @@
+# Roots reviewed as plausible short finance and service .si labels.
+equity
+stock
+bond
+broker
+forex
+escrow
+venture
+invoice
+credit
+dividend
+capital
+commerce

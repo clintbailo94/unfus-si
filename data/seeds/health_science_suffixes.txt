@@ -1,0 +1,20 @@
+# Biomedical product and research heads.
+lab
+labs
+scan
+assay
+clinic
+scope
+sequence
+marker
+track
+pulse
+therapy
+atlas
+screen
+trial
+works
+cell
+research
+monitor
+link

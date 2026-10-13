@@ -1,0 +1,21 @@
+# Industrial product and infrastructure heads.
+lab
+labs
+works
+forge
+grid
+cell
+dock
+ops
+control
+mesh
+stack
+scan
+hub
+station
+engine
+flight
+sensor
+pilot
+drive
+storage

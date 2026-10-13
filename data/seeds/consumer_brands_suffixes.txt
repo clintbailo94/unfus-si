@@ -1,0 +1,18 @@
+# Consumer product and experience heads used in reviewed compounds.
+studio
+shop
+club
+house
+box
+craft
+wear
+hub
+works
+school
+course
+class
+booking
+stay
+design
+show
+gear
