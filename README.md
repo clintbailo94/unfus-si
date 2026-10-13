@@ -140,6 +140,15 @@ coverage. It cannot establish that a cited source page was read correctly,
 that a mark is legally relevant, or that a domain is legally clear; those need
 human evidence review.
 
+For the 2026-10-13 research snapshot, the specified sources have 0/100
+completed queries each: TMview and USPTO remain unverified, and UKIPO has one
+source-wide HTTP 403 affecting the 100 target domains. An independent browser
+surface check returned `apps=[]`, `browsers=[]`, and
+`Browser is not available: iab` for an in-app browser attempt. No per-domain
+search ran. The validator therefore reports structural checks as passed, marks
+query coverage BLOCKED, and exits non-zero; a source-wide access attempt never
+counts as a completed query.
+
 RDAP and WHOIS outcomes are timestamped observations from the registry's
 channels. They are not registrar checkout confirmation and do not guarantee
 registration eligibility, registration success, or a non-premium price.

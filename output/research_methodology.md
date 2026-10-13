@@ -48,10 +48,12 @@ mechanically to `.si`.
 
 The target was the pre-rescoring top 100, then the final top 100 after
 re-scoring. The member sets were identical, so there were no newly entered
-names to search. The available browser inventory was empty and the in-app
-browser was unavailable. The official-page fetches did not expose a usable
-search UI, so **no exact label or completed seed phrase was queried for any
-domain**. No mark match or no-match result was invented.
+names to search. An independent check of enabled browser surfaces returned
+`apps=[]` and `browsers=[]`; attempting to create the in-app browser at
+`https://www.tmdn.org/tmview/` returned `Browser is not available: iab`.
+The official-page fetches did not expose a usable search UI, so **no exact
+label or completed seed phrase was queried for any domain**. No mark match or
+no-match result was invented.
 
 The source-wide access evidence records:
 
@@ -67,7 +69,7 @@ The source-wide access evidence records:
 Each source-wide record is linked by ID from the 100 affected summary rows, but
 is not counted as a completed query. Current top-100 per-source counts are:
 
-| Source | Completed per-domain queries | Blocked top-100 domains | Unverified top-100 domains |
+| Source | Completed per-domain queries (of 100) | Blocked top-100 domains | Unverified top-100 domains |
 | --- | ---: | ---: | ---: |
 | TMview | 0 | 0 | 100 |
 | UKIPO | 0 | 100 | 0 |
@@ -76,6 +78,13 @@ is not counted as a completed query. Current top-100 per-source counts are:
 These are domain coverage counts, not counts of attempted per-domain requests.
 For example, UKIPO's 100 blocked domains are affected by one source-wide 403
 record; no 100 individual requests were made.
+
+Thus the completed-query count is **0/100 for each specified source**. The
+browser-surface failure is environment-wide context, not a database query or
+an additional per-domain attempt. No browser workaround, account, paid source,
+or search-engine substitute was used. The validator's structural checks pass,
+then it exits unsuccessfully because this required top-100 query coverage is
+unresolved; source-wide blocked attempts never count as completed searches.
 
 All 100 summary rows therefore remain `unverified` at the conservative score
 of 70. The other 400 shortlist names have no summary row and remain explicitly

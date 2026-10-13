@@ -28,7 +28,7 @@ def _read(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
-def test_summary_injection_reranks_shortlist_and_joins_evidence(tmp_path):
+def test_summary_injection_reranks_shortlist_and_joins_evidence(tmp_path, capsys):
     candidates_path = tmp_path / "candidates.csv"
     rdap_path = tmp_path / "rdap.csv"
     whois_path = tmp_path / "whois.csv"
@@ -139,4 +139,85 @@ def test_summary_injection_reranks_shortlist_and_joins_evidence(tmp_path):
         trademark_summary_path=tm_summary_path,
         opportunities_path=opportunities_path,
     ) == 0
+
+    # Source-wide access outcomes are provenance, not per-domain query results.
+    global_rows = [
+        {
+            "evidence_id": "TMV-ACCESS-001",
+            "domain": "*",
+            "source": "TMview",
+            "jurisdiction": "EU/participating offices",
+            "query": "source access check; no domain query",
+            "utc_timestamp": "2026-10-13T12:30:00Z",
+            "result_status": "unverified",
+            "source_url": source_urls["TMview"],
+            "result_url": "",
+            "mark_number": "",
+            "mark_name": "",
+            "mark_status": "",
+            "classes": "",
+            "notes": "Synthetic browser-unavailable fixture; no per-domain query ran.",
+        },
+        {
+            "evidence_id": "UKIPO-ACCESS-001",
+            "domain": "*",
+            "source": "UKIPO",
+            "jurisdiction": "UK",
+            "query": "source access check; no domain query",
+            "utc_timestamp": "2026-10-13T12:30:00Z",
+            "result_status": "blocked",
+            "source_url": source_urls["UKIPO"],
+            "result_url": "",
+            "mark_number": "",
+            "mark_name": "",
+            "mark_status": "",
+            "classes": "",
+            "notes": "Synthetic initial HTTP 403; not retried; no per-domain query ran.",
+        },
+        {
+            "evidence_id": "USPTO-ACCESS-001",
+            "domain": "*",
+            "source": "USPTO",
+            "jurisdiction": "US",
+            "query": "source access check; no domain query",
+            "utc_timestamp": "2026-10-13T12:30:00Z",
+            "result_status": "unverified",
+            "source_url": source_urls["USPTO"],
+            "result_url": "",
+            "mark_number": "",
+            "mark_name": "",
+            "mark_status": "",
+            "classes": "",
+            "notes": "Synthetic browser-unavailable fixture; no per-domain query ran.",
+        },
+    ]
+    _write_csv(tm_evidence_path, TM_FIELDS, global_rows)
+    assert write_trademark_summary(tm_evidence_path, domains_path, tm_summary_path) == len(labels)
+    assert all(row["status"] == "unverified" for row in _read(tm_summary_path))
+    assert main([
+        "score", "--input", str(candidates_path), "--rdap-evidence", str(rdap_path),
+        "--trademark-evidence", str(tm_summary_path), "--trademark-source-evidence", str(tm_evidence_path),
+        "--out", str(scores_path),
+    ]) == 0
+    assert main([
+        "shortlist", "--input", str(candidates_path), "--rdap-evidence", str(rdap_path),
+        "--whois-evidence", str(whois_path), "--scores", str(scores_path),
+        "--out", str(final_shortlist), "--excluded", str(excluded_path), "--sample-out", str(sample_path),
+    ]) == 0
+    assert write_valuations(final_shortlist, valuation_evidence, valuations_path) == len(_read(final_shortlist))
+    assert write_opportunities(final_shortlist, scores_path, valuations_path, tm_summary_path, opportunities_path) == len(_read(final_shortlist))
+    assert validate_research(
+        shortlist_path=final_shortlist,
+        scores_path=scores_path,
+        valuation_path=valuations_path,
+        valuation_evidence_path=valuation_evidence,
+        trademark_evidence_path=tm_evidence_path,
+        trademark_summary_path=tm_summary_path,
+        opportunities_path=opportunities_path,
+    ) == 2
+    report = capsys.readouterr()
+    assert "TMview: completed_queries=0, sourcewide_blocked_domains=0, unverified_or_missing_domains=100" in report.out
+    assert "UKIPO: completed_queries=0, sourcewide_blocked_domains=100, unverified_or_missing_domains=0" in report.out
+    assert "USPTO: completed_queries=0, sourcewide_blocked_domains=0, unverified_or_missing_domains=100" in report.out
+    assert "BLOCKED: required trademark query coverage is unresolved" in report.err
 
