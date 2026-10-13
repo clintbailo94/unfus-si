@@ -14,7 +14,7 @@ from typing import Sequence
 import requests
 
 from . import rdap, rules, whois
-from .config import DATA_DIR, EVIDENCE_PATH, WHOIS_EVIDENCE_PATH
+from .config import DATA_DIR, EVIDENCE_PATH, OUTPUT_DIR, WHOIS_EVIDENCE_PATH
 from .evidence import EvidenceStore, WhoisEvidenceStore
 from .rdap import RegistryInaccessible, check_domain
 from .candidates.build import CATEGORIES, default_output, generate_all, write_csv
@@ -259,6 +259,65 @@ def build_parser() -> argparse.ArgumentParser:
         "--whois-evidence",
         default=str(WHOIS_EVIDENCE_PATH),
         help="optional WHOIS evidence CSV",
+    )
+
+    score = subparsers.add_parser("score", help="score latest RDAP-404 candidates offline")
+    score.add_argument(
+        "--input",
+        default=str(DATA_DIR / "candidates.csv"),
+        help="candidate feature CSV",
+    )
+    score.add_argument(
+        "--rdap-evidence",
+        default=str(EVIDENCE_PATH),
+        help="latest-row RDAP evidence CSV",
+    )
+    score.add_argument(
+        "--out",
+        default=str(OUTPUT_DIR / "scores.csv"),
+        help="score output CSV",
+    )
+
+    shortlist = subparsers.add_parser(
+        "shortlist", help="rank WHOIS-confirmed RDAP-404 domains offline"
+    )
+    shortlist.add_argument(
+        "--input",
+        default=str(DATA_DIR / "candidates.csv"),
+        help="candidate feature CSV",
+    )
+    shortlist.add_argument(
+        "--rdap-evidence",
+        default=str(EVIDENCE_PATH),
+        help="latest-row RDAP evidence CSV",
+    )
+    shortlist.add_argument(
+        "--whois-evidence",
+        default=str(WHOIS_EVIDENCE_PATH),
+        help="latest-row WHOIS evidence CSV",
+    )
+    shortlist.add_argument(
+        "--scores",
+        default=str(OUTPUT_DIR / "scores.csv"),
+        help="score CSV produced by the score command",
+    )
+    shortlist.add_argument(
+        "--out",
+        default=str(OUTPUT_DIR / "shortlist.csv"),
+        help="shortlist CSV",
+    )
+    shortlist.add_argument(
+        "--excluded",
+        default=str(OUTPUT_DIR / "excluded.csv"),
+        help="excluded-domain CSV",
+    )
+    shortlist.add_argument(
+        "--sample-out",
+        default=str(OUTPUT_DIR / "sample_404_for_review.csv"),
+        help="seeded RDAP-404 review sample CSV",
+    )
+    shortlist.add_argument(
+        "--seed", type=int, default=20261013, help="deterministic sample seed"
     )
 
     candidates = subparsers.add_parser("candidates", help="build or review offline .si label candidates")
@@ -707,6 +766,42 @@ def _run_candidates(args: argparse.Namespace, parser: argparse.ArgumentParser) -
     return 0
 
 
+def _run_score(args: argparse.Namespace) -> int:
+    from .scoring import write_scores
+
+    try:
+        count = write_scores(args.input, args.rdap_evidence, args.out)
+    except (OSError, ValueError) as exc:
+        print(f"Score failed: {exc}", file=sys.stderr)
+        return 2
+    print(f"Wrote scores for {count} RDAP-404 domains to {args.out}")
+    return 0
+
+
+def _run_shortlist(args: argparse.Namespace) -> int:
+    from .shortlist import build_outputs
+
+    try:
+        shortlisted, excluded, sampled = build_outputs(
+            args.input,
+            args.rdap_evidence,
+            args.whois_evidence,
+            args.scores,
+            args.out,
+            args.excluded,
+            args.sample_out,
+            seed=args.seed,
+        )
+    except (OSError, ValueError) as exc:
+        print(f"Shortlist failed: {exc}", file=sys.stderr)
+        return 2
+    print(
+        f"Wrote {shortlisted} shortlist domains, {excluded} exclusions, "
+        f"and {sampled} review sample rows"
+    )
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -716,6 +811,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _run_whois_check(args)
     if args.command == "status":
         return _run_status(args)
+    if args.command == "score":
+        return _run_score(args)
+    if args.command == "shortlist":
+        return _run_shortlist(args)
     if args.command == "candidates":
         return _run_candidates(args, parser)
     parser.error("unknown command")

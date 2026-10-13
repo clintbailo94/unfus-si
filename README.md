@@ -77,3 +77,23 @@ classification, recognized pattern identifier, and a short error code; no
 registrant or contact fields are retained. `status` reads both evidence files
 without making network requests and reports confirmations, conflicts, and
 pending WHOIS checks for RDAP 404s.
+
+## Scoring and shortlist
+
+`python -m si_domains score` reads `data/candidates.csv` and the latest rows in
+`output/rdap_evidence.csv`, then writes deterministic heuristic scores for
+RDAP-404 candidates to `output/scores.csv`. The score uses candidate category,
+method, tags, quality score, and label. Its six weights are brandability 25%,
+commercial relevance 20%, shortness 15%, domain-hack creativity 15%, resale
+potential 15%, and trademark risk 10%. Scores do not use network access or
+estimate sale prices. Trademark is a fixed placeholder score of 70 with a
+"not yet screened" note until the next screening step.
+
+`python -m si_domains shortlist` combines the candidate CSV, latest RDAP and
+WHOIS evidence, and `output/scores.csv`. Only domains with RDAP
+`potentially_unregistered` and WHOIS `not_registered` enter
+`output/shortlist.csv`; it is capped at 500 domains, with at most 125 per category.
+Other candidates, including rule-based special classes and evidence conflicts,
+are written to `output/excluded.csv` with a reason. A seeded sample of up to 30
+RDAP-404 domains, including available WHOIS status groups, is written to
+`output/sample_404_for_review.csv`; set `--seed` to reproduce another sample.
