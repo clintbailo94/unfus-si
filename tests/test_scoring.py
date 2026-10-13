@@ -1,8 +1,9 @@
 import csv
+from decimal import Decimal
 from pathlib import Path
 
 from si_domains.cli import main
-from si_domains.scoring import SCORE_WEIGHTS, score_domain
+from si_domains.scoring import SCORE_WEIGHTS, score_domain, weighted_total
 
 
 SCORE_FIELDS = [
@@ -68,11 +69,42 @@ def test_score_domain_is_deterministic_bounded_and_explainable():
 
 def test_total_is_the_weighted_sum_rounded_to_one_decimal():
     result = score_domain(_candidate("novara"))
-    expected = round(
-        sum(result[name] * weight for name, weight in SCORE_WEIGHTS.items()), 1
-    )
 
-    assert result["total"] == expected
+    assert result["total"] == Decimal("72.0")
+
+
+def test_weighted_total_uses_exact_decimal_half_even_rounding():
+    # Captured before the heuristic rework; preserve these component fixtures.
+    accesshub_components = {
+        "brandability": 80,
+        "commercial": 86,
+        "shortness": 73,
+        "hack": 12,
+        "resale": 64,
+        "trademark": 70,
+    }
+    accountinghub_components = {
+        "brandability": 65,
+        "commercial": 86,
+        "shortness": 38,
+        "hack": 12,
+        "resale": 50,
+        "trademark": 70,
+    }
+
+    assert weighted_total(accesshub_components) == Decimal("66.6")
+    assert weighted_total(accountinghub_components) == Decimal("55.4")
+    assert weighted_total({**accesshub_components, "shortness": 72}) == Decimal("66.4")
+    assert weighted_total({name: 70 for name in SCORE_WEIGHTS}) == Decimal("70.0")
+
+
+def test_trademark_override_recalculates_exact_weighted_total():
+    baseline = score_domain(_candidate("novara"))
+    overridden = score_domain(_candidate("novara"), trademark_override=22)
+
+    assert baseline["trademark"] == 70
+    assert overridden["trademark"] == 22
+    assert baseline["total"] - overridden["total"] == Decimal("4.8")
 
 
 def test_shorter_pronounceable_label_scores_at_least_as_high():
@@ -110,13 +142,91 @@ def test_domain_hack_category_gets_higher_hack_score():
     assert hack["hack"] > unseeded["hack"]
 
 
-def test_commercial_score_uses_secondary_tags_and_label_keywords():
+def test_commercial_score_uses_secondary_tags_and_recorded_industry_roots():
     generic = score_domain(_candidate("novara", "dictionary"))
     tagged = score_domain({**_candidate("novara", "dictionary"), "tags": "health_science"})
     keyword = score_domain(_candidate("finance", "dictionary"))
+    seeded_root = score_domain(
+        {**_candidate("aichat", "dictionary"), "seed": "ai+chat"}
+    )
 
     assert tagged["commercial"] > generic["commercial"]
     assert keyword["commercial"] > generic["commercial"]
+    assert seeded_root["commercial"] > generic["commercial"]
+
+
+def test_incidental_ai_substrings_do_not_raise_commercial_demand():
+    baseline = score_domain(_candidate("novara", "dictionary"))["commercial"]
+
+    for label in ("chair", "rain", "naivety", "naivete"):
+        assert score_domain(_candidate(label, "dictionary"))["commercial"] == baseline
+
+
+def test_common_dictionary_nouns_outscore_negative_and_niche_words_on_resale():
+    broad_nouns = [
+        score_domain({**_candidate(word, "dictionary"), "method": "dictionary"})
+        for word in ("market", "travel", "bank")
+    ]
+    narrow_words = [
+        score_domain({**_candidate(word, "dictionary"), "method": "dictionary"})
+        for word in (
+            "naivety",
+            "naivete",
+            "fidgety",
+            "shadowy",
+            "gaseous",
+            "raucous",
+            "walkout",
+            "epaulet",
+        )
+    ]
+
+    assert min(row["resale"] for row in broad_nouns) > max(
+        row["resale"] for row in narrow_words
+    )
+    assert max(row["resale"] for row in narrow_words) < 85
+
+
+def test_hack_source_seed_changes_buyer_breadth_but_keeps_hack_score_high():
+    clear = score_domain(
+        {
+            **_candidate("newsagen", "domain_hacks"),
+            "method": "hack-suffix",
+            "seed": "newsagency",
+            "quality_score": "91",
+        }
+    )
+    obscure = score_domain(
+        {
+            **_candidate("indetermina", "domain_hacks"),
+            "method": "hack-suffix",
+            "seed": "indeterminacy",
+            "quality_score": "91",
+        }
+    )
+    conversational = score_domain(
+        {
+            **_candidate("tryto", "domain_hacks"),
+            "method": "hack-phrase",
+            "seed": "tryto + see",
+            "quality_score": "81",
+        }
+    )
+    narrow_legal = score_domain(
+        {
+            **_candidate("subtenan", "domain_hacks"),
+            "method": "hack-suffix",
+            "seed": "subtenancy",
+            "quality_score": "91",
+        }
+    )
+
+    assert clear["hack"] >= 75 and obscure["hack"] >= 75
+    assert clear["commercial"] > obscure["commercial"]
+    assert clear["resale"] > obscure["resale"]
+    assert conversational["resale"] > narrow_legal["resale"]
+    assert "newsagency" in clear["rationale"]
+    assert "indeterminacy" in obscure["rationale"]
 
 
 def test_reclassified_invented_names_do_not_receive_common_dictionary_resale_score():

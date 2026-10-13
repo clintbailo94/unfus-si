@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import re
+from decimal import Decimal, ROUND_HALF_EVEN
 from pathlib import Path
 from typing import Mapping
 
@@ -76,7 +77,83 @@ _INDUSTRY_TERMS = (
     "software",
     "tech",
     "trade",
+    "news",
+    "travel",
+    "energy",
+    "education",
+    "insurance",
+    "legal",
+    "hotel",
+    "office",
+    "wallet",
 )
+_BROAD_BUYER_NOUNS = frozenset(
+    {
+        "bank",
+        "cloud",
+        "credit",
+        "energy",
+        "food",
+        "home",
+        "hotel",
+        "market",
+        "office",
+        "security",
+        "service",
+        "travel",
+        "wallet",
+        "water",
+    }
+)
+# Curated low-breadth dictionary entries: negative traits, adjectives, niche
+# terms, and narrow activities do not get a generic dictionary resale premium.
+_LOW_BREADTH_DICTIONARY_WORDS = frozenset(
+    {
+        "askance",
+        "belated",
+        "cowhide",
+        "decorous",
+        "epaulet",
+        "elitism",
+        "fidgety",
+        "gaseous",
+        "jittery",
+        "jugular",
+        "leaning",
+        "naivete",
+        "naivety",
+        "orifice",
+        "powdery",
+        "raucous",
+        "roguish",
+        "shadowy",
+        "stoical",
+        "tenuous",
+        "walkout",
+        "wizened",
+    }
+)
+# Per-seed adjustments separate phonetic hack quality from likely buyer breadth.
+# Tuple order is brandability, commercial demand, and resale potential. The
+# seed names and adjustments are reviewed lexical notes, not sale-price claims.
+_HACK_SEED_ADJUSTMENTS = {
+    "flouncy": (-16, 0, -24),     # playful adjective with an awkward short stem
+    "pliancy": (-16, -5, -24),    # obscure abstract trait and awkward stem
+    "unfussy": (0, 2, 6),         # familiar positive consumer adjective
+    "piquancy": (-16, -2, -22),   # niche abstract/culinary sense
+    "tryto + see": (0, 2, 7),     # clear conversational phrase
+    "fervency": (-14, -2, -24),   # abstract intensity and awkward stem
+    "pungency": (-14, -2, -24),   # narrow sensory property
+    "absorbency": (-12, 0, -22),  # material/product attribute
+    "subtenancy": (-14, -10, -28), # narrow real-estate/legal term
+    "newsagency": (0, 12, 8),     # recognizable media-service term
+    "shallwe + see": (0, 2, 7),   # clear conversational phrase
+    "interagency": (-14, -8, -25), # institutional use
+    "stringency": (-14, -2, -25), # standards/technical term
+    "astringency": (-14, -3, -25), # narrow sensory property
+    "indeterminacy": (-16, -8, -26), # technical abstraction
+    "intermittency": (-14, 3, -18), # technical reliability term
+}
 _AMBIGUOUS_PAIRS = ("cl", "rn", "vv", "ii", "0o", "1l")
 _VOWELS = frozenset("aeiouy")
 _FACTOR_LABELS = {
@@ -108,6 +185,21 @@ def _quality(candidate: Mapping[str, object]) -> int:
         return _clamp(float(str(candidate.get("quality_score", "50"))))
     except (TypeError, ValueError):
         return 50
+
+
+def _seed_terms(candidate: Mapping[str, object]) -> set[str]:
+    """Return exact recorded seed components, including plus-joined roots."""
+
+    seed = str(candidate.get("seed") or "").casefold()
+    return set(re.findall(r"[a-z0-9]+", seed))
+
+
+def _hack_seed_adjustment(candidate: Mapping[str, object]) -> tuple[int, int, int]:
+    method = str(candidate.get("method") or "").casefold()
+    if method not in {"hack-suffix", "hack-phrase"}:
+        return 0, 0, 0
+    seed = str(candidate.get("seed") or "").strip().casefold()
+    return _HACK_SEED_ADJUSTMENTS.get(seed, (0, 0, 0))
 
 
 def _length_score(length: int) -> int:
@@ -178,7 +270,11 @@ def _brandability(candidate: Mapping[str, object], label: str) -> int:
     pronunciation = _pronounceability(label)
     spelling = _spelling(label)
     quality = _quality(candidate)
-    return _clamp(length * 0.30 + pronunciation * 0.30 + spelling * 0.20 + quality * 0.20)
+    base = _clamp(length * 0.30 + pronunciation * 0.30 + spelling * 0.20 + quality * 0.20)
+    brand_adjustment, _commercial_adjustment, _resale_adjustment = _hack_seed_adjustment(
+        candidate
+    )
+    return _clamp(base + brand_adjustment)
 
 
 def _commercial(candidate: Mapping[str, object], label: str) -> int:
@@ -189,9 +285,15 @@ def _commercial(candidate: Mapping[str, object], label: str) -> int:
     if method == "invented-reclassified":
         category_score -= 5
     tag_score = max((_TAG_DEMAND.get(tag, 0) for tag in tags), default=0)
-    searchable = f"{label} {' '.join(tags)}".replace("_", " ")
-    keyword_bonus = min(10, 3 * sum(term in searchable for term in _INDUSTRY_TERMS))
-    return _clamp(category_score + tag_score + keyword_bonus)
+    seed_terms = _seed_terms(candidate)
+    matched_terms = seed_terms.intersection(_INDUSTRY_TERMS)
+    if label in _INDUSTRY_TERMS:
+        matched_terms.add(label)
+    keyword_bonus = min(10, 3 * len(matched_terms))
+    _brand_adjustment, commercial_adjustment, _resale_adjustment = _hack_seed_adjustment(
+        candidate
+    )
+    return _clamp(category_score + tag_score + keyword_bonus + commercial_adjustment)
 
 
 def _syllable_estimate(label: str) -> int:
@@ -250,7 +352,7 @@ def _resale(candidate: Mapping[str, object], label: str) -> int:
     method = str(candidate.get("method") or "").casefold()
     tags = _tags(candidate)
     base = {
-        "dictionary": 72,
+        "dictionary": 60,
         "short": 69,
         "consumer_brands": 67,
         "domain_hacks": 62,
@@ -265,22 +367,28 @@ def _resale(candidate: Mapping[str, object], label: str) -> int:
         base -= 8
         if "real_word" in tags:
             base += 2
-    elif method == "dictionary":
-        base += 10
+    elif category == "dictionary" and method == "dictionary":
+        if label in _BROAD_BUYER_NOUNS:
+            base += 15
+        elif label in _LOW_BREADTH_DICTIONARY_WORDS:
+            base -= 14
     if len(label) <= 5:
         base += 8
     elif len(label) <= 8:
         base += 5
     if _pronounceability(label) >= 72:
         base += 5
-    if "dictionary" in tags:
-        base += 3
     if len(label) >= 12:
         base -= 15
-    return _clamp(base, high=85)
+    _brand_adjustment, _commercial_adjustment, resale_adjustment = _hack_seed_adjustment(
+        candidate
+    )
+    return _clamp(base + resale_adjustment, high=85)
 
 
-def _rationale(scores: Mapping[str, int], *, trademark_override: int | None) -> str:
+def _rationale(
+    scores: Mapping[str, int], *, trademark_override: int | None, seed: str = ""
+) -> str:
     weighted = sorted(
         SCORE_WEIGHTS,
         key=lambda name: (scores[name] * SCORE_WEIGHTS[name], scores[name], name),
@@ -300,12 +408,24 @@ def _rationale(scores: Mapping[str, int], *, trademark_override: int | None) -> 
         rationale += " TM not yet screened."
     else:
         rationale += f" TM override {trademark_override}."
+    if seed:
+        rationale += f" Seed: {seed.strip()[:28]}."
     return rationale[:140]
+
+
+def weighted_total(components: Mapping[str, int]) -> Decimal:
+    """Return the exact one-decimal weighted total with ties rounded to even."""
+
+    total = sum(
+        Decimal(components[name]) * Decimal(str(weight))
+        for name, weight in SCORE_WEIGHTS.items()
+    )
+    return total.quantize(Decimal("0.1"), rounding=ROUND_HALF_EVEN)
 
 
 def score_domain(
     candidate: Mapping[str, object], *, trademark_override: int | None = None
-) -> dict[str, str | int | float]:
+) -> dict[str, str | int | Decimal]:
     """Score one candidate row without network access or hidden state."""
 
     label = _label(candidate)
@@ -324,13 +444,17 @@ def score_domain(
         "resale": _resale(candidate, label),
         "trademark": 70 if trademark_override is None else trademark_override,
     }
-    total = round(sum(components[name] * weight for name, weight in SCORE_WEIGHTS.items()), 1)
+    total = weighted_total(components)
     return {
         "domain": f"{label}.si",
         "category": category,
         **components,
         "total": total,
-        "rationale": _rationale(components, trademark_override=trademark_override),
+        "rationale": _rationale(
+            components,
+            trademark_override=trademark_override,
+            seed=str(candidate.get("seed") or ""),
+        ),
     }
 
 
@@ -366,7 +490,7 @@ def write_scores(
 
     candidates = _read_candidates(Path(candidates_path))
     rdap_latest = _read_latest(Path(rdap_path))
-    scored: dict[str, dict[str, str | int | float]] = {}
+    scored: dict[str, dict[str, str | int | Decimal]] = {}
     for candidate in candidates:
         label = _label(candidate)
         domain = f"{label}.si"
@@ -384,7 +508,7 @@ def write_scores(
             writer.writerow(
                 {
                     **row,
-                    "total": f"{float(row['total']):.1f}",
+                    "total": f"{row['total']:.1f}",
                 }
             )
     return len(scored)

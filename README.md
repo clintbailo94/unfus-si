@@ -87,7 +87,12 @@ method, tags, quality score, and label. Its six weights are brandability 25%,
 commercial relevance 20%, shortness 15%, domain-hack creativity 15%, resale
 potential 15%, and trademark risk 10%. Scores do not use network access or
 estimate sale prices. Trademark is a fixed placeholder score of 70 with a
-"not yet screened" note until the next screening step.
+"not yet screened" note until the next screening step. The weighted total is
+calculated with decimal arithmetic and rounded once to one decimal using
+`ROUND_HALF_EVEN` (ties to even). Commercial keyword bonuses require exact tags,
+labels, or recorded seed components. Resale uses curated common-noun and
+low-breadth dictionary signals plus reviewed hack-seed adjustments; these are
+buyer-breadth heuristics, not valuation evidence.
 
 `python -m si_domains shortlist` combines the candidate CSV, latest RDAP and
 WHOIS evidence, and `output/scores.csv`. Only domains with RDAP
