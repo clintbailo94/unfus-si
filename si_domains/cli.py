@@ -13,9 +13,9 @@ from typing import Sequence
 
 import requests
 
-from . import rdap, rules
-from .config import DATA_DIR
-from .evidence import EvidenceStore
+from . import rdap, rules, whois
+from .config import DATA_DIR, EVIDENCE_PATH, WHOIS_EVIDENCE_PATH
+from .evidence import EvidenceStore, WhoisEvidenceStore
 from .rdap import RegistryInaccessible, check_domain
 from .candidates.build import CATEGORIES, default_output, generate_all, write_csv
 
@@ -24,6 +24,9 @@ MONOTONIC = time.monotonic
 SLEEP = time.sleep
 _RULE_CLASSIFICATIONS = frozenset(
     {"invalid_syntax", "reserved", "restricted", "premium"}
+)
+_WHOIS_COOLDOWN_ERRORS = frozenset(
+    {"connection_error", "timeout", "empty_response", "rate_limited"}
 )
 
 
@@ -140,6 +143,47 @@ def _time_budget_expired(args: argparse.Namespace, started: float) -> bool:
     )
 
 
+class WhoisRateLimiter:
+    """Serialize WHOIS query starts and adapt after transport failures."""
+
+    def __init__(self, min_interval: float) -> None:
+        self.configured_min_interval = float(min_interval)
+        if (
+            not math.isfinite(self.configured_min_interval)
+            or self.configured_min_interval < 1.0
+        ):
+            raise ValueError("min_interval must be a finite number of at least 1 second")
+        self.min_interval = self.configured_min_interval
+        self._last_start: float | None = None
+
+    def wait(self, *, deadline: float | None = None) -> bool:
+        now = MONOTONIC()
+        while self._last_start is not None:
+            remaining = self.min_interval - (now - self._last_start)
+            if remaining <= 0:
+                break
+            if deadline is not None:
+                budget_remaining = deadline - now
+                if budget_remaining <= 0:
+                    return False
+                if remaining >= budget_remaining:
+                    SLEEP(budget_remaining)
+                    return False
+            SLEEP(remaining)
+            now = MONOTONIC()
+        now = MONOTONIC()
+        if deadline is not None and now >= deadline:
+            return False
+        self._last_start = now
+        return True
+
+    def increase_after_failure(self) -> None:
+        self.min_interval = max(
+            self.configured_min_interval,
+            min(6.0, self.min_interval * 1.5),
+        )
+
+
 def _print_time_budget(checked: int, skipped: int) -> None:
     print(
         f"Time budget reached after checking {checked} domains; "
@@ -163,11 +207,43 @@ def build_parser() -> argparse.ArgumentParser:
         help="stop after the first unverified result (useful for a bounded live smoke check)",
     )
 
+    whois_check = subparsers.add_parser(
+        "whois-check", help="second-check RDAP 404 domains through WHOIS"
+    )
+    whois_check.add_argument(
+        "--input",
+        default=str(DATA_DIR / "candidates.csv"),
+        help="CSV with domain_label and category columns",
+    )
+    whois_check.add_argument(
+        "--rdap-evidence",
+        default=str(EVIDENCE_PATH),
+        help="latest-row RDAP evidence CSV used to select domains",
+    )
+    whois_check.add_argument(
+        "--evidence",
+        default=str(WHOIS_EVIDENCE_PATH),
+        help="append-only WHOIS evidence CSV",
+    )
+    whois_check.add_argument("--limit", type=_positive_limit)
+    whois_check.add_argument("--max-minutes", type=_positive_minutes)
+    whois_check.add_argument("--min-interval", type=_minimum_interval, default=2.0)
+    whois_check.add_argument("--cooldown-seconds", type=_nonnegative_seconds, default=300)
+    whois_check.add_argument("--retry-unverified", action="store_true")
+
     status = subparsers.add_parser("status", help="summarize local candidates and RDAP evidence")
     status.add_argument(
         "--input",
         default=str(DATA_DIR / "candidates.csv"),
         help="CSV with domain_label and category columns",
+    )
+    status.add_argument(
+        "--rdap-evidence", default=str(EVIDENCE_PATH), help="RDAP evidence CSV"
+    )
+    status.add_argument(
+        "--whois-evidence",
+        default=str(WHOIS_EVIDENCE_PATH),
+        help="optional WHOIS evidence CSV",
     )
 
     candidates = subparsers.add_parser("candidates", help="build or review offline .si label candidates")
@@ -305,12 +381,156 @@ def _run_check(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_whois_check(args: argparse.Namespace) -> int:
+    input_path = Path(args.input)
+    rdap_path = Path(args.rdap_evidence)
+    evidence_path = Path(args.evidence)
+    started = MONOTONIC()
+    candidates = _load_candidates(input_path)
+    if candidates is None:
+        return 2
+    if not rdap_path.is_file():
+        print(f"RDAP evidence CSV not found: {rdap_path}", file=sys.stderr)
+        return 2
+
+    rdap_latest = EvidenceStore(rdap_path).load_latest()
+    eligible = [
+        (label, category)
+        for label, category in candidates
+        if rdap_latest.get(f"{label}.si", {}).get("classification")
+        == "potentially_unregistered"
+    ]
+    store = WhoisEvidenceStore(evidence_path)
+    checked = 0
+    skipped = 0
+    requests_started = 0
+    cooldown_cycles = 0
+    cooldown_waits = 0
+    awaiting_cooldown_result = False
+    results: Counter[str] = Counter()
+    errors: Counter[str] = Counter()
+    limiter = WhoisRateLimiter(args.min_interval)
+    deadline = (
+        started + args.max_minutes * 60 if args.max_minutes is not None else None
+    )
+
+    try:
+        for label, category in eligible:
+            if _time_budget_expired(args, started):
+                _print_time_budget(checked, skipped)
+                return 0
+
+            domain = f"{label}.si"
+            if store.should_skip(domain, retry_unverified=args.retry_unverified):
+                skipped += 1
+                continue
+            if args.limit is not None and checked >= args.limit:
+                break
+            if not limiter.wait(deadline=deadline):
+                _print_time_budget(checked, skipped)
+                return 0
+
+            result = whois.whois_check(
+                label,
+                connect=whois.socket.create_connection,
+            )
+            store.append(category, result)
+            checked += 1
+            requests_started += 1
+            results[result.classification] += 1
+            if result.error:
+                errors[result.error] += 1
+            if result.error in _WHOIS_COOLDOWN_ERRORS:
+                limiter.increase_after_failure()
+
+            if result.classification in {"not_registered", "registered"}:
+                cooldown_cycles = 0
+                awaiting_cooldown_result = False
+
+            if checked and checked % 50 == 0:
+                print(
+                    _progress_line(
+                        checked,
+                        skipped,
+                        len(eligible),
+                        requests_started,
+                        started,
+                    ),
+                    file=sys.stderr,
+                )
+
+            if result.error not in _WHOIS_COOLDOWN_ERRORS:
+                continue
+
+            if awaiting_cooldown_result:
+                cooldown_cycles += 1
+                awaiting_cooldown_result = False
+            if cooldown_cycles >= 3:
+                print(
+                    "WHOIS server remained unavailable after 3 consecutive "
+                    "cooldown cycles without a successful result; stopping",
+                    file=sys.stderr,
+                )
+                return 2
+
+            print(
+                f"WHOIS circuit breaker opened; cooling down for "
+                f"{args.cooldown_seconds:g} seconds "
+                f"(cycle {cooldown_cycles + 1}/3)",
+                file=sys.stderr,
+            )
+            cooldown_wait = args.cooldown_seconds
+            if deadline is not None:
+                remaining_budget = deadline - MONOTONIC()
+                if remaining_budget <= 0:
+                    _print_time_budget(checked, skipped)
+                    return 0
+                cooldown_wait = min(cooldown_wait, remaining_budget)
+            cooldown_waits += 1
+            SLEEP(cooldown_wait)
+            if _time_budget_expired(args, started):
+                _print_time_budget(checked, skipped)
+                return 0
+            awaiting_cooldown_result = True
+    except KeyboardInterrupt:
+        print(
+            f"Interrupted after {checked} WHOIS checks; evidence is flushed",
+            file=sys.stderr,
+        )
+        return 130
+    finally:
+        elapsed = max(0.0, MONOTONIC() - started)
+        requests_per_minute = requests_started * 60 / elapsed if elapsed else 0.0
+        print(
+            f"Run totals: {requests_started} WHOIS requests; "
+            f"{requests_per_minute:.1f} requests/min; {cooldown_waits} cooldown cycles; "
+            f"adaptive interval {limiter.min_interval:g} seconds"
+        )
+        print(
+            "Run results: "
+            f"not_registered={results['not_registered']}, "
+            f"registered={results['registered']}, "
+            f"unverified={results['unverified']}"
+        )
+        if errors:
+            print(
+                "WHOIS error codes: "
+                + ", ".join(f"{error}={count}" for error, count in sorted(errors.items()))
+            )
+
+    print(
+        f"Checked {checked} WHOIS domains; skipped {skipped} previously recorded "
+        "RDAP-404 domains"
+    )
+    return 0
+
+
 def _run_status(args: argparse.Namespace) -> int:
     candidates = _load_candidates(Path(args.input))
     if candidates is None:
         return 2
 
-    latest = EvidenceStore().load_latest()
+    latest = EvidenceStore(Path(args.rdap_evidence)).load_latest()
     counts: Counter[str] = Counter()
     unverified: Counter[str] = Counter()
     timestamps: list[str] = []
@@ -357,6 +577,41 @@ def _run_status(args: argparse.Namespace) -> int:
     print(f"Candidates unchecked: {unchecked}")
     print(f"Oldest evidence timestamp: {min(timestamps) if timestamps else 'none'}")
     print(f"Newest evidence timestamp: {max(timestamps) if timestamps else 'none'}")
+    whois_path = Path(args.whois_evidence)
+    if whois_path.is_file():
+        whois_latest = WhoisEvidenceStore(whois_path).load_latest()
+        rdap_404_domains = [
+            f"{label}.si"
+            for label, _category in candidates
+            if latest.get(f"{label}.si", {}).get("classification")
+            == "potentially_unregistered"
+        ]
+        whois_counts: Counter[str] = Counter()
+        cross_counts: Counter[str] = Counter()
+        for domain in rdap_404_domains:
+            row = whois_latest.get(domain)
+            classification = row.get("classification", "") if row else ""
+            if classification not in {"not_registered", "registered", "unverified"}:
+                classification = "not yet checked"
+            whois_counts[classification] += 1
+            if classification == "not_registered":
+                cross_counts["confirmed"] += 1
+            elif classification == "registered":
+                cross_counts["conflict"] += 1
+            else:
+                cross_counts["pending"] += 1
+
+        print("WHOIS second check (RDAP-404 domains):")
+        print(f"WHOIS not_registered: {whois_counts['not_registered']}")
+        print(f"WHOIS registered: {whois_counts['registered']}")
+        print(f"WHOIS unverified: {whois_counts['unverified']}")
+        print(f"WHOIS not yet checked: {whois_counts['not yet checked']}")
+        print(
+            "Confirmed available (two channels): "
+            f"{cross_counts['confirmed']}"
+        )
+        print(f"Conflicts (RDAP 404 but WHOIS registered): {cross_counts['conflict']}")
+        print(f"Pending/unverified: {cross_counts['pending']}")
     return 0
 
 
@@ -397,6 +652,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.command == "check":
         return _run_check(args)
+    if args.command == "whois-check":
+        return _run_whois_check(args)
     if args.command == "status":
         return _run_status(args)
     if args.command == "candidates":

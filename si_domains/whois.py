@@ -19,6 +19,11 @@ _NO_MATCH_PATTERNS = (
     ("domain_not_found", re.compile(r"^\s*(?:%\s*)?domain not found\b", re.I)),
     ("domain_does_not_exist", re.compile(r"^\s*(?:%\s*)?domain does not exist\b", re.I)),
 )
+_RATE_LIMIT_NOTICE = re.compile(
+    r"\b(?:too many (?:queries|requests|connections)|rate[ -]?limit(?:ed|ing|\s+exceeded)?|"
+    r"(?:access|query) (?:has been )?(?:blocked|denied)|temporarily (?:blocked|denied))\b",
+    re.I,
+)
 _REGISTRATION_FIELD = re.compile(
     r"^\s*(registrar|created|registered|nserver|nameserver|name\s+server)\s*:\s*\S+",
     re.I,
@@ -48,6 +53,9 @@ class WhoisResult:
 
 def classify_whois_text(text: str) -> tuple[str, str]:
     """Return a conservative classification and a body-free pattern identifier."""
+
+    if _RATE_LIMIT_NOTICE.search(text):
+        return "unverified", "notice:rate_limited"
 
     for line in text.splitlines():
         for pattern_name, pattern in _NO_MATCH_PATTERNS:
@@ -100,4 +108,5 @@ def whois_check(
     if not text:
         return WhoisResult(domain, "unverified", timestamp, "", "empty_response")
     classification, matched_pattern = classify_whois_text(text)
-    return WhoisResult(domain, classification, timestamp, matched_pattern, "")
+    error = "rate_limited" if matched_pattern == "notice:rate_limited" else ""
+    return WhoisResult(domain, classification, timestamp, matched_pattern, error)

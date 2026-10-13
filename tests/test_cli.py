@@ -53,7 +53,7 @@ def test_retry_unverified_only_rechecks_unverified_and_latest_result_wins(
     store = EvidenceStore(evidence_path)
     store.append("tech", _result("verified"))
     store.append("tech", _result("limited", "unverified", status=429, error="http_429"))
-    monkeypatch.setattr(cli, "EvidenceStore", lambda: EvidenceStore(evidence_path))
+    monkeypatch.setattr(cli, "EvidenceStore", lambda path=evidence_path: EvidenceStore(path))
     calls = []
     configured_intervals = []
 
@@ -85,7 +85,9 @@ def test_retry_unverified_only_rechecks_unverified_and_latest_result_wins(
         "potentially_unregistered"
     )
 
-    assert cli.main(["status", "--input", str(input_path)]) == 0
+    assert cli.main(
+        ["status", "--input", str(input_path), "--rdap-evidence", str(evidence_path)]
+    ) == 0
     status = capsys.readouterr().out
     assert "Candidates: 3" in status
     assert "Potentially unregistered: 3" in status
@@ -420,9 +422,11 @@ def test_status_reports_evidence_rules_unchecked_and_timestamp_range(
     )
     monkeypatch.setitem(rules._RESTRICTED_NAMES, "restricted", {"class": "restricted"})
     monkeypatch.setitem(rules._PREMIUM_NAMES, "premium", {"class": "premium"})
-    monkeypatch.setattr(cli, "EvidenceStore", lambda: EvidenceStore(evidence_path))
+    monkeypatch.setattr(cli, "EvidenceStore", lambda path=evidence_path: EvidenceStore(path))
 
-    assert cli.main(["status", "--input", str(input_path)]) == 0
+    assert cli.main(
+        ["status", "--input", str(input_path), "--rdap-evidence", str(evidence_path)]
+    ) == 0
 
     output = capsys.readouterr().out
     assert "Registered: 1" in output

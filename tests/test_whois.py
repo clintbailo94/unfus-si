@@ -67,6 +67,17 @@ def test_header_comments_do_not_trigger_registered_classification():
     assert classify_whois_text(text) == ("unverified", "no_recognized_pattern")
 
 
+def test_rate_limit_notice_is_an_unverified_body_free_code():
+    connection = FakeSocket(b"% Too many queries; access temporarily blocked\r\n")
+
+    result = whois_check("google", connect=lambda address, timeout: connection, clock=fixed_clock)
+
+    assert result.classification == "unverified"
+    assert result.matched_pattern == "notice:rate_limited"
+    assert result.error == "rate_limited"
+    assert "temporarily blocked" not in result.error
+
+
 def test_whois_encodes_allowed_idn_as_ascii_ace():
     connection = FakeSocket(b"% no entries found\r\n")
     result = whois_check("roža", connect=lambda address, timeout: connection, clock=fixed_clock)
