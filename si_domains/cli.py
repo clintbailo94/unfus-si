@@ -355,7 +355,7 @@ def build_parser() -> argparse.ArgumentParser:
     opportunities.add_argument("--out", default=str(OUTPUT_DIR / "opportunities.csv"))
 
     validate_research = subparsers.add_parser(
-        "validate-research", help="validate local PKG-B artifacts and top shortlist query coverage"
+        "validate-research", help="validate research artifacts and top shortlist trademark coverage"
     )
     validate_research.add_argument("--shortlist", default=str(OUTPUT_DIR / "shortlist.csv"))
     validate_research.add_argument("--scores", default=str(OUTPUT_DIR / "scores.csv"))
@@ -366,6 +366,11 @@ def build_parser() -> argparse.ArgumentParser:
     validate_research.add_argument("--opportunities", default=str(OUTPUT_DIR / "opportunities.csv"))
     validate_research.add_argument("--candidates", default=str(DATA_DIR / "candidates.csv"))
     validate_research.add_argument("--top-n", type=_positive_limit, default=100)
+    validate_research.add_argument(
+        "--completion-mode",
+        action="store_true",
+        help="validate complete, evidence-backed outcomes without requiring every source search to finish",
+    )
 
     delivery_inputs = {
         "candidates": DATA_DIR / "candidates.csv",
@@ -944,6 +949,7 @@ def _run_validate_research(args: argparse.Namespace) -> int:
         opportunities_path=args.opportunities,
         top_n=args.top_n,
         candidates_path=args.candidates,
+        completion_mode=args.completion_mode,
     )
 
 

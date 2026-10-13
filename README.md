@@ -24,6 +24,12 @@ query-blocked, and USPTO 56 complete / 44 query-blocked (stopped after one HTTP
 403 on a near-match query). Neither command certifies project completion or
 owner acceptance.
 
+Add `--completion-mode` to validate that every top-100 name/source pair has a
+dated, evidence-backed completed or refused outcome, the summary and scores
+reflect conflicts and incomplete sources, and no top-100 opportunity remains
+`not yet screened`. This mode checks the record without making network
+requests; it does not treat a refusal as a completed search or a clearance.
+
 ## Running the verification
 
 Run a small, polite live smoke check and inspect its body-free evidence:
@@ -171,6 +177,7 @@ python -m si_domains shortlist
 python -m si_domains valuations --shortlist output/shortlist.csv --evidence output/valuation_evidence.csv --out output/valuations.csv
 python -m si_domains opportunities --shortlist output/shortlist.csv --scores output/scores.csv --valuations output/valuations.csv --trademark-summary output/trademark_summary.csv --out output/opportunities.csv
 python -m si_domains validate-research --candidates data/candidates.csv
+python -m si_domains validate-research --candidates data/candidates.csv --completion-mode
 ```
 
 If rescoring changes membership in the final top 100, complete the newly
@@ -199,3 +206,17 @@ counts as a completed query.
 RDAP and WHOIS outcomes are timestamped observations from the registry's
 channels. They are not registrar checkout confirmation and do not guarantee
 registration eligibility, registration success, or a non-premium price.
+
+## Manual trademark checks the owner can do
+
+The official search pages are [TMview](https://www.tmdn.org/tmview/),
+[UKIPO](https://trademarks.ipo.gov.uk/ipo-tmtext), and
+[USPTO](https://tmsearch.uspto.gov/). TMview automated access is documented as
+unavailable after the connection closed at 2026-10-13T18:02:42Z
+(`REWORK1-TMVIEW-PROBES`; earlier `PKGD-0002`, 2026-10-13T17:09:22Z); UKIPO
+returned HTTP 403 Service Captcha at 2026-10-13T17:09:52Z (`PKGD-0003`). No
+further TMview or UKIPO attempts were made. USPTO screening stopped after one
+HTTP 403 at 2026-10-13T18:05:11Z (`REWORK1-USPTO-00259`, source-stop record
+`REWORK1-USPTO-SOURCE-STOP`); no USPTO resume was attempted here, and a later
+cooled-down pass belongs to the separate PKG-G package. No result is a
+trademark clearance.
