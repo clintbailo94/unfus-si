@@ -22,7 +22,14 @@ FIELDNAMES = (
     "error",
 )
 FINAL_CLASSIFICATIONS = frozenset(
-    {"registered", "potentially_unregistered", "invalid_syntax"}
+    {
+        "registered",
+        "potentially_unregistered",
+        "invalid_syntax",
+        "reserved",
+        "restricted",
+        "premium",
+    }
 )
 _SAFE_ERROR = frozenset(
     {
@@ -51,9 +58,28 @@ class EvidenceStore:
         self._latest: dict[str, dict[str, str]] | None = None
         self.load_latest()
 
+    def _repair_torn_final_row(self) -> None:
+        if not self.path.exists():
+            return
+        with self.path.open("rb+") as handle:
+            handle.seek(0, os.SEEK_END)
+            size = handle.tell()
+            if size == 0:
+                return
+            handle.seek(-1, os.SEEK_END)
+            if handle.read(1) == b"\n":
+                return
+            handle.seek(0)
+            contents = handle.read()
+            boundary = contents.rfind(b"\n") + 1
+            handle.truncate(boundary)
+            handle.flush()
+            os.fsync(handle.fileno())
+
     def load_latest(self) -> dict[str, dict[str, str]]:
         latest: dict[str, dict[str, str]] = {}
         if self.path.exists():
+            self._repair_torn_final_row()
             with self.path.open("r", encoding="utf-8-sig", newline="") as handle:
                 for row in csv.DictReader(handle):
                     domain = (row.get("domain") or "").strip()
@@ -76,6 +102,7 @@ class EvidenceStore:
 
     def append(self, category: str, result: Result) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
+        self._repair_torn_final_row()
         error = result.error.replace("\r", " ").replace("\n", " ")
         if error not in _SAFE_ERROR and not _HTTP_ERROR.fullmatch(error):
             error = "unspecified_error"
@@ -91,7 +118,12 @@ class EvidenceStore:
 
         with self.path.open("a+", encoding="utf-8", newline="") as handle:
             handle.seek(0, os.SEEK_END)
-            writer = csv.DictWriter(handle, fieldnames=FIELDNAMES, extrasaction="ignore")
+            writer = csv.DictWriter(
+                handle,
+                fieldnames=FIELDNAMES,
+                extrasaction="ignore",
+                lineterminator="\n",
+            )
             if handle.tell() == 0:
                 writer.writeheader()
                 handle.flush()

@@ -87,6 +87,24 @@ def test_loader_rejects_malformed_data_files(tmp_path):
         load_name_rules(bad_csv, tmp_path / "restricted.csv")
 
 
+def test_name_rule_loader_accepts_crlf_csv(tmp_path):
+    reserved_path = tmp_path / "reserved.csv"
+    restricted_path = tmp_path / "restricted.csv"
+    reserved_path.write_bytes(
+        b"label,class,source_url,note\r\n"
+        b"example,reserved,https://registry.example/rule,synthetic note\r\n"
+    )
+    restricted_path.write_bytes(
+        b"label,class,source_url,note\r\n"
+        b"limited,restricted,https://registry.example/restrictions,another note\r\n"
+    )
+
+    reserved, restricted = load_name_rules(reserved_path, restricted_path)
+
+    assert reserved["example"]["note"] == "synthetic note"
+    assert restricted["limited"]["source_url"] == "https://registry.example/restrictions"
+
+
 def test_known_rules_do_not_imply_availability_or_premium_pricing():
     assert classify("brandable") == "ok"
     assert classify("premium") == "ok"

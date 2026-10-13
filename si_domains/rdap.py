@@ -122,6 +122,12 @@ class CircuitBreaker:
         if self.is_open:
             raise RegistryInaccessible("RDAP circuit breaker is open")
 
+    def reset(self) -> None:
+        """Close the breaker after an operator-selected cooldown."""
+
+        self.consecutive_outages = 0
+        self.is_open = False
+
     def record(self, result: Result) -> None:
         if result.classification == "unverified" and _is_registry_outage(result):
             self.consecutive_outages += 1
