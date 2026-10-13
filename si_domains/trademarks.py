@@ -10,6 +10,8 @@ from datetime import datetime
 from pathlib import Path, PurePosixPath
 from urllib.parse import parse_qsl, urlparse
 
+from .scoring import trademark_score_for_status
+
 
 DEFAULT_CANDIDATES_PATH = Path(__file__).resolve().parents[1] / "data" / "candidates.csv"
 
@@ -111,7 +113,6 @@ def read_candidate_context(
         domain = f"{label}.si"
         if not _DOMAIN.fullmatch(domain) or domain in candidates:
             raise ValueError(f"candidate file has an invalid or duplicate domain label: {label!r}")
-        expected = [label]
         if row.get("category", "").casefold() == "domain_hacks":
             seed = row.get("seed", "").strip()
             if not seed:
@@ -119,10 +120,11 @@ def read_candidate_context(
             normalized_seed = normalize_seed(seed)
             if not normalized_seed:
                 raise ValueError(f"domain-hack candidate has an invalid completion seed: {domain}")
-            if normalized_seed not in expected:
-                expected.append(normalized_seed)
         candidates[domain] = row
-        queries[domain] = tuple(expected)
+        # The bounded screen covers the exact unspaced domain label only.
+        # Recorded completion seeds remain candidate provenance, not an
+        # automatic second trademark query or a phonetic variant.
+        queries[domain] = (label,)
     return candidates, queries
 
 
@@ -250,13 +252,8 @@ def validate_summary_rows(
             raise ValueError(f"invalid trademark score for {domain}") from exc
         if not 0 <= score <= 100:
             raise ValueError(f"trademark score must be between 0 and 100 for {domain}")
-        expected = {
-            "limited_screen_no_obvious_match": {80},
-            "needs legal review": set(range(26)),
-            "blocked": {70},
-            "unverified": {70},
-        }[status]
-        if score not in expected:
+        expected = trademark_score_for_status(status)
+        if score != expected:
             raise ValueError(f"trademark score does not match status for {domain}")
         if not row.get("coverage", "").strip():
             raise ValueError(f"trademark coverage is blank for {domain}")
@@ -355,21 +352,14 @@ def aggregate_trademark_rows(
             query_blocked = query_blocked or bool(source_coverage[source]["query_blocked"])
 
         if conflict:
-            status, score = "needs legal review", 25
-        elif "unverified" in source_states.values():
-            status, score = "unverified", 70
-        elif query_blocked:
-            status, score = "blocked", 70
-        elif all(value == "blocked" for value in source_states.values()):
-            status, score = "blocked", 70
-        elif all(value in {"no_obvious_match", "blocked"} for value in source_states.values()) and any(
-            value == "no_obvious_match" for value in source_states.values()
-        ):
-            status, score = "limited_screen_no_obvious_match", 80
-        elif any(value == "blocked" for value in source_states.values()):
-            status, score = "blocked", 70
+            status = "needs legal review"
+        elif all(value == "no_obvious_match" for value in source_states.values()) and not query_blocked:
+            status = "limited_screen_no_obvious_match"
+        elif "blocked" in source_states.values() or query_blocked:
+            status = "blocked"
         else:
-            status, score = "unverified", 70
+            status = "unverified"
+        score = trademark_score_for_status(status)
 
         query_blocked_sources = [
             source for source in REQUIRED_SOURCES if source_coverage[source]["query_blocked"]

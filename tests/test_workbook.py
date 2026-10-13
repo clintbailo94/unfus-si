@@ -14,7 +14,7 @@ from si_domains.valuation import (
     write_valuations,
 )
 from si_domains.delivery import validate_delivery
-from si_domains.workbook import build_workbook_model, export_workbook
+from si_domains.workbook import _validate_registry_rows, build_workbook_model, export_workbook
 
 
 RDAP_FIELDS = [
@@ -152,7 +152,7 @@ def make_fixture(tmp_path: Path, *, hostile_text=" \\t=1+1", second_eligible=Fal
         paths["trademark_summary"],
         candidates_path=paths["candidates"],
     )
-    # The current summary leaves the baseline placeholder at 70, so scores stay aligned.
+    # The incomplete synthetic screen uses the unverified mapping score.
     _write_csv(paths["valuation_evidence"], list(VALUATION_EVIDENCE_FIELDS), [])
     write_valuations(paths["shortlist"], paths["valuation_evidence"], paths["valuations"])
     write_opportunities(
@@ -182,6 +182,19 @@ def test_workbook_exports_latest_joins_numeric_cells_and_header_only_unverified(
     assert normal["All candidates"].max_row == 5
     assert normal["RDAP evidence"].max_row == 5  # history is retained
     assert normal["Unverified"].max_row == 1
+
+    methodology = normal["Methodology"]
+    methodology_headers = [cell.value for cell in methodology[1]]
+    methodology_columns = {header: index + 1 for index, header in enumerate(methodology_headers)}
+    availability = next(
+        row for row in methodology.iter_rows(min_row=2, values_only=True)
+        if row[methodology_columns["Topic"] - 1] == "Availability: technology"
+    )
+    assert availability[methodology_columns["Details"] - 1] == "technology | 4 | 1 | 1 | 1 | 1"
+    assert any(
+        row[methodology_columns["Topic"] - 1] == "Demand root: pay"
+        for row in methodology.iter_rows(min_row=2, values_only=True)
+    )
 
     shortlist = normal["Shortlist"]
     headers = [cell.value for cell in shortlist[1]]
@@ -311,3 +324,40 @@ def test_unrepresentable_external_text_fails_before_replacing_existing_workbook(
 
     assert output.read_bytes() == previous
     assert paths["candidates"].read_bytes() == source_bytes
+
+
+def test_registry_evidence_keeps_historical_category_after_curated_name_retag():
+    candidates = {
+        "brena.si": {
+            "domain_label": "brena",
+            "category": "invented",
+            "method": "given-name-reclassified",
+            "tags": "phonotactic;given_name",
+        }
+    }
+    rdap_rows = [
+        {
+            "domain": "brena.si",
+            "category": "dictionary",
+            "http_status": "404",
+            "utc_timestamp": "2026-10-13T01:00:00Z",
+            "attempts": "1",
+            "classification": "potentially_unregistered",
+            "error": "",
+        }
+    ]
+    whois_rows = [
+        {
+            "domain": "brena.si",
+            "category": "dictionary",
+            "utc_timestamp": "2026-10-13T02:00:00Z",
+            "classification": "not_registered",
+            "matched_pattern": "no_entries_found",
+            "error": "",
+        }
+    ]
+
+    rdap, whois = _validate_registry_rows(candidates, rdap_rows, whois_rows)
+
+    assert rdap["brena.si"]["category"] == "dictionary"
+    assert whois["brena.si"]["category"] == "dictionary"

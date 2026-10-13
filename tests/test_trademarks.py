@@ -81,7 +81,7 @@ def _candidate(path: Path, label: str, category: str, seed: str) -> None:
             "clear_limited_screen",
             [_evidence("TM-1", "TMview", "no_obvious_match"), _evidence("UK-1", "UKIPO", "no_obvious_match"), _evidence("US-1", "USPTO", "no_obvious_match")],
             "limited_screen_no_obvious_match",
-            "80",
+            "85",
         ),
         (
             "conflict_overrides_other_no_matches",
@@ -93,15 +93,15 @@ def _candidate(path: Path, label: str, category: str, seed: str) -> None:
             "blocked_sources_do_not_clear",
             [_source_attempt("TMview", "blocked"), _source_attempt("UKIPO", "blocked"), _source_attempt("USPTO", "blocked")],
             "blocked",
-            "70",
+            "40",
         ),
         (
             "unverified_sources_do_not_clear",
             [_source_attempt("TMview", "unverified"), _source_attempt("UKIPO", "unverified"), _source_attempt("USPTO", "unverified")],
             "unverified",
-            "70",
+            "40",
         ),
-        ("absent_evidence_does_not_clear", [], "unverified", "70"),
+        ("absent_evidence_does_not_clear", [], "unverified", "40"),
     ],
 )
 def test_trademark_aggregation_preserves_conservative_status_and_provenance(
@@ -135,11 +135,10 @@ def test_trademark_aggregation_preserves_conservative_status_and_provenance(
 @pytest.mark.parametrize(
     ("scenario", "expected_status", "expected_score", "query_key"),
     [
-        ("exact_label_and_seed", "limited_screen_no_obvious_match", "80", "query"),
-        ("wrong_exact_query", "unverified", "70", "query"),
-        ("missing_seed_query", "unverified", "70", "query"),
-        ("newer_blocked_seed", "blocked", "70", "query"),
-        ("cosmetic_home_query", "unverified", "70", "synthetic-query"),
+        ("exact_label_only", "limited_screen_no_obvious_match", "85", "query"),
+        ("wrong_exact_query", "unverified", "40", "query"),
+        ("newer_blocked_label", "blocked", "40", "query"),
+        ("cosmetic_home_query", "unverified", "40", "synthetic-query"),
     ],
 )
 def test_hack_coverage_requires_each_current_exact_query(
@@ -151,13 +150,12 @@ def test_hack_coverage_requires_each_current_exact_query(
         "USPTO": "https://tmsearch.uspto.gov/",
     }
     queries = {
-        "wrong_exact_query": ["unrelated", "unfussy"],
-        "missing_seed_query": ["unfus"],
-    }.get(scenario, ["unfus", "unfussy"])
+        "wrong_exact_query": ["unrelated"],
+    }.get(scenario, ["unfus"])
     evidence = []
     for source, source_url in source_urls.items():
         for index, query in enumerate(queries):
-            status = "blocked" if scenario == "newer_blocked_seed" and source == "TMview" and query == "unfussy" else "no_obvious_match"
+            status = "blocked" if scenario == "newer_blocked_label" and source == "TMview" else "no_obvious_match"
             evidence.append(
                 _evidence(
                     f"{source}-{index}", source, status,
@@ -169,11 +167,11 @@ def test_hack_coverage_requires_each_current_exact_query(
                     notes="Synthetic query-coverage fixture.",
                 )
             )
-        if scenario == "newer_blocked_seed" and source == "TMview":
+        if scenario == "newer_blocked_label" and source == "TMview":
             evidence.append(
                 _evidence(
                     "TMview-newer-blocked", source, "blocked",
-                    domain="unfus.si", query="unfussy", source_url=source_url, result_url="",
+                    domain="unfus.si", query="unfus", source_url=source_url, result_url="",
                     utc_timestamp="2026-10-13T12:02:00Z", notes="Synthetic later blocked state.",
                 )
             )
@@ -193,11 +191,11 @@ def test_hack_coverage_requires_each_current_exact_query(
         row = next(csv.DictReader(handle))
     assert row["status"] == expected_status, scenario
     assert row["trademark_score"] == expected_score, scenario
-    if scenario == "exact_label_and_seed":
+    if scenario == "exact_label_only":
         assert normalize_seed("tryto + see") == "try to see"
-        assert "[2/2]" in row["coverage"]
-    if scenario == "newer_blocked_seed":
-        assert "[1/2]" in row["coverage"]
+        assert "[1/1]" in row["coverage"]
+    if scenario == "newer_blocked_label":
+        assert "[0/1]" in row["coverage"]
 
 
 @pytest.mark.parametrize(

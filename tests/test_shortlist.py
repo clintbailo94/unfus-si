@@ -125,7 +125,7 @@ def _score(label: str, total: str = "80.0") -> dict[str, str]:
         "shortness": "80",
         "hack": "12",
         "resale": "70",
-        "trademark": "70",
+        "trademark": "40",
         "total": total,
         "rationale": "Strengths: demand 80, brand 80; weakness: hack 12. TM not yet screened.",
     }
@@ -280,14 +280,20 @@ def test_shortlist_ranks_by_score_then_label_length_then_alphabetically(tmp_path
     assert [row["rank"] for row in rows] == ["1", "2", "3", "4"]
 
 
-def test_shortlist_caps_each_category_and_fills_to_500(tmp_path):
-    groups = [("a", "ai"), ("d", "dictionary"), ("i", "invented"), ("t", "technology")]
+def test_shortlist_caps_each_category_at_100_and_fills_to_500(tmp_path):
+    groups = [
+        ("a", "ai"),
+        ("d", "dictionary"),
+        ("i", "invented"),
+        ("t", "technology"),
+        ("h", "health_science"),
+    ]
     candidates = []
     rdap_rows = []
     whois_rows = []
     score_rows = []
     for prefix, category in groups:
-        for index in range(130):
+        for index in range(105):
             label = f"{prefix}{index:04d}"
             candidate = _candidate(label, category)
             candidates.append(candidate)
@@ -300,13 +306,14 @@ def test_shortlist_caps_each_category_and_fills_to_500(tmp_path):
 
     assert len(rows) == 500
     assert Counter(row["category"] for row in rows) == {
-        "ai": 125,
-        "dictionary": 125,
-        "invented": 125,
-        "technology": 125,
+        "ai": 100,
+        "dictionary": 100,
+        "invented": 100,
+        "technology": 100,
+        "health_science": 100,
     }
     assert all(row["rank"] == str(index) for index, row in enumerate(rows, start=1))
-    assert all(row["category"] == "ai" for row in rows[:125])
+    assert all(row["category"] == "ai" for row in rows[:100])
 
 
 def test_sample_404_has_seeded_deterministic_30_rows_and_status_mix(tmp_path):

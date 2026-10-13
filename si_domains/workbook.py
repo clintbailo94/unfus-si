@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
+from statistics import median
 from typing import Mapping, Sequence
 
 from openpyxl import Workbook, load_workbook
@@ -25,7 +26,17 @@ from .config import DATA_DIR, OUTPUT_DIR, PROJECT_ROOT
 from .evidence import FIELDNAMES as RDAP_FIELDS
 from .evidence import WHOIS_FIELDNAMES
 from .research import OPPORTUNITY_FIELDS, _decimal, _unique_by_domain
-from .scoring import SCORE_FIELDS, SCORE_WEIGHTS, weighted_total
+from .scoring import (
+    COMMERCIAL_ROOTS,
+    SCORE_FIELDS,
+    SCORE_WEIGHTS,
+    TRADEMARK_CLEAR_SCORE,
+    TRADEMARK_CONFLICT_SCORE,
+    TRADEMARK_UNVERIFIED_SCORE,
+    _negative_connotations,
+    trademark_score_for_status,
+    weighted_total,
+)
 from .shortlist import EXCLUDED_FIELDS, SHORTLIST_FIELDS, SHORTLIST_LIMIT, CATEGORY_LIMIT
 from .trademarks import (
     REQUIRED_SOURCES,
@@ -264,7 +275,9 @@ def _validate_registry_rows(
         domain = _domain(row["domain"], "RDAP evidence")
         if domain not in candidates:
             raise ValueError(f"RDAP evidence contains a domain outside candidates: {domain}")
-        if row["category"] != candidates[domain]["category"]:
+        if row["category"] != candidates[domain]["category"] and not _is_reclassified_evidence_category(
+            row["category"], candidates[domain]
+        ):
             raise ValueError(f"RDAP category does not match candidate metadata for {domain}")
         if row["classification"] not in _RDAP_CLASSES:
             raise ValueError(f"unknown RDAP classification for {domain}: {row['classification']!r}")
@@ -287,13 +300,30 @@ def _validate_registry_rows(
         domain = _domain(row["domain"], "WHOIS evidence")
         if domain not in candidates:
             raise ValueError(f"WHOIS evidence contains a domain outside candidates: {domain}")
-        if row["category"] != candidates[domain]["category"]:
+        if row["category"] != candidates[domain]["category"] and not _is_reclassified_evidence_category(
+            row["category"], candidates[domain]
+        ):
             raise ValueError(f"WHOIS category does not match candidate metadata for {domain}")
         if row["classification"] not in _WHOIS_CLASSES:
             raise ValueError(f"unknown WHOIS classification for {domain}: {row['classification']!r}")
         _utc_timestamp(row["utc_timestamp"], f"WHOIS evidence for {domain}")
         whois_latest[domain] = row
     return rdap_latest, whois_latest
+
+
+def _is_reclassified_evidence_category(
+    evidence_category: str, candidate: Mapping[str, str]
+) -> bool:
+    """Allow historical registry tags to retain the old dictionary category."""
+
+    tags = {tag.strip().casefold() for tag in candidate.get("tags", "").split(";")}
+    return (
+        evidence_category == "dictionary"
+        and candidate.get("category") == "invented"
+        and candidate.get("method")
+        in {"given-name-reclassified", "technical-term-reclassified"}
+        and bool(tags & {"given_name", "technical_term"})
+    )
 
 
 def _score_index(
@@ -323,7 +353,11 @@ def _score_index(
                 raise ValueError(f"invalid {name} score for {domain}") from exc
             if not 0 <= components[name] <= 100:
                 raise ValueError(f"{name} score is outside 0..100 for {domain}")
-        expected_trademark = int(summary[domain]["trademark_score"]) if domain in summary else 70
+        expected_trademark = (
+            int(summary[domain]["trademark_score"])
+            if domain in summary
+            else trademark_score_for_status("not yet screened")
+        )
         if components["trademark"] != expected_trademark:
             raise ValueError(f"trademark score does not match research status for {domain}")
         if _decimal(row["total"], f"score total for {domain}") != weighted_total(components):
@@ -737,6 +771,47 @@ def _methodology_rows(
         "; ".join(f"{key}: {value}" for key, value in sorted(metrics["candidate_categories"].items())),
     )
     add(
+        "Category availability table columns",
+        "Category | candidate pool | eligible (RDAP 404 + WHOIS not_registered, known rules pass) | final shortlist | median global eligible rank | minimum global eligible rank",
+    )
+    candidate_rows = tables["candidates"].rows
+    candidate_categories = Counter(row["category"] for row in candidate_rows)
+    selected_categories = Counter(row["category"] for row in tables["shortlist"].rows)
+    score_by_domain = {row["domain"].casefold(): row for row in tables["scores"].rows}
+    eligible_rows: list[tuple[str, str, dict[str, str]]] = []
+    for candidate in candidate_rows:
+        label = candidate["domain_label"].strip().casefold()
+        domain = f"{label}.si"
+        rdap = rdap_latest.get(domain)
+        whois = whois_latest.get(domain)
+        if (
+            rules.classify(label) == "ok"
+            and rdap
+            and rdap["classification"] == "potentially_unregistered"
+            and whois
+            and whois["classification"] == "not_registered"
+            and domain in score_by_domain
+        ):
+            eligible_rows.append((domain, candidate["category"], score_by_domain[domain]))
+    eligible_rows.sort(
+        key=lambda item: (
+            -Decimal(item[2]["total"]),
+            len(item[0].removesuffix(".si")),
+            item[0],
+        )
+    )
+    eligible_ranks: dict[str, list[int]] = {category: [] for category in candidate_categories}
+    for global_rank, (_domain_name, category, _score) in enumerate(eligible_rows, start=1):
+        eligible_ranks[category].append(global_rank)
+    for category in sorted(candidate_categories):
+        ranks = eligible_ranks[category]
+        add(
+            f"Availability: {category}",
+            f"{category} | {candidate_categories[category]} | {len(ranks)} | "
+            f"{selected_categories.get(category, 0)} | {median(ranks) if ranks else ''} | "
+            f"{min(ranks) if ranks else ''}",
+        )
+    add(
         "Latest RDAP counts",
         "; ".join(f"{key}: {rdap_latest_counts.get(key, 0)}" for key in ("registered", "potentially_unregistered", "unverified")),
     )
@@ -747,13 +822,28 @@ def _methodology_rows(
     add("Unverified sheet", "Zero rows means no latest RDAP result is unverified or missing and no necessary WHOIS second check is pending; trademark uncertainty remains shown separately.")
     add("Scores", f"{metrics['scores']} RDAP-404 rows; no score is fabricated for names outside the score artifact.")
     add("Ranking weights", weights)
-    add("Score convention", "Total is a 0–100 heuristic; higher is stronger. Trademark component is a risk heuristic where higher means lower estimated risk; 70 is a placeholder and does not imply legal safety.")
+    add("Score convention", f"Total is a 0–100 heuristic; higher is stronger. Components are integer 0–100; total uses Decimal ROUND_HALF_EVEN to one decimal. Trademark scores: {TRADEMARK_CLEAR_SCORE} complete limited screen/no obvious match; {TRADEMARK_CONFLICT_SCORE} possible conflict; {TRADEMARK_UNVERIFIED_SCORE} incomplete, blocked, unverified, or not yet screened. Unknown risk is penalized without weight renormalization; clear screening can add up to 4.5 weighted points over an unscreened name. No score implies clearance.")
+    add("Brandability factors", "Label length 25%, pronounceability 22%, spelling clarity 15%, candidate quality 15%, letter-shape score 10%, vowel balance 4%, transition balance 3%, distinct letters 3%, onset/ending clarity 3%; reviewed phrase-hack adjustments and exact negative-label penalty apply.")
+    add("Commercial scoring factors", "Tiered exact roots score their own demand and buyer breadth. Compounds average recorded head/tail demand and gain 6 when both are commercial. Unmatched roots start at 48 demand/4 breadth; label shape, length, and given-name status adjust the score. Exact negative labels receive a 50-point penalty.")
+    add("Resale heuristic factors", "Per label: length, estimated syllables, pronounceability, vowel/consonant shape, letter distinctness, edge clarity, root demand and buyer breadth, exact-word/commonness, hack rarity, repeated letters and ambiguous pairs; given names and reviewed low-breadth dictionary words are penalized. This is not a price estimate.")
+    add("Shortness and hack factors", "Shortness responds to label length, syllables, pronounceability/shape, letter variety, and edge clarity. Phrase/suffix hacks combine seed quality and pronunciation; short names and true hacks receive within-component bonuses. All six eligible CVCV short names are selected; no 3-letter short name was eligible. Three of 15 eligible hacks are selected: the three higher-quality hacks rank 1-3, while 12 awkward, weak, or narrow-seed labels were penalized and rank below the cut. Hack count is quality/scoring constrained, not category-cap constrained.")
+    add("Negative-label penalties", ", ".join(sorted(_negative_connotations())))
+    for root, (tier, demand, breadth, buyer_summary) in sorted(
+        COMMERCIAL_ROOTS.items(), key=lambda item: (item[1][0], item[0])
+    ):
+        add(
+            f"Demand root: {root}",
+            f"tier={tier}; demand={demand}/100; buyer breadth={breadth}; buyer pool={buyer_summary}",
+        )
     add("Eligibility", "A shortlist row requires known rules to pass, latest RDAP potentially_unregistered (HTTP 404), and latest WHOIS not_registered. WHOIS is a separate channel of the same registry, not another registrar/operator.")
-    add("Ranking and ties", "Total descending, label length ascending, then case-folded domain ascending. Selection walks that order, with at most 500 rows overall and 125 per category.")
+    add("Ranking and ties", "Total descending, label length ascending, then case-folded domain ascending. Selection walks that order, with at most 500 rows overall and 100 per category (20% maximum per category) to preserve category diversity. Short/hack counts are availability-bounded in this snapshot, not suppressed by scores.")
     add("Exclusions", f"{metrics['excluded']} ineligible rows are in the exclusion artifact; {metrics['outside_shortlist_cap']} eligible rows fall outside the final ranked cap.")
     add("Trademark query coverage", coverage)
-    add("Trademark status", "No completed required-query set is represented as complete by a source-wide refusal. Source-wide refusal and per-domain searches are distinct; no per-domain query ran in this snapshot.")
-    add("Trademark limitations", "Exact public-query coverage is not comprehensive phonetic, class, national-office, or worldwide clearance. A score of 70 is not legal safety; possible conflicts need professional legal review.")
+    add("Trademark status", "Per-name rows preserve the source-wide outcome for each final top-100 label; these are coverage records, not per-domain requests. No trademark result was parseable and no per-domain query ran in this snapshot. All 300 required source/name pairs remain incomplete.")
+    add("Trademark mapping rationale", f"One source of truth: limited_screen_no_obvious_match={TRADEMARK_CLEAR_SCORE}; needs legal review={TRADEMARK_CONFLICT_SCORE}; blocked/unverified/not yet screened={TRADEMARK_UNVERIFIED_SCORE}. The documented {TRADEMARK_UNVERIFIED_SCORE} is below clear and above conflict; no renormalization is used. Unknown risk loses up to 4.5 weighted points versus a clear result; a finding loses more.")
+    add("Trademark similarity rule", "Flag legal review for identical word marks, whole-word containment, edit distance <=1 for labels of 5+ characters, or identical stem, in any class. Classes 9, 35, 36, 38, 41, and 42 are higher relevance. Uncertain is never clear.")
+    add("Trademark probe outcome", "Two ranking rounds. TMview: 1 POST attempt, connection closed before HTTP response, final top 100 each have an unverified coverage row, 0 completed. UKIPO: 1 GET, HTTP 403 Service Captcha, final top 100 each have a blocked row, 0 completed. USPTO: 1 GET, HTTP 200 JavaScript shell with no parseable results, final top 100 each have an unverified row, 0 completed. Round 2 recorded six new entrants using the existing source-wide outcomes; no additional requests ran. No name was flagged for legal review because no marks were returned; final membership then stabilized.")
+    add("Trademark limitations", "Exact public-query coverage is not comprehensive phonetic, class, national-office, or worldwide clearance. Possible conflicts need professional legal review; unknown risk scores 40, below a complete no-obvious-match screen at 85 and above a conflict at 25.")
     add("Valuation evidence", f"Evidence records: {val_summary}. No current evidence meets the direct-comparable rule for any shortlist row; unsupported valuations have blank currency and low/high cells.")
     add("Availability limits", "RDAP and WHOIS are timestamped registry-channel observations, not registrar checkout confirmation, eligibility confirmation, or a guarantee of successful registration.")
     add("Pricing limits", "Public registrar confirmation and registrar retail/premium pricing are unknown. The rule inventory has no premium-name list; an empty premium list is not evidence of ordinary pricing.")

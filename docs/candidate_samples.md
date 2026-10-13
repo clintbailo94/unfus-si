@@ -130,141 +130,173 @@
 | sale.si | short | sa+le | cvcv | 92 |
 | mema.si | short | me+ma | cvcv | 92 |
 
-## dictionary (40 of 1050)
+## dictionary (40 of 996)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
-| penguin.si | dictionary | penguin |  | 93 |
-| teenage.si | dictionary | teenage |  | 90 |
-| magazine.si | dictionary | magazine |  | 89 |
-| admirer.si | dictionary | admirer |  | 93 |
-| ragtime.si | dictionary | ragtime |  | 93 |
-| zoology.si | dictionary | zoology |  | 90 |
-| dioxide.si | dictionary | dioxide |  | 90 |
-| hangout.si | dictionary | hangout |  | 93 |
-| sensory.si | dictionary | sensory |  | 93 |
-| brewery.si | dictionary | brewery |  | 93 |
-| unnamed.si | dictionary | unnamed |  | 93 |
-| polygon.si | dictionary | polygon |  | 97 |
-| granite.si | dictionary | granite |  | 93 |
-| volcano.si | dictionary | volcano |  | 93 |
-| sailing.si | dictionary | sailing |  | 93 |
-| valera.si | invented-reclassified | val+era | phonotactic;real_word | 89 |
-| piccolo.si | dictionary | piccolo |  | 93 |
-| salient.si | dictionary | salient |  | 93 |
-| parasol.si | dictionary | parasol |  | 97 |
-| academy.si | dictionary | academy | consumer_brands | 90 |
-| optimum.si | dictionary | optimum |  | 93 |
-| teacher.si | dictionary | teacher |  | 93 |
+| vivara.si | invented-reclassified | viv+ara | phonotactic;real_word | 89 |
+| subsidy.si | dictionary | subsidy |  | 93 |
+| namesake.si | dictionary | namesake |  | 89 |
+| gazelle.si | dictionary | gazelle |  | 93 |
+| leading.si | dictionary | leading |  | 93 |
+| unheard.si | dictionary | unheard |  | 93 |
+| elderly.si | dictionary | elderly |  | 93 |
+| penalty.si | dictionary | penalty |  | 93 |
+| mimicry.si | dictionary | mimicry |  | 93 |
+| omnibus.si | dictionary | omnibus |  | 93 |
+| voltage.si | dictionary | voltage |  | 93 |
+| realism.si | dictionary | realism |  | 93 |
+| acrobat.si | dictionary | acrobat |  | 93 |
+| haircut.si | dictionary | haircut |  | 93 |
+| saliva.si | dictionary | saliva |  | 89 |
+| surreal.si | dictionary | surreal |  | 93 |
+| snooker.si | dictionary | snooker |  | 93 |
+| vivera.si | invented-reclassified | viv+era | phonotactic;real_word | 89 |
+| torino.si | invented-reclassified | tor+ino | phonotactic;real_word | 89 |
+| vestige.si | dictionary | vestige |  | 93 |
+| regular.si | dictionary | regular |  | 97 |
+| majesty.si | dictionary | majesty |  | 93 |
+| shapely.si | dictionary | shapely |  | 93 |
+| caravan.si | dictionary | caravan |  | 97 |
+| mariner.si | dictionary | mariner |  | 97 |
+| routine.si | dictionary | routine |  | 90 |
+| modular.si | dictionary | modular |  | 97 |
+| curious.si | dictionary | curious |  | 90 |
+| insider.si | dictionary | insider |  | 93 |
+| visitor.si | dictionary | visitor |  | 97 |
 | aviator.si | dictionary | aviator |  | 90 |
-| inverse.si | dictionary | inverse |  | 93 |
-| footing.si | dictionary | footing |  | 93 |
-| freedom.si | dictionary | freedom |  | 93 |
-| comrade.si | dictionary | comrade |  | 93 |
-| library.si | dictionary | library |  | 93 |
-| barrier.si | dictionary | barrier |  | 93 |
-| carrier.si | dictionary | carrier |  | 93 |
-| climate.si | dictionary | climate |  | 93 |
-| anomaly.si | dictionary | anomaly |  | 90 |
-| surname.si | dictionary | surname |  | 93 |
-| anatomy.si | dictionary | anatomy |  | 90 |
-| massive.si | dictionary | massive |  | 93 |
-| leno.si | invented-reclassified | len+o | phonotactic;real_word | 82 |
-| machine.si | dictionary | machine |  | 93 |
-| cuticle.si | dictionary | cuticle |  | 93 |
-| galia.si | invented-reclassified | gal+ia | phonotactic;real_word | 81 |
-| parable.si | dictionary | parable |  | 93 |
+| license.si | dictionary | license |  | 93 |
+| tenable.si | dictionary | tenable |  | 93 |
+| glacial.si | dictionary | glacial |  | 93 |
+| moria.si | invented-reclassified | mor+ia | phonotactic;real_word | 81 |
+| minute.si | dictionary | minute |  | 89 |
+| cruiser.si | dictionary | cruiser |  | 93 |
+| victory.si | dictionary | victory |  | 93 |
+| magazine.si | dictionary | magazine |  | 89 |
+| imagery.si | dictionary | imagery |  | 90 |
 
-## invented (40 of 1400)
+## invented (40 of 1454)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
-| monaro.si | invented | mon+aro | phonotactic | 89 |
-| dorova.si | invented | dor+ova | phonotactic | 89 |
-| lanelo.si | invented | lan+elo | phonotactic | 89 |
-| kelina.si | invented | kel+ina | phonotactic | 89 |
-| merium.si | invented | mer+ium | phonotactic | 89 |
-| tanino.si | invented | tan+ino | phonotactic | 89 |
-| lanera.si | invented | lan+era | phonotactic | 89 |
-| zalena.si | invented | zal+ena | phonotactic | 89 |
-| mirette.si | invented | mir+ette | phonotactic | 92 |
-| winera.si | invented | win+era | phonotactic | 89 |
-| monora.si | invented | mon+ora | phonotactic | 89 |
-| renura.si | invented | ren+ura | phonotactic | 89 |
+| reviva.si | invented | rev+iva | phonotactic | 89 |
+| neruno.si | invented | ner+uno | phonotactic | 89 |
+| parino.si | invented | par+ino | phonotactic | 89 |
+| nelora.si | invented | nel+ora | phonotactic | 89 |
+| belaro.si | invented | bel+aro | phonotactic | 89 |
+| talelo.si | invented | tal+elo | phonotactic | 89 |
+| talette.si | invented | tal+ette | phonotactic | 92 |
+| velora.si | invented | vel+ora | phonotactic | 89 |
+| variva.si | invented | var+iva | phonotactic | 89 |
+| narene.si | invented | nar+ene | phonotactic | 89 |
+| ranuno.si | invented | ran+uno | phonotactic | 89 |
+| valene.si | invented | val+ene | phonotactic | 89 |
+| calino.si | invented | cal+ino | phonotactic | 89 |
+| loral.si | invented | lor+al | phonotactic | 88 |
+| verami.si | invented | ver+ami | phonotactic | 89 |
+| kelova.si | invented | kel+ova | phonotactic | 89 |
+| tanera.si | invented | tan+era | phonotactic | 89 |
+| tolona.si | invented | tol+ona | phonotactic | 89 |
+| lanaya.si | invented | lan+aya | phonotactic | 82 |
+| falura.si | invented | fal+ura | phonotactic | 89 |
+| tanette.si | invented | tan+ette | phonotactic | 92 |
+| marium.si | invented | mar+ium | phonotactic | 89 |
+| celal.si | given-name-reclassified | cel+al | given_name;phonotactic | 88 |
+| winelle.si | invented | win+elle | phonotactic | 92 |
+| dorami.si | invented | dor+ami | phonotactic | 89 |
+| falaya.si | invented | fal+aya | phonotactic | 82 |
+| brenino.si | invented | bren+ino | phonotactic | 92 |
+| ranena.si | invented | ran+ena | phonotactic | 89 |
+| brenera.si | invented | bren+era | phonotactic | 92 |
+| milelle.si | invented | mil+elle | phonotactic | 92 |
+| lumvia.si | invented | lum+via | phonotactic | 85 |
+| meral.si | given-name-reclassified | mer+al | given_name;phonotactic | 88 |
+| ferova.si | invented | fer+ova | phonotactic | 89 |
+| velura.si | invented | vel+ura | phonotactic | 89 |
+| lanina.si | invented | lan+ina | phonotactic | 89 |
 | nelium.si | invented | nel+ium | phonotactic | 89 |
-| silera.si | invented | sil+era | phonotactic | 89 |
-| rinura.si | invented | rin+ura | phonotactic | 89 |
-| galene.si | invented | gal+ene | phonotactic | 89 |
-| calina.si | invented | cal+ina | phonotactic | 89 |
-| narium.si | invented | nar+ium | phonotactic | 89 |
-| paraya.si | invented | par+aya | phonotactic | 82 |
-| nexova.si | invented | nex+ova | phonotactic | 89 |
-| ralilo.si | invented | ral+ilo | phonotactic | 89 |
-| lenette.si | invented | len+ette | phonotactic | 92 |
-| mervia.si | invented | mer+via | phonotactic | 85 |
-| finora.si | invented | fin+ora | phonotactic | 89 |
-| merette.si | invented | mer+ette | phonotactic | 92 |
-| solura.si | invented | sol+ura | phonotactic | 89 |
-| lisina.si | invented | lis+ina | phonotactic | 89 |
-| veniva.si | invented | ven+iva | phonotactic | 89 |
-| ranina.si | invented | ran+ina | phonotactic | 89 |
-| calelo.si | invented | cal+elo | phonotactic | 89 |
-| lumelle.si | invented | lum+elle | phonotactic | 92 |
-| brenura.si | invented | bren+ura | phonotactic | 92 |
-| pelaro.si | invented | pel+aro | phonotactic | 89 |
+| miraro.si | invented | mir+aro | phonotactic | 89 |
+| delura.si | invented | del+ura | phonotactic | 89 |
+| karova.si | invented | kar+ova | phonotactic | 89 |
 | karal.si | invented | kar+al | phonotactic | 88 |
-| celuno.si | invented | cel+uno | phonotactic | 89 |
-| kelium.si | invented | kel+ium | phonotactic | 89 |
-| relura.si | invented | rel+ura | phonotactic | 89 |
-| solilo.si | invented | sol+ilo | phonotactic | 89 |
-| zorette.si | invented | zor+ette | phonotactic | 92 |
-| ranal.si | invented | ran+al | phonotactic | 88 |
 
 ## technology (40 of 254)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
-| kernellab.si | compound | kernel+lab |  | 85 |
-| softwarestack.si | compound | software+stack |  | 72 |
-| clusterlab.si | compound | cluster+lab |  | 88 |
-| wirelesshub.si | compound | wireless+hub |  | 82 |
-| walletvault.si | compound | wallet+vault |  | 86 |
-| opticlab.si | compound | optic+lab |  | 83 |
-| siliconforge.si | compound | silicon+forge |  | 85 |
-| protocolworks.si | compound | protocol+works |  | 72 |
-| indexlab.si | compound | index+lab |  | 83 |
-| edgestack.si | compound | edge+stack |  | 85 |
-| clusterstack.si | compound | cluster+stack |  | 74 |
-| infosec.si | blend | information+security |  | 82 |
-| paymentops.si | compound | payment+ops |  | 92 |
-| apiflow.si | compound | api+flow |  | 81 |
-| databaselab.si | compound | database+lab |  | 91 |
-| protocolflow.si | compound | protocol+flow |  | 77 |
-| ledgerflow.si | compound | ledger+flow |  | 84 |
-| silicongrid.si | compound | silicon+grid |  | 82 |
-| cryptolab.si | compound | crypto+lab |  | 85 |
+| configforge.si | compound | config+forge |  | 86 |
+| kernel.si | root | kernel |  | 75 |
+| videostack.si | compound | video+stack |  | 92 |
+| circuitworks.si | compound | circuit+works |  | 77 |
 | privacylab.si | compound | privacy+lab |  | 92 |
-| walletstack.si | compound | wallet+stack |  | 79 |
-| devops.si | blend | development+operations |  | 74 |
-| auditflow.si | compound | audit+flow | business_finance | 84 |
-| releasestack.si | compound | release+stack |  | 85 |
-| contractforge.si | compound | contract+forge |  | 72 |
-| cipherforge.si | compound | cipher+forge |  | 86 |
-| clustergrid.si | compound | cluster+grid |  | 79 |
-| streamlab.si | compound | stream+lab |  | 81 |
-| apistack.si | compound | api+stack |  | 83 |
-| contractlab.si | compound | contract+lab |  | 79 |
-| auditlab.si | compound | audit+lab |  | 82 |
-| storagestack.si | compound | storage+stack |  | 81 |
-| auditscan.si | compound | audit+scan |  | 84 |
+| containerflow.si | compound | container+flow |  | 76 |
+| paymentlink.si | compound | payment+link |  | 82 |
+| querylab.si | compound | query+lab |  | 86 |
+| containerworks.si | compound | container+works |  | 70 |
+| fibergrid.si | compound | fiber+grid |  | 81 |
+| queryflow.si | compound | query+flow |  | 88 |
+| cryptolab.si | compound | crypto+lab |  | 85 |
+| identityops.si | compound | identity+ops |  | 87 |
+| graph.si | root | graph |  | 65 |
+| chainstack.si | compound | chain+stack |  | 84 |
+| analyticsops.si | compound | analytics+ops |  | 85 |
 | contractlink.si | compound | contract+link |  | 74 |
-| threatscan.si | compound | threat+scan |  | 84 |
-| sensorhub.si | compound | sensor+hub |  | 85 |
-| circuithub.si | compound | circuit+hub |  | 92 |
-| developerhub.si | compound | developer+hub |  | 85 |
-| keyscan.si | compound | key+scan |  | 81 |
+| databaseflow.si | compound | database+flow |  | 85 |
+| cyber.si | root | cyber |  | 78 |
+| developerlab.si | compound | developer+lab |  | 85 |
+| shieldworks.si | compound | shield+works |  | 79 |
+| cloudhub.si | compound | cloud+hub |  | 83 |
+| confighub.si | compound | config+hub |  | 85 |
+| chainlab.si | compound | chain+lab |  | 83 |
 | configflow.si | compound | config+flow |  | 84 |
+| releasehub.si | compound | release+hub |  | 93 |
+| indexflow.si | compound | index+flow |  | 81 |
+| clusterflow.si | compound | cluster+flow |  | 79 |
+| netops.si | blend | network+operations |  | 74 |
+| edge.si | root | edge |  | 67 |
+| softwareflow.si | compound | software+flow |  | 77 |
+| analyticslab.si | compound | analytics+lab |  | 81 |
+| clusterstack.si | compound | cluster+stack |  | 74 |
+| analyticshub.si | compound | analytics+hub |  | 81 |
+| databaselab.si | compound | database+lab |  | 91 |
+| cipherworks.si | compound | cipher+works |  | 79 |
+| apilab.si | compound | api+lab |  | 78 |
+| releaseflow.si | compound | release+flow |  | 87 |
+| circuitlab.si | compound | circuit+lab |  | 92 |
+| edgelink.si | compound | edge+link |  | 83 |
 
 ## business_finance (40 of 359)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
+| portfoliodesk.si | compound | portfolio+desk |  | 76 |
+| ventureflow.si | compound | venture+flow |  | 86 |
+| lendingworks.si | compound | lending+works |  | 74 |
+| receivabledesk.si | compound | receivable+desk |  | 77 |
+| currencyledger.si | compound | currency+ledger |  | 74 |
+| suppliertrack.si | compound | supplier+track |  | 72 |
+| yieldhub.si | compound | yield+hub |  | 78 |
+| premiumflow.si | compound | premium+flow |  | 82 |
+| loanvault.si | compound | loan+vault |  | 88 |
+| currencytrack.si | compound | currency+track |  | 76 |
+| premiumtrack.si | compound | premium+track |  | 77 |
+| transfervault.si | compound | transfer+vault |  | 72 |
+| assetindex.si | compound | asset+index |  | 92 |
+| inventoryhub.si | compound | inventory+hub |  | 85 |
+| vendortrack.si | compound | vendor+track |  | 79 |
+| revenuehub.si | compound | revenue+hub |  | 93 |
+| forexhub.si | compound | forex+hub |  | 83 |
+| treasuryledger.si | compound | treasury+ledger |  | 77 |
+| tradingdesk.si | compound | trading+desk |  | 79 |
+| benefitledger.si | compound | benefit+ledger |  | 80 |
+| exchangesignal.si | compound | exchange+signal |  | 70 |
+| cardvault.si | compound | card+vault |  | 81 |
+| creditvault.si | compound | credit+vault |  | 86 |
+| bankinghub.si | compound | banking+hub |  | 84 |
+| expensehub.si | compound | expense+hub |  | 92 |
+| bondhub.si | compound | bond+hub |  | 71 |
+| bondsignal.si | compound | bond+signal |  | 84 |
+| expensetrack.si | compound | expense+track |  | 81 |
+| clearingworks.si | compound | clearing+works |  | 72 |
+| lendingdesk.si | compound | lending+desk |  | 79 |
+| remitvault.si | compound | remit+vault |  | 92 |
+| enterpriseflow.si | compound | enterprise+flow |  | 70 |
 | cashhub.si | compound | cash+hub |  | 71 |
 | actuaryhub.si | compound | actuary+hub |  | 89 |
 | remitledger.si | compound | remit+ledger |  | 86 |
@@ -273,135 +305,127 @@
 | currencyhub.si | compound | currency+hub |  | 86 |
 | retirementhub.si | compound | retirement+hub |  | 76 |
 | mortgagehub.si | compound | mortgage+hub |  | 82 |
-| commoditydesk.si | compound | commodity+desk |  | 80 |
-| supplierdesk.si | compound | supplier+desk |  | 77 |
-| portfolioflow.si | compound | portfolio+flow |  | 76 |
-| insuranceflow.si | compound | insurance+flow |  | 80 |
-| creditdesk.si | compound | credit+desk |  | 88 |
-| fundvault.si | compound | fund+vault |  | 81 |
-| budgetflow.si | compound | budget+flow |  | 84 |
-| creditledger.si | compound | credit+ledger |  | 81 |
-| revenueflow.si | compound | revenue+flow |  | 87 |
-| vendortrack.si | compound | vendor+track |  | 79 |
-| liabilityhub.si | compound | liability+hub |  | 86 |
-| covertrack.si | compound | cover+track |  | 84 |
-| pensiondesk.si | compound | pension+desk |  | 86 |
-| budgettrack.si | compound | budget+track |  | 79 |
-| treasuryvault.si | compound | treasury+vault |  | 79 |
-| insurtech.si | blend | insurance+technology |  | 86 |
-| exchangeledger.si | compound | exchange+ledger |  | 70 |
-| pensionvault.si | compound | pension+vault |  | 85 |
-| pensionledger.si | compound | pension+ledger |  | 80 |
-| angelflow.si | compound | angel+flow |  | 81 |
-| forexsignal.si | compound | forex+signal |  | 86 |
-| stockdesk.si | compound | stock+desk |  | 76 |
-| investmenthub.si | compound | investment+hub |  | 72 |
-| escrowledger.si | compound | escrow+ledger |  | 77 |
-| angelforge.si | compound | angel+forge |  | 92 |
-| clearingops.si | compound | clearing+ops |  | 86 |
-| forextrack.si | compound | forex+track |  | 84 |
-| remittrack.si | compound | remit+track |  | 84 |
-| cashvault.si | compound | cash+vault |  | 81 |
-| fundforge.si | compound | fund+forge |  | 81 |
-| liabilitydesk.si | compound | liability+desk |  | 79 |
-| currencydesk.si | compound | currency+desk |  | 81 |
 
 ## health_science (40 of 252)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
-| genemarker.si | compound | gene+marker |  | 92 |
-| physiolab.si | compound | physio+lab |  | 88 |
-| biotech.si | root | biotech |  | 82 |
-| serumassay.si | compound | serum+assay |  | 89 |
-| helixmarker.si | compound | helix+marker |  | 86 |
-| synapsescope.si | compound | synapse+scope |  | 85 |
-| nutritionlab.si | compound | nutrition+lab |  | 85 |
-| gerilab.si | compound | geri+lab |  | 85 |
-| synapseatlas.si | compound | synapse+atlas |  | 85 |
-| sleepscan.si | compound | sleep+scan |  | 81 |
-| vaccinescan.si | compound | vaccine+scan |  | 86 |
-| plasmacell.si | compound | plasma+cell |  | 88 |
-| neuronworks.si | compound | neuron+works |  | 82 |
-| myelinscan.si | compound | myelin+scan |  | 88 |
-| recoverytrack.si | compound | recovery+track |  | 80 |
-| synapsetrial.si | compound | synapse+trial |  | 85 |
-| enzymemarker.si | compound | enzyme+marker |  | 85 |
-| biomarkerworks.si | compound | biomarker+works |  | 70 |
-| proteinscan.si | compound | protein+scan |  | 82 |
-| biomarkerassay.si | compound | biomarker+assay |  | 74 |
-| biopsyscope.si | compound | biopsy+scope |  | 87 |
-| bloodtrack.si | compound | blood+track |  | 84 |
 | chromatinscan.si | compound | chromatin+scan |  | 72 |
-| chromatinlab.si | compound | chromatin+lab |  | 77 |
-| neuroscan.si | compound | neuro+scan |  | 88 |
-| dermascope.si | compound | derma+scope |  | 92 |
-| vaccineworks.si | compound | vaccine+works |  | 77 |
-| recoverylab.si | compound | recovery+lab |  | 91 |
-| genomicslab.si | compound | genomics+lab |  | 82 |
-| pathogenassay.si | compound | pathogen+assay |  | 79 |
+| ribosomescan.si | compound | ribosome+scan |  | 85 |
+| sleepclinic.si | compound | sleep+clinic |  | 82 |
+| vaccinetrack.si | compound | vaccine+track |  | 81 |
+| rehabscan.si | compound | rehab+scan |  | 81 |
+| plasmatrial.si | compound | plasma+trial |  | 86 |
+| pathologyscan.si | compound | pathology+scan |  | 80 |
+| neurologylab.si | compound | neurology+lab |  | 86 |
+| antigenscan.si | compound | antigen+scan |  | 82 |
+| helixlab.si | compound | helix+lab |  | 83 |
+| dermaclinic.si | compound | derma+clinic |  | 86 |
+| gerilab.si | compound | geri+lab |  | 85 |
+| biotechlab.si | compound | biotech+lab |  | 88 |
+| dermalab.si | compound | derma+lab |  | 83 |
+| organoidatlas.si | compound | organoid+atlas |  | 79 |
+| physiolab.si | compound | physio+lab |  | 88 |
+| stromacell.si | compound | stroma+cell |  | 84 |
+| longevityatlas.si | compound | longevity+atlas |  | 77 |
+| organoidscope.si | compound | organoid+scope |  | 75 |
+| cytokinescope.si | compound | cytokine+scope |  | 79 |
+| nephroclinic.si | compound | nephro+clinic |  | 77 |
+| biotechworks.si | compound | biotech+works |  | 77 |
+| pharmaworks.si | compound | pharma+works |  | 79 |
+| helixscope.si | compound | helix+scope |  | 88 |
+| geneworks.si | compound | gene+works |  | 81 |
 | nephroscope.si | compound | nephro+scope |  | 82 |
-| serumcell.si | compound | serum+cell |  | 85 |
-| epigeneticslab.si | compound | epigenetics+lab |  | 73 |
-| helixatlas.si | compound | helix+atlas |  | 92 |
-| genomicsworks.si | compound | genomics+works |  | 72 |
-| gericlinic.si | compound | geri+clinic |  | 92 |
-| bloodlab.si | compound | blood+lab |  | 83 |
-| geneticslab.si | compound | genetics+lab |  | 82 |
-| synapsecell.si | compound | synapse+cell |  | 86 |
-| pathogenlab.si | compound | pathogen+lab |  | 86 |
+| nephrolab.si | compound | nephro+lab |  | 81 |
+| antibodyworks.si | compound | antibody+works |  | 76 |
+| genomeworks.si | compound | genome+works |  | 82 |
+| pathogenworks.si | compound | pathogen+works |  | 72 |
+| hemolab.si | compound | hemo+lab |  | 85 |
+| geneticsassay.si | compound | genetics+assay |  | 79 |
+| sleepmonitor.si | compound | sleep+monitor |  | 85 |
+| chromatinassay.si | compound | chromatin+assay |  | 73 |
+| tumorlab.si | compound | tumor+lab |  | 83 |
+| sleeplab.si | compound | sleep+lab |  | 83 |
+| ribosomeatlas.si | compound | ribosome+atlas |  | 79 |
+| oncologyscan.si | compound | oncology+scan |  | 85 |
+| rehabtrack.si | compound | rehab+track |  | 84 |
+| bloodtrack.si | compound | blood+track |  | 84 |
 
 ## consumer_brands (40 of 265)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
-| trekclub.si | compound | trek+club |  | 74 |
-| creatorhouse.si | compound | creator+house |  | 82 |
-| comedyclub.si | compound | comedy+club |  | 92 |
-| leathercraft.si | compound | leather+craft |  | 77 |
-| boutiquestudio.si | compound | boutique+studio |  | 71 |
-| recipecraft.si | compound | recipe+craft |  | 86 |
-| cinema.si | root | cinema |  | 79 |
+| linenhouse.si | compound | linen+house |  | 89 |
+| sailingwear.si | compound | sailing+wear |  | 83 |
+| footwearcraft.si | compound | footwear+craft |  | 76 |
+| haircarecraft.si | compound | haircare+craft |  | 80 |
+| coffeeclub.si | compound | coffee+club |  | 92 |
 | musicstudio.si | compound | music+studio |  | 83 |
-| cyclinggear.si | compound | cycling+gear |  | 82 |
-| couturedesign.si | compound | couture+design |  | 79 |
+| linenwear.si | compound | linen+wear |  | 88 |
+| theaterstudio.si | compound | theater+studio |  | 75 |
+| furniturehouse.si | compound | furniture+house |  | 74 |
+| ceramicsbox.si | compound | ceramics+box |  | 82 |
+| marinastay.si | compound | marina+stay |  | 89 |
+| bakeryclub.si | compound | bakery+club |  | 92 |
+| campingbox.si | compound | camping+box |  | 84 |
+| ceramicshouse.si | compound | ceramics+house |  | 75 |
+| classroomclub.si | compound | classroom+club |  | 72 |
+| cinemaworks.si | compound | cinema+works |  | 82 |
+| studenthub.si | compound | student+hub |  | 84 |
+| haircarehouse.si | compound | haircare+house |  | 76 |
+| comedyhouse.si | compound | comedy+house |  | 88 |
+| creatorclub.si | compound | creator+club |  | 82 |
+| weddinghouse.si | compound | wedding+house |  | 81 |
+| denimshop.si | compound | denim+shop |  | 81 |
+| jewelshop.si | compound | jewel+shop |  | 81 |
+| gaminghouse.si | compound | gaming+house |  | 83 |
+| safaribooking.si | compound | safari+booking |  | 79 |
+| couturehouse.si | compound | couture+house |  | 82 |
+| ecommercebox.si | compound | ecommerce+box |  | 85 |
+| denimstudio.si | compound | denim+studio |  | 83 |
 | denimwear.si | compound | denim+wear |  | 88 |
 | canyonstay.si | compound | canyon+stay |  | 85 |
-| kitchenhouse.si | compound | kitchen+house |  | 81 |
-| jewelbox.si | compound | jewel+box |  | 83 |
-| parcelclub.si | compound | parcel+club |  | 84 |
-| tailorshop.si | compound | tailor+shop |  | 88 |
-| edtech.si | blend | education+technology |  | 74 |
-| boutiqueshop.si | compound | boutique+shop |  | 82 |
-| hostelbooking.si | compound | hostel+booking |  | 80 |
-| hikinggear.si | compound | hiking+gear |  | 88 |
-| concerthouse.si | compound | concert+house |  | 81 |
-| homewareshop.si | compound | homeware+shop |  | 85 |
-| yoga.si | root | yoga |  | 61 |
-| creatorclub.si | compound | creator+club |  | 82 |
-| ecommerce.si | blend | electronic+commerce |  | 89 |
-| skincareshop.si | compound | skincare+shop |  | 81 |
-| voyagestay.si | compound | voyage+stay |  | 85 |
-| textileshop.si | compound | textile+shop |  | 86 |
-| haircarecraft.si | compound | haircare+craft |  | 80 |
-| voyage.si | root | voyage |  | 72 |
-| fragranceshop.si | compound | fragrance+shop |  | 76 |
-| skincarestudio.si | compound | skincare+studio |  | 77 |
-| creatorstudio.si | compound | creator+studio |  | 75 |
-| campusstudio.si | compound | campus+studio |  | 81 |
-| parcelhub.si | compound | parcel+hub |  | 85 |
-| bakerycraft.si | compound | bakery+craft |  | 86 |
-| recipestudio.si | compound | recipe+studio |  | 82 |
-| tailorstudio.si | compound | tailor+studio |  | 78 |
-| academystudio.si | compound | academy+studio |  | 76 |
-| tutoringhub.si | compound | tutoring+hub |  | 82 |
+| curriculumhub.si | compound | curriculum+hub |  | 80 |
+| cookwareshop.si | compound | cookware+shop |  | 85 |
+| scholarshiphub.si | compound | scholarship+hub |  | 67 |
+| jewelstudio.si | compound | jewel+studio |  | 83 |
+| parcelbox.si | compound | parcel+box |  | 85 |
+| marinabooking.si | compound | marina+booking |  | 79 |
+| skincarehouse.si | compound | skincare+house |  | 79 |
+| gallerydesign.si | compound | gallery+design |  | 80 |
+| trekgear.si | compound | trek+gear |  | 83 |
+| hostelstay.si | compound | hostel+stay |  | 88 |
 
 ## emerging_industries (40 of 289)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
+| tidaldock.si | compound | tidal+dock |  | 81 |
+| carbonhub.si | compound | carbon+hub |  | 81 |
+| lidarhub.si | compound | lidar+hub |  | 79 |
+| autopilothub.si | compound | autopilot+hub |  | 85 |
+| photonforge.si | compound | photon+forge |  | 90 |
+| biocharstorage.si | compound | biochar+storage |  | 77 |
+| navigationmesh.si | compound | navigation+mesh |  | 81 |
+| climatetech.si | blend | climate+technology |  | 91 |
+| ceramiccell.si | compound | ceramic+cell |  | 90 |
+| microgrid.si | root | microgrid |  | 82 |
+| catalystlab.si | compound | catalyst+lab |  | 86 |
+| navigationlab.si | compound | navigation+lab |  | 83 |
+| biomasshub.si | compound | biomass+hub |  | 84 |
+| tidal.si | root | tidal |  | 74 |
+| fleetdrive.si | compound | fleet+drive |  | 84 |
+| biomateriallab.si | compound | biomaterial+lab |  | 78 |
+| graphenegrid.si | compound | graphene+grid |  | 85 |
+| myceliumgrid.si | compound | mycelium+grid |  | 85 |
+| hydrogenlab.si | compound | hydrogen+lab |  | 90 |
+| windlab.si | compound | wind+lab |  | 67 |
+| spacecraftmesh.si | compound | spacecraft+mesh |  | 71 |
+| redoxflowcell.si | compound | redoxflow+cell |  | 76 |
+| greentech.si | blend | green+technology |  | 82 |
+| carbonstorage.si | compound | carbon+storage |  | 80 |
+| autopilotops.si | compound | autopilot+ops |  | 85 |
+| agrihub.si | compound | agri+hub |  | 77 |
 | agrilab.si | compound | agri+lab |  | 77 |
 | bioreactorgrid.si | compound | bioreactor+grid |  | 77 |
 | photonmesh.si | compound | photon+mesh |  | 84 |
-| catalystlab.si | compound | catalyst+lab |  | 86 |
-| autopilothub.si | compound | autopilot+hub |  | 85 |
 | desalhub.si | compound | desal+hub |  | 79 |
 | fusion.si | root | fusion |  | 75 |
 | polymercell.si | compound | polymer+cell |  | 90 |
@@ -413,27 +437,3 @@
 | cobotmesh.si | compound | cobot+mesh |  | 81 |
 | carbongrid.si | compound | carbon+grid |  | 80 |
 | propulsionlab.si | compound | propulsion+lab |  | 84 |
-| navigationlab.si | compound | navigation+lab |  | 83 |
-| thermalgrid.si | compound | thermal+grid |  | 83 |
-| hydrogenhub.si | compound | hydrogen+hub |  | 90 |
-| tidal.si | root | tidal |  | 74 |
-| fusionworks.si | compound | fusion+works |  | 86 |
-| roboticsops.si | compound | robotics+ops |  | 90 |
-| laserworks.si | compound | laser+works |  | 80 |
-| carbonforge.si | compound | carbon+forge |  | 90 |
-| fissioncell.si | compound | fission+cell |  | 90 |
-| lidar.si | root | lidar |  | 74 |
-| alloymesh.si | compound | alloy+mesh |  | 84 |
-| aerospacemesh.si | compound | aerospace+mesh |  | 83 |
-| hydrogenlab.si | compound | hydrogen+lab |  | 90 |
-| lidarflight.si | compound | lidar+flight |  | 83 |
-| orbitlab.si | compound | orbit+lab |  | 79 |
-| laserstack.si | compound | laser+stack |  | 80 |
-| payloadhub.si | compound | payload+hub |  | 85 |
-| batteryworks.si | compound | battery+works |  | 81 |
-| reactorops.si | compound | reactor+ops |  | 88 |
-| catalysthub.si | compound | catalyst+hub |  | 86 |
-| fusionlab.si | compound | fusion+lab |  | 84 |
-| fissionlab.si | compound | fission+lab |  | 88 |
-| renewablelab.si | compound | renewable+lab |  | 89 |
-| mobilitylab.si | compound | mobility+lab |  | 95 |
