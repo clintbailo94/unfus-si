@@ -367,6 +367,38 @@ def build_parser() -> argparse.ArgumentParser:
     validate_research.add_argument("--candidates", default=str(DATA_DIR / "candidates.csv"))
     validate_research.add_argument("--top-n", type=_positive_limit, default=100)
 
+    delivery_inputs = {
+        "candidates": DATA_DIR / "candidates.csv",
+        "reserved_names": DATA_DIR / "reserved_names.csv",
+        "restricted_names": DATA_DIR / "restricted_names.csv",
+        "rdap_evidence": OUTPUT_DIR / "rdap_evidence.csv",
+        "whois_evidence": OUTPUT_DIR / "whois_evidence.csv",
+        "scores": OUTPUT_DIR / "scores.csv",
+        "shortlist": OUTPUT_DIR / "shortlist.csv",
+        "excluded": OUTPUT_DIR / "excluded.csv",
+        "opportunities": OUTPUT_DIR / "opportunities.csv",
+        "valuations": OUTPUT_DIR / "valuations.csv",
+        "valuation_evidence": OUTPUT_DIR / "valuation_evidence.csv",
+        "trademark_summary": OUTPUT_DIR / "trademark_summary.csv",
+        "trademark_evidence": OUTPUT_DIR / "trademark_evidence.csv",
+        "sample": OUTPUT_DIR / "sample_404_for_review.csv",
+    }
+    export = subparsers.add_parser(
+        "export", help="build the ranked owner-readable XLSX from local CSV snapshots"
+    )
+    export.add_argument("--out", default=str(OUTPUT_DIR / "si_domains_ranked.xlsx"))
+    for name, default in delivery_inputs.items():
+        export.add_argument(f"--{name.replace('_', '-')}", dest=f"delivery_{name}", default=str(default))
+
+    validate_delivery = subparsers.add_parser(
+        "validate-delivery", help="check an XLSX against every current local source row"
+    )
+    validate_delivery.add_argument(
+        "--workbook", default=str(OUTPUT_DIR / "si_domains_ranked.xlsx")
+    )
+    for name, default in delivery_inputs.items():
+        validate_delivery.add_argument(f"--{name.replace('_', '-')}", dest=f"delivery_{name}", default=str(default))
+
     candidates = subparsers.add_parser("candidates", help="build or review offline .si label candidates")
     selection = candidates.add_mutually_exclusive_group()
     selection.add_argument("--category", choices=CATEGORIES, help="write one candidate category")
@@ -915,6 +947,61 @@ def _run_validate_research(args: argparse.Namespace) -> int:
     )
 
 
+def _delivery_paths(args: argparse.Namespace) -> dict[str, str]:
+    return {
+        name: getattr(args, f"delivery_{name}")
+        for name in (
+            "candidates", "reserved_names", "restricted_names", "rdap_evidence",
+            "whois_evidence", "scores", "shortlist", "excluded", "opportunities",
+            "valuations", "valuation_evidence", "trademark_summary", "trademark_evidence",
+            "sample",
+        )
+    }
+
+
+def _run_export(args: argparse.Namespace) -> int:
+    from .workbook import build_workbook_model, export_workbook
+
+    try:
+        model = build_workbook_model(_delivery_paths(args))
+        export_workbook(model, args.out)
+    except (OSError, ValueError) as exc:
+        print(f"Workbook export failed: {exc}", file=sys.stderr)
+        return 2
+    counts = ", ".join(f"{name}={len(sheet.rows)}" for name, sheet in model.sheets.items())
+    print(f"Wrote offline workbook to {args.out}; snapshot sha256:{model.snapshot_digest}")
+    print(f"Sheet rows: {counts}")
+    print("XLSX reopened in normal, read-only, and data-only modes.")
+    return 0
+
+
+def _run_validate_delivery(args: argparse.Namespace) -> int:
+    from .delivery import validate_delivery
+
+    try:
+        report = validate_delivery(args.workbook, _delivery_paths(args))
+    except (OSError, ValueError) as exc:
+        print(f"Delivery validation failed: {exc}", file=sys.stderr)
+        return 2
+    print(
+        f"Structural delivery PASS: {report.candidate_count} candidates; "
+        f"{report.shortlist_count} ranked opportunities; snapshot sha256:{report.snapshot_digest}."
+    )
+    if report.research_unresolved:
+        details = "; ".join(
+            f"{source} {values['completed']} completed, "
+            f"{values['sourcewide_blocked']} source-wide blocked, "
+            f"{values['query_blocked']} query blocked, {values['unverified']} unverified/missing"
+            for source, values in report.screening_counts.items()
+        )
+        print(f"Research screening BLOCKED: {details}.")
+    else:
+        print("Research screening coverage PASS for the specified query scope.")
+    print("Project completion not certified; the separate Trio owner gate remains authoritative.")
+    print("Sheet rows: " + ", ".join(f"{name}={count}" for name, count in report.sheet_rows.items()))
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -936,6 +1023,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _run_opportunities(args)
     if args.command == "validate-research":
         return _run_validate_research(args)
+    if args.command == "export":
+        return _run_export(args)
+    if args.command == "validate-delivery":
+        return _run_validate_delivery(args)
     if args.command == "candidates":
         return _run_candidates(args, parser)
     parser.error("unknown command")

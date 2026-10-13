@@ -57,15 +57,32 @@ _RESERVED_NAMES, _RESTRICTED_NAMES = load_name_rules()
 _PREMIUM_NAMES: dict[str, dict[str, str]] = {}
 
 
-def _find_name_rule(canonical_label: str) -> dict[str, str] | None:
-    for name_rules in (_RESERVED_NAMES, _RESTRICTED_NAMES, _PREMIUM_NAMES):
+def _find_name_rule(
+    canonical_label: str,
+    *,
+    reserved_rules: dict[str, dict[str, str]] | None = None,
+    restricted_rules: dict[str, dict[str, str]] | None = None,
+    premium_rules: dict[str, dict[str, str]] | None = None,
+) -> dict[str, str] | None:
+    rule_sets = (
+        _RESERVED_NAMES if reserved_rules is None else reserved_rules,
+        _RESTRICTED_NAMES if restricted_rules is None else restricted_rules,
+        _PREMIUM_NAMES if premium_rules is None else premium_rules,
+    )
+    for name_rules in rule_sets:
         entry = name_rules.get(canonical_label)
         if entry:
             return entry
     return None
 
 
-def classify(label: str) -> str:
+def classify(
+    label: str,
+    *,
+    reserved_rules: dict[str, dict[str, str]] | None = None,
+    restricted_rules: dict[str, dict[str, str]] | None = None,
+    premium_rules: dict[str, dict[str, str]] | None = None,
+) -> str:
     """Classify a label under known registry rules, before network lookup.
 
     ``ok`` only means that the label passes known syntax and name lists; it
@@ -75,17 +92,38 @@ def classify(label: str) -> str:
     canonical_label = ascii_label(label)
     if canonical_label is None:
         return "invalid_syntax"
-    entry = _find_name_rule(canonical_label)
+    entry = _find_name_rule(
+        canonical_label,
+        reserved_rules=reserved_rules,
+        restricted_rules=restricted_rules,
+        premium_rules=premium_rules,
+    )
     return entry["class"] if entry else "ok"
 
 
-def explain(label: str) -> tuple[str, str, str]:
+def explain(
+    label: str,
+    *,
+    reserved_rules: dict[str, dict[str, str]] | None = None,
+    restricted_rules: dict[str, dict[str, str]] | None = None,
+    premium_rules: dict[str, dict[str, str]] | None = None,
+) -> tuple[str, str, str]:
     """Return ``(classification, rule_id, source_url)`` for a label."""
 
-    classification = classify(label)
+    classification = classify(
+        label,
+        reserved_rules=reserved_rules,
+        restricted_rules=restricted_rules,
+        premium_rules=premium_rules,
+    )
     canonical_label = ascii_label(label)
     if classification in {"reserved", "restricted", "premium"} and canonical_label is not None:
-        entry = _find_name_rule(canonical_label)
+        entry = _find_name_rule(
+            canonical_label,
+            reserved_rules=reserved_rules,
+            restricted_rules=restricted_rules,
+            premium_rules=premium_rules,
+        )
         if entry:
             return classification, f"{classification}:{canonical_label}", entry["source_url"]
 
