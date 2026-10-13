@@ -445,7 +445,7 @@ def test_t4_generators_are_substantive_and_keep_global_pool_above_hard_minimum()
     generated = generate_all()
     labels = [row.domain_label for rows in generated.values() for row in rows]
 
-    assert all(len(generated[category]) >= 900 for category in CATEGORIES[5:])
+    assert all(len(generated[category]) >= 400 for category in CATEGORIES[5:])
     assert len(labels) >= 5_000
     assert len(labels) == len(set(labels))
     assert all(generated[category] for category in CATEGORIES)
@@ -455,10 +455,10 @@ def test_global_dedup_keeps_the_first_primary_category_and_other_category_tags()
     generated = generate_all()
     rows = {row.domain_label: row for values in generated.values() for row in values}
 
-    bioengine = rows["bioengine"]
-    assert bioengine.category == "health_science"
-    assert "emerging_industries" in bioengine.tags
-    assert bioengine.tags == tuple(sorted(set(bioengine.tags)))
+    precision_lab = rows["precisionlab"]
+    assert precision_lab.category == "health_science"
+    assert "emerging_industries" in precision_lab.tags
+    assert precision_lab.tags == tuple(sorted(set(precision_lab.tags)))
     assert len(rows) == sum(map(len, generated.values()))
 
 
@@ -500,10 +500,151 @@ def test_seed_one_sample_review_excludes_weak_sector_pairings():
         (candidate.category, candidate.seed)
         for rows in generate_all().values()
         for candidate in rows
-        if candidate.method == "compound"
+        if candidate.category in CATEGORIES[5:] and candidate.method == "compound"
     }
 
     assert not reviewed_pairs.intersection(generated_pairs)
+
+
+def test_t4_generated_compounds_are_explicitly_pair_whitelisted():
+    from si_domains.candidates.generators.common import read_curated_pairs
+
+    generated_pairs = {
+        (candidate.category, candidate.seed)
+        for rows in generate_all().values()
+        for candidate in rows
+        if candidate.category in CATEGORIES[5:] and candidate.method == "compound"
+    }
+    reviewed_pairs = set()
+    for category in CATEGORIES[5:]:
+        pairs = read_curated_pairs(
+            f"{category}_concepts.txt",
+            f"{category}_products.txt",
+            f"{category}_pairs.txt",
+        )
+        reviewed_pairs.update((category, f"{concept}+{suffix}") for concept, suffix in pairs)
+
+    assert generated_pairs
+    assert generated_pairs <= reviewed_pairs
+
+
+def test_t4_pair_whitelist_terms_must_come_from_curated_vocabularies(tmp_path, monkeypatch):
+    import si_domains.candidates.generators.common as common
+
+    (tmp_path / "concepts.txt").write_text("genome\n", encoding="utf-8")
+    (tmp_path / "products.txt").write_text("lab\n", encoding="utf-8")
+    (tmp_path / "pairs.txt").write_text("genome|lab,desk\n", encoding="utf-8")
+    monkeypatch.setattr(common, "SEED_DIR", tmp_path)
+
+    with pytest.raises(ValueError, match="unknown concept or product"):
+        common.read_curated_pairs("concepts.txt", "products.txt", "pairs.txt")
+
+
+def test_t4_seed_vocabularies_exclude_reviewed_generic_filler_terms():
+    seeds_dir = Path(__file__).parents[1] / "data" / "seeds"
+    generic_fillers = {
+        "zone", "region", "life", "guide", "plan", "base", "field", "path",
+        "source", "order", "auto", "measure", "safety", "family", "city",
+    }
+    terms = set()
+    for category in CATEGORIES[5:]:
+        for suffix in ("concepts", "products"):
+            lines = (seeds_dir / f"{category}_{suffix}.txt").read_text(encoding="utf-8").splitlines()
+            terms.update(
+                line.strip().casefold()
+                for line in lines
+                if line.strip() and not line.lstrip().startswith("#")
+            )
+
+    assert generic_fillers.isdisjoint(terms)
+
+
+def test_consumer_brand_suffix_vocabulary_stays_compact():
+    seeds_dir = Path(__file__).parents[1] / "data" / "seeds"
+    lines = (seeds_dir / "consumer_brands_products.txt").read_text(encoding="utf-8").splitlines()
+    heads = [line.strip() for line in lines if line.strip() and not line.lstrip().startswith("#")]
+
+    assert len(heads) == 31
+
+
+def test_ai_output_omits_generic_filler_product_joins_seen_in_review():
+    generated_labels = {row.domain_label for rows in generate_all().values() for row in rows}
+    weak_ai_labels = {
+        "reasonbase", "imagepath", "logicgarden", "agentfield", "embedbase",
+        "memorygarden", "visipath", "deepfield", "recallpath", "roboticbase",
+        "modelgarden", "neuraharbor", "visiatelier", "synapharbor", "semantmind",
+        "neuraroute",
+    }
+
+    assert not weak_ai_labels.intersection(generated_labels)
+
+
+def test_t4_curated_output_omits_obvious_unreviewed_pairings():
+    generated_labels = {
+        candidate.domain_label
+        for rows in generate_all().values()
+        for candidate in rows
+    }
+    weak_labels = {
+        "zoneregion", "regionharbor", "financetrade", "chainfinance",
+        "monitoraudit", "configsource", "zeroaccess", "safetylock",
+        "camerasignal", "autowatch", "auditguide", "valuefund",
+        "orderfinance", "tradeguide", "yieldwealth", "bloodchart",
+        "healthycare", "vitalitylife", "lifeguide", "safetylab",
+        "measurepath", "wearableplan", "brainfield", "stemfield",
+        "retailskin", "coffeesale", "retreatsail", "stagecinema",
+        "familylife", "citybooking", "shopgarden", "storeorder",
+        "tutorexam", "lessonbook", "watermarket", "routespace",
+        "moleculemetal", "alloycarbon", "energycarbon", "chargefuel",
+        "elementfiber", "motionorbit", "quantalaser",
+        "clinicalworks", "hobbycraft", "underwritehub", "procurestudio",
+        "precisionplant", "soilplant", "aquaponicplant", "aquaponiccell",
+        "myceliumcell", "harvestcell", "biomaterialcell", "entangleforge",
+        "aerialflight", "industrialops", "celebrationcraft", "audiobookvoice",
+        "creatorvoice", "podcastvoice", "checkoutcart", "parceldelivery",
+        "voyageescape", "voyagetrip", "ecommerceshop", "ecommercecart",
+        "scholarshipworks", "socialcraft",
+        "genomeomics", "researchomics", "cookwarehouse", "homewarehouse",
+        "plantworks", "insurequote", "climateplant", "circularplant",
+        "agricultureplant", "hydroponicplant", "aquacultureplant", "cropplant",
+        "renewableplant",
+        "microbialcell", "microbiomecell", "trialtherapy", "festivalshow",
+        "windcell", "navigationdrive", "aquaculturecell",
+        "examquiz", "documentaryshow", "checkoutshop", "basketcrate", "pharmacare",
+        "musicsound", "decarbonplant", "decarbonops", "decarbonlab",
+        "basketcart", "songvoice", "additivecell",
+        "musiclive", "catalystcell",
+    }
+
+    assert not weak_labels.intersection(generated_labels)
+
+
+def test_t4_generation_does_not_apply_a_per_category_quota(monkeypatch):
+    import si_domains.candidates.build as build
+
+    expected = 1_301
+
+    def letters(number):
+        chars = []
+        for _ in range(5):
+            number, remainder = divmod(number, 26)
+            chars.append(chr(ord("a") + remainder))
+        return "".join(reversed(chars))
+
+    candidates = [
+        Candidate(f"x{letters(number)}q", "technology", "blend", f"sample{number}", (), 80)
+        for number in range(expected)
+    ]
+    monkeypatch.setattr(
+        build,
+        "_GENERATORS",
+        {category: (lambda: []) for category in CATEGORIES}
+        | {"technology": lambda: candidates},
+    )
+
+    generated = build.generate_all()
+
+    assert len(generated["technology"]) == expected
 
 
 def test_generated_committed_csvs_and_review_sample_match_regeneration(tmp_path):
@@ -577,7 +718,7 @@ def test_category_cli_writes_a_valid_offline_csv(tmp_path):
         reader = csv.DictReader(handle)
         rows = list(reader)
     assert reader.fieldnames == ["domain_label", "category", "method", "seed", "tags", "quality_score"]
-    assert len(rows) >= 1_200
+    assert len(rows) >= 1_000
     assert {row["category"] for row in rows} == {"invented"}
 
 

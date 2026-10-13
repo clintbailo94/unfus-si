@@ -16,5 +16,9 @@ _BLENDS = (
 
 def generate() -> list[Candidate]:
     return generate_curated_compounds(
-        "consumer_brands", "consumer_brands_concepts.txt", "consumer_brands_products.txt", blends=_BLENDS
+        "consumer_brands",
+        "consumer_brands_concepts.txt",
+        "consumer_brands_products.txt",
+        "consumer_brands_pairs.txt",
+        blends=_BLENDS,
     )

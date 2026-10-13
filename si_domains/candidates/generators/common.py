@@ -25,26 +25,48 @@ def read_terms(filename: str) -> tuple[str, ...]:
     return tuple(terms)
 
 
-def read_grouped_terms(filename: str) -> dict[str, tuple[str, ...]]:
-    """Read reviewed vocabularies grouped by the products they can sensibly form."""
+def read_curated_pairs(
+    concepts_file: str,
+    products_file: str,
+    pairs_file: str,
+) -> tuple[tuple[str, str], ...]:
+    """Expand a hand-reviewed root-to-suffix whitelist and validate its sources.
 
-    groups: dict[str, list[str]] = {}
-    current_group: str | None = None
-    with (SEED_DIR / filename).open("r", encoding="utf-8") as handle:
+    Each non-comment line in ``pairs_file`` is ``concept|suffix,suffix``. This
+    compact format records exact permitted pairs and never infers compatibility
+    from shared groups or a Cartesian product.
+    """
+
+    concepts = set(read_terms(concepts_file))
+    products = set(read_terms(products_file))
+    pairs: list[tuple[str, str]] = []
+    seen: set[tuple[str, str]] = set()
+    with (SEED_DIR / pairs_file).open("r", encoding="utf-8") as handle:
         for raw_line in handle:
             line = raw_line.strip().casefold()
             if not line or line.startswith("#"):
                 continue
-            if line.startswith("[") and line.endswith("]"):
-                current_group = line[1:-1].strip()
-                if not current_group or current_group in groups:
-                    raise ValueError(f"invalid or duplicate seed group in {filename}: {line}")
-                groups[current_group] = []
-            elif current_group is None:
-                raise ValueError(f"seed term precedes its group in {filename}: {line}")
-            else:
-                groups[current_group].append(line)
-    return {group: tuple(terms) for group, terms in groups.items()}
+            try:
+                concept, suffix_list = line.split("|", maxsplit=1)
+            except ValueError as exc:
+                raise ValueError(f"invalid curated pair line in {pairs_file}: {line}") from exc
+            suffixes = [suffix.strip() for suffix in suffix_list.split(",")]
+            if (
+                not concept
+                or concept not in concepts
+                or not suffixes
+                or any(not suffix or suffix not in products for suffix in suffixes)
+            ):
+                raise ValueError(f"curated pair uses an unknown concept or product in {pairs_file}: {line}")
+            for suffix in suffixes:
+                pair = (concept, suffix)
+                if pair in seen:
+                    raise ValueError(f"duplicate curated pair in {pairs_file}: {concept}+{suffix}")
+                seen.add(pair)
+                pairs.append(pair)
+    if not pairs:
+        raise ValueError(f"curated pair list is empty: {pairs_file}")
+    return tuple(pairs)
 
 
 @lru_cache(maxsize=1)
@@ -108,34 +130,30 @@ def generate_curated_compounds(
     category: str,
     concepts_file: str,
     products_file: str,
+    pairs_file: str,
     *,
     blends: Iterable[tuple[str, str]] = (),
 ) -> list[Candidate]:
     """Combine one reviewed sector vocabulary with its compatible product vocabulary."""
 
-    concepts = read_grouped_terms(concepts_file)
-    products = read_grouped_terms(products_file)
-    if concepts.keys() != products.keys():
-        raise ValueError(f"seed groups must match for {category}")
+    pairs = read_curated_pairs(concepts_file, products_file, pairs_file)
     blocked_pairs = read_candidate_pair_blocks()
     candidates: list[Candidate] = []
-    for group in concepts:
-        for concept in concepts[group]:
-            for product in products[group]:
-                if concept in product or product in concept:
-                    continue
-                seed = f"{concept}+{product}"
-                if (category, seed) in blocked_pairs:
-                    continue
-                candidate = make_candidate(
-                    concept + product,
-                    category,
-                    "compound",
-                    seed,
-                    seed_quality=84,
-                )
-                if candidate is not None:
-                    candidates.append(candidate)
+    for concept, product in pairs:
+        if concept in product or product in concept:
+            continue
+        seed = f"{concept}+{product}"
+        if (category, seed) in blocked_pairs:
+            continue
+        candidate = make_candidate(
+            concept + product,
+            category,
+            "compound",
+            seed,
+            seed_quality=84,
+        )
+        if candidate is not None:
+            candidates.append(candidate)
 
     for label, seed in blends:
         candidate = make_candidate(label, category, "blend", seed, seed_quality=88)

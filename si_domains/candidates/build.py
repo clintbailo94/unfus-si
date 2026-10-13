@@ -42,11 +42,6 @@ MAX_CANDIDATES = {
     "short": 700,
     "dictionary": 1_050,
     "invented": 1_400,
-    "technology": 1_200,
-    "business_finance": 1_200,
-    "health_science": 1_200,
-    "consumer_brands": 1_200,
-    "emerging_industries": 1_200,
 }
 _GENERATORS: dict[str, Callable[[], list[Candidate]]] = {
     "domain_hacks": domain_hacks.generate,
@@ -174,7 +169,9 @@ def _remove_trivial_plurals(candidates: list[Candidate]) -> list[Candidate]:
 
 
 def _rank_within_limit(category: str, candidates: list[Candidate]) -> list[Candidate]:
-    limit = MAX_CANDIDATES[category]
+    limit = MAX_CANDIDATES.get(category)
+    if limit is None:
+        return sorted(candidates, key=lambda candidate: candidate.domain_label)
     if len(candidates) <= limit:
         return candidates
     ranked = sorted(
