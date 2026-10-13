@@ -124,6 +124,157 @@ def _single_domain_research(tmp_path: Path, *, screened: bool):
     }
 
 
+def _refresh_trademark_artifacts(artifacts):
+    write_trademark_summary(
+        artifacts["evidence"],
+        artifacts["shortlist"],
+        artifacts["summary"],
+        candidates_path=artifacts["candidates"],
+    )
+    summary = _read(artifacts["summary"])[0]
+    score = score_domain(
+        artifacts["candidate"],
+        trademark_override=int(summary["trademark_score"]),
+        trademark_status=summary["status"],
+    )
+    _write_csv(
+        artifacts["scores"],
+        list(SCORE_FIELDS),
+        [{field: str(score[field]) for field in SCORE_FIELDS}],
+    )
+    shortlist = _read(artifacts["shortlist"])
+    shortlist[0].update(
+        {field: str(score[field]) for field in SCORE_FIELDS if field != "domain"}
+    )
+    _write_csv(artifacts["shortlist"], list(SHORTLIST_FIELDS), shortlist)
+    write_opportunities(
+        artifacts["shortlist"],
+        artifacts["scores"],
+        artifacts["valuations"],
+        artifacts["summary"],
+        artifacts["opportunities"],
+    )
+
+
+def _validate_completion_mode(artifacts):
+    return main([
+        "validate-research",
+        "--shortlist", str(artifacts["shortlist"]),
+        "--scores", str(artifacts["scores"]),
+        "--valuations", str(artifacts["valuations"]),
+        "--valuation-evidence", str(artifacts["valuation_evidence"]),
+        "--trademark-evidence", str(artifacts["evidence"]),
+        "--trademark-summary", str(artifacts["summary"]),
+        "--opportunities", str(artifacts["opportunities"]),
+        "--candidates", str(artifacts["candidates"]),
+        "--top-n", "1",
+        "--completion-mode",
+    ])
+
+
+def _set_uspto_refusal(artifacts):
+    evidence = _read(artifacts["evidence"])
+    for row in evidence:
+        if row["source"] == "USPTO":
+            row.update(
+                result_status="blocked",
+                result_url="",
+                notes="Synthetic source stop reference USPTO-SOURCE-STOP; no query result was returned.",
+            )
+    evidence.append({
+        "evidence_id": "USPTO-SOURCE-STOP",
+        "domain": "*",
+        "source": "USPTO",
+        "jurisdiction": "United States",
+        "query": "source stop; no domain query",
+        "utc_timestamp": "2026-10-13T12:01:00Z",
+        "result_status": "blocked",
+        "source_url": "https://tmsearch.uspto.gov/",
+        "result_url": "",
+        "mark_number": "",
+        "mark_name": "",
+        "mark_status": "",
+        "classes": "",
+        "notes": "Synthetic source stop after HTTP 403; no per-domain query ran.",
+    })
+    _write_csv(artifacts["evidence"], TM_FIELDS, evidence)
+
+
+def test_completion_mode_passes_when_every_source_pair_has_a_completed_or_refused_outcome(
+    tmp_path, capsys
+):
+    artifacts = _single_domain_research(tmp_path, screened=True)
+    _set_uspto_refusal(artifacts)
+    _refresh_trademark_artifacts(artifacts)
+
+    assert _validate_completion_mode(artifacts) == 0
+    report = capsys.readouterr()
+    assert "TMview: completed=1, refused=0, missing=0" in report.out
+    assert "UKIPO: completed=1, refused=0, missing=0" in report.out
+    assert "USPTO: completed=0, refused=1 (source-stop evidence id=1), missing=0" in report.out
+    assert "Needs legal review names: 0" in report.out
+    assert report.out.rstrip().endswith("COMPLETION-MODE PASS")
+
+
+@pytest.mark.parametrize(
+    ("defect", "expected_diagnostic"),
+    [
+        ("missing_pair", "missing outcome pair(s) for novara.si: TMview"),
+        ("refusal_without_date", "timestamp must be UTC"),
+        ("refusal_without_evidence", "needs a public source_url"),
+        ("incomplete_source_scored_85", "does not match evidence"),
+        ("not_yet_screened", "not yet screened"),
+        ("clear_claim", "claims novara.si is clear despite incomplete sources"),
+    ],
+)
+def test_completion_mode_rejects_missing_or_misrepresented_outcomes(
+    tmp_path, capsys, defect, expected_diagnostic
+):
+    artifacts = _single_domain_research(
+        tmp_path, screened=defect != "not_yet_screened"
+    )
+    if defect == "missing_pair":
+        evidence = [row for row in _read(artifacts["evidence"]) if row["source"] != "TMview"]
+        _write_csv(artifacts["evidence"], TM_FIELDS, evidence)
+        _refresh_trademark_artifacts(artifacts)
+    elif defect in {"refusal_without_date", "refusal_without_evidence"}:
+        evidence = _read(artifacts["evidence"])
+        row = next(row for row in evidence if row["source"] == "TMview")
+        row.update(
+            result_status="blocked",
+            result_url="",
+            notes="Synthetic refusal after HTTP 403.",
+        )
+        if defect == "refusal_without_date":
+            row["utc_timestamp"] = ""
+        else:
+            row["source_url"] = ""
+        _write_csv(artifacts["evidence"], TM_FIELDS, evidence)
+    elif defect == "incomplete_source_scored_85":
+        _set_uspto_refusal(artifacts)
+    elif defect == "clear_claim":
+        _set_uspto_refusal(artifacts)
+        _refresh_trademark_artifacts(artifacts)
+        scores = _read(artifacts["scores"])
+        shortlist = _read(artifacts["shortlist"])
+        opportunities = _read(artifacts["opportunities"])
+        scores[0]["rationale"] = "novara.si is clear"
+        shortlist[0]["rationale"] = "novara.si is clear"
+        opportunities[0]["rationale"] = "novara.si is clear"
+        _write_csv(artifacts["scores"], list(SCORE_FIELDS), scores)
+        _write_csv(artifacts["shortlist"], list(SHORTLIST_FIELDS), shortlist)
+        _write_csv(artifacts["opportunities"], list(opportunities[0]), opportunities)
+
+    assert _validate_completion_mode(artifacts) == 2
+    report = capsys.readouterr()
+    assert "COMPLETION-MODE FAIL" in report.out
+    assert "TMview: completed=" in report.out
+    assert "UKIPO: completed=" in report.out
+    assert "USPTO: completed=" in report.out
+    assert "Needs legal review names:" in report.out
+    assert expected_diagnostic in report.out
+
+
 def test_summary_injection_reranks_shortlist_and_joins_evidence(tmp_path, capsys):
     candidates_path = tmp_path / "candidates.csv"
     rdap_path = tmp_path / "rdap.csv"

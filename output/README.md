@@ -81,6 +81,33 @@ USPTO exact-label queries used an exact phrase, then one near query (fuzziness 1
 
 `validate-research` exits **2** because required coverage is incomplete: TMview 0 completed, 0 query-blocked, 100 unverified; UKIPO 0 completed, 100 query-blocked, 0 unverified; USPTO 56 completed, 44 query-blocked, 0 unverified. In particular TMview and UKIPO were inaccessible and USPTO stopped after an HTTP 403 with 44 top-100 labels still incomplete. Its output separates those exact states. The final top 100 are not legally cleared; the screen is not comprehensive phonetic, class, national-office, or worldwide clearance.
 
+### Manual trademark checks the owner can do
+
+Official search pages: [TMview](https://www.tmdn.org/tmview/),
+[UKIPO](https://trademarks.ipo.gov.uk/ipo-tmtext), and
+[USPTO](https://tmsearch.uspto.gov/). TMview automated access is documented as
+unavailable after its probes closed before an HTTP response at
+2026-10-13T18:02:42Z (`REWORK1-TMVIEW-PROBES`; earlier `PKGD-0002` at
+2026-10-13T17:09:22Z). UKIPO returned HTTP 403 Service Captcha at
+2026-10-13T17:09:52Z (`PKGD-0003`). No further TMview or UKIPO attempts were
+made. USPTO screening stopped after one HTTP 403 at 2026-10-13T18:05:11Z
+(`REWORK1-USPTO-00259`; source-stop record `REWORK1-USPTO-SOURCE-STOP`). No
+USPTO resume was attempted here; a later cooled-down pass belongs to the
+separate PKG-G package. No result is a clearance.
+
+`validate-research --completion-mode` runs the same structural checks, then
+requires a recorded outcome for every top-100 name/source pair. A pair must
+have completed exact and near searches, or dated blocked/unverified records
+with an official source URL and a note naming the refusal (HTTP status,
+CAPTCHA, connection closed, or a source-stop evidence ID). Missing pairs fail.
+Only three completed no-match sources may score 85; any possible conflict
+must score 25; incomplete or refused sources score 40 unless a conflict takes
+precedence. Every top-100 opportunity must have a trademark status other than
+`not yet screened`, and the report gives completed, refused-by-reason, and
+missing counts plus the needs-legal-review total. The flag makes no network
+requests and does not weaken strict mode, which still exits 2 while required
+searches remain incomplete.
+
 All **500 valuations** are literally `insufficiently supported`; currency, low, and high are blank. The evidence file separately records ten reported completed sales, two asking prices, and three unsupported source attempts. None qualified as a direct comparable for a current shortlist name. Asking prices are not sales, and the unsupported source attempts did not become market evidence. These entries are not appraisals.
 
 ## Rebuild from the recorded source snapshot (offline)
@@ -119,12 +146,16 @@ python -m si_domains validate-research --shortlist "$Build/shortlist.csv" --scor
 $ResearchExit = $LASTEXITCODE
 if ($ResearchExit -ne 2) { throw "Expected validate-research exit 2 for unresolved trademark coverage; got $ResearchExit" }
 
+# This checks that the same incomplete research is recorded honestly, without network access.
+python -m si_domains validate-research --shortlist "$Build/shortlist.csv" --scores "$Build/scores.csv" --valuations "$Build/valuations.csv" --valuation-evidence "$Source/valuation_evidence.csv" --trademark-evidence "$Source/trademark_evidence.csv" --trademark-summary "$Build/trademark_summary_2.csv" --opportunities "$Build/opportunities.csv" --candidates "$Source/candidates.csv" --completion-mode
+if ($LASTEXITCODE -ne 0) { throw "Expected completion-mode validation to pass; got $LASTEXITCODE" }
+
 # Export and structurally validate the rebuilt workbook. Validation is read-only.
 python -m si_domains export --out "$Build/si_domains_ranked.xlsx" --candidates "$Source/candidates.csv" --reserved-names "$Source/reserved_names.csv" --restricted-names "$Source/restricted_names.csv" --rdap-evidence "$Source/rdap_evidence.csv" --whois-evidence "$Source/whois_evidence.csv" --scores "$Build/scores.csv" --shortlist "$Build/shortlist.csv" --excluded "$Build/excluded.csv" --opportunities "$Build/opportunities.csv" --valuations "$Build/valuations.csv" --valuation-evidence "$Source/valuation_evidence.csv" --trademark-summary "$Build/trademark_summary_2.csv" --trademark-evidence "$Source/trademark_evidence.csv" --sample "$Source/sample_404_for_review.csv"
 python -m si_domains validate-delivery --workbook "$Build/si_domains_ranked.xlsx" --candidates "$Source/candidates.csv" --reserved-names "$Source/reserved_names.csv" --restricted-names "$Source/restricted_names.csv" --rdap-evidence "$Source/rdap_evidence.csv" --whois-evidence "$Source/whois_evidence.csv" --scores "$Build/scores.csv" --shortlist "$Build/shortlist.csv" --excluded "$Build/excluded.csv" --opportunities "$Build/opportunities.csv" --valuations "$Build/valuations.csv" --valuation-evidence "$Source/valuation_evidence.csv" --trademark-summary "$Build/trademark_summary_2.csv" --trademark-evidence "$Source/trademark_evidence.csv" --sample "$Source/sample_404_for_review.csv"
 ```
 
-The summary preserves prior evidence for names that leave the top 100 and records incomplete results for new entrants. A refusal never becomes a completed query. Do not run beyond three screening rounds without a new authorization. `validate-delivery` checks workbook and CSV consistency and may exit 0 while reporting **Research screening BLOCKED**; `validate-research` is the separate coverage check and exits 2 on the current snapshot.
+The summary preserves prior evidence for names that leave the top 100 and records incomplete results for new entrants. A refusal never becomes a completed query. Do not run beyond three screening rounds without a new authorization. `validate-delivery` checks workbook and CSV consistency and may exit 0 while reporting **Research screening BLOCKED**; strict `validate-research` remains the coverage check and exits 2 on the current snapshot, while `--completion-mode` checks that recorded outcomes and resulting statuses are complete and honest.
 
 ## Optional fresh live verification
 

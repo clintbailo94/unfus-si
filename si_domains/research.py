@@ -3,20 +3,27 @@
 from __future__ import annotations
 
 import csv
+import re
 import sys
+from collections import Counter
+from datetime import datetime
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
+from urllib.parse import urlparse
 
 from .shortlist import CATEGORY_LIMIT, SHORTLIST_FIELDS, SHORTLIST_LIMIT
 from .scoring import SCORE_FIELDS, SCORE_WEIGHTS, trademark_score_for_status, weighted_total
 from .trademarks import (
     DEFAULT_CANDIDATES_PATH,
     REQUIRED_SOURCES,
+    TRADEMARK_EVIDENCE_FIELDS,
     aggregate_trademark_rows,
+    normalize_query,
     query_coverage_by_source,
     read_candidate_context,
     read_trademark_evidence,
     read_trademark_summary,
+    validate_evidence_rows,
 )
 from .valuation import (
     VALUATION_FIELDS,
@@ -187,6 +194,410 @@ def _screening_counts(
     return counts, unresolved
 
 
+_HTTP_STATUS = re.compile(r"\bHTTP(?:\s+status)?\s*[:=]?\s*(\d{3})\b", re.IGNORECASE)
+_CLEARANCE_WORD = re.compile(r"\bclear(?:ed)?\b", re.IGNORECASE)
+_NEGATION_WORDS = frozenset(
+    {"no", "not", "never", "without", "cannot", "can't", "isn't", "aren't", "doesn't", "don't"}
+)
+
+
+def _refusal_reason_category(
+    row: dict[str, str], evidence_index: dict[str, dict[str, str]]
+) -> str | None:
+    """Return a named, evidence-backed refusal reason, if the note records one."""
+
+    notes = row.get("notes", "")
+    lowered = notes.casefold()
+    if "captcha" in lowered:
+        return "captcha"
+    for http_status in _HTTP_STATUS.finditer(notes):
+        if int(http_status.group(1)) >= 400:
+            return f"HTTP {http_status.group(1)}"
+    if "connection closed" in lowered or "closed before an http response" in lowered:
+        return "connection closed"
+    for evidence_id, referenced in evidence_index.items():
+        if (
+            evidence_id.casefold() in lowered
+            and referenced.get("source") == row.get("source")
+            and "stop" in evidence_id.casefold()
+        ):
+            return "source-stop evidence id"
+    return None
+
+
+def _claims_clearance(text: str) -> bool:
+    """Find positive clear/cleared claims while allowing an explicit negation."""
+
+    for match in _CLEARANCE_WORD.finditer(text):
+        clause_start = max(
+            text.rfind(mark, 0, match.start()) for mark in (".", "!", "?", ";", "\n")
+        ) + 1
+        preceding_words = re.findall(r"[a-z']+", text[clause_start : match.start()].casefold())
+        if any(word in _NEGATION_WORDS for word in preceding_words[-6:]):
+            continue
+        return True
+    return False
+
+
+def _completion_pair_outcome(
+    domain: str,
+    source: str,
+    expected_queries: tuple[str, ...],
+    evidence_rows: list[dict[str, str]],
+    evidence_index: dict[str, dict[str, str]],
+    proof_root: str | Path,
+) -> tuple[str, str | None]:
+    """Classify one top-name/source pair from its latest required query states."""
+
+    normalized_domain = domain.casefold()
+    domain_rows = [
+        row
+        for row in evidence_rows
+        if row["source"] == source and row["domain"].casefold() == normalized_domain
+    ]
+    if not domain_rows:
+        return "missing", None
+
+    coverage = query_coverage_by_source(
+        evidence_rows,
+        normalized_domain,
+        expected_queries,
+        proof_root=proof_root,
+        evidence_index=evidence_index,
+    )[source]
+    missing_queries = set(coverage["missing_queries"])
+    if (
+        coverage["status"] in {"no_obvious_match", "possible_conflict"}
+        and coverage["completed"] == coverage["required"]
+    ):
+        return "completed", None
+
+    sourcewide_rows = [
+        row
+        for row in evidence_rows
+        if row["source"] == source
+        and row["domain"] == "*"
+        and "control query" not in row.get("notes", "").casefold()
+    ]
+    reasons: list[str] = []
+    for query in expected_queries:
+        normalized_query = normalize_query(query)
+        if normalized_query not in missing_queries:
+            continue
+        matching_rows = [
+            row
+            for row in domain_rows
+            if normalize_query(row["query"]) == normalized_query
+        ]
+        state_row = (
+            max(matching_rows, key=lambda row: (row["utc_timestamp"], row["evidence_id"]))
+            if matching_rows
+            else max(sourcewide_rows, key=lambda row: (row["utc_timestamp"], row["evidence_id"]))
+            if sourcewide_rows
+            else None
+        )
+        if state_row is None or state_row["result_status"] not in {"blocked", "unverified"}:
+            return "missing", None
+        reason = _refusal_reason_category(state_row, evidence_index)
+        if reason is None:
+            return "missing", None
+        reasons.append(reason)
+
+    if not reasons:
+        return "missing", None
+    # Count each name/source pair once even if both required queries cite the refusal.
+    return "refused", sorted(set(reasons))[0]
+
+
+def _completion_source_counts(
+    top_rows: list[dict[str, str]],
+    evidence_rows: list[dict[str, str]],
+    evidence_index: dict[str, dict[str, str]],
+    query_manifest: dict[str, tuple[str, ...]],
+    proof_root: str | Path,
+) -> tuple[dict[str, dict[str, object]], dict[tuple[str, str], str]]:
+    counts: dict[str, dict[str, object]] = {
+        source: {
+            "completed": 0,
+            "refused": 0,
+            "missing": 0,
+            "refusal_reasons": Counter(),
+        }
+        for source in REQUIRED_SOURCES
+    }
+    outcomes: dict[tuple[str, str], str] = {}
+    for row in top_rows:
+        domain = row["domain"].casefold()
+        for source in REQUIRED_SOURCES:
+            state, reason = _completion_pair_outcome(
+                domain,
+                source,
+                query_manifest.get(domain, ()),
+                evidence_rows,
+                evidence_index,
+                proof_root,
+            )
+            outcomes[(domain, source)] = state
+            counts[source][state] = int(counts[source][state]) + 1
+            if state == "refused" and reason:
+                reasons = counts[source]["refusal_reasons"]
+                assert isinstance(reasons, Counter)
+                reasons[reason] += 1
+    return counts, outcomes
+
+
+def _fallback_pair_outcome(
+    domain: str,
+    source: str,
+    expected_queries: tuple[str, ...],
+    evidence_rows: list[dict[str, str]],
+) -> tuple[str, str | None]:
+    """Count raw states for a failure report when structural evidence checks fail."""
+
+    normalized_domain = domain.casefold()
+    domain_rows = [
+        row for row in evidence_rows
+        if row.get("source") == source and row.get("domain", "").casefold() == normalized_domain
+    ]
+    if not domain_rows:
+        return "missing", None
+    sourcewide_rows = [
+        row for row in evidence_rows
+        if row.get("source") == source
+        and row.get("domain") == "*"
+        and "control query" not in row.get("notes", "").casefold()
+    ]
+    states: list[tuple[str, str | None]] = []
+    for query in expected_queries:
+        normalized_query = normalize_query(query)
+        matches = [
+            row for row in domain_rows
+            if normalize_query(row.get("query", "")) == normalized_query
+        ]
+        state_row = (
+            max(matches, key=lambda row: (row.get("utc_timestamp", ""), row.get("evidence_id", "")))
+            if matches
+            else max(sourcewide_rows, key=lambda row: (row.get("utc_timestamp", ""), row.get("evidence_id", "")))
+            if sourcewide_rows
+            else None
+        )
+        if state_row is None or not _valid_record_time_and_url(state_row):
+            return "missing", None
+        status = state_row.get("result_status", "")
+        if status in {"no_obvious_match", "possible_conflict"}:
+            if not (state_row.get("result_url") or state_row.get("proof_path")):
+                return "missing", None
+            states.append(("completed", None))
+        elif status in {"blocked", "unverified"}:
+            raw_index = {
+                item.get("evidence_id", ""): item
+                for item in evidence_rows
+                if item.get("evidence_id")
+            }
+            reason = _refusal_reason_category(state_row, raw_index)
+            if reason is None:
+                return "missing", None
+            states.append(("refused", reason))
+        else:
+            return "missing", None
+    refusal_reasons = [reason for state, reason in states if state == "refused" and reason]
+    if refusal_reasons:
+        return "refused", sorted(set(refusal_reasons))[0]
+    return "completed", None
+
+
+def _valid_record_time_and_url(row: dict[str, str]) -> bool:
+    try:
+        parsed = datetime.fromisoformat(row.get("utc_timestamp", "").replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    source_url = urlparse(row.get("source_url", ""))
+    return (
+        parsed.tzinfo is not None
+        and parsed.utcoffset() is not None
+        and parsed.utcoffset().total_seconds() == 0
+        and source_url.scheme in {"http", "https"}
+        and bool(source_url.netloc)
+    )
+
+
+def _print_completion_counts(
+    counts: dict[str, dict[str, object]], needs_legal_review: int | str
+) -> None:
+    for source in REQUIRED_SOURCES:
+        source_counts = counts[source]
+        reasons = source_counts["refusal_reasons"]
+        assert isinstance(reasons, Counter)
+        reason_text = ", ".join(
+            f"{reason}={count}" for reason, count in sorted(reasons.items())
+        )
+        refused_text = f"refused={source_counts['refused']}"
+        if reason_text:
+            refused_text += f" ({reason_text})"
+        print(
+            f"{source}: completed={source_counts['completed']}, {refused_text}, "
+            f"missing={source_counts['missing']}"
+        )
+    print(f"Needs legal review names: {needs_legal_review}")
+
+
+def _completion_failure_counts(
+    *,
+    shortlist_path: str | Path,
+    trademark_evidence_path: str | Path,
+    candidates_path: str | Path,
+    trademark_summary_path: str | Path,
+) -> tuple[dict[str, dict[str, object]], int | str]:
+    """Best-effort counts so completion-mode failures still report source states."""
+
+    try:
+        shortlist_rows = _read_csv(shortlist_path, set(SHORTLIST_FIELDS), "shortlist")
+        top_rows = [
+            row for row in sorted(shortlist_rows, key=lambda item: int(item["rank"]))
+            if int(row["rank"]) <= 100
+        ]
+        _candidate_map, query_manifest = read_candidate_context(candidates_path)
+        evidence_rows = _read_csv(
+            trademark_evidence_path,
+            set(TRADEMARK_EVIDENCE_FIELDS) - {"proof_kind", "proof_path"},
+            "trademark evidence",
+        )
+        proof_root = Path(trademark_evidence_path).parent
+        try:
+            evidence_index = validate_evidence_rows(evidence_rows, proof_root)
+            counts, _outcomes = _completion_source_counts(
+                top_rows, evidence_rows, evidence_index, query_manifest, proof_root
+            )
+        except ValueError:
+            counts = {
+                source: {
+                    "completed": 0,
+                    "refused": 0,
+                    "missing": 0,
+                    "refusal_reasons": Counter(),
+                }
+                for source in REQUIRED_SOURCES
+            }
+            for row in top_rows:
+                domain = row["domain"].casefold()
+                for source in REQUIRED_SOURCES:
+                    state, reason = _fallback_pair_outcome(
+                        domain,
+                        source,
+                        query_manifest.get(domain, ()),
+                        evidence_rows,
+                    )
+                    counts[source][state] = int(counts[source][state]) + 1
+                    reasons = counts[source]["refusal_reasons"]
+                    assert isinstance(reasons, Counter)
+                    if state == "refused" and reason:
+                        reasons[reason] += 1
+        top_domains = {row["domain"].casefold() for row in top_rows}
+        summary_rows = _read_csv(
+            trademark_summary_path, {"domain", "status"}, "trademark summary"
+        )
+        needs_legal_review = sum(
+            row["domain"].casefold() in top_domains
+            and row["status"] == "needs legal review"
+            for row in summary_rows
+        )
+        return counts, needs_legal_review
+    except (OSError, ValueError, KeyError):
+        counts = {
+            source: {
+                "completed": 0,
+                "refused": 0,
+                "missing": "unknown",
+                "refusal_reasons": Counter(),
+            }
+            for source in REQUIRED_SOURCES
+        }
+        return counts, "unavailable"
+
+
+def _completion_issues(
+    top_rows: list[dict[str, str]],
+    shortlist: dict[str, dict[str, str]],
+    scores: dict[str, dict[str, str]],
+    summary_map: dict[str, dict[str, str]],
+    opportunities: dict[str, dict[str, str]],
+    evidence_rows: list[dict[str, str]],
+    outcomes: dict[tuple[str, str], str],
+) -> list[str]:
+    issues: list[str] = []
+    if not top_rows:
+        issues.append("the final shortlist has no top rows to validate")
+
+    for row in top_rows:
+        domain = row["domain"].casefold()
+        summary = summary_map.get(domain)
+        opportunity = opportunities[domain]
+        pair_states = [outcomes[(domain, source)] for source in REQUIRED_SOURCES]
+        complete = all(state == "completed" for state in pair_states)
+        incomplete = any(state != "completed" for state in pair_states)
+        conflict = any(
+            item["domain"].casefold() == domain
+            and item["result_status"] == "possible_conflict"
+            for item in evidence_rows
+        )
+
+        if any(state == "missing" for state in pair_states):
+            missing_sources = [
+                source for source in REQUIRED_SOURCES if outcomes[(domain, source)] == "missing"
+            ]
+            issues.append(f"missing outcome pair(s) for {domain}: {', '.join(missing_sources)}")
+        if summary is None:
+            issues.append(f"top name has no trademark summary: {domain}")
+        else:
+            actual_status = summary["status"]
+            actual_score = int(summary["trademark_score"])
+            if conflict:
+                expected_status, expected_score = "needs legal review", 25
+            elif complete:
+                expected_status, expected_score = "limited_screen_no_obvious_match", 85
+            else:
+                expected_status, expected_score = "blocked or unverified", 40
+            status_matches = (
+                actual_status in {"blocked", "unverified"}
+                if expected_status == "blocked or unverified"
+                else actual_status == expected_status
+            )
+            if actual_score != expected_score or not status_matches:
+                issues.append(
+                    f"{domain} has {actual_status}/{actual_score}; expected "
+                    f"{expected_status}/{expected_score} from source outcomes"
+                )
+
+            expected_artifact_score = expected_score
+            for artifact_name, artifact_row in (
+                ("shortlist", shortlist[domain]),
+                ("scores", scores[domain]),
+                ("opportunities", opportunity),
+            ):
+                if int(artifact_row["trademark"]) != expected_artifact_score:
+                    issues.append(
+                        f"{artifact_name} trademark score for {domain} is not {expected_artifact_score}"
+                    )
+
+        for artifact_name, artifact_row in (
+            ("opportunity", opportunity),
+            ("shortlist", shortlist[domain]),
+        ):
+            if artifact_row.get("trademark_status") == "not yet screened":
+                issues.append(f"top-100 {artifact_name} is still not yet screened: {domain}")
+
+        for artifact_name, artifact_row in (
+            ("summary", summary or {}),
+            ("opportunity", opportunity),
+            ("shortlist", shortlist[domain]),
+        ):
+            if any(_claims_clearance(value) for value in artifact_row.values()):
+                qualifier = " despite incomplete sources" if incomplete else ""
+                issues.append(f"{artifact_name} claims {domain} is clear{qualifier}")
+
+    return issues
+
+
 def validate_research(
     *,
     shortlist_path: str | Path,
@@ -198,8 +609,9 @@ def validate_research(
     opportunities_path: str | Path,
     top_n: int = 100,
     candidates_path: str | Path = DEFAULT_CANDIDATES_PATH,
+    completion_mode: bool = False,
 ) -> int:
-    """Validate artifact structure and flag unresolved live-search coverage."""
+    """Validate structure, then apply strict search or honest-completion checks."""
 
     try:
         shortlist_rows = _read_csv(shortlist_path, set(SHORTLIST_FIELDS), "shortlist")
@@ -351,7 +763,12 @@ def validate_research(
             if summary is None and (row["trademark_coverage"] or row["trademark_evidence_ids"]):
                 raise ValueError(f"unscreened opportunity has fabricated trademark provenance for {domain}")
 
-        top_rows = sorted(shortlist_rows, key=lambda row: int(row["rank"]))[: min(top_n, len(shortlist_rows))]
+        coverage_limit = 100 if completion_mode else top_n
+        top_rows = [
+            row
+            for row in sorted(shortlist_rows, key=lambda item: int(item["rank"]))
+            if int(row["rank"]) <= coverage_limit
+        ]
         missing = [row["domain"] for row in top_rows if row["domain"].casefold() not in summary_map]
         counts, unresolved = _screening_counts(
             top_rows,
@@ -367,10 +784,41 @@ def validate_research(
             for source in REQUIRED_SOURCES
         )
         print(f"Research structure PASS: {len(shortlist_rows)} shortlist rows; {len(valuation_rows)} valuations; {len(opportunities_rows)} joined rows.")
-        print(f"Final top-{len(top_rows)} trademark query coverage: {count_text}")
+        if not completion_mode:
+            print(f"Final top-{len(top_rows)} trademark query coverage: {count_text}")
         if missing:
             unresolved = True
             print(f"Unresolved top-{len(top_rows)} domains without a trademark summary: {', '.join(missing[:10])}")
+
+        if completion_mode:
+            completion_counts, outcomes = _completion_source_counts(
+                top_rows,
+                trademark_evidence_rows,
+                trademark_evidence,
+                query_manifest,
+                Path(trademark_evidence_path).parent,
+            )
+            issues = _completion_issues(
+                top_rows,
+                shortlist,
+                scores,
+                summary_map,
+                opportunities,
+                trademark_evidence_rows,
+                outcomes,
+            )
+            needs_legal_review = sum(
+                summary_map.get(row["domain"].casefold(), {}).get("status")
+                == "needs legal review"
+                for row in top_rows
+            )
+            _print_completion_counts(completion_counts, needs_legal_review)
+            if issues:
+                print(f"COMPLETION-MODE FAIL: {'; '.join(issues)}")
+                return 2
+            print("COMPLETION-MODE PASS")
+            return 0
+
         if unresolved:
             print("BLOCKED: required trademark query coverage is unresolved; blocked attempts do not count as completed per-domain searches.", file=sys.stderr)
             return 2
@@ -378,5 +826,14 @@ def validate_research(
         return 0
     except (OSError, ValueError) as exc:
         print(f"Research validation failed: {exc}", file=sys.stderr)
+        if completion_mode:
+            failure_counts, needs_legal_review = _completion_failure_counts(
+                shortlist_path=shortlist_path,
+                trademark_evidence_path=trademark_evidence_path,
+                candidates_path=candidates_path,
+                trademark_summary_path=trademark_summary_path,
+            )
+            _print_completion_counts(failure_counts, needs_legal_review)
+            print(f"COMPLETION-MODE FAIL: structural validation failed: {exc}")
         return 2
 

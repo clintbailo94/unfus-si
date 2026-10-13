@@ -195,6 +195,19 @@ def test_workbook_exports_latest_joins_numeric_cells_and_header_only_unverified(
         row[methodology_columns["Topic"] - 1] == "Demand root: pay"
         for row in methodology.iter_rows(min_row=2, values_only=True)
     )
+    methodology_rows = list(methodology.iter_rows(min_row=2, values_only=True))
+    manual_checks = next(
+        row for row in methodology_rows
+        if row[methodology_columns["Topic"] - 1] == "Manual trademark checks the owner can do"
+    )
+    assert "https://www.tmdn.org/tmview/" in manual_checks[methodology_columns["Details"] - 1]
+    assert "REWORK1-USPTO-00259" in manual_checks[methodology_columns["Details"] - 1]
+    completion_mode = next(
+        row for row in methodology_rows
+        if row[methodology_columns["Topic"] - 1] == "Completion-mode research validation"
+    )
+    assert "--completion-mode" in completion_mode[methodology_columns["Details"] - 1]
+    assert "Missing pairs fail" in completion_mode[methodology_columns["Details"] - 1]
 
     shortlist = normal["Shortlist"]
     headers = [cell.value for cell in shortlist[1]]

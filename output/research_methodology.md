@@ -172,7 +172,34 @@ The similarity rule flags an identical word mark, whole-word containment of or b
 
 Trademark component values use one mapping in `si_domains/scoring.py` and `si_domains/trademarks.py`: all three sources complete with no obvious match = 85; any possible conflict = 25; incomplete, blocked, unverified, or not yet screened = 40. The 40 score is explicitly below clear and above conflict, without weight renormalization: unknown risk is penalized relative to a clean screen, and a conflict is penalized most. A screened-clear name could gain up to 4.5 weighted points over an unscreened name, so new top-100 entrants are checked in subsequent rounds. None of these scores is legal clearance.
 
-`validate-research` exits **2** on this snapshot. Source counts are: TMview: 0 complete, 0 query-blocked, 100 unverified/missing; UKIPO: 0 complete, 100 query-blocked, 0 unverified/missing; USPTO: 56 complete, 44 query-blocked, 0 unverified/missing. TMview and UKIPO are incomplete; USPTO is also partial. `validate-delivery` is a separate structural check and can pass while research remains blocked. This is not comprehensive phonetic, class, national-office, or worldwide clearance.
+`validate-research` in strict mode exits **2** on this snapshot. Source counts are: TMview: 0 complete, 0 query-blocked, 100 unverified/missing; UKIPO: 0 complete, 100 query-blocked, 0 unverified/missing; USPTO: 56 complete, 44 query-blocked, 0 unverified/missing. TMview and UKIPO are incomplete; USPTO is also partial. `validate-delivery` is a separate structural check and can pass while research remains blocked. This is not comprehensive phonetic, class, national-office, or worldwide clearance.
+
+### Manual trademark checks the owner can do
+
+Official search pages: [TMview](https://www.tmdn.org/tmview/),
+[UKIPO](https://trademarks.ipo.gov.uk/ipo-tmtext), and
+[USPTO](https://tmsearch.uspto.gov/). TMview automated access is documented as
+unavailable after its probes closed before an HTTP response at
+2026-10-13T18:02:42Z (`REWORK1-TMVIEW-PROBES`; earlier `PKGD-0002` at
+2026-10-13T17:09:22Z). UKIPO returned HTTP 403 Service Captcha at
+2026-10-13T17:09:52Z (`PKGD-0003`). No further TMview or UKIPO attempts were
+made. USPTO screening stopped after one HTTP 403 at 2026-10-13T18:05:11Z
+(`REWORK1-USPTO-00259`; source-stop record `REWORK1-USPTO-SOURCE-STOP`). No
+USPTO resume was attempted here; a later cooled-down pass belongs to the
+separate PKG-G package. No result is a clearance.
+
+`validate-research --completion-mode` runs the same structural checks and then
+requires every top-100 name/source pair to have a recorded outcome. A pair
+must have completed exact and near searches, or dated blocked/unverified
+records with an official source URL and a note naming the refusal (HTTP status,
+CAPTCHA, connection closed, or a source-stop evidence ID). Missing pairs fail.
+Only three completed no-match sources may score 85; any possible conflict
+must score 25; incomplete or refused sources score 40 unless a conflict takes
+precedence. Every top-100 opportunity must have a trademark status other than
+`not yet screened`. The command prints per-source completed, refused-by-reason,
+and missing counts plus the needs-legal-review total. It makes no network
+requests and does not change strict mode, which still exits 2 until required
+query sets are complete.
 
 ## Offline rebuild and validation
 
@@ -190,6 +217,7 @@ python -m si_domains opportunities --shortlist output/shortlist.csv --scores out
 python -m si_domains export --out output/si_domains_ranked.xlsx
 python -m si_domains validate-delivery --workbook output/si_domains_ranked.xlsx --candidates data/candidates.csv
 python -m si_domains validate-research --candidates data/candidates.csv
+python -m si_domains validate-research --candidates data/candidates.csv --completion-mode
 ```
 
-The strict research validator requires a real exact and near-query result per required source for each final top-100 label; blocked and unverified rows never complete coverage. Structural delivery checks compare workbook cells and evidence joins with current CSV snapshots. They do not establish trademark clearance, comparable-sale validity, registrar pricing, or successful registration. The score and rationale are ranking heuristics only.
+The strict research validator requires a real exact and near-query result per required source for each final top-100 label; blocked and unverified rows never complete coverage. Completion mode checks outcome-record presence and the consistency of statuses and scores; it does not count refusals as searches or establish trademark clearance. Structural delivery checks compare workbook cells and evidence joins with current CSV snapshots. They do not establish comparable-sale validity, registrar pricing, or successful registration. The score and rationale are ranking heuristics only.
