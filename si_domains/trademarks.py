@@ -371,10 +371,25 @@ def aggregate_trademark_rows(
         else:
             status, score = "unverified", 70
 
-        blocked_sources = [source for source in REQUIRED_SOURCES if source_states[source] == "blocked"]
+        query_blocked_sources = [
+            source for source in REQUIRED_SOURCES if source_coverage[source]["query_blocked"]
+        ]
+        sourcewide_blocked_sources = [
+            source for source in REQUIRED_SOURCES if source_coverage[source]["sourcewide_blocked"]
+        ]
+        sourcewide_only_sources = [
+            source for source in sourcewide_blocked_sources if source not in query_blocked_sources
+        ]
+        sourcewide_mixed_sources = [
+            source for source in sourcewide_blocked_sources if source in query_blocked_sources
+        ]
         limitations = "Exact-word/public UI screen only; no comprehensive phonetic, class, or global coverage."
-        if blocked_sources:
-            limitations += " Blocked sources: " + ", ".join(blocked_sources) + "; no per-domain query ran there."
+        if query_blocked_sources:
+            limitations += " Required per-domain queries blocked: " + ", ".join(query_blocked_sources) + "."
+        if sourcewide_only_sources:
+            limitations += " Blocked sources: " + ", ".join(sourcewide_only_sources) + "; no per-domain query ran there."
+        if sourcewide_mixed_sources:
+            limitations += " Source-wide refusal also prevented missing required queries for: " + ", ".join(sourcewide_mixed_sources) + "."
         if "unverified" in source_states.values():
             unknown_sources = [source for source in REQUIRED_SOURCES if source_states[source] == "unverified"]
             limitations += " Unverified sources: " + ", ".join(unknown_sources) + "; no no-match conclusion."

@@ -84,6 +84,13 @@ spaces and uses a short curated expansion for fused phrase starts, so
 per-domain requests. UKIPO's 100 blocked domains are affected by one
 source-wide 403 record; no 100 individual requests were made.
 
+Coverage classifications are exclusive per domain/source pair. A required
+per-domain query refusal takes priority over a source-wide refusal affecting a
+different missing query; the summary preserves both facts. Any per-domain
+query refusal leaves required coverage unresolved even when other specified
+sources completed their queries. A pure source-wide refusal remains separately
+counted and does not invalidate complete searches at accessible sources.
+
 For query provenance, an official result URL must lead to a different result
 path or carry a recognized search parameter whose value matches that row's
 query. A homepage with a tracking parameter or fragment is not proof. When a

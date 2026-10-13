@@ -400,3 +400,94 @@ def test_validator_rejects_research_join_drift(tmp_path, capsys, defect, expecte
     assert result == 2
     assert expected_diagnostic in report.err
 
+
+@pytest.mark.parametrize(
+    ("scope", "expected_exit", "expected_status", "expected_score"),
+    [
+        ("per_query", 2, "blocked", "70"),
+        ("sourcewide", 0, "limited_screen_no_obvious_match", "80"),
+        ("mixed", 2, "blocked", "70"),
+    ],
+)
+def test_query_specific_refusals_remain_unresolved_with_sourcewide_context(
+    tmp_path, capsys, scope, expected_exit, expected_status, expected_score
+):
+    artifacts = _single_domain_research(tmp_path, screened=True)
+    evidence = _read(artifacts["evidence"])
+    if scope == "sourcewide":
+        evidence[0].update(
+            result_status="blocked",
+            result_url="",
+            domain="*",
+            query="source access check",
+            notes="Synthetic source-wide refusal; no per-domain query ran.",
+        )
+    else:
+        evidence[0].update(
+            result_status="blocked",
+            result_url="",
+            notes="Synthetic query-specific refusal; no real search was performed.",
+        )
+    if scope == "mixed":
+        candidate = artifacts["candidate"]
+        candidate.update(category="domain_hacks", seed="novarasee")
+        _write_csv(artifacts["candidates"], CANDIDATE_FIELDS, [candidate])
+        evidence.extend({
+            **row,
+            "evidence_id": f"{row['evidence_id']}-seed",
+            "query": "novarasee",
+            "result_url": f"{row['source_url']}?query=novarasee",
+        } for row in evidence[1:])
+        evidence.append({
+            **evidence[0], "evidence_id": "TMV-SOURCE-ACCESS", "domain": "*",
+            "query": "source access check",
+            "notes": "Synthetic source-wide refusal; no per-domain query ran.",
+        })
+
+    _write_csv(artifacts["evidence"], list(evidence[0]), evidence)
+    write_trademark_summary(
+        artifacts["evidence"],
+        artifacts["shortlist"],
+        artifacts["summary"],
+        candidates_path=artifacts["candidates"],
+    )
+    summary = _read(artifacts["summary"])[0]
+    assert summary["status"] == expected_status
+    assert summary["trademark_score"] == expected_score
+    if scope == "sourcewide":
+        assert "Blocked sources: TMview; no per-domain query ran there." in summary["limitations"]
+    else:
+        assert "Required per-domain queries blocked: TMview." in summary["limitations"]
+    if scope == "mixed":
+        assert "Source-wide refusal also prevented missing required queries for: TMview." in summary["limitations"]
+
+    score = score_domain(
+        artifacts["candidate"],
+        trademark_override=int(summary["trademark_score"]),
+        trademark_status=summary["status"],
+    )
+    _write_csv(artifacts["scores"], list(SCORE_FIELDS), [{field: str(score[field]) for field in SCORE_FIELDS}])
+    shortlist = _read(artifacts["shortlist"])
+    shortlist[0].update({field: str(score[field]) for field in SCORE_FIELDS if field != "domain"})
+    _write_csv(artifacts["shortlist"], list(SHORTLIST_FIELDS), shortlist)
+    write_opportunities(artifacts["shortlist"], artifacts["scores"], artifacts["valuations"], artifacts["summary"], artifacts["opportunities"])
+
+    result = validate_research(**{
+        "shortlist_path": artifacts["shortlist"], "scores_path": artifacts["scores"],
+        "valuation_path": artifacts["valuations"], "valuation_evidence_path": artifacts["valuation_evidence"],
+        "trademark_evidence_path": artifacts["evidence"], "trademark_summary_path": artifacts["summary"],
+        "opportunities_path": artifacts["opportunities"], "candidates_path": artifacts["candidates"], "top_n": 1,
+    })
+    report = capsys.readouterr()
+    assert result == expected_exit
+    sourcewide_count = int(scope == "sourcewide")
+    query_blocked_count = int(scope != "sourcewide")
+    assert (
+        f"TMview: completed_queries=0, sourcewide_blocked_domains={sourcewide_count}, "
+        f"query_blocked_domains={query_blocked_count}, unverified_or_missing_domains=0"
+    ) in report.out
+    if expected_exit == 2:
+        assert "BLOCKED: required trademark query coverage is unresolved" in report.err
+    else:
+        assert "Research validation PASS" in report.out
+
