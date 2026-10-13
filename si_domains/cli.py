@@ -25,9 +25,7 @@ SLEEP = time.sleep
 _RULE_CLASSIFICATIONS = frozenset(
     {"invalid_syntax", "reserved", "restricted", "premium"}
 )
-_WHOIS_COOLDOWN_ERRORS = frozenset(
-    {"connection_error", "timeout", "empty_response", "rate_limited"}
-)
+_WHOIS_RETRY_ERRORS = frozenset({"connection_error", "timeout", "empty_response"})
 
 
 def _positive_limit(value: str) -> int:
@@ -144,7 +142,7 @@ def _time_budget_expired(args: argparse.Namespace, started: float) -> bool:
 
 
 class WhoisRateLimiter:
-    """Serialize WHOIS query starts and adapt after transport failures."""
+    """Serialize WHOIS query starts and adapt to sustained failures."""
 
     def __init__(self, min_interval: float) -> None:
         self.configured_min_interval = float(min_interval)
@@ -155,6 +153,8 @@ class WhoisRateLimiter:
             raise ValueError("min_interval must be a finite number of at least 1 second")
         self.min_interval = self.configured_min_interval
         self._last_start: float | None = None
+        self._consecutive_failures = 0
+        self._consecutive_successes = 0
 
     def wait(self, *, deadline: float | None = None) -> bool:
         now = MONOTONIC()
@@ -182,6 +182,21 @@ class WhoisRateLimiter:
             self.configured_min_interval,
             min(6.0, self.min_interval * 1.5),
         )
+
+    def record_failure(self, *, rate_limited: bool = False) -> None:
+        self._consecutive_failures += 1
+        self._consecutive_successes = 0
+        if rate_limited or self._consecutive_failures >= 2:
+            self.increase_after_failure()
+
+    def record_success(self) -> None:
+        self._consecutive_failures = 0
+        self._consecutive_successes += 1
+        if self._consecutive_successes % 50 == 0:
+            self.min_interval = max(
+                self.configured_min_interval,
+                self.min_interval / 1.5,
+            )
 
 
 def _print_time_budget(checked: int, skipped: int) -> None:
@@ -404,11 +419,14 @@ def _run_whois_check(args: argparse.Namespace) -> int:
     checked = 0
     skipped = 0
     requests_started = 0
+    retries = 0
     cooldown_cycles = 0
     cooldown_waits = 0
     awaiting_cooldown_result = False
+    consecutive_unverified = 0
     results: Counter[str] = Counter()
-    errors: Counter[str] = Counter()
+    attempt_errors: Counter[str] = Counter()
+    final_errors: Counter[str] = Counter()
     limiter = WhoisRateLimiter(args.min_interval)
     deadline = (
         started + args.max_minutes * 60 if args.max_minutes is not None else None
@@ -426,26 +444,52 @@ def _run_whois_check(args: argparse.Namespace) -> int:
                 continue
             if args.limit is not None and checked >= args.limit:
                 break
-            if not limiter.wait(deadline=deadline):
-                _print_time_budget(checked, skipped)
-                return 0
+            attempt = 0
+            while True:
+                if not limiter.wait(deadline=deadline):
+                    _print_time_budget(checked, skipped)
+                    return 0
 
-            result = whois.whois_check(
-                label,
-                connect=whois.socket.create_connection,
-            )
+                if attempt:
+                    retries += 1
+                result = whois.whois_check(
+                    label,
+                    connect=whois.socket.create_connection,
+                )
+                attempt += 1
+                requests_started += 1
+                if result.error:
+                    attempt_errors[result.error] += 1
+
+                if result.error not in _WHOIS_RETRY_ERRORS or attempt >= 3:
+                    break
+
+                backoff = (10.0, 30.0)[attempt - 1]
+                if deadline is not None:
+                    remaining_budget = deadline - MONOTONIC()
+                    if remaining_budget <= 0:
+                        _print_time_budget(checked, skipped)
+                        return 0
+                    if remaining_budget <= backoff:
+                        SLEEP(remaining_budget)
+                        _print_time_budget(checked, skipped)
+                        return 0
+                SLEEP(backoff)
+
             store.append(category, result)
             checked += 1
-            requests_started += 1
             results[result.classification] += 1
             if result.error:
-                errors[result.error] += 1
-            if result.error in _WHOIS_COOLDOWN_ERRORS:
-                limiter.increase_after_failure()
+                final_errors[result.error] += 1
 
             if result.classification in {"not_registered", "registered"}:
+                limiter.record_success()
+                consecutive_unverified = 0
                 cooldown_cycles = 0
                 awaiting_cooldown_result = False
+            else:
+                limiter.record_failure(rate_limited=result.error == "rate_limited")
+                consecutive_unverified += 1
 
             if checked and checked % 50 == 0:
                 print(
@@ -459,7 +503,8 @@ def _run_whois_check(args: argparse.Namespace) -> int:
                     file=sys.stderr,
                 )
 
-            if result.error not in _WHOIS_COOLDOWN_ERRORS:
+            rate_limited = result.error == "rate_limited"
+            if not rate_limited and consecutive_unverified < 3:
                 continue
 
             if awaiting_cooldown_result:
@@ -473,8 +518,13 @@ def _run_whois_check(args: argparse.Namespace) -> int:
                 )
                 return 2
 
+            reason = (
+                "rate-limited notice"
+                if rate_limited
+                else "3 consecutive domains finished unverified"
+            )
             print(
-                f"WHOIS circuit breaker opened; cooling down for "
+                f"WHOIS circuit breaker opened after {reason}; cooling down for "
                 f"{args.cooldown_seconds:g} seconds "
                 f"(cycle {cooldown_cycles + 1}/3)",
                 file=sys.stderr,
@@ -491,6 +541,7 @@ def _run_whois_check(args: argparse.Namespace) -> int:
             if _time_budget_expired(args, started):
                 _print_time_budget(checked, skipped)
                 return 0
+            consecutive_unverified = 0
             awaiting_cooldown_result = True
     except KeyboardInterrupt:
         print(
@@ -502,7 +553,7 @@ def _run_whois_check(args: argparse.Namespace) -> int:
         elapsed = max(0.0, MONOTONIC() - started)
         requests_per_minute = requests_started * 60 / elapsed if elapsed else 0.0
         print(
-            f"Run totals: {requests_started} WHOIS requests; "
+            f"Run totals: {requests_started} WHOIS requests; {retries} retries; "
             f"{requests_per_minute:.1f} requests/min; {cooldown_waits} cooldown cycles; "
             f"adaptive interval {limiter.min_interval:g} seconds"
         )
@@ -512,10 +563,19 @@ def _run_whois_check(args: argparse.Namespace) -> int:
             f"registered={results['registered']}, "
             f"unverified={results['unverified']}"
         )
-        if errors:
+        if attempt_errors:
             print(
-                "WHOIS error codes: "
-                + ", ".join(f"{error}={count}" for error, count in sorted(errors.items()))
+                "WHOIS attempt error codes: "
+                + ", ".join(
+                    f"{error}={count}" for error, count in sorted(attempt_errors.items())
+                )
+            )
+        if final_errors:
+            print(
+                "WHOIS final error codes: "
+                + ", ".join(
+                    f"{error}={count}" for error, count in sorted(final_errors.items())
+                )
             )
 
     print(
