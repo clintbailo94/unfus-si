@@ -69,15 +69,30 @@ The source-wide access evidence records:
 Each source-wide record is linked by ID from the 100 affected summary rows, but
 is not counted as a completed query. Current top-100 per-source counts are:
 
-| Source | Completed per-domain queries (of 100) | Blocked top-100 domains | Unverified top-100 domains |
+| Source | Completed required-query sets (domain/source, of 100) | Blocked top-100 domains | Unverified top-100 domains |
 | --- | ---: | ---: | ---: |
 | TMview | 0 | 0 | 100 |
 | UKIPO | 0 | 100 | 0 |
 | USPTO | 0 | 0 | 100 |
 
-These are domain coverage counts, not counts of attempted per-domain requests.
-For example, UKIPO's 100 blocked domains are affected by one source-wide 403
-record; no 100 individual requests were made.
+These counts treat a domain/source pair as complete only when every required
+query for that source has a current result. A normal candidate requires its
+normalized exact label; a `domain_hacks` candidate also requires its recorded
+completion seed. Candidate seed normalization replaces `+` separators with
+spaces and uses a short curated expansion for fused phrase starts, so
+`tryto + see` becomes `try to see`. The counts are not counts of attempted
+per-domain requests. UKIPO's 100 blocked domains are affected by one
+source-wide 403 record; no 100 individual requests were made.
+
+For query provenance, an official result URL must lead to a different result
+path or carry a recognized search parameter whose value matches that row's
+query. A homepage with a tracking parameter or fragment is not proof. When a
+public UI has no stable result link, `trademark_evidence.csv` may instead add
+optional `proof_kind` (`screenshot` or `official_export`) and `proof_path`
+columns. The path is relative to the evidence CSV's `output/` directory, must
+stay inside that directory, and must name an existing file. The row's domain,
+source, and query associate that proof with the search. These checks establish
+mechanical provenance only; a reviewer still inspects the result or image.
 
 Thus the completed-query count is **0/100 for each specified source**. The
 browser-surface failure is environment-wide context, not a database query or
@@ -105,34 +120,36 @@ advice.
 ## Offline build and validation
 
 After updating the curated evidence CSVs with actual sourced records, rebuild
-in this order:
+in this order. The first three commands create a summary for the current top
+100, inject its scores, and regenerate the shortlist. The next three refresh
+the summary for the re-ranked top 100. Compare membership after each scoring
+pass; if a new name enters, research it where access permits, append the result,
+and repeat until the summary covers the final membership. A blocked source does
+not become complete through repetition.
 
 ```powershell
-python -m si_domains trademark-summary --shortlist output/shortlist.csv --evidence output/trademark_evidence.csv --out output/trademark_summary.csv --top-n 100
+python -m si_domains trademark-summary --shortlist output/shortlist.csv --candidates data/candidates.csv --evidence output/trademark_evidence.csv --out output/trademark_summary.csv --top-n 100
 python -m si_domains score --trademark-evidence output/trademark_summary.csv --trademark-source-evidence output/trademark_evidence.csv
 python -m si_domains shortlist
-python -m si_domains trademark-summary --shortlist output/shortlist.csv --evidence output/trademark_evidence.csv --out output/trademark_summary.csv --top-n 100
+python -m si_domains trademark-summary --shortlist output/shortlist.csv --candidates data/candidates.csv --evidence output/trademark_evidence.csv --out output/trademark_summary.csv --top-n 100
 python -m si_domains score --trademark-evidence output/trademark_summary.csv --trademark-source-evidence output/trademark_evidence.csv
 python -m si_domains shortlist
 python -m si_domains valuations --shortlist output/shortlist.csv --evidence output/valuation_evidence.csv --out output/valuations.csv
 python -m si_domains opportunities --shortlist output/shortlist.csv --scores output/scores.csv --valuations output/valuations.csv --trademark-summary output/trademark_summary.csv --out output/opportunities.csv
-python -m si_domains validate-research
+python -m si_domains validate-research --candidates data/candidates.csv
 ```
 
-After each re-score, compare the final top-100 domain set to the summary. Search
-new entrants where an official source permits a query, add per-domain evidence,
-and repeat until membership is current. Do not fill a blocked source with
-synthetic result rows.
+Do not fill a blocked source with synthetic result rows.
 
-The validator checks CSV schemas, duplicate IDs/domains, score arithmetic with
-the exact configured weights, shortlist/valuation/opportunity domain and rank
-sets, numeric range currencies and eligible completed-sale references,
-trademark statuses and evidence mappings, and query coverage of the final top
-100. It reports source-wide access failures separately from completed queries
-and exits unsuccessfully when required coverage remains unresolved. These are
-structural checks: a reviewer must still inspect the cited public pages and
-decide whether a sale is genuinely comparable or a mark is relevant and
-current.
+The validator checks CSV schemas, duplicate IDs/domains, candidate-to-score
+relationships, exact Decimal weighted totals and injected trademark scores,
+shortlist score/length/domain order and caps, all copied opportunity fields,
+valuation range citations, trademark summary mappings, required label/seed
+queries, and query proof references. It reports source-wide access failures
+separately from complete per-domain query sets and exits unsuccessfully when
+required coverage remains unresolved. These structural checks cannot confirm
+that a cited sale is genuinely comparable or that a mark result is legally
+relevant; a reviewer must inspect the cited pages and proof files.
 
 RDAP `potentially_unregistered` and WHOIS `not_registered` are timestamped
 observations from two registry channels. They are not registrar checkout

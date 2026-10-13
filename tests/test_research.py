@@ -2,10 +2,13 @@ import csv
 from decimal import Decimal
 from pathlib import Path
 
+import pytest
+
 from si_domains.cli import main
 from si_domains.research import validate_research, write_opportunities
-from si_domains.scoring import weighted_total
-from si_domains.trademarks import write_trademark_summary
+from si_domains.scoring import SCORE_FIELDS, score_domain, weighted_total
+from si_domains.shortlist import SHORTLIST_FIELDS
+from si_domains.trademarks import TRADEMARK_SUMMARY_FIELDS, write_trademark_summary
 from si_domains.valuation import write_valuations
 
 
@@ -26,6 +29,99 @@ def _write_csv(path: Path, fields: list[str], rows: list[dict[str, str]]) -> Non
 def _read(path: Path) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8", newline="") as handle:
         return list(csv.DictReader(handle))
+
+
+def _single_domain_research(tmp_path: Path, *, screened: bool):
+    candidate = {
+        "domain_label": "novara",
+        "category": "technology",
+        "method": "concept",
+        "seed": "novara",
+        "tags": "",
+        "quality_score": "80",
+    }
+    candidates_path = tmp_path / "candidates.csv"
+    _write_csv(candidates_path, CANDIDATE_FIELDS, [candidate])
+    source_urls = {
+        "TMview": "https://www.tmdn.org/tmview/",
+        "UKIPO": "https://trademarks.ipo.gov.uk/ipo-tmtext",
+        "USPTO": "https://tmsearch.uspto.gov/",
+    }
+    evidence_path = tmp_path / "trademark_evidence.csv"
+    evidence_rows = [
+        {
+            "evidence_id": f"{source}-1",
+            "domain": "novara.si",
+            "source": source,
+            "jurisdiction": "synthetic",
+            "query": "novara",
+            "utc_timestamp": "2026-10-13T12:00:00Z",
+            "result_status": "no_obvious_match",
+            "source_url": source_url,
+            "result_url": f"{source_url}?query=novara",
+            "mark_number": "",
+            "mark_name": "",
+            "mark_status": "",
+            "classes": "",
+            "notes": "Synthetic validator fixture only.",
+        }
+        for source, source_url in source_urls.items()
+    ] if screened else []
+    _write_csv(evidence_path, TM_FIELDS, evidence_rows)
+
+    summary_path = tmp_path / "trademark_summary.csv"
+    shortlist_path = tmp_path / "shortlist.csv"
+    score_path = tmp_path / "scores.csv"
+    valuation_evidence_path = tmp_path / "valuation_evidence.csv"
+    valuation_path = tmp_path / "valuations.csv"
+    opportunity_path = tmp_path / "opportunities.csv"
+    if screened:
+        _write_csv(
+            shortlist_path,
+            ["rank", "domain"],
+            [{"rank": "1", "domain": "novara.si"}],
+        )
+        write_trademark_summary(
+            evidence_path, shortlist_path, summary_path, candidates_path=candidates_path
+        )
+        score = score_domain(
+            candidate,
+            trademark_override=80,
+            trademark_status="limited_screen_no_obvious_match",
+        )
+    else:
+        with summary_path.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=TRADEMARK_SUMMARY_FIELDS, lineterminator="\n")
+            writer.writeheader()
+        score = score_domain(candidate)
+
+    score_row = {field: str(score[field]) for field in SCORE_FIELDS}
+    _write_csv(score_path, list(SCORE_FIELDS), [score_row])
+    shortlist_row = {
+        "rank": "1",
+        "domain": "novara.si",
+        "category": score_row["category"],
+        "total": score_row["total"],
+        **{name: score_row[name] for name in ("brandability", "commercial", "shortness", "hack", "resale", "trademark")},
+        "rdap_timestamp": "2026-10-13T10:00:00Z",
+        "whois_timestamp": "2026-10-13T11:00:00Z",
+        "rationale": score_row["rationale"],
+    }
+    _write_csv(shortlist_path, list(SHORTLIST_FIELDS), [shortlist_row])
+    _write_csv(valuation_evidence_path, VALUATION_EVIDENCE_FIELDS, [])
+    write_valuations(shortlist_path, valuation_evidence_path, valuation_path)
+    write_opportunities(shortlist_path, score_path, valuation_path, summary_path, opportunity_path)
+    return {
+        "candidate": candidate,
+        "candidates": candidates_path,
+        "evidence": evidence_path,
+        "summary": summary_path,
+        "shortlist": shortlist_path,
+        "scores": score_path,
+        "valuation_evidence": valuation_evidence_path,
+        "valuations": valuation_path,
+        "opportunities": opportunity_path,
+    }
 
 
 def test_summary_injection_reranks_shortlist_and_joins_evidence(tmp_path, capsys):
@@ -87,7 +183,7 @@ def test_summary_injection_reranks_shortlist_and_joins_evidence(tmp_path, capsys
                 "utc_timestamp": "2026-10-13T12:00:00Z",
                 "result_status": "possible_conflict" if conflict else "no_obvious_match",
                 "source_url": source_urls[source],
-                "result_url": f"{source_urls[source]}?synthetic-query={label}",
+                "result_url": f"{source_urls[source]}?query={label}",
                 "mark_number": "SYNTH-1" if conflict else "",
                 "mark_name": "Synthetic test mark" if conflict else "",
                 "mark_status": "registered" if conflict else "",
@@ -95,7 +191,9 @@ def test_summary_injection_reranks_shortlist_and_joins_evidence(tmp_path, capsys
                 "notes": "Synthetic e2e evidence; not a real mark search.",
             })
     _write_csv(tm_evidence_path, TM_FIELDS, tm_rows)
-    assert write_trademark_summary(tm_evidence_path, domains_path, tm_summary_path) == 101
+    assert write_trademark_summary(
+        tm_evidence_path, domains_path, tm_summary_path, candidates_path=candidates_path
+    ) == 101
 
     assert main([
         "score", "--input", str(candidates_path), "--rdap-evidence", str(rdap_path),
@@ -138,6 +236,7 @@ def test_summary_injection_reranks_shortlist_and_joins_evidence(tmp_path, capsys
         trademark_evidence_path=tm_evidence_path,
         trademark_summary_path=tm_summary_path,
         opportunities_path=opportunities_path,
+        candidates_path=candidates_path,
     ) == 0
 
     # Source-wide access outcomes are provenance, not per-domain query results.
@@ -192,7 +291,12 @@ def test_summary_injection_reranks_shortlist_and_joins_evidence(tmp_path, capsys
         },
     ]
     _write_csv(tm_evidence_path, TM_FIELDS, global_rows)
-    assert write_trademark_summary(tm_evidence_path, domains_path, tm_summary_path) == len(labels)
+    assert main([
+        "trademark-summary", "--shortlist", str(domains_path),
+        "--candidates", str(candidates_path), "--evidence", str(tm_evidence_path),
+        "--out", str(tm_summary_path), "--top-n", str(len(labels)),
+    ]) == 0
+    assert len(_read(tm_summary_path)) == len(labels)
     assert all(row["status"] == "unverified" for row in _read(tm_summary_path))
     assert main([
         "score", "--input", str(candidates_path), "--rdap-evidence", str(rdap_path),
@@ -206,18 +310,93 @@ def test_summary_injection_reranks_shortlist_and_joins_evidence(tmp_path, capsys
     ]) == 0
     assert write_valuations(final_shortlist, valuation_evidence, valuations_path) == len(_read(final_shortlist))
     assert write_opportunities(final_shortlist, scores_path, valuations_path, tm_summary_path, opportunities_path) == len(_read(final_shortlist))
-    assert validate_research(
-        shortlist_path=final_shortlist,
-        scores_path=scores_path,
-        valuation_path=valuations_path,
-        valuation_evidence_path=valuation_evidence,
-        trademark_evidence_path=tm_evidence_path,
-        trademark_summary_path=tm_summary_path,
-        opportunities_path=opportunities_path,
-    ) == 2
+    assert main([
+        "validate-research", "--shortlist", str(final_shortlist),
+        "--scores", str(scores_path), "--valuations", str(valuations_path),
+        "--valuation-evidence", str(valuation_evidence),
+        "--trademark-evidence", str(tm_evidence_path),
+        "--trademark-summary", str(tm_summary_path),
+        "--opportunities", str(opportunities_path),
+        "--candidates", str(candidates_path), "--top-n", "100",
+    ]) == 2
     report = capsys.readouterr()
-    assert "TMview: completed_queries=0, sourcewide_blocked_domains=0, unverified_or_missing_domains=100" in report.out
-    assert "UKIPO: completed_queries=0, sourcewide_blocked_domains=100, unverified_or_missing_domains=0" in report.out
-    assert "USPTO: completed_queries=0, sourcewide_blocked_domains=0, unverified_or_missing_domains=100" in report.out
+    assert "TMview: completed_queries=0, sourcewide_blocked_domains=0, query_blocked_domains=0, unverified_or_missing_domains=100" in report.out
+    assert "UKIPO: completed_queries=0, sourcewide_blocked_domains=100, query_blocked_domains=0, unverified_or_missing_domains=0" in report.out
+    assert "USPTO: completed_queries=0, sourcewide_blocked_domains=0, query_blocked_domains=0, unverified_or_missing_domains=100" in report.out
     assert "BLOCKED: required trademark query coverage is unresolved" in report.err
+
+
+@pytest.mark.parametrize(
+    ("defect", "expected_diagnostic"),
+    [
+        ("shortlist_score_drift", "shortlist total does not match score row"),
+        ("opportunity_timestamp_drift", "opportunity rdap_timestamp does not match shortlist"),
+        ("opportunity_category_drift", "opportunity category does not match shortlist"),
+        ("opportunity_rationale_drift", "opportunity rationale does not match shortlist"),
+        ("summary_score_not_injected", "does not match limited_screen_no_obvious_match evidence (80)"),
+        ("unscreened_provenance_fabricated", "unscreened opportunity has fabricated trademark provenance"),
+    ],
+)
+def test_validator_rejects_research_join_drift(tmp_path, capsys, defect, expected_diagnostic):
+    screened = defect != "unscreened_provenance_fabricated"
+    artifacts = _single_domain_research(tmp_path, screened=screened)
+
+    if screened:
+        assert validate_research(
+            shortlist_path=artifacts["shortlist"],
+            scores_path=artifacts["scores"],
+            valuation_path=artifacts["valuations"],
+            valuation_evidence_path=artifacts["valuation_evidence"],
+            trademark_evidence_path=artifacts["evidence"],
+            trademark_summary_path=artifacts["summary"],
+            opportunities_path=artifacts["opportunities"],
+            candidates_path=artifacts["candidates"],
+            top_n=1,
+        ) == 0
+        capsys.readouterr()
+
+    shortlist = _read(artifacts["shortlist"])
+    opportunities = _read(artifacts["opportunities"])
+    if defect == "shortlist_score_drift":
+        shortlist[0]["total"] = "1.0"
+        _write_csv(artifacts["shortlist"], list(SHORTLIST_FIELDS), shortlist)
+    elif defect == "opportunity_timestamp_drift":
+        opportunities[0]["rdap_timestamp"] = "2000-01-01T00:00:00Z"
+        _write_csv(artifacts["opportunities"], list(opportunities[0]), opportunities)
+    elif defect == "opportunity_category_drift":
+        opportunities[0]["category"] = "invented"
+        _write_csv(artifacts["opportunities"], list(opportunities[0]), opportunities)
+    elif defect == "opportunity_rationale_drift":
+        opportunities[0]["rationale"] = "fabricated copied rationale"
+        _write_csv(artifacts["opportunities"], list(opportunities[0]), opportunities)
+    elif defect == "summary_score_not_injected":
+        baseline = score_domain(artifacts["candidate"])
+        scores = _read(artifacts["scores"])
+        scores[0] = {field: str(baseline[field]) for field in SCORE_FIELDS}
+        _write_csv(artifacts["scores"], list(SCORE_FIELDS), scores)
+        shortlist[0].update({field: str(baseline[field]) for field in SCORE_FIELDS if field != "domain"})
+        _write_csv(artifacts["shortlist"], list(SHORTLIST_FIELDS), shortlist)
+        write_opportunities(
+            artifacts["shortlist"], artifacts["scores"], artifacts["valuations"],
+            artifacts["summary"], artifacts["opportunities"],
+        )
+    else:
+        opportunities[0]["trademark_coverage"] = "TMview:no_obvious_match"
+        opportunities[0]["trademark_evidence_ids"] = "FABRICATED-1"
+        _write_csv(artifacts["opportunities"], list(opportunities[0]), opportunities)
+
+    result = validate_research(
+        shortlist_path=artifacts["shortlist"],
+        scores_path=artifacts["scores"],
+        valuation_path=artifacts["valuations"],
+        valuation_evidence_path=artifacts["valuation_evidence"],
+        trademark_evidence_path=artifacts["evidence"],
+        trademark_summary_path=artifacts["summary"],
+        opportunities_path=artifacts["opportunities"],
+        candidates_path=artifacts["candidates"],
+        top_n=1,
+    )
+    report = capsys.readouterr()
+    assert result == 2
+    assert expected_diagnostic in report.err
 

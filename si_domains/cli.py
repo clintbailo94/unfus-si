@@ -340,6 +340,7 @@ def build_parser() -> argparse.ArgumentParser:
         "trademark-summary", help="aggregate curated public trademark query evidence offline"
     )
     trademark_summary.add_argument("--shortlist", default=str(OUTPUT_DIR / "shortlist.csv"))
+    trademark_summary.add_argument("--candidates", default=str(DATA_DIR / "candidates.csv"))
     trademark_summary.add_argument("--evidence", default=str(OUTPUT_DIR / "trademark_evidence.csv"))
     trademark_summary.add_argument("--out", default=str(OUTPUT_DIR / "trademark_summary.csv"))
     trademark_summary.add_argument("--top-n", type=_positive_limit, default=100)
@@ -363,6 +364,7 @@ def build_parser() -> argparse.ArgumentParser:
     validate_research.add_argument("--trademark-evidence", default=str(OUTPUT_DIR / "trademark_evidence.csv"))
     validate_research.add_argument("--trademark-summary", default=str(OUTPUT_DIR / "trademark_summary.csv"))
     validate_research.add_argument("--opportunities", default=str(OUTPUT_DIR / "opportunities.csv"))
+    validate_research.add_argument("--candidates", default=str(DATA_DIR / "candidates.csv"))
     validate_research.add_argument("--top-n", type=_positive_limit, default=100)
 
     candidates = subparsers.add_parser("candidates", help="build or review offline .si label candidates")
@@ -870,7 +872,11 @@ def _run_trademark_summary(args: argparse.Namespace) -> int:
 
     try:
         count = write_trademark_summary(
-            args.evidence, args.shortlist, args.out, top_n=args.top_n
+            args.evidence,
+            args.shortlist,
+            args.out,
+            top_n=args.top_n,
+            candidates_path=args.candidates,
         )
     except (OSError, ValueError) as exc:
         print(f"Trademark summary failed: {exc}", file=sys.stderr)
@@ -905,6 +911,7 @@ def _run_validate_research(args: argparse.Namespace) -> int:
         trademark_summary_path=args.trademark_summary,
         opportunities_path=args.opportunities,
         top_n=args.top_n,
+        candidates_path=args.candidates,
     )
 
 

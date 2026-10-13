@@ -4,10 +4,14 @@ from __future__ import annotations
 
 import csv
 import re
+import unicodedata
 from collections import defaultdict
 from datetime import datetime
-from pathlib import Path
-from urllib.parse import urlparse
+from pathlib import Path, PurePosixPath
+from urllib.parse import parse_qsl, urlparse
+
+
+DEFAULT_CANDIDATES_PATH = Path(__file__).resolve().parents[1] / "data" / "candidates.csv"
 
 
 TRADEMARK_EVIDENCE_FIELDS = (
@@ -25,6 +29,8 @@ TRADEMARK_EVIDENCE_FIELDS = (
     "mark_status",
     "classes",
     "notes",
+    "proof_kind",
+    "proof_path",
 )
 TRADEMARK_SUMMARY_FIELDS = (
     "domain",
@@ -47,6 +53,18 @@ _OFFICIAL_HOSTS = {
     "UKIPO": ("ipo.gov.uk",),
     "USPTO": ("uspto.gov",),
 }
+_PROOF_KINDS = frozenset({"screenshot", "official_export"})
+_QUERY_PARAMETER_KEYS = frozenset(
+    {"q", "query", "search", "searchterm", "searchtext", "term", "text", "word", "input", "mark"}
+)
+_PHRASE_PREFIXES = {
+    "comeand": "come and",
+    "lets": "let's",
+    "letus": "let us",
+    "shallwe": "shall we",
+    "tryto": "try to",
+    "waitand": "wait and",
+}
 
 
 def _read_csv(path: str | Path, required: set[str], description: str) -> list[dict[str, str]]:
@@ -65,7 +83,98 @@ def _valid_utc_timestamp(value: str) -> bool:
     return parsed.tzinfo is not None and parsed.utcoffset() is not None and parsed.utcoffset().total_seconds() == 0
 
 
-def validate_evidence_rows(rows: list[dict[str, str]]) -> dict[str, dict[str, str]]:
+def normalize_query(value: str) -> str:
+    """Normalize case, Unicode width, plus separators, and repeated spaces."""
+
+    normalized = unicodedata.normalize("NFKC", value).casefold().replace("+", " ")
+    return " ".join(normalized.split())
+
+
+def normalize_seed(seed: str) -> str:
+    pieces = [normalize_query(piece) for piece in seed.split("+") if normalize_query(piece)]
+    if len(pieces) > 1:
+        pieces[0] = _PHRASE_PREFIXES.get(pieces[0].replace(" ", ""), pieces[0])
+        return normalize_query(" ".join(pieces))
+    return normalize_query(seed)
+
+
+def read_candidate_context(
+    path: str | Path = DEFAULT_CANDIDATES_PATH,
+) -> tuple[dict[str, dict[str, str]], dict[str, tuple[str, ...]]]:
+    """Load candidate metadata and its exact trademark-query manifest."""
+
+    rows = _read_csv(path, {"domain_label", "category", "seed"}, "candidate")
+    candidates: dict[str, dict[str, str]] = {}
+    queries: dict[str, tuple[str, ...]] = {}
+    for row in rows:
+        label = normalize_query(row.get("domain_label", ""))
+        domain = f"{label}.si"
+        if not _DOMAIN.fullmatch(domain) or domain in candidates:
+            raise ValueError(f"candidate file has an invalid or duplicate domain label: {label!r}")
+        expected = [label]
+        if row.get("category", "").casefold() == "domain_hacks":
+            seed = row.get("seed", "").strip()
+            if not seed:
+                raise ValueError(f"domain-hack candidate has no recorded completion seed: {domain}")
+            normalized_seed = normalize_seed(seed)
+            if not normalized_seed:
+                raise ValueError(f"domain-hack candidate has an invalid completion seed: {domain}")
+            if normalized_seed not in expected:
+                expected.append(normalized_seed)
+        candidates[domain] = row
+        queries[domain] = tuple(expected)
+    return candidates, queries
+
+
+def _resolve_proof(row: dict[str, str], proof_root: str | Path | None) -> Path | None:
+    kind = row.get("proof_kind", "").strip()
+    raw_path = row.get("proof_path", "").strip()
+    if not kind and not raw_path:
+        return None
+    evidence_id = row.get("evidence_id", "")
+    if not kind or not raw_path:
+        raise ValueError(f"trademark proof needs both proof_kind and proof_path: {evidence_id}")
+    if kind not in _PROOF_KINDS:
+        raise ValueError(f"invalid trademark proof_kind for {evidence_id}")
+    if proof_root is None:
+        raise ValueError(f"trademark proof cannot be resolved without an output directory: {evidence_id}")
+    if "\\" in raw_path or re.match(r"^[a-zA-Z]:", raw_path):
+        raise ValueError(f"trademark proof_path must be a relative output path: {evidence_id}")
+    relative = PurePosixPath(raw_path)
+    if relative.is_absolute() or not relative.parts or any(part in {".", ".."} for part in relative.parts):
+        raise ValueError(f"trademark proof_path must stay within the output directory: {evidence_id}")
+    root = Path(proof_root).resolve()
+    resolved = root.joinpath(*relative.parts).resolve()
+    if not resolved.is_relative_to(root) or not resolved.is_file():
+        raise ValueError(f"trademark proof file is missing or outside the output directory: {evidence_id}")
+    return resolved
+
+
+def _query_specific_result(row: dict[str, str]) -> bool:
+    result_url = row.get("result_url", "").strip()
+    if not result_url:
+        return False
+    source = urlparse(row.get("source_url", ""))
+    result = urlparse(result_url)
+    source_path = source.path.rstrip("/") or "/"
+    result_path = result.path.rstrip("/") or "/"
+    if result_path != source_path:
+        return True
+    expected = normalize_query(row.get("query", ""))
+    for key, value in parse_qsl(result.query, keep_blank_values=True):
+        normalized_key = re.sub(r"[^a-z]", "", key.casefold())
+        if normalized_key in _QUERY_PARAMETER_KEYS and normalize_query(value) == expected:
+            return True
+    return False
+
+
+def _has_query_proof(row: dict[str, str]) -> bool:
+    return bool(row.get("proof_path", "").strip()) or _query_specific_result(row)
+
+
+def validate_evidence_rows(
+    rows: list[dict[str, str]], proof_root: str | Path | None = None
+) -> dict[str, dict[str, str]]:
     """Check a curated evidence file and return its stable-ID index."""
 
     indexed: dict[str, dict[str, str]] = {}
@@ -84,6 +193,7 @@ def validate_evidence_rows(rows: list[dict[str, str]]) -> dict[str, dict[str, st
             raise ValueError(f"trademark evidence query is blank for {evidence_id}")
         if not _valid_utc_timestamp(row.get("utc_timestamp", "")):
             raise ValueError(f"trademark evidence timestamp must be UTC for {evidence_id}")
+        _resolve_proof(row, proof_root)
         for field in ("source_url",):
             parsed = urlparse(row.get(field, ""))
             if parsed.scheme not in {"http", "https"} or not parsed.netloc:
@@ -98,11 +208,12 @@ def validate_evidence_rows(rows: list[dict[str, str]]) -> dict[str, dict[str, st
                 raise ValueError(f"source-wide trademark attempt must say no per-domain query ran: {evidence_id}")
         elif row["result_status"] in {"no_obvious_match", "possible_conflict"}:
             result_url = row.get("result_url", "").strip()
-            if not result_url or result_url == row["source_url"]:
-                raise ValueError(f"completed trademark query needs a query-specific result URL: {evidence_id}")
-            result_host = (urlparse(result_url).hostname or "").casefold()
-            if not any(result_host == suffix or result_host.endswith("." + suffix) for suffix in _OFFICIAL_HOSTS[row["source"]]):
-                raise ValueError(f"trademark result URL is not on the official {row['source']} host: {evidence_id}")
+            if result_url:
+                result_host = (urlparse(result_url).hostname or "").casefold()
+                if not any(result_host == suffix or result_host.endswith("." + suffix) for suffix in _OFFICIAL_HOSTS[row["source"]]):
+                    raise ValueError(f"trademark result URL is not on the official {row['source']} host: {evidence_id}")
+            elif not row.get("proof_path", "").strip():
+                raise ValueError(f"completed trademark query needs a result URL or proof file: {evidence_id}")
         if row["result_status"] == "possible_conflict" and not (
             row.get("mark_number") or row.get("mark_name")
         ):
@@ -112,8 +223,9 @@ def validate_evidence_rows(rows: list[dict[str, str]]) -> dict[str, dict[str, st
 
 
 def read_trademark_evidence(path: str | Path) -> tuple[list[dict[str, str]], dict[str, dict[str, str]]]:
-    rows = _read_csv(path, set(TRADEMARK_EVIDENCE_FIELDS), "trademark evidence")
-    return rows, validate_evidence_rows(rows)
+    required = set(TRADEMARK_EVIDENCE_FIELDS) - {"proof_kind", "proof_path"}
+    rows = _read_csv(path, required, "trademark evidence")
+    return rows, validate_evidence_rows(rows, Path(path).parent)
 
 
 def validate_summary_rows(
@@ -167,15 +279,25 @@ def read_trademark_summary(
     *,
     evidence_path: str | Path | None = None,
     candidate_domains: set[str] | None = None,
+    candidates_path: str | Path = DEFAULT_CANDIDATES_PATH,
 ) -> dict[str, dict[str, str]]:
     rows = _read_csv(path, set(TRADEMARK_SUMMARY_FIELDS), "trademark summary")
+    candidates, query_manifest = read_candidate_context(candidates_path)
     evidence_rows: list[dict[str, str]] | None = None
     evidence_index = None
     if evidence_path:
         evidence_rows, evidence_index = read_trademark_evidence(evidence_path)
-    indexed = validate_summary_rows(rows, evidence_index, candidate_domains=candidate_domains)
+    known_domains = set(candidates)
+    if candidate_domains is not None:
+        known_domains &= candidate_domains
+    indexed = validate_summary_rows(rows, evidence_index, candidate_domains=known_domains)
     if evidence_rows is not None:
-        recomputed = aggregate_trademark_rows(evidence_rows, list(indexed))
+        recomputed = aggregate_trademark_rows(
+            evidence_rows,
+            list(indexed),
+            expected_queries_by_domain=query_manifest,
+            proof_root=Path(evidence_path).parent,
+        )
         for row in recomputed:
             domain = row["domain"]
             if any(indexed[domain].get(key, "") != row.get(key, "") for key in ("status", "trademark_score", "evidence_ids", "coverage")):
@@ -184,11 +306,15 @@ def read_trademark_summary(
 
 
 def aggregate_trademark_rows(
-    evidence_rows: list[dict[str, str]], domains: list[str]
+    evidence_rows: list[dict[str, str]],
+    domains: list[str],
+    *,
+    expected_queries_by_domain: dict[str, tuple[str, ...]] | None = None,
+    proof_root: str | Path | None = None,
 ) -> list[dict[str, str]]:
-    """Aggregate actual per-domain searches without treating access attempts as queries."""
+    """Aggregate only complete, query-matched official screens; retain all conflicts."""
 
-    evidence_index = validate_evidence_rows(evidence_rows)
+    evidence_index = validate_evidence_rows(evidence_rows, proof_root)
     by_source_domain: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
     by_source_global: dict[str, list[dict[str, str]]] = defaultdict(list)
     for row in evidence_rows:
@@ -204,31 +330,36 @@ def aggregate_trademark_rows(
         if not _DOMAIN.fullmatch(domain) or domain in seen_domains:
             raise ValueError(f"invalid or duplicate domain in trademark summary input: {domain!r}")
         seen_domains.add(domain)
-        source_states: dict[str, str] = {}
+        expected_queries = (
+            expected_queries_by_domain.get(domain)
+            if expected_queries_by_domain is not None
+            else None
+        ) or (normalize_query(domain.removesuffix(".si")),)
+        source_coverage = query_coverage_by_source(
+            evidence_rows,
+            domain,
+            expected_queries,
+            proof_root=proof_root,
+            evidence_index=evidence_index,
+        )
+        source_states = {source: source_coverage[source]["status"] for source in REQUIRED_SOURCES}
         evidence_ids: list[str] = []
         conflict = False
+        query_blocked = False
         for source in REQUIRED_SOURCES:
             actual = by_source_domain.get((source, domain), [])
-            actual = sorted(actual, key=lambda item: (item["utc_timestamp"], item["evidence_id"]))
-            if actual:
-                evidence_ids.extend(row["evidence_id"] for row in actual)
-                source_states[source] = actual[-1]["result_status"]
-                conflict = conflict or any(row["result_status"] == "possible_conflict" for row in actual)
-            else:
-                global_rows = sorted(
-                    by_source_global.get(source, []),
-                    key=lambda item: (item["utc_timestamp"], item["evidence_id"]),
-                )
-                if global_rows:
-                    evidence_ids.extend(row["evidence_id"] for row in global_rows)
-                    source_states[source] = global_rows[-1]["result_status"]
-                else:
-                    source_states[source] = "unverified"
+            global_rows = by_source_global.get(source, [])
+            evidence_ids.extend(row["evidence_id"] for row in actual)
+            evidence_ids.extend(row["evidence_id"] for row in global_rows)
+            conflict = conflict or any(row["result_status"] == "possible_conflict" for row in actual)
+            query_blocked = query_blocked or bool(source_coverage[source]["query_blocked"])
 
         if conflict:
             status, score = "needs legal review", 25
         elif "unverified" in source_states.values():
             status, score = "unverified", 70
+        elif query_blocked:
+            status, score = "blocked", 70
         elif all(value == "blocked" for value in source_states.values()):
             status, score = "blocked", 70
         elif all(value in {"no_obvious_match", "blocked"} for value in source_states.values()) and any(
@@ -247,7 +378,14 @@ def aggregate_trademark_rows(
         if "unverified" in source_states.values():
             unknown_sources = [source for source in REQUIRED_SOURCES if source_states[source] == "unverified"]
             limitations += " Unverified sources: " + ", ".join(unknown_sources) + "; no no-match conclusion."
-        coverage = ";".join(f"{source}:{source_states[source]}" for source in REQUIRED_SOURCES)
+        coverage = ";".join(
+            f"{source}:{source_states[source]}[{source_coverage[source]['completed']}/{source_coverage[source]['required']}]"
+            for source in REQUIRED_SOURCES
+        )
+        for source in REQUIRED_SOURCES:
+            missing_queries = source_coverage[source]["missing_queries"]
+            if missing_queries:
+                limitations += f" {source} incomplete queries: {', '.join(missing_queries)}."
         summaries.append(
             {
                 "domain": domain,
@@ -262,15 +400,87 @@ def aggregate_trademark_rows(
     return summaries
 
 
+def query_coverage_by_source(
+    evidence_rows: list[dict[str, str]],
+    domain: str,
+    expected_queries: tuple[str, ...],
+    *,
+    proof_root: str | Path | None = None,
+    evidence_index: dict[str, dict[str, str]] | None = None,
+) -> dict[str, dict[str, object]]:
+    """Return required-query completion counts using aggregation's exact rules."""
+
+    indexed = evidence_index or validate_evidence_rows(evidence_rows, proof_root)
+    normalized_domain = domain.casefold()
+    global_rows: dict[str, list[dict[str, str]]] = defaultdict(list)
+    domain_rows: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for row in indexed.values():
+        if row["domain"] == "*":
+            global_rows[row["source"]].append(row)
+        elif row["domain"].casefold() == normalized_domain:
+            domain_rows[row["source"]].append(row)
+
+    required = tuple(dict.fromkeys(normalize_query(query) for query in expected_queries if normalize_query(query)))
+    coverage: dict[str, dict[str, object]] = {}
+    for source in REQUIRED_SOURCES:
+        source_global = sorted(global_rows[source], key=lambda row: (row["utc_timestamp"], row["evidence_id"]))
+        global_status = source_global[-1]["result_status"] if source_global else "unverified"
+        query_states: dict[str, str] = {}
+        sourcewide_blocked = False
+        query_blocked = False
+        for query in required:
+            matches = [row for row in domain_rows[source] if normalize_query(row["query"]) == query]
+            if matches:
+                latest = max(matches, key=lambda row: (row["utc_timestamp"], row["evidence_id"]))
+                state = latest["result_status"]
+                query_blocked = query_blocked or state == "blocked"
+                if state in {"no_obvious_match", "possible_conflict"} and not _has_query_proof(latest):
+                    state = "unverified"
+            else:
+                state = global_status if global_status in {"blocked", "unverified"} else "unverified"
+                sourcewide_blocked = sourcewide_blocked or state == "blocked"
+            query_states[query] = state
+
+        completed = sum(
+            state in {"no_obvious_match", "possible_conflict"}
+            for state in query_states.values()
+        )
+        missing_queries = [
+            query for query, state in query_states.items()
+            if state not in {"no_obvious_match", "possible_conflict"}
+        ]
+        if not required or any(state == "unverified" for state in query_states.values()):
+            status = "unverified"
+        elif any(state == "blocked" for state in query_states.values()):
+            status = "blocked"
+        elif any(state == "possible_conflict" for state in query_states.values()):
+            status = "possible_conflict"
+        elif completed == len(required):
+            status = "no_obvious_match"
+        else:
+            status = "unverified"
+        coverage[source] = {
+            "status": status,
+            "completed": completed,
+            "required": len(required),
+            "missing_queries": missing_queries,
+            "sourcewide_blocked": sourcewide_blocked,
+            "query_blocked": query_blocked,
+        }
+    return coverage
+
+
 def write_trademark_summary(
     evidence_path: str | Path,
     domains_path: str | Path,
     output_path: str | Path,
     *,
     top_n: int | None = None,
+    candidates_path: str | Path = DEFAULT_CANDIDATES_PATH,
 ) -> int:
     evidence_rows, _index = read_trademark_evidence(evidence_path)
     domain_rows = _read_csv(domains_path, {"domain"}, "domain list")
+    candidate_map, query_manifest = read_candidate_context(candidates_path)
     if top_n is not None:
         if top_n < 1:
             raise ValueError("top_n must be positive")
@@ -278,7 +488,16 @@ def write_trademark_summary(
             domain_rows = sorted(domain_rows, key=lambda row: int(row["rank"]))[:top_n]
         else:
             domain_rows = domain_rows[:top_n]
-    summaries = aggregate_trademark_rows(evidence_rows, [row["domain"] for row in domain_rows])
+    domains = [normalize_query(row["domain"]) for row in domain_rows]
+    unknown = sorted(set(domains) - set(candidate_map))
+    if unknown:
+        raise ValueError(f"trademark summary domain is missing candidate metadata: {unknown[0]}")
+    summaries = aggregate_trademark_rows(
+        evidence_rows,
+        domains,
+        expected_queries_by_domain=query_manifest,
+        proof_root=Path(evidence_path).parent,
+    )
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("w", encoding="utf-8", newline="") as handle:

@@ -535,6 +535,7 @@ def write_scores(
             trademark_evidence_path,
             evidence_path=source_path,
             candidate_domains=candidate_domains,
+            candidates_path=candidates_path,
         )
     scored: dict[str, dict[str, str | int | Decimal]] = {}
     for candidate in candidates:

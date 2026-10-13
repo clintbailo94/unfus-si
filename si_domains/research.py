@@ -7,10 +7,14 @@ import sys
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
+from .shortlist import CATEGORY_LIMIT, SHORTLIST_FIELDS, SHORTLIST_LIMIT
 from .scoring import SCORE_FIELDS, SCORE_WEIGHTS, weighted_total
 from .trademarks import (
+    DEFAULT_CANDIDATES_PATH,
     REQUIRED_SOURCES,
     aggregate_trademark_rows,
+    query_coverage_by_source,
+    read_candidate_context,
     read_trademark_evidence,
     read_trademark_summary,
 )
@@ -134,28 +138,37 @@ def _decimal(value: str, description: str) -> Decimal:
 
 
 def _screening_counts(
-    shortlist_top: list[dict[str, str]], evidence_rows: list[dict[str, str]]
+    shortlist_top: list[dict[str, str]],
+    evidence_rows: list[dict[str, str]],
+    query_manifest: dict[str, tuple[str, ...]],
+    proof_root: str | Path,
 ) -> tuple[dict[str, dict[str, int]], bool]:
-    counts = {source: {"completed": 0, "blocked": 0, "unverified": 0} for source in REQUIRED_SOURCES}
-    global_rows: dict[str, list[dict[str, str]]] = {source: [] for source in REQUIRED_SOURCES}
-    domain_rows: dict[tuple[str, str], list[dict[str, str]]] = {}
-    for row in evidence_rows:
-        source = row["source"]
-        if row["domain"] == "*":
-            global_rows[source].append(row)
-        else:
-            domain_rows.setdefault((source, row["domain"].casefold()), []).append(row)
+    counts = {
+        source: {
+            "completed": 0,
+            "sourcewide_blocked": 0,
+            "query_blocked": 0,
+            "unverified": 0,
+        }
+        for source in REQUIRED_SOURCES
+    }
     unresolved = False
     for source in REQUIRED_SOURCES:
         for shortlist_row in shortlist_top:
             domain = shortlist_row["domain"].casefold()
-            actual = domain_rows.get((source, domain), [])
-            if any(row["result_status"] in {"no_obvious_match", "possible_conflict"} for row in actual):
+            expected = query_manifest.get(domain, ())
+            coverage = query_coverage_by_source(
+                evidence_rows,
+                domain,
+                expected,
+                proof_root=proof_root,
+            )[source]
+            if coverage["status"] in {"no_obvious_match", "possible_conflict"} and coverage["completed"] == coverage["required"]:
                 counts[source]["completed"] += 1
-            elif any(row["result_status"] == "blocked" for row in actual) or any(
-                row["result_status"] == "blocked" for row in global_rows[source]
-            ):
-                counts[source]["blocked"] += 1
+            elif coverage["sourcewide_blocked"]:
+                counts[source]["sourcewide_blocked"] += 1
+            elif coverage["query_blocked"]:
+                counts[source]["query_blocked"] += 1
             else:
                 counts[source]["unverified"] += 1
         source_counts = counts[source]
@@ -178,19 +191,22 @@ def validate_research(
     trademark_summary_path: str | Path,
     opportunities_path: str | Path,
     top_n: int = 100,
+    candidates_path: str | Path = DEFAULT_CANDIDATES_PATH,
 ) -> int:
     """Validate artifact structure and flag unresolved live-search coverage."""
 
     try:
-        shortlist_rows = _read_csv(shortlist_path, {"rank", "domain", "category", "total", *SCORE_WEIGHTS}, "shortlist")
+        shortlist_rows = _read_csv(shortlist_path, set(SHORTLIST_FIELDS), "shortlist")
         scores_rows = _read_csv(scores_path, set(SCORE_FIELDS), "score")
         valuation_rows = _read_csv(valuation_path, set(VALUATION_FIELDS), "valuation")
         valuation_evidence_rows, valuation_evidence = read_valuation_evidence(valuation_evidence_path)
         trademark_evidence_rows, trademark_evidence = read_trademark_evidence(trademark_evidence_path)
+        candidate_map, query_manifest = read_candidate_context(candidates_path)
         summary_map = read_trademark_summary(
             trademark_summary_path,
             evidence_path=trademark_evidence_path,
-            candidate_domains={row["domain"].casefold() for row in scores_rows},
+            candidate_domains=set(candidate_map),
+            candidates_path=candidates_path,
         )
         opportunities_rows = _read_csv(opportunities_path, set(OPPORTUNITY_FIELDS), "opportunities")
 
@@ -204,6 +220,43 @@ def validate_research(
         ranks = {row["domain"].casefold(): int(row["rank"]) for row in shortlist_rows}
         if sorted(ranks.values()) != list(range(1, len(shortlist_rows) + 1)):
             raise ValueError("shortlist ranks must be unique and contiguous from 1")
+        if any(int(row["rank"]) != index for index, row in enumerate(shortlist_rows, start=1)):
+            raise ValueError("shortlist row order does not match its rank column")
+        if len(shortlist_rows) > SHORTLIST_LIMIT:
+            raise ValueError(f"shortlist exceeds the {SHORTLIST_LIMIT}-domain cap")
+        category_counts: dict[str, int] = {}
+        for row in shortlist_rows:
+            category_counts[row["category"]] = category_counts.get(row["category"], 0) + 1
+        if any(count > CATEGORY_LIMIT for count in category_counts.values()):
+            raise ValueError(f"shortlist exceeds the {CATEGORY_LIMIT}-domain category cap")
+
+        ordered_by_score = sorted(
+            shortlist_rows,
+            key=lambda row: (
+                -_decimal(row["total"], "shortlist total"),
+                len(row["domain"].casefold().removesuffix(".si")),
+                row["domain"].casefold(),
+            ),
+        )
+        if [row["domain"].casefold() for row in shortlist_rows] != [
+            row["domain"].casefold() for row in ordered_by_score
+        ]:
+            raise ValueError("shortlist order does not match score, label length, and domain ranking")
+
+        for domain, shortlist_row in shortlist.items():
+            score_row = scores.get(domain)
+            if score_row is None:
+                raise ValueError(f"shortlist domain is missing a score row: {domain}")
+            candidate = candidate_map.get(domain)
+            if candidate is None:
+                raise ValueError(f"shortlist domain is missing candidate metadata: {domain}")
+            if score_row["category"] != candidate["category"] or shortlist_row["category"] != candidate["category"]:
+                raise ValueError(f"shortlist category does not match candidate and score rows for {domain}")
+            for field in ("category", "total", "rationale", *SCORE_WEIGHTS):
+                if shortlist_row.get(field, "") != score_row.get(field, ""):
+                    raise ValueError(f"shortlist {field} does not match score row for {domain}")
+        if not set(summary_map).issubset(scores):
+            raise ValueError("trademark summary contains a domain missing from scores")
 
         for row in scores_rows:
             components: dict[str, int] = {}
@@ -214,6 +267,14 @@ def validate_research(
                     raise ValueError(f"invalid {name} score for {row['domain']}") from exc
                 if not 0 <= components[name] <= 100:
                     raise ValueError(f"{name} score is out of bounds for {row['domain']}")
+            domain = row["domain"].casefold()
+            summary = summary_map.get(domain)
+            expected_trademark = int(summary["trademark_score"]) if summary else 70
+            if components["trademark"] != expected_trademark:
+                expected_state = summary["status"] if summary else "not yet screened"
+                raise ValueError(
+                    f"trademark score for {domain} does not match {expected_state} evidence ({expected_trademark})"
+                )
             expected_total = weighted_total(components)
             if _decimal(row["total"], "score total") != expected_total:
                 raise ValueError(f"weighted score total mismatch for {row['domain']}")
@@ -252,18 +313,22 @@ def validate_research(
             else:
                 raise ValueError(f"invalid valuation status for {domain}")
 
-        recomputed = aggregate_trademark_rows(trademark_evidence_rows, list(summary_map))
+        recomputed = aggregate_trademark_rows(
+            trademark_evidence_rows,
+            list(summary_map),
+            expected_queries_by_domain=query_manifest,
+            proof_root=Path(trademark_evidence_path).parent,
+        )
         for row in recomputed:
             domain = row["domain"]
             if any(summary_map[domain].get(key, "") != row.get(key, "") for key in ("status", "trademark_score", "evidence_ids", "coverage")):
                 raise ValueError(f"trademark summary does not match evidence for {domain}")
 
         for domain, row in opportunities.items():
-            if row["rank"] != str(ranks[domain]):
-                raise ValueError(f"opportunity rank does not match shortlist for {domain}")
-            source_score = scores[domain]
-            if row["total"] != source_score["total"] or any(row[name] != source_score[name] for name in SCORE_WEIGHTS):
-                raise ValueError(f"opportunity score components do not match scores for {domain}")
+            shortlist_row = shortlist[domain]
+            for field in SHORTLIST_FIELDS:
+                if row.get(field, "") != shortlist_row.get(field, ""):
+                    raise ValueError(f"opportunity {field} does not match shortlist for {domain}")
             valuation = valuations[domain]
             if any(row[f"valuation_{name}"] != valuation[name] for name in ("status", "currency", "low", "high", "evidence_ids", "rationale")):
                 raise ValueError(f"opportunity valuation provenance does not match valuation artifact for {domain}")
@@ -273,13 +338,21 @@ def validate_research(
                 raise ValueError(f"opportunity trademark status does not match summary for {domain}")
             if summary and (row["trademark_coverage"] != summary["coverage"] or row["trademark_evidence_ids"] != summary["evidence_ids"]):
                 raise ValueError(f"opportunity trademark provenance does not match summary for {domain}")
+            if summary is None and (row["trademark_coverage"] or row["trademark_evidence_ids"]):
+                raise ValueError(f"unscreened opportunity has fabricated trademark provenance for {domain}")
 
         top_rows = sorted(shortlist_rows, key=lambda row: int(row["rank"]))[: min(top_n, len(shortlist_rows))]
         missing = [row["domain"] for row in top_rows if row["domain"].casefold() not in summary_map]
-        counts, unresolved = _screening_counts(top_rows, trademark_evidence_rows)
+        counts, unresolved = _screening_counts(
+            top_rows,
+            trademark_evidence_rows,
+            query_manifest,
+            Path(trademark_evidence_path).parent,
+        )
         count_text = "; ".join(
             f"{source}: completed_queries={counts[source]['completed']}, "
-            f"sourcewide_blocked_domains={counts[source]['blocked']}, "
+            f"sourcewide_blocked_domains={counts[source]['sourcewide_blocked']}, "
+            f"query_blocked_domains={counts[source]['query_blocked']}, "
             f"unverified_or_missing_domains={counts[source]['unverified']}"
             for source in REQUIRED_SOURCES
         )
