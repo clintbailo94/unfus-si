@@ -57,6 +57,20 @@ def _nonnegative_seconds(value: str) -> float:
     return seconds
 
 
+def _minimum_interval(value: str) -> float:
+    try:
+        seconds = float(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(
+            "min-interval must be a finite number of at least 1 second"
+        ) from exc
+    if not math.isfinite(seconds) or seconds < 1.0:
+        raise argparse.ArgumentTypeError(
+            "min-interval must be a finite number of at least 1 second"
+        )
+    return seconds
+
+
 def _load_candidates(input_path: Path) -> list[tuple[str, str]] | None:
     if not input_path.is_file():
         print(f"Input CSV not found: {input_path}", file=sys.stderr)
@@ -140,6 +154,7 @@ def build_parser() -> argparse.ArgumentParser:
     check.add_argument("--input", required=True, help="CSV with domain_label and category columns")
     check.add_argument("--limit", type=_positive_limit)
     check.add_argument("--max-minutes", type=_positive_minutes)
+    check.add_argument("--min-interval", type=_minimum_interval, default=1.0)
     check.add_argument("--cooldown-seconds", type=_nonnegative_seconds, default=300)
     check.add_argument("--retry-unverified", action="store_true")
     check.add_argument(
@@ -177,7 +192,9 @@ def _run_check(args: argparse.Namespace) -> int:
     skipped = 0
     requests_started = 0
     cooldown_cycles = 0
+    cooldown_waits = 0
     awaiting_cooldown_result = False
+    rate_limiter = rdap.RateLimiter(min_interval=args.min_interval)
     try:
         with requests.Session() as session:
             for label, category in candidates:
@@ -193,7 +210,11 @@ def _run_check(args: argparse.Namespace) -> int:
                     break
 
                 try:
-                    result = check_domain(label, session=session)
+                    result = check_domain(
+                        label,
+                        session=session,
+                        rate_limiter=rate_limiter,
+                    )
                 except RegistryInaccessible as exc:
                     result = exc.result
                     if result is not None:
@@ -235,6 +256,7 @@ def _run_check(args: argparse.Namespace) -> int:
                             _print_time_budget(checked, skipped)
                             return 0
                         cooldown_wait = min(cooldown_wait, remaining_budget)
+                    cooldown_waits += 1
                     SLEEP(cooldown_wait)
                     rdap.CIRCUIT_BREAKER.reset()
                     if _time_budget_expired(args, started):
@@ -270,6 +292,14 @@ def _run_check(args: argparse.Namespace) -> int:
     except KeyboardInterrupt:
         print(f"Interrupted after {checked} checked domains; evidence is flushed", file=sys.stderr)
         return 130
+    finally:
+        elapsed = max(0.0, MONOTONIC() - started)
+        requests_per_minute = requests_started * 60 / elapsed if elapsed else 0.0
+        print(
+            f"Run totals: {requests_started} requests; {requests_per_minute:.1f} requests/min; "
+            f"{rate_limiter.rate_limited_responses} HTTP 429 responses; "
+            f"{cooldown_waits} cooldown cycles"
+        )
 
     print(f"Checked {checked} domains; skipped {skipped} previously recorded domains")
     return 0

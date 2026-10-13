@@ -44,6 +44,38 @@ def test_resume_skips_final_and_skips_unverified_until_retry_option(tmp_path):
     assert not store.should_skip("example.si", retry_unverified=True)
 
 
+def test_retrying_old_429_appends_and_supersedes_it_for_status(tmp_path):
+    path = tmp_path / "evidence.csv"
+    store = EvidenceStore(path)
+    old_429 = Result(
+        "example.si",
+        429,
+        "2026-10-11T10:00:00Z",
+        5,
+        "unverified",
+        "http_429",
+    )
+    latest_404 = Result(
+        "example.si",
+        404,
+        "2026-10-12T10:00:00Z",
+        1,
+        "potentially_unregistered",
+    )
+    store.append("tech", old_429)
+
+    assert not store.should_skip("example.si", retry_unverified=True)
+
+    store.append("tech", latest_404)
+
+    with path.open(encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    assert len(rows) == 2
+    assert rows[0]["http_status"] == "429"
+    assert store.load_latest()["example.si"]["classification"] == "potentially_unregistered"
+    assert store.should_skip("example.si", retry_unverified=True)
+
+
 def test_invalid_syntax_is_final_and_retry_option_does_not_override(tmp_path):
     store = EvidenceStore(tmp_path / "evidence.csv")
     store.append("tech", make_result("invalid_syntax", status=None, attempts=0))

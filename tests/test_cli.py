@@ -29,6 +29,70 @@ def _result(label, classification="potentially_unregistered", *, status=404, err
     )
 
 
+def test_min_interval_defaults_to_one_and_rejects_values_below_one():
+    parser = cli.build_parser()
+
+    assert parser.parse_args(["check", "--input", "candidates.csv"]).min_interval == 1.0
+    assert parser.parse_args(
+        ["check", "--input", "candidates.csv", "--min-interval", "2.5"]
+    ).min_interval == 2.5
+    try:
+        parser.parse_args(["check", "--input", "candidates.csv", "--min-interval", "0.99"])
+    except SystemExit as exc:
+        assert exc.code == 2
+    else:
+        raise AssertionError("an interval below one second must be rejected")
+
+
+def test_retry_unverified_only_rechecks_unverified_and_latest_result_wins(
+    tmp_path, monkeypatch, capsys
+):
+    input_path = tmp_path / "candidates.csv"
+    _write_candidates(input_path, ["verified", "limited", "unchecked"])
+    evidence_path = tmp_path / "rdap_evidence.csv"
+    store = EvidenceStore(evidence_path)
+    store.append("tech", _result("verified"))
+    store.append("tech", _result("limited", "unverified", status=429, error="http_429"))
+    monkeypatch.setattr(cli, "EvidenceStore", lambda: EvidenceStore(evidence_path))
+    calls = []
+    configured_intervals = []
+
+    def fake_check(label, session, *, rate_limiter):
+        calls.append(label)
+        configured_intervals.append(rate_limiter.configured_min_interval)
+        return _result(label)
+
+    monkeypatch.setattr(cli, "check_domain", fake_check)
+
+    assert cli.main(
+        [
+            "check",
+            "--input",
+            str(input_path),
+            "--retry-unverified",
+            "--min-interval",
+            "2.0",
+        ]
+    ) == 0
+
+    assert calls == ["limited", "unchecked"]
+    assert configured_intervals == [2.0, 2.0]
+    with evidence_path.open(encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    assert len(rows) == 4
+    assert rows[1]["http_status"] == "429"
+    assert EvidenceStore(evidence_path).load_latest()["limited.si"]["classification"] == (
+        "potentially_unregistered"
+    )
+
+    assert cli.main(["status", "--input", str(input_path)]) == 0
+    status = capsys.readouterr().out
+    assert "Candidates: 3" in status
+    assert "Potentially unregistered: 3" in status
+    assert "Unverified: 0" in status
+    assert "Candidates unchecked: 0" in status
+
+
 def test_cli_reads_input_resumes_and_writes_evidence(tmp_path, monkeypatch):
     input_path = tmp_path / "candidates.csv"
     with input_path.open("w", encoding="utf-8", newline="") as handle:
@@ -42,7 +106,13 @@ def test_cli_reads_input_resumes_and_writes_evidence(tmp_path, monkeypatch):
     monkeypatch.setattr(
         cli,
         "check_domain",
-        lambda label, session: Result("example.si", 404, "2026-10-12T12:00:00Z", 1, "potentially_unregistered"),
+        lambda label, session, **kwargs: Result(
+            "example.si",
+            404,
+            "2026-10-12T12:00:00Z",
+            1,
+            "potentially_unregistered",
+        ),
     )
 
     assert cli.main(["check", "--input", str(input_path)]) == 0
@@ -61,7 +131,7 @@ def test_check_time_budget_stops_between_domains(tmp_path, monkeypatch, capsys):
     now = [0.0]
     calls = []
 
-    def fake_check(label, session):
+    def fake_check(label, session, **kwargs):
         calls.append(label)
         now[0] += 61.0
         return _result(label)
@@ -91,7 +161,7 @@ def test_check_time_budget_caps_cooldown_before_stopping(tmp_path, monkeypatch, 
         sleeps.append(seconds)
         now[0] += seconds
 
-    def fake_check(label, session):
+    def fake_check(label, session, **kwargs):
         nonlocal calls
         calls += 1
         now[0] += 10.0
@@ -113,7 +183,7 @@ def test_check_time_budget_caps_cooldown_before_stopping(tmp_path, monkeypatch, 
     assert breaker.is_open is False
 
 
-def test_check_cools_down_and_resumes_after_circuit_breaker_open(tmp_path, monkeypatch):
+def test_check_cools_down_and_resumes_after_circuit_breaker_open(tmp_path, monkeypatch, capsys):
     input_path = tmp_path / "candidates.csv"
     _write_candidates(input_path, [f"name{index}" for index in range(8)])
     evidence_path = tmp_path / "rdap_evidence.csv"
@@ -128,7 +198,7 @@ def test_check_cools_down_and_resumes_after_circuit_breaker_open(tmp_path, monke
         sleeps.append(seconds)
         now[0] += seconds
 
-    def fake_check(label, session):
+    def fake_check(label, session, **kwargs):
         nonlocal calls
         calls += 1
         if calls <= 5:
@@ -149,6 +219,7 @@ def test_check_cools_down_and_resumes_after_circuit_breaker_open(tmp_path, monke
     assert calls == 8
     assert breaker.is_open is False
     assert len(EvidenceStore(evidence_path).load_latest()) == 8
+    assert "1 cooldown cycles" in capsys.readouterr().out
 
 
 def test_check_stops_after_three_failed_cooldown_cycles_and_reports_unverified_count(
@@ -168,7 +239,7 @@ def test_check_stops_after_three_failed_cooldown_cycles_and_reports_unverified_c
         sleeps.append(seconds)
         now[0] += seconds
 
-    def fake_check(label, session):
+    def fake_check(label, session, **kwargs):
         nonlocal calls
         calls += 1
         result = _result(label, "unverified", status=503, error="http_503")
@@ -206,7 +277,7 @@ def test_successful_result_resets_consecutive_cooldown_failures(tmp_path, monkey
         sleeps.append(seconds)
         now[0] += seconds
 
-    def fake_check(label, session):
+    def fake_check(label, session, **kwargs):
         nonlocal calls
         calls += 1
         if calls == 11:
@@ -236,7 +307,7 @@ def test_check_resume_limit_is_counted_from_newly_checked_rows(tmp_path, monkeyp
     monkeypatch.setattr(cli, "EvidenceStore", lambda: EvidenceStore(evidence_path))
     calls = []
 
-    def fake_check(label, session):
+    def fake_check(label, session, **kwargs):
         calls.append(label)
         return _result(label)
 
@@ -256,7 +327,7 @@ def test_check_progress_reports_request_rate_and_eta(tmp_path, monkeypatch, caps
     monkeypatch.setattr(cli, "EvidenceStore", lambda: EvidenceStore(evidence_path))
     now = [0.0]
 
-    def fake_check(label, session):
+    def fake_check(label, session, **kwargs):
         now[0] += 1.0
         return _result(label)
 
@@ -271,6 +342,30 @@ def test_check_progress_reports_request_rate_and_eta(tmp_path, monkeypatch, caps
     assert "ETA 1 sec" in progress
 
 
+def test_check_reports_request_rate_and_429_response_count(tmp_path, monkeypatch, capsys):
+    input_path = tmp_path / "candidates.csv"
+    _write_candidates(input_path, ["limited"])
+    evidence_path = tmp_path / "rdap_evidence.csv"
+    monkeypatch.setattr(cli, "EvidenceStore", lambda: EvidenceStore(evidence_path))
+    now = [0.0]
+
+    def fake_check(label, session, *, rate_limiter):
+        rate_limiter.increase_after_429()
+        now[0] += 30.0
+        return _result(label)
+
+    monkeypatch.setattr(cli, "check_domain", fake_check)
+    monkeypatch.setattr(cli, "MONOTONIC", lambda: now[0])
+
+    assert cli.main(["check", "--input", str(input_path), "--min-interval", "2"]) == 0
+
+    output = capsys.readouterr().out
+    assert (
+        "Run totals: 1 requests; 2.0 requests/min; 1 HTTP 429 responses; "
+        "0 cooldown cycles"
+    ) in output
+
+
 def test_stop_on_unverified_still_flushes_evidence_and_returns_error(
     tmp_path, monkeypatch, capsys
 ):
@@ -280,7 +375,7 @@ def test_stop_on_unverified_still_flushes_evidence_and_returns_error(
     monkeypatch.setattr(cli, "EvidenceStore", lambda: EvidenceStore(evidence_path))
     calls = []
 
-    def fake_check(label, session):
+    def fake_check(label, session, **kwargs):
         calls.append(label)
         return _result(label, "unverified", status=403, error="http_403")
 
