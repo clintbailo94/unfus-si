@@ -87,7 +87,12 @@ method, tags, quality score, and label. Its six weights are brandability 25%,
 commercial relevance 20%, shortness 15%, domain-hack creativity 15%, resale
 potential 15%, and trademark risk 10%. Scores do not use network access or
 estimate sale prices. Trademark is a fixed placeholder score of 70 with a
-"not yet screened" note until the next screening step. The weighted total is
+"not yet screened" note when no trademark summary is supplied. To inject a
+curated summary, pass `--trademark-evidence output/trademark_summary.csv`; the
+command also validates its evidence IDs against
+`output/trademark_evidence.csv` (override that path with
+`--trademark-source-evidence`). Screened rows show their limited, review-needed,
+blocked, or unverified state in the rationale. The weighted total is
 calculated with decimal arithmetic and rounded once to one decimal using
 `ROUND_HALF_EVEN` (ties to even). Commercial keyword bonuses require exact tags,
 labels, or recorded seed components. Resale uses curated common-noun and
@@ -102,3 +107,39 @@ Other candidates, including rule-based special classes and evidence conflicts,
 are written to `output/excluded.csv` with a reason. A seeded sample of up to 30
 RDAP-404 domains, including available WHOIS status groups, is written to
 `output/sample_404_for_review.csv`; set `--seed` to reproduce another sample.
+
+## PKG-B research artifacts and offline rebuild
+
+Curated source records live in `output/valuation_evidence.csv` and
+`output/trademark_evidence.csv`. The first records attributable completed-sale
+reports, asking prices, and unavailable source pages separately. The second
+records exact per-domain public database queries or a source-wide access
+failure; a source-wide row says that no per-domain query ran. Do not turn an
+access attempt into a no-match result. `output/valuation_sources_notes.md`
+records the sales research and `output/research_methodology.md` explains the
+screening limits and validator checks.
+
+Use these commands to rebuild the research outputs without registry or
+trademark network calls:
+
+```powershell
+python -m si_domains trademark-summary --shortlist output/shortlist.csv --evidence output/trademark_evidence.csv --out output/trademark_summary.csv --top-n 100
+python -m si_domains score --trademark-evidence output/trademark_summary.csv --trademark-source-evidence output/trademark_evidence.csv
+python -m si_domains shortlist
+python -m si_domains valuations --shortlist output/shortlist.csv --evidence output/valuation_evidence.csv --out output/valuations.csv
+python -m si_domains opportunities --shortlist output/shortlist.csv --scores output/scores.csv --valuations output/valuations.csv --trademark-summary output/trademark_summary.csv --out output/opportunities.csv
+python -m si_domains validate-research
+```
+
+If rescoring changes membership in the final top 100, complete the newly
+entered names' public searches where the specified databases allow them, append
+those evidence rows, and repeat summary, score, and shortlist until the target
+set is current. The validator checks evidence references, status enums, score
+arithmetic, final artifact domain/rank sets, range inputs, and top-100 query
+coverage. It cannot establish that a cited source page was read correctly,
+that a mark is legally relevant, or that a domain is legally clear; those need
+human evidence review.
+
+RDAP and WHOIS outcomes are timestamped observations from the registry's
+channels. They are not registrar checkout confirmation and do not guarantee
+registration eligibility, registration success, or a non-premium price.

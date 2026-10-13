@@ -387,7 +387,11 @@ def _resale(candidate: Mapping[str, object], label: str) -> int:
 
 
 def _rationale(
-    scores: Mapping[str, int], *, trademark_override: int | None, seed: str = ""
+    scores: Mapping[str, int],
+    *,
+    trademark_override: int | None,
+    trademark_status: str | None = None,
+    seed: str = "",
 ) -> str:
     weighted = sorted(
         SCORE_WEIGHTS,
@@ -406,11 +410,19 @@ def _rationale(
     )
     if trademark_override is None:
         rationale += " TM not yet screened."
+    elif trademark_status == "limited_screen_no_obvious_match":
+        rationale += " TM limited screen no obvious match."
+    elif trademark_status == "needs legal review":
+        rationale += " TM needs legal review."
+    elif trademark_status == "blocked":
+        rationale += " TM screen blocked."
+    elif trademark_status == "unverified":
+        rationale += " TM screen unverified."
     else:
         rationale += f" TM override {trademark_override}."
     if seed:
         rationale += f" Seed: {seed.strip()[:28]}."
-    return rationale[:140]
+    return rationale.encode("ascii", "ignore").decode("ascii")[:140]
 
 
 def weighted_total(components: Mapping[str, int]) -> Decimal:
@@ -424,7 +436,10 @@ def weighted_total(components: Mapping[str, int]) -> Decimal:
 
 
 def score_domain(
-    candidate: Mapping[str, object], *, trademark_override: int | None = None
+    candidate: Mapping[str, object],
+    *,
+    trademark_override: int | None = None,
+    trademark_status: str | None = None,
 ) -> dict[str, str | int | Decimal]:
     """Score one candidate row without network access or hidden state."""
 
@@ -435,6 +450,15 @@ def score_domain(
     if trademark_override is not None:
         if not isinstance(trademark_override, int) or not 0 <= trademark_override <= 100:
             raise ValueError("trademark_override must be an integer from 0 to 100")
+    if trademark_status is not None and trademark_status not in {
+        "limited_screen_no_obvious_match",
+        "needs legal review",
+        "blocked",
+        "unverified",
+    }:
+        raise ValueError("trademark_status is not a recognized screening state")
+    if trademark_status is not None and trademark_override is None:
+        raise ValueError("trademark_status requires a trademark_override")
 
     components = {
         "brandability": _brandability(candidate, label),
@@ -453,6 +477,7 @@ def score_domain(
         "rationale": _rationale(
             components,
             trademark_override=trademark_override,
+            trademark_status=trademark_status,
             seed=str(candidate.get("seed") or ""),
         ),
     }
@@ -485,18 +510,44 @@ def write_scores(
     candidates_path: str | Path,
     rdap_path: str | Path,
     output_path: str | Path,
+    *,
+    trademark_evidence_path: str | Path | None = None,
+    trademark_source_evidence_path: str | Path | None = None,
 ) -> int:
     """Write scores for the latest RDAP-404 rows in stable domain order."""
 
     candidates = _read_candidates(Path(candidates_path))
     rdap_latest = _read_latest(Path(rdap_path))
+    trademark_summaries: dict[str, dict[str, str]] = {}
+    if trademark_evidence_path is not None:
+        from .trademarks import read_trademark_summary
+
+        source_path = trademark_source_evidence_path or (
+            Path(trademark_evidence_path).parent / "trademark_evidence.csv"
+        )
+        candidate_domains = {
+            f"{_label(candidate)}.si"
+            for candidate in candidates
+            if rdap_latest.get(f"{_label(candidate)}.si", {}).get("classification")
+            == "potentially_unregistered"
+        }
+        trademark_summaries = read_trademark_summary(
+            trademark_evidence_path,
+            evidence_path=source_path,
+            candidate_domains=candidate_domains,
+        )
     scored: dict[str, dict[str, str | int | Decimal]] = {}
     for candidate in candidates:
         label = _label(candidate)
         domain = f"{label}.si"
         if rdap_latest.get(domain, {}).get("classification") != "potentially_unregistered":
             continue
-        scored[domain] = score_domain(candidate)
+        summary = trademark_summaries.get(domain)
+        scored[domain] = score_domain(
+            candidate,
+            trademark_override=int(summary["trademark_score"]) if summary else None,
+            trademark_status=summary["status"] if summary else None,
+        )
 
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)

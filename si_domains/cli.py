@@ -277,6 +277,15 @@ def build_parser() -> argparse.ArgumentParser:
         default=str(OUTPUT_DIR / "scores.csv"),
         help="score output CSV",
     )
+    score.add_argument(
+        "--trademark-evidence",
+        help="optional researched trademark summary CSV; omit to retain baseline scoring",
+    )
+    score.add_argument(
+        "--trademark-source-evidence",
+        default=str(OUTPUT_DIR / "trademark_evidence.csv"),
+        help="raw trademark evidence CSV used to validate summary evidence IDs",
+    )
 
     shortlist = subparsers.add_parser(
         "shortlist", help="rank WHOIS-confirmed RDAP-404 domains offline"
@@ -319,6 +328,42 @@ def build_parser() -> argparse.ArgumentParser:
     shortlist.add_argument(
         "--seed", type=int, default=20261013, help="deterministic sample seed"
     )
+
+    valuations = subparsers.add_parser(
+        "valuations", help="write cautious valuation rows from curated sale evidence offline"
+    )
+    valuations.add_argument("--shortlist", default=str(OUTPUT_DIR / "shortlist.csv"))
+    valuations.add_argument("--evidence", default=str(OUTPUT_DIR / "valuation_evidence.csv"))
+    valuations.add_argument("--out", default=str(OUTPUT_DIR / "valuations.csv"))
+
+    trademark_summary = subparsers.add_parser(
+        "trademark-summary", help="aggregate curated public trademark query evidence offline"
+    )
+    trademark_summary.add_argument("--shortlist", default=str(OUTPUT_DIR / "shortlist.csv"))
+    trademark_summary.add_argument("--evidence", default=str(OUTPUT_DIR / "trademark_evidence.csv"))
+    trademark_summary.add_argument("--out", default=str(OUTPUT_DIR / "trademark_summary.csv"))
+    trademark_summary.add_argument("--top-n", type=_positive_limit, default=100)
+
+    opportunities = subparsers.add_parser(
+        "opportunities", help="join shortlist, valuation, and trademark provenance offline"
+    )
+    opportunities.add_argument("--shortlist", default=str(OUTPUT_DIR / "shortlist.csv"))
+    opportunities.add_argument("--scores", default=str(OUTPUT_DIR / "scores.csv"))
+    opportunities.add_argument("--valuations", default=str(OUTPUT_DIR / "valuations.csv"))
+    opportunities.add_argument("--trademark-summary", default=str(OUTPUT_DIR / "trademark_summary.csv"))
+    opportunities.add_argument("--out", default=str(OUTPUT_DIR / "opportunities.csv"))
+
+    validate_research = subparsers.add_parser(
+        "validate-research", help="validate local PKG-B artifacts and top shortlist query coverage"
+    )
+    validate_research.add_argument("--shortlist", default=str(OUTPUT_DIR / "shortlist.csv"))
+    validate_research.add_argument("--scores", default=str(OUTPUT_DIR / "scores.csv"))
+    validate_research.add_argument("--valuations", default=str(OUTPUT_DIR / "valuations.csv"))
+    validate_research.add_argument("--valuation-evidence", default=str(OUTPUT_DIR / "valuation_evidence.csv"))
+    validate_research.add_argument("--trademark-evidence", default=str(OUTPUT_DIR / "trademark_evidence.csv"))
+    validate_research.add_argument("--trademark-summary", default=str(OUTPUT_DIR / "trademark_summary.csv"))
+    validate_research.add_argument("--opportunities", default=str(OUTPUT_DIR / "opportunities.csv"))
+    validate_research.add_argument("--top-n", type=_positive_limit, default=100)
 
     candidates = subparsers.add_parser("candidates", help="build or review offline .si label candidates")
     selection = candidates.add_mutually_exclusive_group()
@@ -770,7 +815,13 @@ def _run_score(args: argparse.Namespace) -> int:
     from .scoring import write_scores
 
     try:
-        count = write_scores(args.input, args.rdap_evidence, args.out)
+        count = write_scores(
+            args.input,
+            args.rdap_evidence,
+            args.out,
+            trademark_evidence_path=args.trademark_evidence,
+            trademark_source_evidence_path=args.trademark_source_evidence,
+        )
     except (OSError, ValueError) as exc:
         print(f"Score failed: {exc}", file=sys.stderr)
         return 2
@@ -802,6 +853,61 @@ def _run_shortlist(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_valuations(args: argparse.Namespace) -> int:
+    from .valuation import write_valuations
+
+    try:
+        count = write_valuations(args.shortlist, args.evidence, args.out)
+    except (OSError, ValueError) as exc:
+        print(f"Valuations failed: {exc}", file=sys.stderr)
+        return 2
+    print(f"Wrote {count} valuation rows to {args.out}")
+    return 0
+
+
+def _run_trademark_summary(args: argparse.Namespace) -> int:
+    from .trademarks import write_trademark_summary
+
+    try:
+        count = write_trademark_summary(
+            args.evidence, args.shortlist, args.out, top_n=args.top_n
+        )
+    except (OSError, ValueError) as exc:
+        print(f"Trademark summary failed: {exc}", file=sys.stderr)
+        return 2
+    print(f"Wrote {count} trademark summary rows to {args.out}")
+    return 0
+
+
+def _run_opportunities(args: argparse.Namespace) -> int:
+    from .research import write_opportunities
+
+    try:
+        count = write_opportunities(
+            args.shortlist, args.scores, args.valuations, args.trademark_summary, args.out
+        )
+    except (OSError, ValueError) as exc:
+        print(f"Opportunities build failed: {exc}", file=sys.stderr)
+        return 2
+    print(f"Wrote {count} joined opportunity rows to {args.out}")
+    return 0
+
+
+def _run_validate_research(args: argparse.Namespace) -> int:
+    from .research import validate_research
+
+    return validate_research(
+        shortlist_path=args.shortlist,
+        scores_path=args.scores,
+        valuation_path=args.valuations,
+        valuation_evidence_path=args.valuation_evidence,
+        trademark_evidence_path=args.trademark_evidence,
+        trademark_summary_path=args.trademark_summary,
+        opportunities_path=args.opportunities,
+        top_n=args.top_n,
+    )
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -815,6 +921,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _run_score(args)
     if args.command == "shortlist":
         return _run_shortlist(args)
+    if args.command == "valuations":
+        return _run_valuations(args)
+    if args.command == "trademark-summary":
+        return _run_trademark_summary(args)
+    if args.command == "opportunities":
+        return _run_opportunities(args)
+    if args.command == "validate-research":
+        return _run_validate_research(args)
     if args.command == "candidates":
         return _run_candidates(args, parser)
     parser.error("unknown command")
