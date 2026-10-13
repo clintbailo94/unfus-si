@@ -13,6 +13,7 @@ from si_domains.valuation import (
     VALUATION_EVIDENCE_FIELDS,
     write_valuations,
 )
+from si_domains.delivery import validate_delivery
 from si_domains.workbook import build_workbook_model, export_workbook
 
 
@@ -48,7 +49,7 @@ def _read_csv(path: Path):
         return list(csv.DictReader(handle))
 
 
-def make_fixture(tmp_path: Path, *, hostile_text=" \\t=1+1"):
+def make_fixture(tmp_path: Path, *, hostile_text=" \\t=1+1", second_eligible=False):
     """Build a complete, tiny offline package from synthetic rows."""
     paths = {name: tmp_path / f"{name}.csv" for name in (
         "candidates",
@@ -72,6 +73,8 @@ def make_fixture(tmp_path: Path, *, hostile_text=" \\t=1+1"):
         {"domain_label": "conflict", "category": "technology", "method": "concept", "seed": "conflict", "tags": "", "quality_score": "80"},
         {"domain_label": "si", "category": "technology", "method": "concept", "seed": "si", "tags": "", "quality_score": "80"},
     ]
+    if second_eligible:
+        candidates.append({"domain_label": "glow", "category": "technology", "method": "concept", "seed": "glow", "tags": "", "quality_score": "80"})
     _write_csv(paths["candidates"], list(CANDIDATE_FIELDS), candidates)
     _write_csv(
         paths["reserved_names"],
@@ -86,15 +89,22 @@ def make_fixture(tmp_path: Path, *, hostile_text=" \\t=1+1"):
         {"domain": "taken.si", "category": "technology", "http_status": "200", "utc_timestamp": "2026-10-13T02:01:00Z", "attempts": "1", "classification": "registered", "error": ""},
         {"domain": "conflict.si", "category": "technology", "http_status": "404", "utc_timestamp": "2026-10-13T02:02:00Z", "attempts": "1", "classification": "potentially_unregistered", "error": ""},
     ]
+    if second_eligible:
+        rdap_rows.append({"domain": "glow.si", "category": "technology", "http_status": "404", "utc_timestamp": "2026-10-13T02:03:00Z", "attempts": "1", "classification": "potentially_unregistered", "error": ""})
     _write_csv(paths["rdap_evidence"], RDAP_FIELDS, rdap_rows)
     whois_rows = [
         {"domain": "bright.si", "category": "technology", "utc_timestamp": "2026-10-13T03:00:00Z", "classification": "not_registered", "matched_pattern": "no_entries_found", "error": ""},
         {"domain": "conflict.si", "category": "technology", "utc_timestamp": "2026-10-13T03:01:00Z", "classification": "registered", "matched_pattern": "field:registrar", "error": ""},
     ]
+    if second_eligible:
+        whois_rows.append({"domain": "glow.si", "category": "technology", "utc_timestamp": "2026-10-13T03:02:00Z", "classification": "not_registered", "matched_pattern": "no_entries_found", "error": ""})
     _write_csv(paths["whois_evidence"], WHOIS_FIELDS, whois_rows)
 
     score_rows = []
-    for candidate in (candidates[0], candidates[2]):
+    score_candidates = [candidates[0], candidates[2]]
+    if second_eligible:
+        score_candidates.append(candidates[-1])
+    for candidate in score_candidates:
         score = score_domain(candidate)
         score_rows.append({field: str(score[field]) for field in SCORE_FIELDS})
     _write_csv(paths["scores"], list(SCORE_FIELDS), score_rows)
@@ -249,3 +259,55 @@ def test_export_never_overwrites_a_source_csv(tmp_path):
         export_workbook(model, paths["candidates"])
 
     assert paths["candidates"].read_bytes() == original
+
+
+def test_shuffled_opportunities_export_in_rank_order_and_validator_rejects_shuffled_rows(tmp_path):
+    paths = make_fixture(tmp_path, second_eligible=True)
+    opportunity_rows = _read_csv(paths["opportunities"])
+    assert len(opportunity_rows) == 2
+    _write_csv(paths["opportunities"], opportunity_rows[0].keys(), reversed(opportunity_rows))
+    output = tmp_path / "ranked.xlsx"
+
+    export_workbook(paths, output)
+    workbook = load_workbook(output)
+    shortlist = workbook["Shortlist"]
+    headers = [cell.value for cell in shortlist[1]]
+    rank_column = headers.index("rank") + 1
+    ranks = [shortlist.cell(row, rank_column).value for row in range(2, shortlist.max_row + 1)]
+    assert ranks == [1, 2]
+    workbook.close()
+
+    tampered = tmp_path / "shuffled.xlsx"
+    workbook = load_workbook(output)
+    sheet = workbook["Shortlist"]
+    first = [sheet.cell(2, column).value for column in range(1, sheet.max_column + 1)]
+    second = [sheet.cell(3, column).value for column in range(1, sheet.max_column + 1)]
+    for column, value in enumerate(second, start=1):
+        sheet.cell(2, column).value = value
+    for column, value in enumerate(first, start=1):
+        sheet.cell(3, column).value = value
+    workbook.save(tampered)
+    workbook.close()
+    with pytest.raises(ValueError, match="Shortlist!A2"):
+        validate_delivery(tampered, paths)
+
+
+@pytest.mark.parametrize(
+    ("hostile_text", "message"),
+    [("x" * 32768, "32767-character cell limit"), ("\x00", "invalid XML character")],
+    ids=("over-limit", "xml-control"),
+)
+def test_unrepresentable_external_text_fails_before_replacing_existing_workbook(
+    tmp_path, hostile_text, message
+):
+    paths = make_fixture(tmp_path, hostile_text=hostile_text)
+    output = tmp_path / "ranked.xlsx"
+    previous = b"previous delivery must survive invalid input"
+    output.write_bytes(previous)
+    source_bytes = paths["candidates"].read_bytes()
+
+    with pytest.raises(ValueError, match=message):
+        export_workbook(paths, output)
+
+    assert output.read_bytes() == previous
+    assert paths["candidates"].read_bytes() == source_bytes

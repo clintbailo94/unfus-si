@@ -6,6 +6,7 @@ import csv
 import hashlib
 import os
 import tempfile
+import textwrap
 import zipfile
 from collections import Counter
 from dataclasses import dataclass
@@ -73,6 +74,8 @@ _SPECIAL_REASONS = {
     "premium": "premium",
 }
 _SCORE_COMPONENTS = tuple(SCORE_WEIGHTS)
+_MAX_EXCEL_ROW_HEIGHT = 409
+_MAX_ESTIMATED_WRAP_LINES = _MAX_EXCEL_ROW_HEIGHT // 15
 _SHORTLIST_EXPORT_PRIORITY = ("rank", "domain", "total", "trademark", "trademark_status")
 _SHORTLIST_EXPORT_FIELDS = (
     *_SHORTLIST_EXPORT_PRIORITY,
@@ -1002,7 +1005,7 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
 
     shortlist_headers = _SHORTLIST_EXPORT_FIELDS
     shortlist_output_rows: list[tuple[object, ...]] = []
-    for opportunity in tables["opportunities"].rows:
+    for opportunity in sorted(tables["opportunities"].rows, key=lambda row: int(row["rank"])):
         domain = _domain(opportunity["domain"], "opportunities")
         rdap_row = rdap_latest.get(domain)
         whois_row = whois_latest.get(domain)
@@ -1202,9 +1205,93 @@ def _cell_value(value: object) -> object:
     return value
 
 
+def _excel_text_length(value: str) -> int:
+    """Return Excel's UTF-16 cell length and reject lone surrogate code points."""
+
+    return len(value.encode("utf-16-le")) // 2
+
+
+def _validate_cell_text(model: WorkbookModel) -> None:
+    """Fail before writing when a text cell cannot be preserved in XLSX/XML."""
+
+    for sheet_name, data in model.sheets.items():
+        for row_number, row in enumerate((data.headers, *data.rows), start=1):
+            for column_number, value in enumerate(row, start=1):
+                if not isinstance(value, str):
+                    continue
+                coordinate = f"{get_column_letter(column_number)}{row_number}"
+                header = data.headers[column_number - 1] if row_number > 1 else "header"
+                context = f"{sheet_name}!{coordinate} ({header})"
+                try:
+                    length = _excel_text_length(value)
+                except UnicodeEncodeError as exc:
+                    raise ValueError(f"invalid XML text in {context}: unpaired Unicode surrogate") from exc
+                if length > 32767:
+                    raise ValueError(
+                        f"text in {context} exceeds Excel's 32767-character cell limit ({length} UTF-16 code units)"
+                    )
+                for character in value:
+                    codepoint = ord(character)
+                    if not (
+                        codepoint in (0x9, 0xA, 0xD)
+                        or 0x20 <= codepoint <= 0xD7FF
+                        or 0xE000 <= codepoint <= 0xFFFD
+                        or 0x10000 <= codepoint <= 0x10FFFF
+                    ):
+                        raise ValueError(
+                            f"invalid XML character U+{codepoint:04X} in {context}"
+                        )
+
+
+def _estimated_wrapped_lines(value: object, width: float) -> int:
+    text = str(value).replace("\r\n", "\n").replace("\r", "\n").expandtabs(4)
+    line_width = max(1, int(width) - 2)
+    count = 0
+    for explicit_line in text.split("\n"):
+        wrapped = textwrap.wrap(
+            explicit_line,
+            width=line_width,
+            break_long_words=True,
+            break_on_hyphens=True,
+            replace_whitespace=False,
+            drop_whitespace=False,
+            max_lines=_MAX_ESTIMATED_WRAP_LINES,
+            placeholder="…",
+        )
+        count += max(1, len(wrapped))
+        if count >= _MAX_ESTIMATED_WRAP_LINES:
+            return _MAX_ESTIMATED_WRAP_LINES
+    return max(1, count)
+
+
 def _write_sheet(workbook: Workbook, name: str, data: SheetData) -> Worksheet:
     sheet = workbook.create_sheet(name)
     sheet.sheet_view.showGridLines = True
+    widths: dict[str, float] = {}
+    for column, header in enumerate(data.headers, start=1):
+        values = [str(header)]
+        values.extend(
+            str(row[column - 1])
+            for row in data.rows
+            if row[column - 1] is not None
+        )
+        longest = max(
+            (len(line.expandtabs(4)) for value in values for line in value.splitlines()),
+            default=10,
+        )
+        width = min(max(longest + 2, 12), 50)
+        if header in data.wrap_columns:
+            width = min(max(width, 30), 60)
+        if header in {"domain", "domain_label"}:
+            width = max(width, 22)
+        if header in {"rank", "shortlist_rank", "http_status", "rdap_http_status"}:
+            width = max(10, min(width, 14))
+        if name == "Methodology" and header == "Details":
+            width = 90
+        if name == "Methodology" and header == "Topic":
+            width = 32
+        widths[header] = width
+
     for column, header in enumerate(data.headers, start=1):
         cell = sheet.cell(1, column, header)
         cell.fill = _HEADER_FILL
@@ -1234,7 +1321,17 @@ def _write_sheet(workbook: Workbook, name: str, data: SheetData) -> Worksheet:
             if name == "Shortlist" and header in {"rank", "domain", "total", "trademark", "trademark_status"}:
                 cell.fill = _KEY_FILL
         if data.wrap_columns:
-            sheet.row_dimensions[row_index].height = 30
+            required_lines = max(
+                (
+                    _estimated_wrapped_lines(value, widths[data.headers[column - 1]])
+                    for column, value in enumerate(row, start=1)
+                    if data.headers[column - 1] in data.wrap_columns and value is not None
+                ),
+                default=1,
+            )
+            sheet.row_dimensions[row_index].height = min(
+                _MAX_EXCEL_ROW_HEIGHT, max(18, required_lines * 15)
+            )
 
     if data.freeze_panes:
         sheet.freeze_panes = data.freeze_panes
@@ -1248,21 +1345,7 @@ def _write_sheet(workbook: Workbook, name: str, data: SheetData) -> Worksheet:
     sheet.print_title_rows = "1:1"
 
     for column, header in enumerate(data.headers, start=1):
-        values = [str(header)]
-        if len(data.rows) <= 100:
-            values.extend(str(row[column - 1]) for row in data.rows if row[column - 1] is not None)
-        width = min(max(max((len(value) for value in values), default=10) + 2, 12), 50)
-        if header in data.wrap_columns:
-            width = min(max(width, 30), 60)
-        if header in {"domain", "domain_label"}:
-            width = max(width, 22)
-        if header in {"rank", "shortlist_rank", "http_status", "rdap_http_status"}:
-            width = max(10, min(width, 14))
-        if name == "Methodology" and header == "Details":
-            width = 90
-        if name == "Methodology" and header == "Topic":
-            width = 32
-        sheet.column_dimensions[get_column_letter(column)].width = width
+        sheet.column_dimensions[get_column_letter(column)].width = widths[header]
     return sheet
 
 
@@ -1307,6 +1390,7 @@ def export_workbook(
         if isinstance(model_or_paths, WorkbookModel)
         else build_workbook_model(model_or_paths)
     )
+    _validate_cell_text(model)
     output = Path(output_path).resolve()
     source_paths = {path.resolve() for path in model.input_paths.values()}
     if output in source_paths:
