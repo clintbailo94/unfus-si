@@ -133,90 +133,90 @@
 ## dictionary (40 of 1050)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
-| perusal.si | dictionary | perusal |  | 97 |
-| teapot.si | dictionary | teapot |  | 89 |
-| luggage.si | dictionary | luggage |  | 93 |
+| penguin.si | dictionary | penguin |  | 93 |
+| teenage.si | dictionary | teenage |  | 90 |
+| magazine.si | dictionary | magazine |  | 89 |
 | admirer.si | dictionary | admirer |  | 93 |
 | ragtime.si | dictionary | ragtime |  | 93 |
 | zoology.si | dictionary | zoology |  | 90 |
 | dioxide.si | dictionary | dioxide |  | 90 |
-| harmony.si | dictionary | harmony |  | 93 |
+| hangout.si | dictionary | hangout |  | 93 |
 | sensory.si | dictionary | sensory |  | 93 |
-| broiler.si | dictionary | broiler |  | 93 |
-| undying.si | dictionary | undying |  | 93 |
-| popular.si | dictionary | popular |  | 97 |
-| granola.si | dictionary | granola |  | 93 |
-| voyager.si | dictionary | voyager |  | 90 |
-| salable.si | dictionary | salable |  | 93 |
-| urgency.si | dictionary | urgency |  | 93 |
-| pipeline.si | dictionary | pipeline |  | 89 |
+| brewery.si | dictionary | brewery |  | 93 |
+| unnamed.si | dictionary | unnamed |  | 93 |
+| polygon.si | dictionary | polygon |  | 97 |
+| granite.si | dictionary | granite |  | 93 |
+| volcano.si | dictionary | volcano |  | 93 |
+| sailing.si | dictionary | sailing |  | 93 |
+| valera.si | invented-reclassified | val+era | phonotactic;real_word | 89 |
+| piccolo.si | dictionary | piccolo |  | 93 |
 | salient.si | dictionary | salient |  | 93 |
-| patient.si | dictionary | patient |  | 93 |
+| parasol.si | dictionary | parasol |  | 97 |
 | academy.si | dictionary | academy | consumer_brands | 90 |
-| orifice.si | dictionary | orifice |  | 90 |
+| optimum.si | dictionary | optimum |  | 93 |
 | teacher.si | dictionary | teacher |  | 93 |
-| average.si | dictionary | average |  | 90 |
-| ironic.si | dictionary | ironic |  | 89 |
-| fluency.si | dictionary | fluency |  | 93 |
-| formula.si | dictionary | formula |  | 93 |
-| conical.si | dictionary | conical |  | 97 |
+| aviator.si | dictionary | aviator |  | 90 |
+| inverse.si | dictionary | inverse |  | 93 |
+| footing.si | dictionary | footing |  | 93 |
+| freedom.si | dictionary | freedom |  | 93 |
+| comrade.si | dictionary | comrade |  | 93 |
 | library.si | dictionary | library |  | 93 |
-| baritone.si | dictionary | baritone |  | 89 |
-| causal.si | dictionary | causal |  | 89 |
-| coaster.si | dictionary | coaster |  | 93 |
-| animated.si | dictionary | animated |  | 89 |
+| barrier.si | dictionary | barrier |  | 93 |
+| carrier.si | dictionary | carrier |  | 93 |
+| climate.si | dictionary | climate |  | 93 |
+| anomaly.si | dictionary | anomaly |  | 90 |
 | surname.si | dictionary | surname |  | 93 |
 | anatomy.si | dictionary | anatomy |  | 90 |
-| martial.si | dictionary | martial |  | 93 |
-| leopard.si | dictionary | leopard |  | 93 |
-| lozenge.si | dictionary | lozenge |  | 93 |
-| debonair.si | dictionary | debonair |  | 89 |
-| gainful.si | dictionary | gainful |  | 93 |
-| passion.si | dictionary | passion |  | 93 |
+| massive.si | dictionary | massive |  | 93 |
+| leno.si | invented-reclassified | len+o | phonotactic;real_word | 82 |
+| machine.si | dictionary | machine |  | 93 |
+| cuticle.si | dictionary | cuticle |  | 93 |
+| galia.si | invented-reclassified | gal+ia | phonotactic;real_word | 81 |
+| parable.si | dictionary | parable |  | 93 |
 
 ## invented (40 of 1400)
 | domain | method | seed | tags | quality_score |
 | --- | --- | --- | --- | ---: |
-| molene.si | invented | mol+ene | phonotactic | 89 |
-| doraro.si | invented | dor+aro | phonotactic | 89 |
+| monaro.si | invented | mon+aro | phonotactic | 89 |
+| dorova.si | invented | dor+ova | phonotactic | 89 |
+| lanelo.si | invented | lan+elo | phonotactic | 89 |
 | kelina.si | invented | kel+ina | phonotactic | 89 |
-| kariva.si | invented | kar+iva | phonotactic | 89 |
-| melora.si | invented | mel+ora | phonotactic | 89 |
-| tanaro.si | invented | tan+aro | phonotactic | 89 |
-| kelium.si | invented | kel+ium | phonotactic | 89 |
-| zalaro.si | invented | zal+aro | phonotactic | 89 |
-| milium.si | invented | mil+ium | phonotactic | 89 |
-| winaro.si | invented | win+aro | phonotactic | 89 |
-| molora.si | invented | mol+ora | phonotactic | 89 |
-| renium.si | invented | ren+ium | phonotactic | 89 |
-| narona.si | invented | nar+ona | phonotactic | 89 |
-| silami.si | invented | sil+ami | phonotactic | 89 |
-| riniva.si | invented | rin+iva | phonotactic | 89 |
-| finuno.si | invented | fin+uno | phonotactic | 89 |
+| merium.si | invented | mer+ium | phonotactic | 89 |
+| tanino.si | invented | tan+ino | phonotactic | 89 |
+| lanera.si | invented | lan+era | phonotactic | 89 |
+| zalena.si | invented | zal+ena | phonotactic | 89 |
+| mirette.si | invented | mir+ette | phonotactic | 92 |
+| winera.si | invented | win+era | phonotactic | 89 |
+| monora.si | invented | mon+ora | phonotactic | 89 |
+| renura.si | invented | ren+ura | phonotactic | 89 |
+| nelium.si | invented | nel+ium | phonotactic | 89 |
+| silera.si | invented | sil+era | phonotactic | 89 |
+| rinura.si | invented | rin+ura | phonotactic | 89 |
+| galene.si | invented | gal+ene | phonotactic | 89 |
+| calina.si | invented | cal+ina | phonotactic | 89 |
+| narium.si | invented | nar+ium | phonotactic | 89 |
+| paraya.si | invented | par+aya | phonotactic | 82 |
+| nexova.si | invented | nex+ova | phonotactic | 89 |
+| ralilo.si | invented | ral+ilo | phonotactic | 89 |
+| lenette.si | invented | len+ette | phonotactic | 92 |
+| mervia.si | invented | mer+via | phonotactic | 85 |
+| finora.si | invented | fin+ora | phonotactic | 89 |
+| merette.si | invented | mer+ette | phonotactic | 92 |
+| solura.si | invented | sol+ura | phonotactic | 89 |
+| lisina.si | invented | lis+ina | phonotactic | 89 |
+| veniva.si | invented | ven+iva | phonotactic | 89 |
+| ranina.si | invented | ran+ina | phonotactic | 89 |
 | calelo.si | invented | cal+elo | phonotactic | 89 |
-| morino.si | invented | mor+ino | phonotactic | 89 |
-| palilo.si | invented | pal+ilo | phonotactic | 89 |
-| nervia.si | invented | ner+via | phonotactic | 85 |
-| ralaya.si | invented | ral+aya | phonotactic | 82 |
-| larona.si | invented | lar+ona | phonotactic | 89 |
-| meraro.si | invented | mer+aro | phonotactic | 89 |
-| finelle.si | invented | fin+elle | phonotactic | 92 |
-| melium.si | invented | mel+ium | phonotactic | 89 |
-| solette.si | invented | sol+ette | phonotactic | 92 |
-| lisal.si | invented | lis+al | phonotactic | 88 |
-| venette.si | invented | ven+ette | phonotactic | 92 |
-| ranaya.si | invented | ran+aya | phonotactic | 82 |
+| lumelle.si | invented | lum+elle | phonotactic | 92 |
 | brenura.si | invented | bren+ura | phonotactic | 92 |
-| lorium.si | invented | lor+ium | phonotactic | 89 |
-| breniva.si | invented | bren+iva | phonotactic | 92 |
-| parium.si | invented | par+ium | phonotactic | 89 |
-| herena.si | invented | her+ena | phonotactic | 89 |
-| celilo.si | invented | cel+ilo | phonotactic | 89 |
-| karora.si | invented | kar+ora | phonotactic | 89 |
-| relium.si | invented | rel+ium | phonotactic | 89 |
-| solami.si | invented | sol+ami | phonotactic | 89 |
-| zorera.si | invented | zor+era | phonotactic | 89 |
-| raliva.si | invented | ral+iva | phonotactic | 89 |
+| pelaro.si | invented | pel+aro | phonotactic | 89 |
+| karal.si | invented | kar+al | phonotactic | 88 |
+| celuno.si | invented | cel+uno | phonotactic | 89 |
+| kelium.si | invented | kel+ium | phonotactic | 89 |
+| relura.si | invented | rel+ura | phonotactic | 89 |
+| solilo.si | invented | sol+ilo | phonotactic | 89 |
+| zorette.si | invented | zor+ette | phonotactic | 92 |
+| ranal.si | invented | ran+al | phonotactic | 88 |
 
 ## technology (40 of 254)
 | domain | method | seed | tags | quality_score |

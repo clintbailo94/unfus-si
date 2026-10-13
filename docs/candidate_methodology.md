@@ -277,6 +277,24 @@ and short brandable morphemes. Matching boundary letters are merged, and the
 quality gate rejects spelling clusters, repeated letters, and repeated
 two/three-letter chunks. The ranked output ceiling is 1,400.
 
+Before an invented label receives the invented score, generation checks it
+against every local seed vocabulary, all shared blocklists, and the reviewed
+exact list in `data/invented_real_words.txt`. The exact list records the manual
+review of all 1,400 labels in the prior invented CSV. It covers common English
+words, familiar names, known places, and established brand-like names. A match
+is evaluated with the existing dictionary quality gates. Passing labels move
+to `dictionary` with method `invented-reclassified`, retain their original
+stem/ending seed and `phonotactic` tag, and gain the `real_word` tag. A match
+that fails the dictionary gates is dropped. No word-list download or network
+lookup is used for this check.
+
+The dictionary seed list and 1,050-row cap remain unchanged. Reclassified rows
+participate in that cap and are retained ahead of other dictionary rows; the
+pool therefore remains at 6,204 unique labels and the category caps stay in
+place. The local vocabulary union catches exact seed and blocklist matches;
+the reviewed list is a bounded manual audit, not a complete database of every
+language, personal name, place, or trademark.
+
 ## Word-list source and license
 
 The five T4 sector root/suffix vocabularies and exact pair whitelists were

@@ -185,6 +185,7 @@ def _rank_within_limit(category: str, candidates: list[Candidate]) -> list[Candi
     ranked = sorted(
         candidates,
         key=lambda candidate: (
+            0 if candidate.method == "invented-reclassified" else 1,
             0 if category == "short" and {"abbr", "word"}.intersection(candidate.tags) else 1,
             -candidate.quality_score,
             hashlib.sha256(candidate.domain_label.encode("ascii")).hexdigest(),
@@ -209,6 +210,7 @@ def generate_all() -> dict[str, list[Candidate]]:
         options = sorted(
             occurrences[label],
             key=lambda candidate: (
+                0 if candidate.method == "invented-reclassified" else 1,
                 index[candidate.category],
                 -candidate.quality_score,
                 candidate.method,

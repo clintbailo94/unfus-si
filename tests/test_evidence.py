@@ -29,6 +29,7 @@ def test_csv_appends_flushable_rows_and_latest_row_wins(tmp_path):
     assert len(rows) == 2
     assert rows[0]["http_status"] == ""
     assert store.load_latest()["example.si"]["classification"] == "registered"
+    assert b"\r" not in path.read_bytes()
 
 
 def test_resume_skips_final_and_skips_unverified_until_retry_option(tmp_path):
@@ -79,3 +80,41 @@ def test_error_field_rejects_unexpected_body_text(tmp_path):
     contents = path.read_text(encoding="utf-8")
     assert "secret registrant payload" not in contents
     assert "unspecified_error" in contents
+
+
+def test_torn_final_row_is_repaired_without_losing_prior_rows_or_repeating_header(tmp_path):
+    path = tmp_path / "evidence.csv"
+    path.write_bytes(
+        b"domain,category,http_status,utc_timestamp,attempts,classification,error\n"
+        b"kept.si,tech,404,2026-10-12T10:00:00Z,1,potentially_unregistered,\n"
+        b"partial.si,tech,20"
+    )
+
+    store = EvidenceStore(path)
+
+    assert set(store.load_latest()) == {"kept.si"}
+    assert path.read_bytes().endswith(b"\n")
+
+    store.append(
+        "tech",
+        Result("added.si", 200, "2026-10-12T11:00:00Z", 1, "registered"),
+    )
+
+    contents = path.read_text(encoding="utf-8")
+    with path.open(encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    assert contents.count("domain,category,http_status") == 1
+    assert {row["domain"] for row in rows} == {"kept.si", "added.si"}
+
+
+def test_evidence_loader_accepts_crlf_csv(tmp_path):
+    path = tmp_path / "evidence.csv"
+    path.write_bytes(
+        b"domain,category,http_status,utc_timestamp,attempts,classification,error\r\n"
+        b"example.si,tech,404,2026-10-12T10:00:00Z,1,potentially_unregistered,\r\n"
+    )
+
+    latest = EvidenceStore(path).load_latest()
+
+    assert latest["example.si"]["classification"] == "potentially_unregistered"
+    assert latest["example.si"]["error"] == ""
