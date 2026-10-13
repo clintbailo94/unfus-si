@@ -39,12 +39,16 @@ class Response:
 
 
 class FakeSession:
-    def __init__(self, outcomes):
+    def __init__(self, outcomes, *, monotonic=None):
         self.outcomes = list(outcomes)
         self.calls = []
+        self.monotonic = monotonic
+        self.starts = []
 
     def get(self, url, **kwargs):
         self.calls.append((url, kwargs))
+        if self.monotonic is not None:
+            self.starts.append(self.monotonic())
         outcome = self.outcomes.pop(0)
         if isinstance(outcome, BaseException):
             raise outcome
@@ -190,6 +194,57 @@ def test_rate_limiter_spaces_any_request_starts_by_one_second():
         starts.append(elapsed[0])
     assert starts == [0.0, 1.0, 2.0, 3.0]
     assert all(right - left >= 1.0 for left, right in zip(starts, starts[1:]))
+
+
+def test_adaptive_pacing_covers_retries_and_later_domains(fake_clock):
+    limiter = rdap.RateLimiter(
+        min_interval=2.0,
+        clock=fake_clock.monotonic,
+        sleep=fake_clock.sleep,
+    )
+    session = FakeSession(
+        [
+            Response(429, {}, headers={"Retry-After": "0"}),
+            Response(429, {}, headers={"Retry-After": "0"}),
+            Response(429, {}, headers={"Retry-After": "0"}),
+            Response(429, {}, headers={"Retry-After": "0"}),
+            Response(200, {"objectClassName": "domain"}),
+            Response(404, {"errorCode": 404}),
+        ],
+        monotonic=fake_clock.monotonic,
+    )
+
+    first = rdap.check_domain(
+        "example",
+        session=session,
+        clock=fake_clock.utc,
+        sleep=fake_clock.sleep,
+        jitter=lambda: 0.0,
+        rate_limiter=limiter,
+    )
+    second = rdap.check_domain(
+        "another",
+        session=session,
+        clock=fake_clock.utc,
+        sleep=fake_clock.sleep,
+        jitter=lambda: 0.0,
+        rate_limiter=limiter,
+    )
+
+    assert first.classification == "registered"
+    assert first.attempts == 5
+    assert second.classification == "potentially_unregistered"
+    assert session.starts == [0.0, 3.0, 7.5, 15.5, 31.5, 36.5]
+    assert limiter.min_interval == 5.0
+    assert limiter.configured_min_interval == 2.0
+
+
+def test_rate_limiter_never_adapts_below_configured_interval():
+    limiter = rdap.RateLimiter(min_interval=6.0, clock=lambda: 0.0, sleep=lambda _: None)
+
+    limiter.increase_after_429()
+
+    assert limiter.min_interval == 6.0
 
 
 def test_retries_are_also_spaced_by_rate_limiter(fake_clock):

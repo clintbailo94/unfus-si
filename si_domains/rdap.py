@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import random
 import threading
 import time
@@ -31,6 +32,9 @@ from .validation import ascii_label, is_valid_label
 Clock = Callable[[], datetime | float]
 Sleep = Callable[[float], None]
 Jitter = Callable[[], float]
+
+MAX_ADAPTIVE_INTERVAL = 5.0
+ADAPTIVE_INTERVAL_MULTIPLIER = 1.5
 
 
 def _now_utc(clock: Clock) -> datetime:
@@ -74,11 +78,34 @@ class RateLimiter:
         clock: Callable[[], float] = time.monotonic,
         sleep: Sleep = time.sleep,
     ) -> None:
-        self.min_interval = min_interval
+        try:
+            configured_interval = float(min_interval)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                "min_interval must be a finite number of at least 1 second"
+            ) from exc
+        if not math.isfinite(configured_interval) or configured_interval < 1.0:
+            raise ValueError("min_interval must be a finite number of at least 1 second")
+        self.configured_min_interval = configured_interval
+        self.min_interval = configured_interval
+        self.rate_limited_responses = 0
         self._clock = clock
         self._sleep = sleep
         self._last_request: float | None = None
-        self._lock = threading.Lock()
+        self._lock = threading.RLock()
+
+    def increase_after_429(self) -> None:
+        """Count a 429 and raise this run's pace without crossing its baseline or 5s."""
+
+        with self._lock:
+            self.rate_limited_responses += 1
+            self.min_interval = max(
+                self.configured_min_interval,
+                min(
+                    MAX_ADAPTIVE_INTERVAL,
+                    self.min_interval * ADAPTIVE_INTERVAL_MULTIPLIER,
+                ),
+            )
 
     def wait(
         self,
@@ -235,6 +262,7 @@ def check_domain(
     clock: Clock = lambda: datetime.now(timezone.utc),
     sleep: Sleep = time.sleep,
     jitter: Jitter | None = None,
+    rate_limiter: RateLimiter | None = None,
 ) -> Result:
     """Check one label, returning only status metadata and a short error code."""
 
@@ -252,10 +280,11 @@ def check_domain(
     final_error = ""
     final_timestamp = _timestamp(clock)
     attempts = 0
+    limiter = rate_limiter or RATE_LIMITER
 
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            with RATE_LIMITER.request():
+            with limiter.request():
                 final_timestamp = _timestamp(clock)
                 attempts = attempt
                 response = session.get(
@@ -264,6 +293,8 @@ def check_domain(
                     timeout=RDAP_TIMEOUT,
                     allow_redirects=False,
                 )
+                if int(response.status_code) == 429:
+                    limiter.increase_after_429()
         except requests.Timeout:
             final_status = None
             final_error = "network_timeout"
