@@ -101,7 +101,10 @@ def test_report_contains_owned_chip_summary_badges_and_purchase_wording():
         ('6,204', 'checked'), ('3,385', 'available'), ('10', 'owned (yours)'),
         ('500', 'top 500 ranked'), ('2,809', 'unavailable'),
     ]
-    assert "Your 10 owned domains are not listed here; see Your domains and Top 500." in source
+    owned_note = "Your 10 owned domains are not listed here; see Your domains and Top 500."
+    available_panel = source.split('id="panel-available"', 1)[1].split("</section>", 1)[0]
+    assert owned_note in available_panel
+    assert source.count(owned_note) == 1
     assert len(data["a"]) == 3385
     assert len(data["u"]) == 2809
     owned_domains = {row[1] for row in data["s"] if row[4]}

@@ -388,7 +388,6 @@ footer{color:var(--faint);font-size:13px;padding:30px 0 60px;border-top:1px soli
     <button class="tab" id="tab-available" role="tab" aria-selected="false" aria-controls="panel-available" tabindex="-1" data-mode="available">All available</button>
     <button class="tab" id="tab-unavailable" role="tab" aria-selected="false" aria-controls="panel-unavailable" tabindex="-1" data-mode="unavailable">Unavailable</button>
   </div>
-  <p class="sub">Your __OWNED_COUNT__ owned domains are not listed here; see Your domains and Top 500.</p>
   <section id="panel-top" role="tabpanel" aria-labelledby="tab-top" class="report-panel" tabindex="0">
     <h2>The shortlist</h2>
     <p class="sub">Tap a category to filter. Tap any row for the reasoning, score breakdown and evidence.</p>
@@ -412,6 +411,7 @@ footer{color:var(--faint);font-size:13px;padding:30px 0 60px;border-top:1px soli
   </section>
   <section id="panel-available" role="tabpanel" aria-labelledby="tab-available" class="report-panel" tabindex="0" hidden>
     <h2>All available</h2>
+    <p class="sub">Your __OWNED_COUNT__ owned domains are not listed here; see Your domains and Top 500.</p>
     <p class="sub">Names with RDAP 404, WHOIS not_registered and known rules passing, excluding owned domains. Ranked names include their shortlist rank; other exclusion reasons come from the workbook.</p>
     <div class="cats" data-cats></div>
     <div class="controls">
