@@ -86,8 +86,6 @@ cands = len(all_candidates)
 
 
 def available(candidate):
-    if candidate.get("owned") == "yes":
-        return True
     return (
         candidate.get("known_rule_class") == "ok"
         and num(candidate.get("latest_rdap_http_status")) == 404
@@ -126,6 +124,7 @@ def unavailable_reason(candidate):
 
 score_fields = ("brandability", "commercial", "shortness", "hack", "resale", "trademark")
 available_rows = []
+owned_rows = []
 unavailable_rows = []
 for candidate in all_candidates:
     domain = str(candidate["domain"])
@@ -143,7 +142,9 @@ for candidate in all_candidates:
         "rdap": [str(candidate.get("latest_rdap_http_status") or ""), str(candidate.get("latest_rdap_classification") or ""), str(candidate.get("latest_rdap_timestamp") or "")],
         "whois": [str(candidate.get("latest_whois_classification") or ""), str(candidate.get("latest_whois_timestamp") or "")],
     }
-    if available(candidate):
+    if is_owned:
+        owned_rows.append(base)
+    elif available(candidate):
         available_rows.append(base)
     else:
         code, label, detail, source, timestamp = unavailable_reason(candidate)
@@ -152,14 +153,14 @@ for candidate in all_candidates:
         unavailable_rows.append(base)
 
 checked_domains = [str(row["domain"]) for row in all_candidates]
-assigned_domains = [row["d"] for row in available_rows + unavailable_rows]
+assigned_domains = [row["d"] for row in available_rows + owned_rows + unavailable_rows]
 checked_counts, assigned_counts = Counter(checked_domains), Counter(assigned_domains)
-if len(available_rows) + len(unavailable_rows) != cands or checked_counts != assigned_counts:
+if len(available_rows) + len(owned_rows) + len(unavailable_rows) != cands or checked_counts != assigned_counts:
     missing = sorted(name for name, count in checked_counts.items() if assigned_counts.get(name, 0) < count)
     extra = sorted(name for name, count in assigned_counts.items() if checked_counts.get(name, 0) < count)
     raise ValueError(
-        f"Available and unavailable rows do not cover All candidates "
-        f"({len(available_rows)} + {len(unavailable_rows)} != {cands}); "
+        f"Available, owned, and unavailable rows do not cover All candidates "
+        f"({len(available_rows)} + {len(owned_rows)} + {len(unavailable_rows)} != {cands}); "
         f"unaccounted names: {', '.join(missing) or '(none)'}; "
         f"unexpected names: {', '.join(extra) or '(none)'}"
     )
@@ -175,9 +176,9 @@ if missing_timestamps:
 missing_reasons = [row["d"] for row in unavailable_rows if not row["reason"]]
 if missing_reasons:
     raise ValueError("Unavailable candidates lack a recorded reason: " + ", ".join(missing_reasons))
-ranked = sorted(row["r"] for row in available_rows if row["r"] is not None)
+ranked = sorted(row["r"] for row in rows if row["r"] is not None)
 if len(short) != 500 or ranked != list(range(1, 501)):
-    raise ValueError("All available shortlist ranks do not cover ranks 1 through 500")
+    raise ValueError("Shortlist ranks do not cover ranks 1 through 500")
 
 weights = meth.get("Ranking weights", "")
 rdap_counts = meth.get("Latest RDAP counts", "")
@@ -242,7 +243,7 @@ header{padding:56px 0 28px}
 h1{font:650 clamp(34px,5vw,54px)/1.05 Fraunces,Georgia,serif;margin:14px 0 14px;letter-spacing:-.01em}
 h1 span{color:var(--accent)}
 .lede{max-width:720px;color:var(--muted);font-size:17px;margin:0}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:32px 0 0}
+.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:32px 0 0}
 .stat{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
 .stat b{display:block;font:650 28px/1.1 Fraunces,Georgia,serif}
 .stat span{color:var(--muted);font-size:13px}
@@ -364,10 +365,11 @@ footer{color:var(--faint);font-size:13px;padding:30px 0 60px;border-top:1px soli
 <header>
   <div class="eyebrow">Research report / Slovenia ccTLD</div>
   <h1>500 ranked <span>.si</span> domains worth a look</h1>
-  <p class="lede">Browse the ranked shortlist, every name that passed both availability checks, and every name that did not. Score details and exclusion reasons come from the workbook; registry observations are a dated snapshot, and domains in Your domains have since been purchased.</p>
+  <p class="lede">Browse the ranked shortlist, names that passed both availability checks and are not owned, and names that did not. Score details and exclusion reasons come from the workbook; registry observations are a dated snapshot, and domains in Your domains have since been purchased.</p>
   <div class="stats">
     <div class="stat"><b>__CANDS__</b><span>checked</span></div>
     <div class="stat"><b>__AVAILABLE__</b><span>available</span></div>
+    <div class="stat"><b>__OWNED_COUNT__</b><span>owned (yours)</span></div>
     <div class="stat"><b>__RANKED__</b><span>top 500 ranked</span></div>
     <div class="stat"><b>__UNAVAILABLE__</b><span>unavailable</span></div>
   </div>
@@ -386,6 +388,7 @@ footer{color:var(--faint);font-size:13px;padding:30px 0 60px;border-top:1px soli
     <button class="tab" id="tab-available" role="tab" aria-selected="false" aria-controls="panel-available" tabindex="-1" data-mode="available">All available</button>
     <button class="tab" id="tab-unavailable" role="tab" aria-selected="false" aria-controls="panel-unavailable" tabindex="-1" data-mode="unavailable">Unavailable</button>
   </div>
+  <p class="sub">Your __OWNED_COUNT__ owned domains are not listed here; see Your domains and Top 500.</p>
   <section id="panel-top" role="tabpanel" aria-labelledby="tab-top" class="report-panel" tabindex="0">
     <h2>The shortlist</h2>
     <p class="sub">Tap a category to filter. Tap any row for the reasoning, score breakdown and evidence.</p>
@@ -409,7 +412,7 @@ footer{color:var(--faint);font-size:13px;padding:30px 0 60px;border-top:1px soli
   </section>
   <section id="panel-available" role="tabpanel" aria-labelledby="tab-available" class="report-panel" tabindex="0" hidden>
     <h2>All available</h2>
-    <p class="sub">Every name with RDAP 404, WHOIS not_registered and known rules passing. Ranked names include their shortlist rank; other exclusion reasons come from the workbook.</p>
+    <p class="sub">Names with RDAP 404, WHOIS not_registered and known rules passing, excluding owned domains. Ranked names include their shortlist rank; other exclusion reasons come from the workbook.</p>
     <div class="cats" data-cats></div>
     <div class="controls">
       <input data-query type="search" placeholder="Search domains or reasoning..." aria-label="Search all available">

@@ -16,7 +16,7 @@ python scripts/build_html.py
 python -m si_domains validate-delivery --workbook output/si_domains_ranked.xlsx
 ```
 
-The HTML report includes Top 500, All available, and Unavailable views with paged rows and keyboard-operable tabs.
+The HTML report includes Top 500, All available, and Unavailable views with paged rows and keyboard-operable tabs. Owned domains remain in Top 500 and Your domains, and are excluded from All available.
 
 `data/owned_domains.txt` records domains bought by you and their purchase dates. The workbook and HTML mark those rows as owned; registry evidence is pre-purchase history, and ownership does not change scores or ranks.
 

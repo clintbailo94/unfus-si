@@ -353,25 +353,27 @@ def test_workbook_relabels_owned_registry_status_and_adds_owned_sheet(tmp_path):
         shortlist_headers = {cell.value: index for index, cell in enumerate(shortlist[1])}
         row = next(row for row in shortlist.iter_rows(min_row=2, values_only=True) if row[shortlist_headers["domain"]] == "bright.si")
         assert row[shortlist_headers["owned"]] == "yes"
-        assert row[shortlist_headers["rdap_classification"]] == "owned by you (bought 2026-10-14)"
-        assert row[shortlist_headers["whois_classification"]] == "owned by you (bought 2026-10-14)"
+        assert row[shortlist_headers["rdap_classification"]] == "potentially_unregistered"
+        assert row[shortlist_headers["whois_classification"]] == "not_registered"
 
         all_candidates = workbook["All candidates"]
         all_headers = {cell.value: index for index, cell in enumerate(all_candidates[1])}
         row = next(row for row in all_candidates.iter_rows(min_row=2, values_only=True) if row[all_headers["domain"]] == "bright.si")
         assert row[all_headers["owned"]] == "yes"
         assert row[all_headers["registry_status"]] == "owned by you (bought 2026-10-14)"
-        assert row[all_headers["latest_rdap_classification"]] == "owned by you (bought 2026-10-14)"
-        assert row[all_headers["latest_whois_classification"]] == "owned by you (bought 2026-10-14)"
+        assert row[all_headers["latest_rdap_classification"]] == "potentially_unregistered"
+        assert row[all_headers["latest_whois_classification"]] == "not_registered"
 
-        for sheet_name in ("RDAP evidence", "WHOIS evidence"):
+        for sheet_name, source_name in (("RDAP evidence", "rdap_evidence"), ("WHOIS evidence", "whois_evidence")):
             evidence_sheet = workbook[sheet_name]
             evidence_headers = {cell.value: index for index, cell in enumerate(evidence_sheet[1])}
-            evidence_row = next(
-                row for row in evidence_sheet.iter_rows(min_row=2, values_only=True)
+            evidence_rows = [
+                row[evidence_headers["classification"]]
+                for row in evidence_sheet.iter_rows(min_row=2, values_only=True)
                 if row[evidence_headers["domain"]] == "bright.si"
-            )
-            assert evidence_row[evidence_headers["classification"]] == "owned by you (bought 2026-10-14)"
+            ]
+            recorded_rows = [row["classification"] for row in _read_csv(paths[source_name]) if row["domain"] == "bright.si"]
+            assert evidence_rows == recorded_rows
 
         owned_sheet = workbook["Owned"]
         assert owned_sheet.max_row == 2
@@ -395,16 +397,40 @@ def test_production_owned_sheet_has_ten_shortlist_rows_and_matching_ranks(tmp_pa
         shortlist_by_domain = {
             row[shortlist_headers["domain"]]: row for row in shortlist[1:]
         }
+        all_candidates = list(workbook["All candidates"].iter_rows(values_only=True))
+        all_headers = {name: index for index, name in enumerate(all_candidates[0])}
+        all_by_domain = {
+            row[all_headers["domain"]]: row for row in all_candidates[1:]
+        }
         owned = list(workbook["Owned"].iter_rows(values_only=True))
         owned_headers = {name: index for index, name in enumerate(owned[0])}
         assert len(owned) - 1 == 10
+
+        def latest_classifications(path):
+            latest = {}
+            for evidence in _read_csv(path):
+                domain = evidence["domain"]
+                if domain not in latest or evidence["utc_timestamp"] > latest[domain]["utc_timestamp"]:
+                    latest[domain] = evidence
+            return {domain: row["classification"] for domain, row in latest.items()}
+
+        root = Path(__file__).resolve().parents[1]
+        rdap = latest_classifications(root / "output" / "rdap_evidence.csv")
+        whois = latest_classifications(root / "output" / "whois_evidence.csv")
         for row in owned[1:]:
             domain = row[owned_headers["domain"]]
             shortlist_row = shortlist_by_domain[domain]
+            candidate_row = all_by_domain[domain]
             assert row[owned_headers["rank"]] == shortlist_row[shortlist_headers["rank"]]
             assert row[owned_headers["total"]] == shortlist_row[shortlist_headers["total"]]
             assert row[owned_headers["category"]] == shortlist_row[shortlist_headers["category"]]
             assert shortlist_row[shortlist_headers["owned"]] == "yes"
+            assert shortlist_row[shortlist_headers["rdap_classification"]] == rdap[domain]
+            assert shortlist_row[shortlist_headers["whois_classification"]] == whois[domain]
+            assert candidate_row[all_headers["owned"]] == "yes"
+            assert candidate_row[all_headers["latest_rdap_classification"]] == rdap[domain]
+            assert candidate_row[all_headers["latest_whois_classification"]] == whois[domain]
+            assert candidate_row[all_headers["registry_status"]] == f"owned by you (bought {row[owned_headers['purchase_date']]})"
     finally:
         workbook.close()
 

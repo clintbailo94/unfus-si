@@ -1131,11 +1131,11 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
                 "owned": "yes" if owned else "",
                 **candidate,
                 "latest_rdap_http_status": int(rdap_row["http_status"]) if rdap_row and rdap_row["http_status"] else None,
-                "latest_rdap_classification": owned_status or (rdap_row["classification"] if rdap_row else "missing"),
+                "latest_rdap_classification": rdap_row["classification"] if rdap_row else "missing",
                 "latest_rdap_timestamp": rdap_row["utc_timestamp"] if rdap_row else "",
                 "latest_rdap_attempts": int(rdap_row["attempts"]) if rdap_row else None,
                 "latest_rdap_error": rdap_row.get("error", "") if rdap_row else "",
-                "latest_whois_classification": owned_status or (whois_row["classification"] if whois_row else "missing"),
+                "latest_whois_classification": whois_row["classification"] if whois_row else "missing",
                 "latest_whois_timestamp": whois_row["utc_timestamp"] if whois_row else "",
                 "latest_whois_matched_pattern": whois_row.get("matched_pattern", "") if whois_row else "",
                 "known_rule_class": rule_class,
@@ -1245,8 +1245,8 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
         values["rdap_http_status"] = int(rdap_row["http_status"]) if rdap_row["http_status"] else None
         owned = owned_by_domain.get(domain)
         values["owned"] = "yes" if owned else ""
-        values["rdap_classification"] = owned.availability_text if owned else rdap_row["classification"]
-        values["whois_classification"] = owned.availability_text if owned else whois_row["classification"]
+        values["rdap_classification"] = rdap_row["classification"]
+        values["whois_classification"] = whois_row["classification"]
         shortlist_output_rows.append(tuple(values[field] for field in shortlist_headers))
 
     opportunity_by_domain = {
@@ -1349,8 +1349,6 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
             tuple(
                 int(row[field])
                 if field in {"http_status", "attempts"} and row.get(field, "")
-                else owned_by_domain[row["domain"].casefold()].availability_text
-                if field == "classification" and row["domain"].casefold() in owned_by_domain
                 else row.get(field, "")
                 for field in tables["rdap_evidence"].headers
             )
@@ -1359,9 +1357,7 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
     for row in tables["whois_evidence"].rows:
         whois_evidence_data.append(
             tuple(
-                owned_by_domain[row["domain"].casefold()].availability_text
-                if field == "classification" and row["domain"].casefold() in owned_by_domain
-                else row.get(field, "")
+                row.get(field, "")
                 for field in tables["whois_evidence"].headers
             )
         )
