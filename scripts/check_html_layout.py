@@ -91,7 +91,12 @@ def main() -> int:
                     expect(page.locator("#tab-top").get_attribute("tabindex") == "0", "initial tab does not own keyboard focus")
                     expect(page.locator("#panel-available[hidden] .row:not(.head)").count() == 0, "All available rendered before first open")
                     expect(page.locator("#panel-unavailable[hidden] .row:not(.head)").count() == 0, "Unavailable rendered before first open")
-                    expect(page.locator(".stat b").all_inner_texts() == ["6,204", "3,395", "500", "2,809"], "header counts differ")
+                    expect(page.locator(".stat b").all_inner_texts() == ["6,204", "3,385", "10", "500", "2,809"], "header counts differ")
+                    expect(
+                        page.locator("#list > .sub").inner_text()
+                        == "Your 10 owned domains are not listed here; see Your domains and Top 500.",
+                        "owned-domain helper text differs",
+                    )
                     expect(page.locator("#owned-summary .owned-list li").count() == 10, "owned summary does not list ten domains")
                     expect(rows(page, "top") == PAGE_SIZE, "Top 500 did not start with one page")
                     no_horizontal_overflow(page, width, "Top 500")
@@ -119,7 +124,7 @@ def main() -> int:
                         "() => JSON.parse(document.getElementById('data').textContent).a.find(row => row[4] === null)[0]"
                     )
                     page.locator("#panel-available [data-query]").fill(data_candidate)
-                    expect(page.locator("#panel-available [data-count]").inner_text() == "1 of 3,395 names", "All available search failed")
+                    expect(page.locator("#panel-available [data-count]").inner_text() == "1 of 3,385 names", "All available search failed")
                     page.locator("#panel-available [data-query]").fill("")
 
                     short_count = page.evaluate(
@@ -127,7 +132,7 @@ def main() -> int:
                     )
                     page.locator("#panel-available [data-length]").select_option("4")
                     expect(
-                        page.locator("#panel-available [data-count]").inner_text() == f"{short_count:,} of 3,395 names",
+                        page.locator("#panel-available [data-count]").inner_text() == f"{short_count:,} of 3,385 names",
                         "All available length filter differs from embedded data",
                     )
                     page.locator("#panel-available [data-length]").select_option("")
@@ -138,7 +143,7 @@ def main() -> int:
                     )
                     page.locator(f"#panel-available .chip[data-c='{category}']").click()
                     expect(
-                        page.locator("#panel-available [data-count]").inner_text() == f"{category_count:,} of 3,395 names",
+                        page.locator("#panel-available [data-count]").inner_text() == f"{category_count:,} of 3,385 names",
                         "All available category filter differs from embedded data",
                     )
                     page.locator("#panel-available .chip[data-c='']").click()

@@ -97,15 +97,18 @@ def test_report_contains_owned_chip_summary_badges_and_purchase_wording():
         ("top", "Top 500"), ("available", "All available"), ("unavailable", "Unavailable")
     ))
     stats = re.findall(r'<div class="stat"><b>(.*?)</b><span>(.*?)</span>', source)
-    assert ('6,204', 'checked') in stats
-    assert ('3,395', 'available') in stats
-    assert ('500', 'top 500 ranked') in stats
-    assert ('2,809', 'unavailable') in stats
-    assert len(data["a"]) == 3395
+    assert stats == [
+        ('6,204', 'checked'), ('3,385', 'available'), ('10', 'owned (yours)'),
+        ('500', 'top 500 ranked'), ('2,809', 'unavailable'),
+    ]
+    assert "Your 10 owned domains are not listed here; see Your domains and Top 500." in source
+    assert len(data["a"]) == 3385
     assert len(data["u"]) == 2809
-    assert sum(row[4] is not None for row in data["a"]) == 500
-    assert all(row[6] or (row[8] == "404" and row[9] == "potentially_unregistered"
-                          and row[11] == "not_registered") for row in data["a"])
+    owned_domains = {row[1] for row in data["s"] if row[4]}
+    assert not any(row[0] in owned_domains for row in data["a"])
+    assert sum(row[4] is not None for row in data["a"]) == 490
+    assert all(not row[6] and row[8] == "404" and row[9] == "potentially_unregistered"
+               and row[11] == "not_registered" for row in data["a"])
     assert all(row[4] is not None or row[5] for row in data["a"])
     assert all(row[3] and row[6] for row in data["u"])
     assert "const PAGE_SIZE = 50" in "".join(parser.script_text)
@@ -131,11 +134,11 @@ def test_report_has_three_tabpanels_with_counts_matching_workbook_data():
     finally:
         workbook.close()
 
-    assert stats == {"checked": checked, "available": len(data["a"]),
+    assert stats == {"checked": checked, "available": len(data["a"]), "owned (yours)": 10,
                      "top 500 ranked": shortlist, "unavailable": len(data["u"])}
-    assert stats["checked"] == stats["available"] + stats["unavailable"]
+    assert stats["checked"] == stats["available"] + stats["owned (yours)"] + stats["unavailable"]
     assert stats["top 500 ranked"] == len(data["s"]) == 500
-    assert sum(row[4] is not None for row in data["a"]) == 500
+    assert sum(row[4] is not None for row in data["a"]) == 490
 
 
 def test_unavailable_evidence_and_available_exclusion_reasons_are_recorded():
