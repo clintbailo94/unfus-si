@@ -218,12 +218,13 @@ registration eligibility, registration success, or a non-premium price.
 
 The official search pages are [TMview](https://www.tmdn.org/tmview/),
 [UKIPO](https://trademarks.ipo.gov.uk/ipo-tmtext), and
-[USPTO](https://tmsearch.uspto.gov/). TMview automated access is documented as
-unavailable after the connection closed at 2026-10-13T18:02:42Z
-(`REWORK1-TMVIEW-PROBES`; earlier `PKGD-0002`, 2026-10-13T17:09:22Z); UKIPO
-returned HTTP 403 Service Captcha at 2026-10-13T17:09:52Z (`PKGD-0003`). No
-further TMview or UKIPO attempts were made. USPTO screening stopped after one
-HTTP 403 at 2026-10-13T18:05:11Z (`REWORK1-USPTO-00259`, source-stop record
+[USPTO](https://tmsearch.uspto.gov/). TMview source-wide refused: connection closed (evidence
+`REWORK1-TMVIEW-PROBES`, 2026-10-13T18:02:42Z); per-name results are unverified
+because of that refusal. UKIPO source-wide refused: automated access refused
+(evidence `PKGD-0003`, 2026-10-13T17:09:52Z); per-name results are blocked
+because of that refusal. No further TMview or UKIPO
+attempts were made. USPTO screening stopped after one HTTP 403 at
+2026-10-13T18:05:11Z (`REWORK1-USPTO-00259`, source-stop record
 `REWORK1-USPTO-SOURCE-STOP`). On 2026-10-14, PKG-G made one cooled-down control
 query and a slow resume pass: 117 USPTO POSTs, all HTTP 200 JSON, with no new
 403. Final coverage is 98/100 completed and 2 unverified. The unverified names

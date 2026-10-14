@@ -15,7 +15,7 @@ from si_domains.valuation import write_valuations
 CANDIDATE_FIELDS = ["domain_label", "category", "method", "seed", "tags", "quality_score"]
 RDAP_FIELDS = ["domain", "category", "http_status", "utc_timestamp", "attempts", "classification", "error"]
 WHOIS_FIELDS = ["domain", "category", "utc_timestamp", "classification", "matched_pattern", "error"]
-TM_FIELDS = ["evidence_id", "domain", "source", "jurisdiction", "query", "utc_timestamp", "result_status", "source_url", "result_url", "mark_number", "mark_name", "mark_status", "classes", "notes"]
+TM_FIELDS = ["evidence_id", "domain", "source", "jurisdiction", "query", "utc_timestamp", "result_status", "source_url", "result_url", "mark_number", "mark_name", "mark_status", "classes", "notes", "proof_kind", "proof_path"]
 VALUATION_EVIDENCE_FIELDS = ["evidence_id", "access_date_utc", "sold_domain", "sale_category", "amount", "currency", "transaction_date", "report_date", "venue", "source_url", "evidence_type", "relevance", "limitations"]
 
 
@@ -245,6 +245,108 @@ def test_completion_mode_accepts_documented_unverified_query_outcomes(
     assert _validate_completion_mode(artifacts) == 0
     report = capsys.readouterr()
     assert f"USPTO: completed=0, refused=1 ({expected_reason}), missing=0" in report.out
+    assert report.out.rstrip().endswith("COMPLETION-MODE PASS")
+
+
+def test_sourcewide_refusal_wording_matches_cli_and_summary(tmp_path, capsys):
+    artifacts = _single_domain_research(tmp_path, screened=True)
+    evidence = _read(artifacts["evidence"])
+    sourcewide = {
+        "TMview": {
+            "evidence_id": "REWORK1-TMVIEW-PROBES",
+            "timestamp": "2026-10-13T18:02:42Z",
+            "status": "unverified",
+            "reason": "The TMview search probes closed before an HTTP response; source-wide refusal; evidence REWORK1-TMVIEW-PROBES. No per-domain query ran.",
+        },
+        "UKIPO": {
+            "evidence_id": "PKGD-0003",
+            "timestamp": "2026-10-13T17:09:52Z",
+            "status": "blocked",
+            "reason": "Automated access refused with HTTP 403 Service Captcha; evidence PKGD-0003. No per-domain query ran.",
+        },
+    }
+    source_urls = {
+        "TMview": "https://www.tmdn.org/tmview/",
+        "UKIPO": "https://trademarks.ipo.gov.uk/ipo-tmtext",
+    }
+    for row in evidence:
+        if row["source"] in sourcewide and row["domain"] == "novara.si":
+            row.update(
+                result_status=sourcewide[row["source"]]["status"],
+                result_url="",
+                notes=sourcewide[row["source"]]["reason"],
+            )
+    for source, details in sourcewide.items():
+        evidence.append({
+            "evidence_id": details["evidence_id"],
+            "domain": "*",
+            "source": source,
+            "jurisdiction": "synthetic",
+            "query": "source-wide refusal; no domain query",
+            "utc_timestamp": details["timestamp"],
+            "result_status": details["status"],
+            "source_url": source_urls[source],
+            "result_url": "",
+            "mark_number": "",
+            "mark_name": "",
+            "mark_status": "",
+            "classes": "",
+            "notes": details["reason"],
+        })
+    evidence.extend([
+        {
+            "evidence_id": "USPTO-SOURCE-STOP",
+            "domain": "*",
+            "source": "USPTO",
+            "jurisdiction": "United States",
+            "query": "source stop; no domain query",
+            "utc_timestamp": "2026-10-13T18:05:11Z",
+            "result_status": "blocked",
+            "source_url": "https://tmsearch.uspto.gov/",
+            "result_url": "",
+            "mark_number": "",
+            "mark_name": "",
+            "mark_status": "",
+            "classes": "",
+            "notes": "Source-wide refused after HTTP 403; no per-domain query ran.",
+            "proof_kind": "",
+            "proof_path": "",
+        },
+        {
+            "evidence_id": "RESUME-USPTO-CONTROL",
+            "domain": "*",
+            "source": "USPTO",
+            "jurisdiction": "United States",
+            "query": "google",
+            "utc_timestamp": "2026-10-14T00:10:00Z",
+            "result_status": "possible_conflict",
+            "source_url": "https://tmsearch.uspto.gov/prod-stage-v1-0-0/tmsearch",
+            "result_url": "https://tmsearch.uspto.gov/search/search-results?query=google",
+            "mark_number": "12345678",
+            "mark_name": "GOOGLE",
+            "mark_status": "registered and renewed; live",
+            "classes": "35",
+            "notes": "Control query; HTTP 200 JSON; mode=exact; term=google; totalValue=2; first hit facts only",
+            "proof_kind": "api_query_summary",
+            "proof_path": "",
+        },
+    ])
+    _write_csv(artifacts["evidence"], TM_FIELDS, evidence)
+    _refresh_trademark_artifacts(artifacts)
+
+    summary = _read(artifacts["summary"])[0]
+    assert "TMview source-wide refused: connection closed" in summary["limitations"]
+    assert "per-name results are unverified because of that refusal" in summary["limitations"]
+    assert "UKIPO source-wide refused: automated access refused" in summary["limitations"]
+    assert "per-name results are blocked because of that refusal" in summary["limitations"]
+    assert "REWORK1-TMVIEW-PROBES" in summary["limitations"]
+    assert "PKGD-0003" in summary["limitations"]
+    assert "USPTO source-wide refused:" not in summary["limitations"]
+
+    assert _validate_completion_mode(artifacts) == 0
+    report = capsys.readouterr()
+    assert "TMview source-wide refused: connection closed (evidence REWORK1-TMVIEW-PROBES, 2026-10-13T18:02:42Z); per-name results are unverified because of that refusal." in report.out
+    assert "UKIPO source-wide refused: automated access refused (evidence PKGD-0003, 2026-10-13T17:09:52Z); per-name results are blocked because of that refusal." in report.out
     assert report.out.rstrip().endswith("COMPLETION-MODE PASS")
 
 

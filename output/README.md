@@ -73,8 +73,8 @@ One `powdery` near-query response was received and parsed, but its evidence coul
 
 | Source | PKG-G requests and outcomes | Final top-100 coverage |
 | --- | --- | --- |
-| TMview | No requests. Existing probes closed before an HTTP response; new entrant rows cite `REWORK1-TMVIEW-PROBES` at 2026-10-13T18:02:42Z. | 0/100 complete; 0 query-blocked; 100 unverified |
-| UKIPO | No requests. Existing search GET returned HTTP 403 Service Captcha; new entrant rows cite `PKGD-0003` at 2026-10-13T17:09:52Z. | 0/100 complete; 100 query-blocked; 0 unverified |
+| TMview | No requests. TMview source-wide refused: connection closed (evidence `REWORK1-TMVIEW-PROBES`, 2026-10-13T18:02:42Z); per-name results are unverified because of that refusal. | 0/100 complete; 0 query-blocked; 100 unverified |
+| UKIPO | No requests. UKIPO source-wide refused: automated access refused (evidence `PKGD-0003`, 2026-10-13T17:09:52Z); per-name results are blocked because of that refusal. | 0/100 complete; 100 query-blocked; 0 unverified |
 | USPTO | 1 `google` control plus 116 candidate requests; all 117 HTTP 200 JSON; 0 new 403; no retries. | 98/100 complete; 0 query-blocked; 2 unverified |
 
 The original 44 blocked final-top-100 labels each received exact and near queries. Forty-three now have both query outcomes retained; `powdery` exact is a possible conflict and its near query is unverified after the local evidence-write failure. The existing 2026-10-13 source-stop row `REWORK1-USPTO-SOURCE-STOP` remains in history. The earlier 139 JSON POSTs and UI-shell GET are also retained; PKG-G adds new evidence rather than replacing that history.
@@ -89,7 +89,7 @@ USPTO exact-label queries use an exact phrase and one near query: fuzziness 1 fo
 
 ### Manual trademark checks the owner can do
 
-Official search pages: [TMview](https://www.tmdn.org/tmview/), [UKIPO](https://trademarks.ipo.gov.uk/ipo-tmtext), and [USPTO](https://tmsearch.uspto.gov/). TMview and UKIPO remain inaccessible to automated screening based on their recorded source-wide refusal evidence; no further attempts were made. USPTO's earlier HTTP 403 remains at `REWORK1-USPTO-00259` / `REWORK1-USPTO-SOURCE-STOP`. PKG-G made one cooled-down control and 116 candidate requests on 2026-10-14; all 117 returned HTTP 200 JSON with no new 403. No name is cleared.
+Official search pages: [TMview](https://www.tmdn.org/tmview/), [UKIPO](https://trademarks.ipo.gov.uk/ipo-tmtext), and [USPTO](https://tmsearch.uspto.gov/). TMview source-wide refused: connection closed (evidence `REWORK1-TMVIEW-PROBES`, 2026-10-13T18:02:42Z); per-name results are unverified because of that refusal. UKIPO source-wide refused: automated access refused (evidence `PKGD-0003`, 2026-10-13T17:09:52Z); per-name results are blocked because of that refusal. No further TMview or UKIPO attempts were made. USPTO's earlier HTTP 403 remains at `REWORK1-USPTO-00259` / `REWORK1-USPTO-SOURCE-STOP`. PKG-G made one cooled-down control and 116 candidate requests on 2026-10-14; all 117 returned HTTP 200 JSON with no new 403. No name is cleared.
 
 `validate-research --completion-mode` requires a recorded outcome for every top-100 name/source pair. A pair needs completed exact and near queries or dated blocked/unverified rows with an official source URL and an evidence-backed reason. Accepted incomplete reasons include an HTTP refusal, CAPTCHA, connection closure, cited source-stop row, a local evidence-write failure after a response, or the documented three-round screening limit. Missing pairs fail. The mode checks evidence completeness and score/status consistency without network requests; strict validation still exits 2 while required searches remain incomplete.
 

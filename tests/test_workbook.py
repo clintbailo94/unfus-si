@@ -241,6 +241,8 @@ def test_workbook_exports_latest_joins_numeric_cells_and_header_only_unverified(
     )
     assert "https://www.tmdn.org/tmview/" in manual_checks[methodology_columns["Details"] - 1]
     assert "REWORK1-USPTO-00259" in manual_checks[methodology_columns["Details"] - 1]
+    assert "TMview source-wide refused: connection closed (evidence REWORK1-TMVIEW-PROBES, 2026-10-13T18:02:42Z); per-name results are unverified because of that refusal." in manual_checks[methodology_columns["Details"] - 1]
+    assert "UKIPO source-wide refused: automated access refused (evidence PKGD-0003, 2026-10-13T17:09:52Z); per-name results are blocked because of that refusal." in manual_checks[methodology_columns["Details"] - 1]
     completion_mode = next(
         row for row in methodology_rows
         if row[methodology_columns["Topic"] - 1] == "Completion-mode research validation"

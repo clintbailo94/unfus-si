@@ -160,7 +160,7 @@ PKG-G continued the T-17 screen on 2026-10-14 after the six-hour cooldown. Befor
 
 The 44 previously blocked top-100 labels were each queried exact and near. Forty-three names have both outcomes retained. `powdery` exact returned a possible conflict, but its near-query response could not be retained after the local ASCII writer rejected a non-ASCII wordmark. That query is recorded `unverified`; it was not retried. The source response was HTTP 200 JSON and did not trigger a source stop. Resume evidence uses `RESUME-USPTO-*` IDs. No name is legally cleared.
 
-Three post-resume entrant rounds were processed while USPTO remained live: Round 1 added 9 names (`examhub`, `bankingvault`, `roboticlink`, `roboticloop`, `memolab`, `biomasshub`, `pharmatrial`, `epaulet`, `trekgear`); Round 2 added 4 (`roboticflow`, `gerilab`, `soilhub`, `biomasslab`); Round 3 added `credittrack`. TMview and UKIPO received no requests. Their per-name rows cite the existing source-wide refusals: TMview `REWORK1-TMVIEW-PROBES` at 2026-10-13T18:02:42Z and UKIPO `PKGD-0003` at 2026-10-13T17:09:52Z. After Round 3, `denimwear` entered the top 100. The three-round limit had been reached, so its exact and near outcomes were recorded `unverified` for USPTO with no request; it was not screened in a fourth round. Names ranked 101-500 remain not yet screened.
+Three post-resume entrant rounds were processed while USPTO remained live: Round 1 added 9 names (`examhub`, `bankingvault`, `roboticlink`, `roboticloop`, `memolab`, `biomasshub`, `pharmatrial`, `epaulet`, `trekgear`); Round 2 added 4 (`roboticflow`, `gerilab`, `soilhub`, `biomasslab`); Round 3 added `credittrack`. TMview and UKIPO received no requests. TMview source-wide refused: connection closed (evidence `REWORK1-TMVIEW-PROBES`, 2026-10-13T18:02:42Z); per-name results are unverified because of that refusal. UKIPO source-wide refused: automated access refused (evidence `PKGD-0003`, 2026-10-13T17:09:52Z); per-name results are blocked because of that refusal. After Round 3, `denimwear` entered the top 100. The three-round limit had been reached, so its exact and near outcomes were recorded `unverified` for USPTO with no request; it was not screened in a fourth round. Names ranked 101-500 remain not yet screened.
 
 Final top-100 membership versus T-17 changed by eight entries and eight exits.
 
@@ -170,8 +170,8 @@ Final top-100 membership versus T-17 changed by eight entries and eight exits.
 
 | Source | Final top-100 coverage | PKG-G outcome |
 | --- | --- | --- |
-| TMview | 0/100 complete; 0 query-blocked; 100 unverified | No request; existing API probes closed before an HTTP response. |
-| UKIPO | 0/100 complete; 100 query-blocked; 0 unverified | No request; existing search GET returned HTTP 403 Service Captcha. |
+| TMview | 0/100 complete; 0 query-blocked; 100 unverified | No request. TMview source-wide refused: connection closed (evidence `REWORK1-TMVIEW-PROBES`, 2026-10-13T18:02:42Z); per-name results are unverified because of that refusal. |
+| UKIPO | 0/100 complete; 100 query-blocked; 0 unverified | No request. UKIPO source-wide refused: automated access refused (evidence `PKGD-0003`, 2026-10-13T17:09:52Z); per-name results are blocked because of that refusal. |
 | USPTO | 98/100 complete; 0 query-blocked; 2 unverified | 1 `google` control plus 116 candidate requests; 117 HTTP 200 JSON total; no new 403 or retry. |
 
 USPTO's earlier source-stop remains in the evidence history: one HTTP 403 on the `bankingdesk` near query at 2026-10-13T18:05:11Z (`REWORK1-USPTO-00259`; source-stop row `REWORK1-USPTO-SOURCE-STOP`). The T-17 history also includes the earlier UI-shell GET and 139 JSON POSTs; PKG-G does not overwrite those records.
@@ -184,7 +184,7 @@ Trademark component values use one mapping in `si_domains/scoring.py` and `si_do
 
 ### Manual trademark checks the owner can do
 
-Official search pages: [TMview](https://www.tmdn.org/tmview/), [UKIPO](https://trademarks.ipo.gov.uk/ipo-tmtext), and [USPTO](https://tmsearch.uspto.gov/). The TMview and UKIPO access limitations above remain unresolved. The earlier USPTO 403 remains in history; the 2026-10-14 resume had no new 403. No result is a trademark clearance.
+Official search pages: [TMview](https://www.tmdn.org/tmview/), [UKIPO](https://trademarks.ipo.gov.uk/ipo-tmtext), and [USPTO](https://tmsearch.uspto.gov/). TMview source-wide refused: connection closed (evidence `REWORK1-TMVIEW-PROBES`, 2026-10-13T18:02:42Z); per-name results are unverified because of that refusal. UKIPO source-wide refused: automated access refused (evidence `PKGD-0003`, 2026-10-13T17:09:52Z); per-name results are blocked because of that refusal. No further TMview or UKIPO requests were made. The earlier USPTO 403 remains in history; the 2026-10-14 resume had no new 403. No result is a trademark clearance.
 
 `validate-research --completion-mode` checks that every top-100 name/source pair has a completed exact and near query, or dated blocked/unverified records with an official source URL and an evidence-backed reason. Accepted incomplete reasons include an HTTP refusal, CAPTCHA, connection closure, cited source-stop row, a local evidence-write failure after a response, or the documented three-round screening limit. Missing pairs fail. It checks record completeness and score/status consistency without network requests; strict mode still exits 2 while searches remain incomplete.
 
