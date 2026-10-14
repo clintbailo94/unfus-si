@@ -37,6 +37,7 @@ from .scoring import (
     trademark_score_for_status,
     weighted_total,
 )
+from .owned import load_owned_domains
 from .shortlist import EXCLUDED_FIELDS, SHORTLIST_FIELDS, SHORTLIST_LIMIT, CATEGORY_LIMIT, select_eligible
 from .trademarks import (
     REQUIRED_SOURCES,
@@ -72,8 +73,10 @@ DEFAULT_INPUT_PATHS: dict[str, Path] = {
     "trademark_evidence": OUTPUT_DIR / "trademark_evidence.csv",
     "sample": OUTPUT_DIR / "sample_404_for_review.csv",
 }
+DEFAULT_OWNED_DOMAINS_PATH = DATA_DIR / "owned_domains.txt"
 
 _INPUT_ORDER = tuple(DEFAULT_INPUT_PATHS)
+_SOURCE_ORDER = (*_INPUT_ORDER, "owned_domains")
 _RDAP_CLASSES = frozenset(
     {"registered", "potentially_unregistered", "unverified", "invalid_syntax", "reserved", "restricted", "premium"}
 )
@@ -87,7 +90,7 @@ _SPECIAL_REASONS = {
 _SCORE_COMPONENTS = tuple(SCORE_WEIGHTS)
 _MAX_EXCEL_ROW_HEIGHT = 409
 _MAX_ESTIMATED_WRAP_LINES = _MAX_EXCEL_ROW_HEIGHT // 15
-_SHORTLIST_EXPORT_PRIORITY = ("rank", "domain", "total", "trademark", "trademark_status")
+_SHORTLIST_EXPORT_PRIORITY = ("rank", "domain", "owned", "total", "trademark", "trademark_status")
 _SHORTLIST_EXPORT_FIELDS = (
     *_SHORTLIST_EXPORT_PRIORITY,
     *(field for field in OPPORTUNITY_FIELDS if field not in _SHORTLIST_EXPORT_PRIORITY),
@@ -128,6 +131,7 @@ class WorkbookModel:
 
 def _resolved_inputs(paths: Mapping[str, str | Path] | None) -> dict[str, Path]:
     result = dict(DEFAULT_INPUT_PATHS)
+    result["owned_domains"] = DEFAULT_OWNED_DOMAINS_PATH
     if paths:
         unknown = set(paths) - set(result)
         if unknown:
@@ -954,6 +958,7 @@ def _methodology_rows(
     add("Exclusions", f"{metrics['excluded']} ineligible rows are in the exclusion artifact; {metrics['outside_shortlist_cap']} eligible rows fall outside the final ranked selection.")
     add("Trademark query coverage", coverage)
     add("Trademark status", "PKG-G screened the 44 previously USPTO-blocked names and completed three entrant rounds. The T-18 rework fixed ASCII evidence sanitization, recovered powdery's fuzzy query, queried denimwear exact and near, and screened soillab as the replacement entrant while USPTO remained live. Relative to the pre-rework PKG-G top 100, soillab entered and denimwear exited; denimwear's conflict evidence remains recorded. Final top-100 USPTO coverage: " + coverage + ". Relative to T-17, seven names entered (examhub, bankingvault, roboticlink, roboticloop, biomasshub, roboticflow, biomasslab) and seven exited (robotsystem, gyration, crophub, croplab, agrihub, cryptoworks, parcelshop). Names leaving retain their evidence. USPTO conflicts take precedence over incomplete other sources and score 25; otherwise incomplete coverage scores 40.")
+    add("Owner-requested USPTO screen", "Profitdesk.si was screened on 2026-10-14 at the owner's request. The google control and exact/fuzzy-1 queries returned HTTP 200 JSON; both profitdesk queries had zero matches. Top-100 USPTO coverage remains 100/100; all other names outside the top 100 remain not yet screened by USPTO.")
     add("Manual trademark checks the owner can do", "Official pages: TMview https://www.tmdn.org/tmview/; UKIPO https://trademarks.ipo.gov.uk/ipo-tmtext; USPTO https://tmsearch.uspto.gov/. TMview source-wide refused: connection closed (evidence REWORK1-TMVIEW-PROBES, 2026-10-13T18:02:42Z); per-name results are unverified because of that refusal. UKIPO source-wide refused: automated access refused (evidence PKGD-0003, 2026-10-13T17:09:52Z); per-name results are blocked because of that refusal. No further TMview or UKIPO attempts were made. USPTO's prior HTTP 403 at 2026-10-13T18:05:11Z is retained (REWORK1-USPTO-00259; REWORK1-USPTO-SOURCE-STOP). PKG-G originally made 117 USPTO POSTs (one control and 116 candidates); T-18 added six (one control and five candidates). The combined total is " + str(resume_posts) + " sequential requests, at least five seconds apart; all " + str(resume_http_200) + " returned HTTP 200 JSON, with no new 403, CAPTCHA, login, non-JSON response, timeout, 5xx, or retry. No result is a clearance.")
     add("Completion-mode research validation", "Use python -m si_domains validate-research --candidates data/candidates.csv --completion-mode for an offline record check. Each top-100 name/source pair needs completed exact and near queries, or dated blocked/unverified rows with an official URL and an evidence-backed reason (HTTP status, CAPTCHA, connection closed, source-stop ID, local evidence-write failure, or the documented three-round limit). Missing pairs fail; incomplete sources score 40, conflicts score 25, and 85 requires all three sources complete with no match. Every top-100 opportunity must have a trademark status other than not yet screened. Strict mode without the flag still exits 2 until required queries complete.")
     add("Trademark mapping rationale", f"One source of truth: limited_screen_no_obvious_match={TRADEMARK_CLEAR_SCORE}; needs legal review={TRADEMARK_CONFLICT_SCORE}; blocked/unverified/not yet screened={TRADEMARK_UNVERIFIED_SCORE}. The documented {TRADEMARK_UNVERIFIED_SCORE} is below clear and above conflict; no renormalization is used. Unknown risk loses up to 4.5 weighted points versus a clear result; a finding loses more.")
@@ -962,15 +967,17 @@ def _methodology_rows(
     add("Trademark limitations", "Exact public-query coverage is not comprehensive phonetic, class, national-office, or worldwide clearance. Possible conflicts need professional legal review; unknown risk scores 40, below a complete no-obvious-match screen at 85 and above a conflict at 25.")
     add("Valuation evidence", f"Evidence records: {val_summary}. No current evidence meets the direct-comparable rule for any shortlist row; unsupported valuations have blank currency and low/high cells.")
     add("Availability limits", "RDAP and WHOIS are timestamped registry-channel observations, not registrar checkout confirmation, eligibility confirmation, or a guarantee of successful registration.")
+    add("Owned domains", "data/owned_domains.txt lists domains and purchase dates; owned means bought by you on the recorded date. Registry evidence is pre-purchase history; ownership does not change scores or ranks.")
     add("Pricing limits", "Public registrar confirmation and registrar retail/premium pricing are unknown. The rule inventory has no premium-name list; an empty premium list is not evidence of ordinary pricing.")
     add("Registry rule inventory", f"{len(reserved)} reserved and {len(restricted)} restricted names are evidence-backed. Known-list limits and classification scope are described in docs/si_registry_rules.md and docs/special_classes.md.")
     add("Rule source URLs", "; ".join(source_urls) if source_urls else "No reserved/restricted inventory rows.")
     add("Special-sheet alias", "Excel sheet name `Special classes` is the documented alias for `Reserved/Restricted/Invalid/Premium` because Excel forbids `/` and limits names to 31 characters. Scope marks candidate rows separately from rule-reference inventory rows.")
     add("Provenance notes", "See docs/si_registry_rules.md, docs/special_classes.md, output/research_methodology.md, and output/valuation_sources_notes.md.")
     add("Research exit", "Strict validate-research exits 2 after structure passes because exact-plus-near coverage is incomplete: " + coverage + ". Blocked/unverified rows do not complete a search. --completion-mode checks outcome-record completeness and status/score honesty without network requests; it does not establish clearance. Delivery validation is separate.")
-    for name in _INPUT_ORDER:
+    for name in _SOURCE_ORDER:
         path = paths[name]
-        rows.append((f"Source CSV: {name}", "Byte-level SHA-256 of the exact input file.", _display_path(path), hashes[name]))
+        source_type = "Source file" if name == "owned_domains" else "Source CSV"
+        rows.append((f"{source_type}: {name}", "Byte-level SHA-256 of the exact input file.", _display_path(path), hashes[name]))
     return tuple(rows)
 
 
@@ -1059,12 +1066,18 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
         reserved=reserved,
         restricted=restricted,
     )
+    owned_domains = load_owned_domains(
+        resolved["owned_domains"],
+        candidate_domains=candidate_domains,
+        shortlist_domains=shortlisted_domains,
+    )
+    owned_by_domain = {item.domain: item for item in owned_domains}
 
     unverified_rows: list[dict[str, object]] = []
     all_candidate_rows: list[dict[str, object]] = []
     special_rows: list[dict[str, object]] = []
     candidate_header_collisions = set(tables["candidates"].headers) & {
-        "domain", "latest_rdap_http_status", "latest_rdap_classification", "latest_rdap_timestamp",
+        "domain", "owned", "latest_rdap_http_status", "latest_rdap_classification", "latest_rdap_timestamp",
         "latest_rdap_attempts", "latest_rdap_error", "latest_whois_classification",
         "latest_whois_timestamp", "latest_whois_matched_pattern", "known_rule_class",
         "known_rule_id", "known_rule_source_url", "known_rule_explanation", "registry_status",
@@ -1109,17 +1122,20 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
         candidate_status = _candidate_status(
             domain, rule_class, rdap_row, whois_row, selected
         )
+        owned = owned_by_domain.get(domain)
+        owned_status = owned.availability_text if owned else ""
         score = scores.get(domain)
         all_candidate_rows.append(
             {
                 "domain": domain,
+                "owned": "yes" if owned else "",
                 **candidate,
                 "latest_rdap_http_status": int(rdap_row["http_status"]) if rdap_row and rdap_row["http_status"] else None,
-                "latest_rdap_classification": rdap_row["classification"] if rdap_row else "missing",
+                "latest_rdap_classification": owned_status or (rdap_row["classification"] if rdap_row else "missing"),
                 "latest_rdap_timestamp": rdap_row["utc_timestamp"] if rdap_row else "",
                 "latest_rdap_attempts": int(rdap_row["attempts"]) if rdap_row else None,
                 "latest_rdap_error": rdap_row.get("error", "") if rdap_row else "",
-                "latest_whois_classification": whois_row["classification"] if whois_row else "missing",
+                "latest_whois_classification": owned_status or (whois_row["classification"] if whois_row else "missing"),
                 "latest_whois_timestamp": whois_row["utc_timestamp"] if whois_row else "",
                 "latest_whois_matched_pattern": whois_row.get("matched_pattern", "") if whois_row else "",
                 "known_rule_class": rule_class,
@@ -1129,7 +1145,7 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
                 **{name: int(score[name]) if score else None for name in _SCORE_COMPONENTS},
                 "score_total": _excel_numeric(score["total"], "total", domain) if score else None,
                 "shortlist_rank": int(shortlist[domain]["rank"]) if domain in selected else None,
-                "registry_status": candidate_status,
+                "registry_status": owned_status or candidate_status,
                 "exclusion_reason": reason or "",
             }
         )
@@ -1184,6 +1200,7 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
 
     candidate_output_headers = (
         "domain",
+        "owned",
         *tables["candidates"].headers,
         "latest_rdap_http_status",
         "latest_rdap_classification",
@@ -1226,9 +1243,39 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
         for field in ("valuation_low", "valuation_high"):
             values[field] = _excel_numeric(str(values[field]), field, domain)
         values["rdap_http_status"] = int(rdap_row["http_status"]) if rdap_row["http_status"] else None
-        values["rdap_classification"] = rdap_row["classification"]
-        values["whois_classification"] = whois_row["classification"]
+        owned = owned_by_domain.get(domain)
+        values["owned"] = "yes" if owned else ""
+        values["rdap_classification"] = owned.availability_text if owned else rdap_row["classification"]
+        values["whois_classification"] = owned.availability_text if owned else whois_row["classification"]
         shortlist_output_rows.append(tuple(values[field] for field in shortlist_headers))
+
+    opportunity_by_domain = {
+        row["domain"].casefold(): row for row in tables["opportunities"].rows
+    }
+    owned_headers = (
+        "rank",
+        "domain",
+        "total",
+        "category",
+        "purchase_date",
+        "trademark_status",
+        "trademark_coverage",
+    )
+    owned_rows: list[tuple[object, ...]] = []
+    for owned in sorted(owned_domains, key=lambda item: int(shortlist[item.domain]["rank"])):
+        opportunity = opportunity_by_domain[owned.domain]
+        summary = summary_map.get(owned.domain)
+        owned_rows.append(
+            (
+                int(shortlist[owned.domain]["rank"]),
+                owned.domain,
+                _excel_numeric(opportunity["total"], "total", owned.domain),
+                opportunity["category"],
+                owned.purchase_date,
+                summary["status"] if summary else "not yet screened",
+                summary.get("coverage", "") if summary else "",
+            )
+        )
 
     special_headers = ("scope", "domain", "class", "rule_id", "source_url", "explanation")
     special_rows.sort(key=lambda row: (row["scope"], row["class"], row["domain"]))
@@ -1242,9 +1289,9 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
     def raw_rows(table_name: str) -> tuple[tuple[object, ...], ...]:
         return tuple(tuple(row.get(header, "") for header in tables[table_name].headers) for row in tables[table_name].rows)
 
-    hashes = {name: _sha256(resolved[name]) for name in _INPUT_ORDER}
+    hashes = {name: _sha256(resolved[name]) for name in _SOURCE_ORDER}
     manifest = "\n".join(
-        f"{name}\t{_display_path(resolved[name])}\t{hashes[name]}" for name in _INPUT_ORDER
+        f"{name}\t{_display_path(resolved[name])}\t{hashes[name]}" for name in _SOURCE_ORDER
     ).encode("utf-8")
     digest = hashlib.sha256(manifest).hexdigest()
     metrics = _metric_counts(
@@ -1300,8 +1347,22 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
     for row in tables["rdap_evidence"].rows:
         rdap_evidence_data.append(
             tuple(
-                int(row[field]) if field in {"http_status", "attempts"} and row.get(field, "") else row.get(field, "")
+                int(row[field])
+                if field in {"http_status", "attempts"} and row.get(field, "")
+                else owned_by_domain[row["domain"].casefold()].availability_text
+                if field == "classification" and row["domain"].casefold() in owned_by_domain
+                else row.get(field, "")
                 for field in tables["rdap_evidence"].headers
+            )
+        )
+    whois_evidence_data = []
+    for row in tables["whois_evidence"].rows:
+        whois_evidence_data.append(
+            tuple(
+                owned_by_domain[row["domain"].casefold()].availability_text
+                if field == "classification" and row["domain"].casefold() in owned_by_domain
+                else row.get(field, "")
+                for field in tables["whois_evidence"].headers
             )
         )
     sample_data = tuple(
@@ -1320,6 +1381,14 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
             wrap_columns=("rationale", "valuation_rationale", "trademark_coverage", "trademark_evidence_ids"),
             integer_columns=("rank", *_SCORE_COMPONENTS, "rdap_http_status"),
             decimal_columns=("total", "valuation_low", "valuation_high"),
+        ),
+        "Owned": _sheet_data(
+            owned_headers,
+            owned_rows,
+            freeze_panes="A2",
+            wrap_columns=("trademark_coverage",),
+            integer_columns=("rank",),
+            decimal_columns=("total",),
         ),
         "All candidates": _sheet_data(
             candidate_output_headers,
@@ -1366,7 +1435,7 @@ def build_workbook_model(paths: Mapping[str, str | Path] | None = None) -> Workb
         ),
         "WHOIS evidence": _sheet_data(
             tables["whois_evidence"].headers,
-            raw_rows("whois_evidence"),
+            whois_evidence_data,
             freeze_panes="C2",
             wrap_columns=("matched_pattern", "error"),
         ),

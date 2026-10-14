@@ -28,6 +28,7 @@ def _cli_inputs(paths):
         "trademark_summary": "--trademark-summary",
         "trademark_evidence": "--trademark-evidence",
         "sample": "--sample",
+        "owned_domains": "--owned-domains",
     }
     return [item for name, flag in flags.items() for item in (flag, str(paths[name]))]
 
@@ -95,6 +96,23 @@ def test_delivery_validation_passes_honest_blocked_workbook_and_says_so(tmp_path
     assert "Structural delivery PASS" in output
     assert "Research screening BLOCKED" in output
     assert "Project completion not certified" in output
+
+
+def test_owned_input_errors_fail_export_and_delivery_cli(tmp_path, capsys):
+    paths = make_fixture(tmp_path)
+    invalid = "unknown.si,2026-10-14\n"
+    paths["owned_domains"].write_text(invalid, encoding="ascii", newline="\n")
+    assert main(["export", "--out", str(tmp_path / "bad.xlsx"), *_cli_inputs(paths)]) == 2
+    assert "not in data/candidates.csv" in capsys.readouterr().err
+
+    paths["owned_domains"].write_text("# domain,purchase_date\n", encoding="ascii", newline="\n")
+    workbook = tmp_path / "valid.xlsx"
+    export_workbook(paths, workbook)
+    paths["owned_domains"].write_text(invalid, encoding="ascii", newline="\n")
+    assert main(
+        ["validate-delivery", "--workbook", str(workbook), *_cli_inputs(paths)]
+    ) == 2
+    assert "not in data/candidates.csv" in capsys.readouterr().err
 
 
 @pytest.mark.parametrize(

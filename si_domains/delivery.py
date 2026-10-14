@@ -68,6 +68,63 @@ def _check_workbook_values(path: Path, model: WorkbookModel) -> dict[str, int]:
         if getattr(normal, "_external_links", ()):
             raise ValueError("workbook contains external links")
 
+        if "Owned" not in normal.sheetnames:
+            raise ValueError("workbook is missing the required Owned sheet")
+        for sheet_name in ("Shortlist", "All candidates"):
+            headers = [cell.value for cell in normal[sheet_name][1]]
+            if "owned" not in headers:
+                raise ValueError(f"{sheet_name} is missing the required owned column")
+        owned_headers = [cell.value for cell in normal["Owned"][1]]
+        owned_rows = list(normal["Owned"].iter_rows(min_row=2, values_only=True))
+        owned_columns = {name: index for index, name in enumerate(owned_headers)}
+        expected_owned = {
+            row[owned_columns["domain"]]: row
+            for row in owned_rows
+        }
+        expected_owned_count = len(model.sheets["Owned"].rows)
+        if len(owned_rows) != expected_owned_count:
+            raise ValueError(
+                f"Owned sheet row count mismatch: expected {expected_owned_count}, got {len(owned_rows)}"
+            )
+        if len(expected_owned) != len(owned_rows):
+            raise ValueError("Owned sheet contains duplicate domains")
+        for sheet_name, status_columns in (
+            ("Shortlist", ("rdap_classification", "whois_classification")),
+            ("All candidates", ("latest_rdap_classification", "latest_whois_classification", "registry_status")),
+        ):
+            sheet = normal[sheet_name]
+            headers = [cell.value for cell in sheet[1]]
+            columns = {name: index for index, name in enumerate(headers)}
+            missing_status = set(status_columns) - set(columns)
+            if missing_status:
+                raise ValueError(f"{sheet_name} is missing availability status columns: {sorted(missing_status)}")
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                domain = row[columns["domain"]]
+                is_owned = domain in expected_owned
+                if (row[columns["owned"]] == "yes") != is_owned:
+                    raise ValueError(f"{sheet_name} owned flag does not match Owned sheet for {domain}")
+                if is_owned:
+                    owned_row = expected_owned[domain]
+                    purchase_date = owned_row[owned_columns["purchase_date"]]
+                    wording = f"owned by you (bought {purchase_date})"
+                    for name in status_columns:
+                        if name in columns and row[columns[name]] != wording:
+                            raise ValueError(f"{sheet_name} availability wording mismatch for {domain}")
+        for sheet_name in ("RDAP evidence", "WHOIS evidence"):
+            sheet = normal[sheet_name]
+            headers = [cell.value for cell in sheet[1]]
+            columns = {name: index for index, name in enumerate(headers)}
+            if not {"domain", "classification"}.issubset(columns):
+                raise ValueError(f"{sheet_name} is missing registry classification columns")
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                domain = row[columns["domain"]]
+                if domain not in expected_owned:
+                    continue
+                purchase_date = expected_owned[domain][owned_columns["purchase_date"]]
+                wording = f"owned by you (bought {purchase_date})"
+                if row[columns["classification"]] != wording:
+                    raise ValueError(f"{sheet_name} availability wording mismatch for {domain}")
+
         row_counts: dict[str, int] = {}
         for name, expected_sheet in model.sheets.items():
             sheet = normal[name]
