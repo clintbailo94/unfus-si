@@ -112,6 +112,8 @@ The following PowerShell sequence regenerates candidate CSVs from curated inputs
 
 After exporting the committed workbook, run `python scripts/build_html.py` from the repository root to rebuild the committed HTML report. The isolated rebuild below writes its HTML beside the temporary workbook.
 
+The report has **Top 500**, **All available** (3,395 names), and **Unavailable** (2,809 names) tabs for this 6,204-name snapshot. The long views render 60 rows per page; tabs support arrow-key navigation.
+
 ```powershell
 $Build = 'output/rebuild'
 $Source = "$Build/source"

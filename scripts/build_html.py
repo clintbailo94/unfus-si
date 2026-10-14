@@ -45,6 +45,7 @@ def coverage(s):
 
 
 short = sheet("Shortlist")
+all_candidates = sheet("All candidates")
 owned_sheet = sheet("Owned")
 owned_by_domain = {str(row["domain"]): row for row in owned_sheet}
 if len(owned_by_domain) != len(owned_sheet):
@@ -76,7 +77,79 @@ for k, v in meth.items():
         avail.append({"cat": p[0], "pool": num(p[1]), "eligible": num(p[2]), "final": num(p[3])})
 sales = [{k: r[k] for k in ("sold_domain", "amount", "currency", "transaction_date", "venue", "relevance", "source_url")}
          for r in sheet("Valuation evidence")]
-cands = len(sheet("All candidates"))
+cands = len(all_candidates)
+
+
+def available(candidate):
+    if candidate.get("owned") == "yes":
+        return True
+    return (
+        candidate.get("known_rule_class") == "ok"
+        and num(candidate.get("latest_rdap_http_status")) == 404
+        and candidate.get("latest_rdap_classification") == "potentially_unregistered"
+        and candidate.get("latest_whois_classification") == "not_registered"
+    )
+
+
+def unavailable_reason(candidate):
+    rule_class = str(candidate.get("known_rule_class") or "ok")
+    rdap_class = str(candidate.get("latest_rdap_classification") or "missing")
+    whois_class = str(candidate.get("latest_whois_classification") or "missing")
+    rdap_time = str(candidate.get("latest_rdap_timestamp") or "")
+    whois_time = str(candidate.get("latest_whois_timestamp") or "")
+    rule_detail = str(candidate.get("known_rule_explanation") or "")
+    if rule_class != "ok":
+        if rule_class == "invalid_syntax":
+            return "syntax_rule", "Syntax rule", rule_detail, "Local rule", ""
+        return f"special:{rule_class}", f"Reserved / special class: {rule_class}", rule_detail, "Local rule", ""
+    if rdap_class == "registered":
+        return "rdap_registered", "RDAP registered", "", "RDAP", rdap_time
+    if rdap_class in {"reserved", "restricted", "premium", "invalid_syntax"}:
+        if rdap_class == "invalid_syntax":
+            return "syntax_rule", "Syntax rule", "", "RDAP", rdap_time
+        return f"special:{rdap_class}", f"RDAP special class: {rdap_class}", "", "RDAP", rdap_time
+    if whois_class == "registered":
+        return "whois_registered", "WHOIS registered", str(candidate.get("latest_whois_matched_pattern") or ""), "WHOIS", whois_time
+    if rdap_class == "unverified" or rdap_class == "missing":
+        label = "RDAP unverified" if rdap_class == "unverified" else "RDAP not checked"
+        return f"rdap_{rdap_class}", label, str(candidate.get("latest_rdap_error") or ""), "RDAP", rdap_time
+    if whois_class in {"unverified", "missing"}:
+        label = "WHOIS unverified" if whois_class == "unverified" else "WHOIS not checked"
+        return f"whois_{whois_class}", label, str(candidate.get("latest_whois_error") or ""), "WHOIS", whois_time
+    return "not_available", str(candidate.get("exclusion_reason") or "Not available"), "", "Registry", rdap_time or whois_time
+
+
+score_fields = ("brandability", "commercial", "shortness", "hack", "resale", "trademark")
+available_rows = []
+unavailable_rows = []
+for candidate in all_candidates:
+    domain = str(candidate["domain"])
+    is_owned = candidate.get("owned") == "yes"
+    owned_record = owned_by_domain.get(domain)
+    base = {
+        "d": domain,
+        "c": str(candidate["category"]),
+        "t": num(candidate.get("score_total")),
+        "s": [num(candidate.get(name)) for name in score_fields],
+        "r": num(candidate.get("shortlist_rank")),
+        "owned": is_owned,
+        "owned_status": f"owned by you (bought {owned_record['purchase_date']})" if owned_record else "",
+        "why": str(candidate.get("exclusion_reason") or ""),
+        "rdap": [str(candidate.get("latest_rdap_http_status") or ""), str(candidate.get("latest_rdap_classification") or ""), str(candidate.get("latest_rdap_timestamp") or "")],
+        "whois": [str(candidate.get("latest_whois_classification") or ""), str(candidate.get("latest_whois_timestamp") or "")],
+    }
+    if available(candidate):
+        available_rows.append(base)
+    else:
+        code, label, detail, source, timestamp = unavailable_reason(candidate)
+        base.update({"reason_code": code, "reason": label, "reason_detail": detail,
+                     "evidence_source": source, "evidence_time": timestamp})
+        unavailable_rows.append(base)
+
+if len(available_rows) + len(unavailable_rows) != cands:
+    raise ValueError("Available and unavailable rows do not cover All candidates")
+if sum(row["r"] is not None for row in available_rows) != len(short):
+    raise ValueError("All available shortlist ranks do not match the Shortlist sheet")
 
 weights = meth.get("Ranking weights", "")
 rdap_counts = meth.get("Latest RDAP counts", "")
@@ -85,9 +158,8 @@ tm_range = meth.get("Trademark evidence timestamp range", "")
 rdap_range = meth.get("RDAP history timestamp range", "")
 whois_range = meth.get("WHOIS history timestamp range", "")
 
-data = json.dumps({"rows": rows, "avail": avail, "sales": sales}, ensure_ascii=False, separators=(",", ":"))
-data = data.replace("</", "<\\/")
-data = json.dumps({"rows": rows, "avail": avail, "sales": sales}, ensure_ascii=True, separators=(",", ":"))
+data = json.dumps({"rows": rows, "available": available_rows, "unavailable": unavailable_rows,
+                   "avail": avail, "sales": sales}, ensure_ascii=True, separators=(",", ":"))
 data = data.replace("</", "<\\/")
 E = lambda value: html.escape(str(value)).encode("ascii", errors="xmlcharrefreplace").decode("ascii")
 owned_summary = "".join(
@@ -138,6 +210,11 @@ section{margin:40px 0}
 h2{font:650 24px/1.2 Fraunces,Georgia,serif;margin:0 0 6px}
 .sub{color:var(--muted);margin:0 0 18px;font-size:14px}
 .cats{display:flex;flex-wrap:wrap;gap:8px}
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:22px 0 18px}
+.tab{border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:12px;padding:12px 14px;font:600 14px Inter,sans-serif;cursor:pointer;text-align:center}
+.tab:hover{color:var(--ink);border-color:var(--accent)}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.tab:focus-visible,.chip:focus-visible,.more:focus-visible,.pager button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .chip{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:7px 13px;font:500 13px Inter,sans-serif;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
 .chip i{font-style:normal;color:var(--faint);font-variant-numeric:tabular-nums}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -146,6 +223,10 @@ h2{font:650 24px/1.2 Fraunces,Georgia,serif;margin:0 0 6px}
 .controls input,.controls select{font:inherit;font-size:14px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
 .controls input{flex:1 1 240px;min-width:0}
 .count{color:var(--muted);font-size:13px;margin-left:auto}
+.pager{display:flex;align-items:center;justify-content:center;gap:14px;margin:16px auto;color:var(--muted);font-size:13px}
+.pager[hidden],.more[hidden],.controls [hidden]{display:none}
+.pager button{font:500 14px Inter,sans-serif;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
+.pager button:disabled{opacity:.45;cursor:default}
 .table{background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
 .row{display:grid;grid-template-columns:52px minmax(150px,1.4fr) 128px 150px minmax(170px,1fr) 150px 24px;gap:14px;align-items:center;padding:12px 18px;border-top:1px solid var(--line);cursor:pointer}
 .row:hover{background:color-mix(in srgb,var(--accent-soft) 45%,transparent)}
@@ -198,13 +279,33 @@ table.plain td.n{text-align:right}
 .owned-name{min-width:0;color:var(--ink);font:600 13px JetBrains Mono,ui-monospace,monospace;overflow-wrap:anywhere}
 .owned-list b{color:var(--ink)}
 .owned-badge{display:inline-block;margin-left:7px;padding:2px 7px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font:600 10px/1.5 Inter,sans-serif;letter-spacing:.02em;vertical-align:2px;white-space:nowrap}
+.reason-pill{display:inline-block;padding:3px 8px;border-radius:8px;background:var(--slate-soft);color:var(--slate);font-size:12px;line-height:1.4;white-space:normal}
+.timestamp{font:12px/1.45 JetBrains Mono,ui-monospace,monospace;color:var(--muted);overflow-wrap:anywhere}
+.row.available{grid-template-columns:52px minmax(150px,1.25fr) 128px 145px 150px minmax(165px,1fr) 24px}
+.row.unavailable{grid-template-columns:minmax(160px,1.25fr) minmax(120px,.8fr) minmax(165px,1fr) minmax(190px,1.2fr) 24px}
+.row.head.unavailable{grid-template-columns:minmax(160px,1.25fr) minmax(120px,.8fr) minmax(165px,1fr) minmax(190px,1.2fr) 24px}
 a{color:var(--accent)}
 footer{color:var(--faint);font-size:13px;padding:30px 0 60px;border-top:1px solid var(--line);margin-top:50px}
 .theme{position:fixed;top:14px;right:14px;z-index:5;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;width:38px;height:38px;cursor:pointer;font-size:16px}
 @media (max-width:900px){
   .stats{grid-template-columns:repeat(2,1fr)}
+  .tab{padding:10px 6px;font-size:13px}
   .row{grid-template-columns:40px 1fr auto 18px;gap:10px;padding:12px 14px}
   .row .c-cat,.row .c-mini,.row .c-tm{display:none}
+  .row.available{grid-template-columns:40px minmax(0,1fr) auto 18px}
+  .row.available .rank{grid-column:1;grid-row:1}
+  .row.available .dom{grid-column:2;grid-row:1}
+  .row.available .c-total{grid-column:3;grid-row:1}
+  .row.available .c-cat{display:block;grid-column:2 / 4;grid-row:2}
+  .row.available .c-mini{display:none}
+  .row.available .c-why{display:block;grid-column:2 / 4;grid-row:3;font-size:12px}
+  .row.available .caret{grid-column:4;grid-row:1 / 4;align-self:center}
+  .row.head.available .c-cat,.row.head.available .c-mini,.row.head.available .c-why{display:none}
+  .row.unavailable{grid-template-columns:minmax(0,1fr) 18px;gap:7px;padding:12px 14px}
+  .row.unavailable .c-category,.row.unavailable .c-reason,.row.unavailable .c-stamp{grid-column:1}
+  .row.unavailable .caret{grid-column:2;grid-row:1 / 5;align-self:center}
+  .row.head.unavailable{grid-template-columns:minmax(0,1fr) auto 18px;gap:8px;padding:12px 14px}
+  .row.head.unavailable .c-category,.row.head.unavailable .c-stamp{display:none}
   .row.head .c-total{justify-self:end}
   .total{width:120px}
   .detail{padding:4px 14px 18px}
@@ -220,12 +321,12 @@ footer{color:var(--faint);font-size:13px;padding:30px 0 60px;border-top:1px soli
 <header>
   <div class="eyebrow">Research report / Slovenia ccTLD</div>
   <h1>500 ranked <span>.si</span> domains worth a look</h1>
-  <p class="lede">Names are ranked by a weighted score for brandability, commercial demand, shortness, domain-hack quality, resale appeal and trademark risk. Registry observations are a dated snapshot; domains in Your domains have since been purchased.</p>
+  <p class="lede">Browse the ranked shortlist, every name that passed both availability checks, and every name that did not. Score details and exclusion reasons come from the workbook; registry observations are a dated snapshot, and domains in Your domains have since been purchased.</p>
   <div class="stats">
-    <div class="stat"><b>500</b><span>ranked opportunities</span></div>
-    <div class="stat"><b>__CANDS__</b><span>candidate names checked</span></div>
-    <div class="stat"><b>2x</b><span>availability checks per name (RDAP + WHOIS)</span></div>
-    <div class="stat"><b>__SCREENED__</b><span>names screened against the US trademark register</span></div>
+    <div class="stat"><b>__CANDS__</b><span>checked</span></div>
+    <div class="stat"><b>__AVAILABLE__</b><span>available</span></div>
+    <div class="stat"><b>__RANKED__</b><span>top 500 ranked</span></div>
+    <div class="stat"><b>__UNAVAILABLE__</b><span>unavailable</span></div>
   </div>
   <div class="notice"><strong>Registry status:</strong> RDAP and WHOIS observations are from 13 Oct 2026 and do not confirm current registrar availability. Owned rows show the purchase date; their registry evidence is pre-purchase history. The owner-requested USPTO screen of profitdesk.si returned zero exact and fuzzy-1 matches; top-100 USPTO coverage remains 100/100, and other outside-top-100 names remain not yet screened. No name is trademark-cleared: EU (TMview) and UK (UKIPO) searches refused automated access. Price estimates are not given because there are not enough comparable .si sales to support them.</div>
 </header>
@@ -237,17 +338,24 @@ footer{color:var(--faint);font-size:13px;padding:30px 0 60px;border-top:1px soli
 </section>
 
 <section id="list">
-  <h2>The shortlist</h2>
-  <p class="sub">Tap a category to filter. Tap any row for the reasoning, score breakdown and evidence.</p>
-  <div class="cats" id="cats"><button class="chip" id="owned-chip" data-owned="true" aria-pressed="false">Owned <i>__OWNED_COUNT__</i></button></div>
+  <div class="tabs" role="tablist" aria-label="Domain views">
+    <button class="tab" id="tab-top" role="tab" aria-selected="true" aria-controls="report-panel" tabindex="0" data-mode="top">Top 500</button>
+    <button class="tab" id="tab-available" role="tab" aria-selected="false" aria-controls="report-panel" tabindex="-1" data-mode="available">All available</button>
+    <button class="tab" id="tab-unavailable" role="tab" aria-selected="false" aria-controls="report-panel" tabindex="-1" data-mode="unavailable">Unavailable</button>
+  </div>
+  <div id="report-panel" role="tabpanel" aria-labelledby="tab-top" tabindex="0">
+  <h2 id="view-title">The shortlist</h2>
+  <p class="sub" id="view-sub">Tap a category to filter. Tap any row for the reasoning, score breakdown and evidence.</p>
+  <div class="cats" id="cats"><button type="button" class="chip" id="owned-chip" data-owned="true" aria-pressed="false">Owned <i>__OWNED_COUNT__</i></button></div>
   <div class="controls">
     <input id="q" type="search" placeholder="Search domains or reasoning..." aria-label="Search">
-    <select id="tmf" aria-label="Trademark status">
+    <select id="tmf" aria-label="Trademark status" hidden>
       <option value="">All trademark statuses</option>
-    <option value="blocked">Blocked / incomplete screen</option>
+      <option value="blocked">Blocked / incomplete screen</option>
       <option value="needs legal review">Needs legal review</option>
       <option value="not yet screened">Not yet screened</option>
     </select>
+    <select id="reasonf" aria-label="Unavailable reason" hidden><option value="">All reasons</option></select>
     <select id="len" aria-label="Length">
       <option value="">Any length</option><option value="4"><= 4 letters</option><option value="6"><= 6 letters</option><option value="8"><= 8 letters</option>
     </select>
@@ -255,6 +363,8 @@ footer{color:var(--faint);font-size:13px;padding:30px 0 60px;border-top:1px soli
   </div>
   <div class="table" id="table"></div>
   <button class="more" id="more" hidden>Show more</button>
+  <div class="pager" id="pager" hidden><button id="previous-page" type="button">Previous</button><span id="page-label"></span><button id="next-page" type="button">Next</button></div>
+  </div>
 </section>
 
 <section>
@@ -302,7 +412,8 @@ const COV = {complete:['ok','clear'],no_obvious_match:['ok','no obvious match'],
   unverified:['mute','unchecked (refused access)'],blocked:['mute','unchecked (blocked)']};
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const $ = id => document.getElementById(id);
-const st = {cat:'', owned:false, q:'', tm:'', len:'', sort:'r', dir:1, shown:60};
+const PAGE_SIZE = 60;
+const st = {mode:'top', cat:'', owned:false, q:'', tm:'', reason:'', len:'', sort:'r', dir:1, shown:60, page:0};
 
 // theme toggle
 try { const t = localStorage.getItem('si-theme'); if (t) document.documentElement.dataset.theme = t; } catch(e) {}
@@ -313,29 +424,63 @@ $('theme').onclick = () => {
   try { localStorage.setItem('si-theme', document.documentElement.dataset.theme); } catch(e) {}
 };
 
-// category chips
-const counts = {};
-D.rows.forEach(r => counts[r.c] = (counts[r.c] || 0) + 1);
-const cats = [['', 'All', D.rows.length], ...Object.entries(counts).sort((a,b) => b[1]-a[1]).map(([k,n]) => [k, CAT[k] || k, n])];
-$('cats').insertAdjacentHTML('afterbegin', cats.map(([k,l,n]) => `<button class="chip" data-c="${k}" aria-pressed="${k===''}">${esc(l)} <i>${n}</i></button>`).join(''));
-$('cats').onclick = e => { const b = e.target.closest('.chip'); if (!b) return;
-  st.owned = b.dataset.owned === 'true';
-  st.cat = st.owned ? '' : b.dataset.c;
-  st.shown = 60;
-  document.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === b)); render(); };
-$('q').oninput = e => { st.q = e.target.value.trim().toLowerCase(); st.shown = 60; render(); };
-$('tmf').onchange = e => { st.tm = e.target.value; st.shown = 60; render(); };
-$('len').onchange = e => { st.len = e.target.value; st.shown = 60; render(); };
-$('more').onclick = () => { st.shown += 100; render(); };
-
-function filtered(){
-  let rs = D.rows.filter(r => (!st.cat || r.c === st.cat) && (!st.owned || r.owned) && (!st.tm || r.tm === st.tm)
-    && (!st.len || r.d.replace('.si','').length <= +st.len)
-    && (!st.q || r.d.includes(st.q) || r.why.toLowerCase().includes(st.q)));
-  const key = st.sort === 'd' ? (r => r.d) : st.sort === 't' ? (r => -r.t) : (r => r.r);
-  return rs.sort((a,b) => (key(a) > key(b) ? 1 : key(a) < key(b) ? -1 : 0) * st.dir);
+function sourceRows(){ return st.mode === 'top' ? D.rows : st.mode === 'available' ? D.available : D.unavailable; }
+function resetPaging(){ st.shown = PAGE_SIZE; st.page = 0; }
+function drawCategories(){
+  const source = sourceRows(), counts = {};
+  source.forEach(r => counts[r.c] = (counts[r.c] || 0) + 1);
+  const cats = [['', 'All', source.length], ...Object.entries(counts).sort((a,b) => b[1]-a[1]).map(([k,n]) => [k, CAT[k] || k, n])];
+  const chips = cats.map(([k,l,n]) => `<button type="button" class="chip" data-c="${esc(k)}" aria-pressed="${k === st.cat && !st.owned}">${esc(l)} <i>${n.toLocaleString()}</i></button>`).join('');
+  const owned = st.mode === 'unavailable' ? '' : `<button type="button" class="chip" id="owned-chip" data-owned="true" aria-pressed="${st.owned}">Owned <i>${source.filter(r => r.owned).length}</i></button>`;
+  $('cats').innerHTML = chips + owned;
 }
-function row(r){
+function drawReasonFilter(){
+  const counts = {};
+  D.unavailable.forEach(r => { if (!counts[r.reason_code]) counts[r.reason_code] = {label:r.reason,count:0}; counts[r.reason_code].count++; });
+  const options = Object.entries(counts).sort((a,b) => b[1].count-a[1].count)
+    .map(([code,v]) => `<option value="${esc(code)}">${esc(v.label)} (${v.count.toLocaleString()})</option>`).join('');
+  $('reasonf').innerHTML = '<option value="">All reasons</option>' + options;
+}
+function updateControls(){
+  $('tmf').hidden = st.mode !== 'top'; $('reasonf').hidden = st.mode !== 'unavailable';
+  $('view-title').textContent = st.mode === 'top' ? 'The shortlist' : st.mode === 'available' ? 'All available' : 'Unavailable';
+  $('view-sub').textContent = st.mode === 'top'
+    ? 'Tap a category to filter. Tap any row for the reasoning, score breakdown and evidence.'
+    : st.mode === 'available'
+      ? 'Every name with RDAP 404, WHOIS not_registered and known rules passing. Ranked names include their shortlist rank; other exclusion reasons come from the workbook.'
+      : 'Names that failed an availability check or a known rule. Search by domain and filter by the recorded reason; timestamps are from the evidence.';
+}
+function selectMode(mode, focusTab){
+  st.mode = mode; st.cat = ''; st.owned = false; st.tm = ''; st.reason = ''; st.len = ''; st.q = '';
+  st.sort = mode === 'unavailable' ? 'd' : 'r'; st.dir = 1; resetPaging();
+  $('q').value = ''; $('tmf').value = ''; $('reasonf').value = ''; $('len').value = '';
+  document.querySelectorAll('[role="tab"]').forEach(tab => {
+    const selected = tab.dataset.mode === mode;
+    tab.setAttribute('aria-selected', String(selected)); tab.tabIndex = selected ? 0 : -1;
+    if (selected) { $('report-panel').setAttribute('aria-labelledby', tab.id); if (focusTab) tab.focus(); }
+  });
+  updateControls(); drawCategories(); render();
+}
+function filtered(){
+  const rs = sourceRows().filter(r => (!st.cat || r.c === st.cat) && (!st.owned || r.owned)
+    && (!st.tm || r.tm === st.tm) && (!st.reason || r.reason_code === st.reason)
+    && (!st.len || r.d.slice(0, -3).length <= +st.len)
+    && (!st.q || [r.d,r.c,r.why,r.reason,r.reason_detail].filter(Boolean).join(' ').toLowerCase().includes(st.q)));
+  const cmp = (a,b) => a > b ? 1 : a < b ? -1 : 0;
+  return rs.sort((a,b) => {
+    let result = 0;
+    if (st.sort === 'd') result = cmp(a.d,b.d);
+    else if (st.sort === 't') {
+      if (a.t == null || b.t == null) result = a.t == null ? (b.t == null ? cmp(a.d,b.d) : 1) : -1;
+      else result = cmp(b.t,a.t) || cmp(a.d,b.d);
+    } else {
+      if (a.r == null || b.r == null) result = a.r == null ? (b.r == null ? cmp(a.d,b.d) : 1) : -1;
+      else result = cmp(a.r,b.r);
+    }
+    return result * st.dir;
+  });
+}
+function shortRow(r){
   const [cls, label] = TM[r.tm] || ['none', r.tm];
   const label_ = r.d.slice(0, -3);
   return `<div class="row" role="button" tabindex="0" aria-expanded="false" data-d="${esc(r.d)}">
@@ -346,9 +491,9 @@ function row(r){
     <span class="c-mini minis" title="${PARTS.map((p,i) => p + ' ' + r.s[i]).join(' / ')}">${r.s.map(v => `<div style="height:${Math.max(8, v)}%"></div>`).join('')}</span>
     <span class="c-tm"><span class="tm ${cls}">${label}</span></span>
     <span class="caret">></span></div>
-  <div class="detail">${detail(r)}</div>`;
+  <div class="detail">${shortDetail(r)}</div>`;
 }
-function detail(r){
+function shortDetail(r){
   const availability = r.owned
     ? `<p><b>${esc(r.owned_status)}</b></p><p>Registry evidence is pre-purchase history (${esc(r.rdap[1])}; ${esc(r.whois[1])}).</p>`
     : `<p>RDAP <b>${esc(r.rdap[0])}</b> (not found) at ${esc(r.rdap[1])}<br>WHOIS <b>${esc(String(r.whois[0]).replace('_',' '))}</b> at ${esc(r.whois[1])}</p>`;
@@ -361,28 +506,110 @@ function detail(r){
     <div><h4>Score breakdown</h4>${PARTS.map((p,i) => `<div class="sc"><span>${p}</span><span class="bar"><div style="width:${r.s[i]}%"></div></span><span>${r.s[i]}</span></div>`).join('')}</div>
     <div><h4>Trademark screen</h4>${cov}<h4>Valuation</h4><p class="mute">${esc(r.val)}</p></div></div>`;
 }
+function scoreBars(r){
+  if (r.t == null || !r.s || r.s.some(v => v == null)) return '<span class="mute">No score</span>';
+  return `<span class="c-mini minis" title="${PARTS.map((p,i) => p + ' ' + r.s[i]).join(' / ')}">${r.s.map(v => `<div style="height:${Math.max(8, v)}%"></div>`).join('')}</span>`;
+}
+function availableRow(r){
+  const label_ = r.d.slice(0, -3);
+  const reason = r.r == null ? (r.why || 'No exclusion reason recorded') : 'In Top 500';
+  return `<div class="row available" role="button" tabindex="0" aria-expanded="false" data-d="${esc(r.d)}">
+    <span class="rank">${r.r == null ? '\u2014' : r.r}</span>
+    <span class="dom">${esc(label_)}<em>.si</em>${r.owned ? '<span class="owned-badge">Owned</span>' : ''}</span>
+    <span class="c-cat"><span class="pill">${esc(CAT[r.c] || r.c)}</span></span>
+    <span class="c-total total"><b>${r.t == null ? '\u2014' : r.t}</b>${r.t == null ? '' : `<span class="bar"><div style="width:${r.t}%"></div></span>`}</span>
+    ${scoreBars(r)}<span class="c-why"><span class="reason-pill">${esc(reason)}</span></span><span class="caret">></span></div>
+  <div class="detail">${availableDetail(r)}</div>`;
+}
+function availableDetail(r){
+  const score = r.t == null || !r.s || r.s.some(v => v == null)
+    ? '<p class="mute">No score is recorded for this name.</p>'
+    : PARTS.map((p,i) => `<div class="sc"><span>${p}</span><span class="bar"><div style="width:${r.s[i]}%"></div></span><span>${r.s[i]}</span></div>`).join('');
+  const why = r.r == null ? `<p>${esc(r.why || 'No exclusion reason recorded in the workbook.')}</p>` : `<p>Shortlist rank <b>${r.r}</b>.</p>`;
+  const evidence = r.owned
+    ? `<p><b>${esc(r.owned_status)}</b></p><p>Registry observations are pre-purchase history (${esc(r.rdap[2])}; ${esc(r.whois[1])}).</p>`
+    : `<p>RDAP <b>${esc(r.rdap[0])}</b> (${esc(r.rdap[1])}) at ${esc(r.rdap[2])}<br>WHOIS <b>${esc(r.whois[0])}</b> at ${esc(r.whois[1])}</p>`;
+  return `<div class="dgrid"><div><h4>Why it is outside the 500</h4>${why}<h4>Availability evidence</h4>${evidence}</div><div><h4>Score breakdown</h4>${score}</div><div><h4>Category</h4><p>${esc(CAT[r.c] || r.c)}</p></div></div>`;
+}
+function unavailableRow(r){
+  const label_ = r.d.slice(0, -3);
+  const timestamp = r.evidence_time ? `${r.evidence_source} \u00b7 ${r.evidence_time}` : 'Local rule \u00b7 no registry timestamp';
+  return `<div class="row unavailable" role="button" tabindex="0" aria-expanded="false" data-d="${esc(r.d)}">
+    <span class="dom">${esc(label_)}<em>.si</em></span>
+    <span class="c-category"><span class="pill">${esc(CAT[r.c] || r.c)}</span></span>
+    <span class="c-reason"><span class="reason-pill">${esc(r.reason)}</span></span>
+    <span class="c-stamp timestamp">${esc(timestamp)}</span><span class="caret">></span></div>
+  <div class="detail">${unavailableDetail(r)}</div>`;
+}
+function unavailableDetail(r){
+  const why = r.reason_detail ? `<p>${esc(r.reason_detail)}</p>` : '';
+  const evidence = r.evidence_time
+    ? `<p>${esc(r.evidence_source)} evidence timestamp: <b>${esc(r.evidence_time)}</b></p>`
+    : '<p>This is a local known-rule classification; the workbook has no registry timestamp for the rule itself.</p>';
+  return `<div class="dgrid"><div><h4>Why unavailable</h4><p><b>${esc(r.reason)}</b></p>${why}</div><div><h4>Evidence timestamp</h4>${evidence}</div><div><h4>Category</h4><p>${esc(CAT[r.c] || r.c)}</p></div></div>`;
+}
 function head(){
   const arrow = k => st.sort === k ? (st.dir > 0 ? ' ^' : ' v') : '';
+  if (st.mode === 'unavailable') return `<div class="row head unavailable"><button data-s="d">Domain${arrow('d')}</button><span class="c-category">Category</span><span>Reason</span><span class="c-stamp">Evidence timestamp</span><span></span></div>`;
+  if (st.mode === 'available') return `<div class="row head available"><button data-s="r">Rank${arrow('r')}</button><button data-s="d">Domain${arrow('d')}</button>
+    <span class="c-cat">Category</span><button class="c-total" data-s="t">Total score${arrow('t')}</button>
+    <span class="c-mini">Breakdown</span><span class="c-why">Why outside 500</span><span></span></div>`;
   return `<div class="row head"><button data-s="r">#${arrow('r')}</button><button data-s="d">Domain${arrow('d')}</button>
     <span class="c-cat">Category</span><button class="c-total" data-s="t">Score${arrow('t')}</button>
     <span class="c-mini" title="Brandability, commercial, shortness, hack, resale, trademark">Breakdown</span><span class="c-tm">Trademark</span><span></span></div>`;
 }
 function render(){
   const rs = filtered();
-  $('count').textContent = `${rs.length} of ${D.rows.length} names`;
-  $('table').innerHTML = head() + (rs.length ? rs.slice(0, st.shown).map(row).join('') : '<div class="empty">No names match these filters.</div>');
+  const source = sourceRows();
+  $('count').textContent = `${rs.length.toLocaleString()} of ${source.length.toLocaleString()} names`;
+  const start = st.mode === 'top' ? 0 : st.page * PAGE_SIZE;
+  const visible = st.mode === 'top' ? rs.slice(0, st.shown) : rs.slice(start, start + PAGE_SIZE);
+  const drawRow = st.mode === 'top' ? shortRow : st.mode === 'available' ? availableRow : unavailableRow;
+  $('table').innerHTML = head() + (visible.length ? visible.map(drawRow).join('') : '<div class="empty">No names match these filters.</div>');
   $('more').hidden = rs.length <= st.shown;
   $('more').textContent = `Show more (${rs.length - st.shown} left)`;
+  $('pager').hidden = st.mode === 'top';
+  const pageCount = Math.max(1, Math.ceil(rs.length / PAGE_SIZE));
+  const from = rs.length ? start + 1 : 0;
+  const to = Math.min(start + PAGE_SIZE, rs.length);
+  $('page-label').textContent = `Rows ${from.toLocaleString()}\u2013${to.toLocaleString()} of ${rs.length.toLocaleString()} \u00b7 page ${st.page + 1} of ${pageCount}`;
+  $('previous-page').disabled = st.page === 0;
+  $('next-page').disabled = st.page + 1 >= pageCount;
 }
 $('table').addEventListener('click', e => {
   const s = e.target.closest('[data-s]');
-  if (s) { st.dir = st.sort === s.dataset.s ? -st.dir : 1; st.sort = s.dataset.s; render(); return; }
+  if (s) { st.dir = st.sort === s.dataset.s ? -st.dir : 1; st.sort = s.dataset.s; resetPaging(); render(); return; }
   const r = e.target.closest('.row:not(.head)'); if (!r) return;
   const open = r.getAttribute('aria-expanded') !== 'true';
   r.setAttribute('aria-expanded', open); r.nextElementSibling.classList.toggle('open', open);
 });
 $('table').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('row')) { e.preventDefault(); e.target.click(); } });
-render();
+$('cats').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  st.owned = b.dataset.owned === 'true'; st.cat = st.owned ? '' : b.dataset.c;
+  resetPaging(); drawCategories(); render();
+});
+$('q').oninput = e => { st.q = e.target.value.trim().toLowerCase(); resetPaging(); render(); };
+$('tmf').onchange = e => { st.tm = e.target.value; resetPaging(); render(); };
+$('reasonf').onchange = e => { st.reason = e.target.value; resetPaging(); render(); };
+$('len').onchange = e => { st.len = e.target.value; resetPaging(); render(); };
+$('more').onclick = () => { st.shown += 100; render(); };
+$('previous-page').onclick = () => { st.page = Math.max(0, st.page - 1); render(); };
+$('next-page').onclick = () => { st.page++; render(); };
+$('list').addEventListener('click', e => { const tab = e.target.closest('[role="tab"]'); if (tab) selectMode(tab.dataset.mode, false); });
+$('list').addEventListener('keydown', e => {
+  const tab = e.target.closest('[role="tab"]'); if (!tab) return;
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  let next = tabs.indexOf(tab);
+  if (e.key === 'ArrowRight') next = (next + 1) % tabs.length;
+  else if (e.key === 'ArrowLeft') next = (next - 1 + tabs.length) % tabs.length;
+  else if (e.key === 'Home') next = 0;
+  else if (e.key === 'End') next = tabs.length - 1;
+  else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectMode(tab.dataset.mode, false); return; }
+  else return;
+  e.preventDefault(); selectMode(tabs[next].dataset.mode, true);
+});
+drawReasonFilter(); updateControls(); drawCategories(); render();
 
 $('avail').innerHTML = '<tr><th>Category</th><th style="text-align:right">Candidates</th><th style="text-align:right">Eligible (snapshot)</th><th style="text-align:right">In the 500</th></tr>'
   + D.avail.sort((a,b) => b.final - a.final).map(a => `<tr><td>${esc(CAT[a.cat] || a.cat)}</td><td class="n">${a.pool.toLocaleString()}</td><td class="n">${a.eligible.toLocaleString()}</td><td class="n"><b>${a.final}</b></td></tr>`).join('');
@@ -395,7 +622,9 @@ $('sales').innerHTML = '<tr><th>Domain sold</th><th style="text-align:right">Pri
 """
 
 screened = sum(1 for r in rows if r["cov"])
-page = (page.replace("__DATA__", data).replace("__CANDS__", f"{cands:,}").replace("__SCREENED__", str(screened))
+page = (page.replace("__DATA__", data).replace("__CANDS__", f"{cands:,}")
+        .replace("__AVAILABLE__", f"{len(available_rows):,}").replace("__RANKED__", f"{len(short):,}")
+        .replace("__UNAVAILABLE__", f"{len(unavailable_rows):,}").replace("__SCREENED__", str(screened))
         .replace("__WEIGHTS__", E(weights[0].upper() + weights[1:] if weights else ""))
         .replace("__RDAPR__", E(rdap_range)).replace("__WHOISR__", E(whois_range)).replace("__TMR__", E(tm_range))
         .replace("__RDAPC__", E(rdap_counts)).replace("__WHOISC__", E(whois_counts))

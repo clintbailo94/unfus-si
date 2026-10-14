@@ -1,4 +1,5 @@
 import json
+import re
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -74,7 +75,8 @@ class ReportParser(HTMLParser):
 
 def test_report_contains_owned_chip_summary_badges_and_purchase_wording():
     parser = ReportParser()
-    parser.feed(REPORT.read_text(encoding="ascii"))
+    source = REPORT.read_text(encoding="ascii")
+    parser.feed(source)
 
     assert parser.has_owned_chip
     assert parser.owned_chip_count == "10"
@@ -88,3 +90,20 @@ def test_report_contains_owned_chip_summary_badges_and_purchase_wording():
     assert len(owned) == 10
     assert {row["d"] for row in owned} == set(parser.owned_names)
     assert all(row["owned_status"] == "owned by you (bought 2026-10-14)" for row in owned)
+
+    assert 'role="tablist"' in source
+    assert all(f'>{label}</button>' in source for label in ("Top 500", "All available", "Unavailable"))
+    stats = re.findall(r'<div class="stat"><b>(.*?)</b><span>(.*?)</span>', source)
+    assert ('6,204', 'checked') in stats
+    assert ('3,395', 'available') in stats
+    assert ('500', 'top 500 ranked') in stats
+    assert ('2,809', 'unavailable') in stats
+    assert len(data["available"]) == 3395
+    assert len(data["unavailable"]) == 2809
+    assert sum(row["r"] is not None for row in data["available"]) == 500
+    assert all(row["owned"] or (row["rdap"][0] == "404" and row["rdap"][1] == "potentially_unregistered"
+                                and row["whois"][0] == "not_registered") for row in data["available"])
+    assert all(row["r"] is not None or row["why"] for row in data["available"])
+    assert all(not row["owned"] and row["reason"] and (row["evidence_time"] or row["evidence_source"] == "Local rule")
+               for row in data["unavailable"])
+    assert "const PAGE_SIZE = 60" in "".join(parser.script_text)
