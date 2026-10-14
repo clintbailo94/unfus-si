@@ -387,6 +387,7 @@ def build_parser() -> argparse.ArgumentParser:
         "trademark_summary": OUTPUT_DIR / "trademark_summary.csv",
         "trademark_evidence": OUTPUT_DIR / "trademark_evidence.csv",
         "sample": OUTPUT_DIR / "sample_404_for_review.csv",
+        "owned_domains": DATA_DIR / "owned_domains.txt",
     }
     export = subparsers.add_parser(
         "export", help="build the ranked owner-readable XLSX from local CSV snapshots"
@@ -960,7 +961,7 @@ def _delivery_paths(args: argparse.Namespace) -> dict[str, str]:
             "candidates", "reserved_names", "restricted_names", "rdap_evidence",
             "whois_evidence", "scores", "shortlist", "excluded", "opportunities",
             "valuations", "valuation_evidence", "trademark_summary", "trademark_evidence",
-            "sample",
+            "sample", "owned_domains",
         )
     }
 

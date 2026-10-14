@@ -13,6 +13,7 @@ from si_domains.uspto import (
     is_similar_wordmark,
     parse_search_response,
     probe_uspto_controls,
+    search_uspto_json,
     search_uspto_label,
 )
 
@@ -330,6 +331,126 @@ def test_trademark_aggregation_preserves_conservative_status_and_provenance(
     }
     if expected_status in {"blocked", "unverified"}:
         assert "limited_screen_no_obvious_match" != row["status"]
+
+
+def test_profitdesk_mocked_uspto_no_matches_remains_blocked_at_40(tmp_path):
+    google_hit = {
+        "id": "12345678",
+        "wordmark": "GOOGLE",
+        "alive": True,
+        "statusDescription": "REGISTERED",
+        "internationalClass": ["IC 035"],
+    }
+
+    class Response:
+        status_code = 200
+        headers = {"content-type": "application/json"}
+
+        def __init__(self, hits):
+            self.payload = {"hits": {"totalValue": len(hits), "hits": [{"source": hit} for hit in hits]}}
+
+        def json(self):
+            return self.payload
+
+    class Session:
+        def __init__(self):
+            self.terms = []
+
+        def post(self, url, *, headers, json, timeout):
+            query = json["query"]["bool"]["must"][0]
+            if "match_phrase" in query:
+                term = query["match_phrase"]["wordmark"]
+            else:
+                term = query["match"]["wordmark"]["query"]
+            self.terms.append(term)
+            return Response([google_hit] if term == "google" else [])
+
+    session = Session()
+    control = search_uspto_json(session, "google")
+    exact, fuzzy = search_uspto_label(session, "profitdesk")
+    assert control.total == 1
+    assert exact.total == fuzzy.total == 0
+    assert session.terms == ["google", "profitdesk", "profitdesk"]
+
+    api_url = "https://tmsearch.uspto.gov/prod-stage-v1-0-0/tmsearch"
+    results_url = "https://tmsearch.uspto.gov/search/search-results?query=profitdesk"
+    evidence = [
+        _evidence(
+            "PKGH-USPTO-00001",
+            "USPTO",
+            "possible_conflict",
+            domain="*",
+            jurisdiction="United States",
+            query="google",
+            source_url=api_url,
+            result_url="https://tmsearch.uspto.gov/search/search-results?query=google",
+            mark_number=control.hits[0].serial_number,
+            mark_name=control.hits[0].wordmark,
+            mark_status="REGISTERED; live",
+            classes="35",
+            utc_timestamp="2026-10-14T11:54:51Z",
+            notes="Control query; HTTP 200 JSON; mode=exact; term=google; totalValue=1; first hit facts only; attempts=1.",
+            proof_kind="api_query_summary",
+        )
+    ]
+    for sequence, result, mode, query, timestamp in (
+        (2, exact, "exact", "profitdesk", "2026-10-14T11:54:56Z"),
+        (3, fuzzy, "fuzzy-1", "profitdesk [fuzzy-1]", "2026-10-14T11:55:01Z"),
+    ):
+        evidence.append(
+            _evidence(
+                f"PKGH-USPTO-{sequence:05d}",
+                "USPTO",
+                "no_obvious_match",
+                domain="profitdesk.si",
+                jurisdiction="United States",
+                query=query,
+                source_url=api_url,
+                result_url=results_url,
+                utc_timestamp=timestamp,
+                notes=f"HTTP 200 JSON; mode={mode}; term=profitdesk; totalValue={result.total}; returned={len(result.hits)}; attempts=1; no similar returned marks; limited screen only, no clearance implied.",
+                proof_kind="api_query_summary",
+            )
+        )
+    for source, status, prefix in (
+        ("TMview", "unverified", "PKGH-TMVIEW"),
+        ("UKIPO", "blocked", "PKGH-UKIPO"),
+    ):
+        for sequence, mode, query in (
+            (1, "exact", "profitdesk"),
+            (2, "fuzzy-1", "profitdesk [fuzzy-1]"),
+        ):
+            evidence.append(
+                _evidence(
+                    f"{prefix}-{sequence:05d}",
+                    source,
+                    status,
+                    domain="profitdesk.si",
+                    query=query,
+                    result_url="",
+                    utc_timestamp="2026-10-14T11:55:06Z",
+                    notes=f"No per-name query was sent. Existing {source} source-wide refusal remains in effect; mode={mode}. No per-domain query ran; no result or clearance implied.",
+                )
+            )
+
+    evidence_path = tmp_path / "trademark_evidence.csv"
+    shortlist_path = tmp_path / "shortlist.csv"
+    summary_path = tmp_path / "trademark_summary.csv"
+    candidates_path = tmp_path / "candidates.csv"
+    _write_csv(evidence_path, EVIDENCE_FIELDS, evidence)
+    _write_csv(shortlist_path, ["rank", "domain"], [{"rank": "230", "domain": "profitdesk.si"}])
+    _candidate(candidates_path, "profitdesk", "business_finance", "profit + desk")
+
+    assert write_trademark_summary(
+        evidence_path,
+        shortlist_path,
+        summary_path,
+        candidates_path=candidates_path,
+    ) == 1
+    with summary_path.open(encoding="utf-8", newline="") as handle:
+        summary = next(csv.DictReader(handle))
+    assert summary["status"] == "blocked"
+    assert summary["trademark_score"] == "40"
 
 
 def test_summary_keeps_prior_screen_results_for_domains_that_exit_top_n(tmp_path):

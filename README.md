@@ -12,8 +12,11 @@ For the committed CSV snapshot, export and check the workbook with:
 
 ```powershell
 python -m si_domains export --out output/si_domains_ranked.xlsx
+python scripts/build_html.py
 python -m si_domains validate-delivery --workbook output/si_domains_ranked.xlsx
 ```
+
+`data/owned_domains.txt` records domains bought by you and their purchase dates. The workbook and HTML mark those rows as owned; registry evidence is pre-purchase history, and ownership does not change scores or ranks.
 
 `validate-delivery` compares every workbook row and cell to the current sources.
 It can report structural delivery PASS while saying research screening BLOCKED;
@@ -180,6 +183,8 @@ python -m si_domains valuations --shortlist output/shortlist.csv --evidence outp
 python -m si_domains opportunities --shortlist output/shortlist.csv --scores output/scores.csv --valuations output/valuations.csv --trademark-summary output/trademark_summary.csv --out output/opportunities.csv
 python -m si_domains validate-research --candidates data/candidates.csv
 python -m si_domains validate-research --candidates data/candidates.csv --completion-mode
+python -m si_domains export --out output/si_domains_ranked.xlsx
+python scripts/build_html.py
 ```
 
 If rescoring changes membership in the final top 100, complete the newly
@@ -216,8 +221,7 @@ flagged names are `autokernel`, `autonetwork`, `autostream`, `carboncell`,
 `cashops`, `jewelshop`, `keyscan`, `pharmascan`, `powdery`, `reveler`,
 `robotspark`, `soilhub`, and `soillab`. `denimwear` also has possible-conflict
 evidence but is outside the final top 100. The query records are limited
-screening evidence; no name is cleared. Names ranked 101-500 remain not yet
-screened. The full final-top-100 flagged list is `autobeacon`, `autokernel`,
+screening evidence; no name is cleared. Except for profitdesk.si, screened at the owner's request, names ranked 101-500 remain not yet screened by USPTO. The full final-top-100 flagged list is `autobeacon`, `autokernel`,
 `autonetwork`, `autosearch`, `autostream`, `autoswitch`, `bankinghub`,
 `carboncell`, `carbonhub`, `cashledger`, `cashops`, `cizo`, `cowhide`,
 `creditdesk`, `datafleet`, `datalearn`, `dataledger`, `datasolve`,
@@ -243,5 +247,4 @@ attempts were made. USPTO screening stopped after one HTTP 403 at
 2026-10-13T18:05:11Z (`REWORK1-USPTO-00259`, source-stop record
 `REWORK1-USPTO-SOURCE-STOP`). PKG-G and the T-18 rework made 123 USPTO POSTs
 across two controls and 121 candidate queries; all returned HTTP 200 JSON,
-with no new 403 or retry. Final USPTO coverage is 100/100 complete. No result
-is a trademark clearance.
+with no new 403 or retry. Final USPTO coverage is 100/100 complete. PKGH added one google control and exact/fuzzy-1 queries for profitdesk.si on 2026-10-14; all three returned HTTP 200 JSON at least five seconds apart, and both candidate queries returned zero matches. Profitdesk was screened at the owner's request and is the sole outside-top-100 USPTO screen; all other outside-top-100 names remain not yet screened by USPTO. No result is a trademark clearance.

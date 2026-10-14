@@ -1,0 +1,11 @@
+# domain,purchase_date
+datasolve.si,2026-10-14
+profitdesk.si,2026-10-14
+fuve.si,2026-10-14
+guza.si,2026-10-14
+datafleet.si,2026-10-14
+datalearn.si,2026-10-14
+autosearch.si,2026-10-14
+agentlearn.si,2026-10-14
+unfus.si,2026-10-14
+newsagen.si,2026-10-14

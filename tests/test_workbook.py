@@ -14,6 +14,7 @@ from si_domains.valuation import (
     write_valuations,
 )
 from si_domains.delivery import validate_delivery
+from si_domains.owned import OwnedDomain, load_owned_domains
 from si_domains.workbook import _validate_registry_rows, build_workbook_model, export_workbook
 
 
@@ -49,6 +50,37 @@ def _read_csv(path: Path):
         return list(csv.DictReader(handle))
 
 
+def test_owned_domain_input_parses_and_rejects_invalid_rows(tmp_path):
+    path = tmp_path / "owned_domains.txt"
+    path.write_text(
+        "# domain,purchase_date\nBright.SI,2026-10-14\n",
+        encoding="ascii",
+        newline="\n",
+    )
+    owners = load_owned_domains(
+        path,
+        candidate_domains={"bright.si"},
+        shortlist_domains={"bright.si"},
+    )
+    assert owners == (OwnedDomain("bright.si", "2026-10-14"),)
+    assert owners[0].availability_text == "owned by you (bought 2026-10-14)"
+
+    invalid_rows = (
+        ("bright.si,2026-10-14\nbright.si,2026-10-14\n", "duplicate owned domain"),
+        ("bright.si,14-10-2026\n", "invalid purchase date"),
+        ("unknown.si,2026-10-14\n", "not in data/candidates.csv"),
+        ("bright.si,2026-10-14\n", "not in the 500-row shortlist"),
+    )
+    for content, message in invalid_rows:
+        path.write_text(content, encoding="ascii", newline="\n")
+        with pytest.raises(ValueError, match=message):
+            load_owned_domains(
+                path,
+                candidate_domains={"bright.si"},
+                shortlist_domains=set() if "shortlist" in message else {"bright.si"},
+            )
+
+
 def make_fixture(tmp_path: Path, *, hostile_text=" \\t=1+1", second_eligible=False, resume_evidence=False):
     """Build a complete, tiny offline package from synthetic rows."""
     paths = {name: tmp_path / f"{name}.csv" for name in (
@@ -67,6 +99,8 @@ def make_fixture(tmp_path: Path, *, hostile_text=" \\t=1+1", second_eligible=Fal
         "trademark_evidence",
         "sample",
     )}
+    paths["owned_domains"] = tmp_path / "owned_domains.txt"
+    paths["owned_domains"].write_text("# domain,purchase_date\n", encoding="ascii", newline="\n")
     candidates = [
         {"domain_label": "bright", "category": "technology", "method": "concept", "seed": "bright", "tags": hostile_text, "quality_score": "80"},
         {"domain_label": "taken", "category": "technology", "method": "concept", "seed": "taken", "tags": "", "quality_score": "80"},
@@ -213,7 +247,7 @@ def test_workbook_exports_latest_joins_numeric_cells_and_header_only_unverified(
     read_only = load_workbook(output, read_only=True, data_only=False)
     data_only = load_workbook(output, data_only=True)
     required = {
-        "Shortlist", "All candidates", "Unverified", "Special classes", "Methodology",
+        "Shortlist", "Owned", "All candidates", "Unverified", "Special classes", "Methodology",
         "Scores", "RDAP evidence", "WHOIS evidence", "Valuation evidence", "Trademark evidence",
     }
     assert set(normal.sheetnames) == required
@@ -303,6 +337,76 @@ def test_workbook_exports_latest_joins_numeric_cells_and_header_only_unverified(
     normal.close()
     read_only.close()
     data_only.close()
+
+
+def test_workbook_relabels_owned_registry_status_and_adds_owned_sheet(tmp_path):
+    paths = make_fixture(tmp_path)
+    paths["owned_domains"].write_text(
+        "bright.si,2026-10-14\n", encoding="ascii", newline="\n"
+    )
+    output = tmp_path / "owned.xlsx"
+    export_workbook(paths, output)
+
+    workbook = load_workbook(output, data_only=True)
+    try:
+        shortlist = workbook["Shortlist"]
+        shortlist_headers = {cell.value: index for index, cell in enumerate(shortlist[1])}
+        row = next(row for row in shortlist.iter_rows(min_row=2, values_only=True) if row[shortlist_headers["domain"]] == "bright.si")
+        assert row[shortlist_headers["owned"]] == "yes"
+        assert row[shortlist_headers["rdap_classification"]] == "owned by you (bought 2026-10-14)"
+        assert row[shortlist_headers["whois_classification"]] == "owned by you (bought 2026-10-14)"
+
+        all_candidates = workbook["All candidates"]
+        all_headers = {cell.value: index for index, cell in enumerate(all_candidates[1])}
+        row = next(row for row in all_candidates.iter_rows(min_row=2, values_only=True) if row[all_headers["domain"]] == "bright.si")
+        assert row[all_headers["owned"]] == "yes"
+        assert row[all_headers["registry_status"]] == "owned by you (bought 2026-10-14)"
+        assert row[all_headers["latest_rdap_classification"]] == "owned by you (bought 2026-10-14)"
+        assert row[all_headers["latest_whois_classification"]] == "owned by you (bought 2026-10-14)"
+
+        for sheet_name in ("RDAP evidence", "WHOIS evidence"):
+            evidence_sheet = workbook[sheet_name]
+            evidence_headers = {cell.value: index for index, cell in enumerate(evidence_sheet[1])}
+            evidence_row = next(
+                row for row in evidence_sheet.iter_rows(min_row=2, values_only=True)
+                if row[evidence_headers["domain"]] == "bright.si"
+            )
+            assert evidence_row[evidence_headers["classification"]] == "owned by you (bought 2026-10-14)"
+
+        owned_sheet = workbook["Owned"]
+        assert owned_sheet.max_row == 2
+        owned_headers = {cell.value: index for index, cell in enumerate(owned_sheet[1])}
+        owned_row = next(owned_sheet.iter_rows(min_row=2, values_only=True))
+        assert owned_row[owned_headers["domain"]] == "bright.si"
+        assert owned_row[owned_headers["purchase_date"]] == "2026-10-14"
+        assert isinstance(owned_row[owned_headers["rank"]], int)
+        assert isinstance(owned_row[owned_headers["total"]], (int, float))
+    finally:
+        workbook.close()
+
+
+def test_production_owned_sheet_has_ten_shortlist_rows_and_matching_ranks(tmp_path):
+    output = tmp_path / "ranked.xlsx"
+    export_workbook(build_workbook_model(), output)
+    workbook = load_workbook(output, read_only=True, data_only=True)
+    try:
+        shortlist = list(workbook["Shortlist"].iter_rows(values_only=True))
+        shortlist_headers = {name: index for index, name in enumerate(shortlist[0])}
+        shortlist_by_domain = {
+            row[shortlist_headers["domain"]]: row for row in shortlist[1:]
+        }
+        owned = list(workbook["Owned"].iter_rows(values_only=True))
+        owned_headers = {name: index for index, name in enumerate(owned[0])}
+        assert len(owned) - 1 == 10
+        for row in owned[1:]:
+            domain = row[owned_headers["domain"]]
+            shortlist_row = shortlist_by_domain[domain]
+            assert row[owned_headers["rank"]] == shortlist_row[shortlist_headers["rank"]]
+            assert row[owned_headers["total"]] == shortlist_row[shortlist_headers["total"]]
+            assert row[owned_headers["category"]] == shortlist_row[shortlist_headers["category"]]
+            assert shortlist_row[shortlist_headers["owned"]] == "yes"
+    finally:
+        workbook.close()
 
 
 @pytest.mark.parametrize(
