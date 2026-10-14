@@ -18,11 +18,13 @@ python -m si_domains validate-delivery --workbook output/si_domains_ranked.xlsx
 `validate-delivery` compares every workbook row and cell to the current sources.
 It can report structural delivery PASS while saying research screening BLOCKED;
 `python -m si_domains validate-research --candidates data/candidates.csv`
-remains separate and exits 2 while the required top-100 trademark query sets
-are unresolved: TMview 0 complete / 100 unverified, UKIPO 0 complete / 100
-query-blocked, and USPTO 56 complete / 44 query-blocked (stopped after one HTTP
-403 on a near-match query). Neither command certifies project completion or
-owner acceptance.
+remains separate and exits 2 while required top-100 screening is incomplete:
+TMview 0 complete / 100 unverified, UKIPO 0 complete / 100 query-blocked, and
+USPTO 100 complete / 0 query-blocked / 0 unverified. TMview is source-wide
+refused because the connection closed (`REWORK1-TMVIEW-PROBES`); its per-name
+results are unverified. UKIPO is source-wide refused because automated access
+was refused (`PKGD-0003`); its per-name results are blocked. Neither command
+certifies project completion or owner acceptance.
 
 Add `--completion-mode` to validate that every top-100 name/source pair has a
 dated, evidence-backed completed or refused outcome, the summary and scores
@@ -189,19 +191,40 @@ coverage. It cannot establish that a cited source page was read correctly,
 that a mark is legally relevant, or that a domain is legally clear; those need
 human evidence review.
 
-For the 2026-10-13 research snapshot, screening followed the ranking for three
-rounds: 100 labels, then 3 new entrants, then 9. TMview has 0/100 complete and
-100 unverified after its earlier POST and three API probes closed before an
-HTTP response. UKIPO has 0/100 complete and 100 query-blocked after its
-search-page GET returned HTTP 403 Service Captcha. USPTO used its public JSON
-endpoint (`https://tmsearch.uspto.gov/prod-stage-v1-0-0/tmsearch`) for two
-control queries and 134 candidate attempts: 133 returned HTTP 200 JSON, and
-one returned HTTP 403 on the `bankingdesk` near query, after which requests
-stopped. The final outcome is 56/100 complete and 44 query-blocked, with the
-remaining 66 query slots blocked without requests. Twenty-four final-top-100
-names were flagged for legal review. The validator passes structural checks,
-marks query coverage BLOCKED, and exits 2; blocked or unverified evidence never
-counts as a completed query.
+The 2026-10-13 T-17 screen stopped USPTO after HTTP 403 on `bankingdesk`.
+PKG-G resumed after the cooldown with 117 sequential POSTs (one `google`
+control and 116 candidate queries), all HTTP 200 JSON. The T-18 rework added
+six requests (one control and five candidate queries), also all HTTP 200 JSON,
+at least five seconds apart. Across both passes, 123 requests returned HTTP
+200 JSON; there was no new 403, CAPTCHA, login, non-JSON response, timeout,
+5xx, or retry. An earlier `powdery [fuzzy-1]` response had failed local ASCII
+evidence writing; the parser now sanitizes distilled text as ASCII and the
+query was re-run with its facts retained.
+
+Final USPTO top-100 coverage is 100 complete, 0 query-blocked, and 0
+unverified. The T-18 rework found possible conflicts for `powdery [fuzzy-1]`,
+`denimwear` exact and fuzzy queries, and `soillab [fuzzy-1]`; `soillab` was
+screened as the replacement entrant after `denimwear` left the top 100. The
+new top-100 entrant/exiter versus the prior PKG-G set are `soillab` and
+`denimwear`. Relative to T-17, entries are `examhub`, `bankingvault`,
+`roboticlink`, `roboticloop`, `biomasshub`, `roboticflow`, and `biomasslab`;
+exits are `robotsystem`, `gyration`, `crophub`, `croplab`, `agrihub`,
+`cryptoworks`, and `parcelshop`.
+
+The final top 100 flags 37 names for legal review, up from 24; the 13 newly
+flagged names are `autokernel`, `autonetwork`, `autostream`, `carboncell`,
+`cashops`, `jewelshop`, `keyscan`, `pharmascan`, `powdery`, `reveler`,
+`robotspark`, `soilhub`, and `soillab`. `denimwear` also has possible-conflict
+evidence but is outside the final top 100. The query records are limited
+screening evidence; no name is cleared. Names ranked 101-500 remain not yet
+screened. The full final-top-100 flagged list is `autobeacon`, `autokernel`,
+`autonetwork`, `autosearch`, `autostream`, `autoswitch`, `bankinghub`,
+`carboncell`, `carbonhub`, `cashledger`, `cashops`, `cizo`, `cowhide`,
+`creditdesk`, `datafleet`, `datalearn`, `dataledger`, `datasolve`,
+`dataswitch`, `jewelshop`, `keyscan`, `leaning`, `ledgerlink`, `loanledger`,
+`newsagen`, `paymentops`, `pharmascan`, `powdery`, `reveler`, `robotloop`,
+`robotspark`, `soilhub`, `soillab`, `stoical`, `tryto`, `unfus`, and
+`walletlink`.
 
 RDAP and WHOIS outcomes are timestamped observations from the registry's
 channels. They are not registrar checkout confirmation and do not guarantee
@@ -211,12 +234,14 @@ registration eligibility, registration success, or a non-premium price.
 
 The official search pages are [TMview](https://www.tmdn.org/tmview/),
 [UKIPO](https://trademarks.ipo.gov.uk/ipo-tmtext), and
-[USPTO](https://tmsearch.uspto.gov/). TMview automated access is documented as
-unavailable after the connection closed at 2026-10-13T18:02:42Z
-(`REWORK1-TMVIEW-PROBES`; earlier `PKGD-0002`, 2026-10-13T17:09:22Z); UKIPO
-returned HTTP 403 Service Captcha at 2026-10-13T17:09:52Z (`PKGD-0003`). No
-further TMview or UKIPO attempts were made. USPTO screening stopped after one
-HTTP 403 at 2026-10-13T18:05:11Z (`REWORK1-USPTO-00259`, source-stop record
-`REWORK1-USPTO-SOURCE-STOP`); no USPTO resume was attempted here, and a later
-cooled-down pass belongs to the separate PKG-G package. No result is a
-trademark clearance.
+[USPTO](https://tmsearch.uspto.gov/). TMview source-wide refused: connection closed (evidence
+`REWORK1-TMVIEW-PROBES`, 2026-10-13T18:02:42Z); per-name results are unverified
+because of that refusal. UKIPO source-wide refused: automated access refused
+(evidence `PKGD-0003`, 2026-10-13T17:09:52Z); per-name results are blocked
+because of that refusal. No further TMview or UKIPO
+attempts were made. USPTO screening stopped after one HTTP 403 at
+2026-10-13T18:05:11Z (`REWORK1-USPTO-00259`, source-stop record
+`REWORK1-USPTO-SOURCE-STOP`). PKG-G and the T-18 rework made 123 USPTO POSTs
+across two controls and 121 candidate queries; all returned HTTP 200 JSON,
+with no new 403 or retry. Final USPTO coverage is 100/100 complete. No result
+is a trademark clearance.

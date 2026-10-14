@@ -378,7 +378,7 @@ def aggregate_trademark_rows(
             global_rows = by_source_global.get(source, [])
             evidence_ids.extend(row["evidence_id"] for row in actual)
             evidence_ids.extend(row["evidence_id"] for row in global_rows)
-            conflict = conflict or any(row["result_status"] == "possible_conflict" for row in actual)
+            conflict = conflict or bool(source_coverage[source]["possible_conflict"])
             query_blocked = query_blocked or bool(source_coverage[source]["query_blocked"])
 
         if conflict:
@@ -408,13 +408,59 @@ def aggregate_trademark_rows(
         limitations = "Exact-word/public UI screen only; no comprehensive phonetic, class, or global coverage."
         if query_blocked_sources:
             limitations += " Required per-domain queries blocked: " + ", ".join(query_blocked_sources) + "."
+        sourcewide_refusals: set[str] = set()
+        for source in REQUIRED_SOURCES:
+            if source_coverage[source]["status"] not in {"blocked", "unverified"}:
+                continue
+            source_rows = [
+                row for row in by_source_global[source]
+                if row["result_status"] in {"blocked", "unverified"}
+            ]
+            if not source_rows:
+                continue
+            latest_source_row = max(
+                source_rows,
+                key=lambda row: (row["utc_timestamp"], row["evidence_id"]),
+            )
+            later_successful_controls = [
+                row for row in evidence_rows
+                if row["source"] == source
+                and _is_control_row(row)
+                and row["result_status"] in {"no_obvious_match", "possible_conflict"}
+                and (row["utc_timestamp"], row["evidence_id"])
+                > (latest_source_row["utc_timestamp"], latest_source_row["evidence_id"])
+            ]
+            if later_successful_controls:
+                continue
+            notes = latest_source_row.get("notes", "").casefold()
+            if "captcha" in notes or "http 403" in notes or "http 403" in latest_source_row.get("evidence_id", "").casefold():
+                refusal_kind = "automated access refused"
+            elif "connection closed" in notes or "closed before an http response" in notes:
+                refusal_kind = "connection closed"
+            else:
+                continue
+            per_name_state = source_coverage[source]["status"]
+            limitations += (
+                f" {source} source-wide refused: {refusal_kind} "
+                f"(evidence {latest_source_row['evidence_id']}, {latest_source_row['utc_timestamp']}); "
+                f"per-name results are {per_name_state} because of that refusal."
+            )
+            sourcewide_refusals.add(source)
         if sourcewide_only_sources:
-            limitations += " Blocked sources: " + ", ".join(sourcewide_only_sources) + "; no per-domain query ran there."
+            unclassified = [source for source in sourcewide_only_sources if source not in sourcewide_refusals]
+            if unclassified:
+                limitations += " Blocked sources: " + ", ".join(unclassified) + "; no per-domain query ran there."
         if sourcewide_mixed_sources:
-            limitations += " Source-wide refusal also prevented missing required queries for: " + ", ".join(sourcewide_mixed_sources) + "."
+            unclassified = [source for source in sourcewide_mixed_sources if source not in sourcewide_refusals]
+            if unclassified:
+                limitations += " Source-wide refusal also prevented missing required queries for: " + ", ".join(unclassified) + "."
         if "unverified" in source_states.values():
-            unknown_sources = [source for source in REQUIRED_SOURCES if source_states[source] == "unverified"]
-            limitations += " Unverified sources: " + ", ".join(unknown_sources) + "; no no-match conclusion."
+            unknown_sources = [
+                source for source in REQUIRED_SOURCES
+                if source_states[source] == "unverified" and source not in sourcewide_refusals
+            ]
+            if unknown_sources:
+                limitations += " Unverified sources: " + ", ".join(unknown_sources) + "; no no-match conclusion."
         coverage = ";".join(
             f"{source}:{source_states[source]}[{source_coverage[source]['completed']}/{source_coverage[source]['required']}]"
             for source in REQUIRED_SOURCES
@@ -465,6 +511,7 @@ def query_coverage_by_source(
         query_states: dict[str, str] = {}
         sourcewide_blocked = False
         query_blocked = False
+        possible_conflict = False
         for query in required:
             matches = [row for row in domain_rows[source] if normalize_query(row["query"]) == query]
             if matches:
@@ -477,6 +524,7 @@ def query_coverage_by_source(
                 state = global_status if global_status in {"blocked", "unverified"} else "unverified"
                 sourcewide_blocked = sourcewide_blocked or state == "blocked"
             query_states[query] = state
+            possible_conflict = possible_conflict or state == "possible_conflict"
 
         completed = sum(
             state in {"no_obvious_match", "possible_conflict"}
@@ -503,6 +551,7 @@ def query_coverage_by_source(
             "missing_queries": missing_queries,
             "sourcewide_blocked": sourcewide_blocked,
             "query_blocked": query_blocked,
+            "possible_conflict": possible_conflict,
             "domain_query_attempted": bool(domain_rows[source]),
         }
     return coverage

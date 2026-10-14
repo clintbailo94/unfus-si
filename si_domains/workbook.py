@@ -719,6 +719,80 @@ def _methodology_rows(
         f"unverified/missing {screening_counts[source]['unverified']}"
         for source in REQUIRED_SOURCES
     )
+    resume_requests: dict[tuple[str, str, str], list[dict[str, str]]] = {}
+    for evidence_row in tables["trademark_evidence"].rows:
+        evidence_id = evidence_row.get("evidence_id", "")
+        if not evidence_id.startswith("RESUME-USPTO-"):
+            continue
+        note = evidence_row.get("notes", "")
+        is_control = (
+            evidence_row.get("domain") == "*"
+            and evidence_row.get("query", "").casefold() == "google"
+            and "control query" in note.casefold()
+        )
+        if evidence_row.get("domain") == "*" and not is_control:
+            continue
+        if not is_control and any(
+            marker in note.casefold()
+            for marker in ("no per-name query was sent", "query not sent", "no request made")
+        ):
+            continue
+        if not is_control and not (
+            evidence_row.get("proof_kind") == "api_query_summary"
+            or "http 200 json response was received" in note.casefold()
+            or "stopped on this request" in note.casefold()
+            or "transient failure after one allowed retry" in note.casefold()
+        ):
+            continue
+        key = (
+            evidence_row.get("domain", ""),
+            evidence_row.get("query", ""),
+            evidence_row.get("utc_timestamp", ""),
+        )
+        resume_requests.setdefault(key, []).append(evidence_row)
+
+    def _request_attempts(rows: list[dict[str, str]]) -> int:
+        attempts = [1]
+        for evidence_row in rows:
+            for token in evidence_row.get("notes", "").replace(";", " ").split():
+                if token.startswith("attempts="):
+                    try:
+                        attempts.append(int(token.partition("=")[2]))
+                    except ValueError:
+                        pass
+        return max(attempts)
+
+    resume_posts = sum(_request_attempts(rows) for rows in resume_requests.values())
+    resume_controls = sum(domain == "*" for domain, _query, _timestamp in resume_requests)
+    resume_candidate_requests = len(resume_requests) - resume_controls
+    resume_http_200 = sum(
+        any("http 200 json" in row.get("notes", "").casefold() for row in rows)
+        for rows in resume_requests.values()
+    )
+    resume_http_403 = sum(
+        sum(row.get("notes", "").casefold().count("http 403") for row in rows)
+        for rows in resume_requests.values()
+    )
+    resume_retries = sum(max(0, _request_attempts(rows) - 1) for rows in resume_requests.values())
+    resume_unverified_captures = sum(
+        any("local evidence write failed" in row.get("notes", "").casefold() for row in rows)
+        for rows in resume_requests.values()
+    )
+    control_label = "google control" if resume_controls == 1 else "google controls"
+    resume_outcomes = (
+        f"PKG-G and T-18 rework recorded {resume_posts} USPTO POST attempts: {resume_controls} {control_label} and "
+        f"{resume_candidate_requests} candidate queries; {resume_http_200} returned HTTP 200 JSON, "
+        f"{resume_http_403} returned HTTP 403, and {resume_retries} retries were used. "
+        f"{resume_unverified_captures} historical response row records a local evidence-write failure; latest query evidence wins."
+    )
+    final_top_domains = {
+        row["domain"].casefold() for row in tables["shortlist"].rows[:100]
+    }
+    final_flags = sorted(
+        row["domain"].removesuffix(".si")
+        for row in tables["trademark_summary"].rows
+        if row["domain"].casefold() in final_top_domains and row["status"] == "needs legal review"
+    )
     sales = metrics["valuation_evidence_types"]
     val_summary = ", ".join(
         f"{sales.get(kind, 0)} {kind.replace('_', ' ')}"
@@ -879,12 +953,12 @@ def _methodology_rows(
         )
     add("Exclusions", f"{metrics['excluded']} ineligible rows are in the exclusion artifact; {metrics['outside_shortlist_cap']} eligible rows fall outside the final ranked selection.")
     add("Trademark query coverage", coverage)
-    add("Trademark status", "The final top 100 have per-source query outcome records. Round 1 screened 100; Round 2 added 3 entrants; Round 3 added 9. The loop stopped after three rounds. Names leaving the top 100 keep their evidence. USPTO conflicts take precedence over incomplete other sources and score 25; otherwise missing or blocked source coverage scores 40.")
-    add("Manual trademark checks the owner can do", "Official pages: TMview https://www.tmdn.org/tmview/; UKIPO https://trademarks.ipo.gov.uk/ipo-tmtext; USPTO https://tmsearch.uspto.gov/. TMview automated probes closed at 2026-10-13T18:02:42Z (REWORK1-TMVIEW-PROBES; earlier PKGD-0002 at 17:09:22Z); UKIPO returned HTTP 403 Service Captcha at 17:09:52Z (PKGD-0003). No further TMview or UKIPO attempts were made. USPTO stopped after one HTTP 403 at 18:05:11Z (REWORK1-USPTO-00259; REWORK1-USPTO-SOURCE-STOP). No USPTO resume was attempted here; a later cooled-down pass belongs to separate PKG-G. No result is a clearance.")
-    add("Completion-mode research validation", "Use python -m si_domains validate-research --candidates data/candidates.csv --completion-mode for an offline record check. Each top-100 name/source pair needs completed exact and near queries, or a dated blocked/unverified record with an official URL and refusal note (HTTP status, CAPTCHA, connection closed, or source-stop evidence ID). Missing pairs fail; incomplete sources score 40, conflicts score 25, and 85 requires all three sources complete with no match. Every top-100 opportunity must have a trademark status other than not yet screened. Strict mode without the flag still exits 2 until required queries complete.")
+    add("Trademark status", "PKG-G screened the 44 previously USPTO-blocked names and completed three entrant rounds. The T-18 rework fixed ASCII evidence sanitization, recovered powdery's fuzzy query, queried denimwear exact and near, and screened soillab as the replacement entrant while USPTO remained live. Relative to the pre-rework PKG-G top 100, soillab entered and denimwear exited; denimwear's conflict evidence remains recorded. Final top-100 USPTO coverage: " + coverage + ". Relative to T-17, seven names entered (examhub, bankingvault, roboticlink, roboticloop, biomasshub, roboticflow, biomasslab) and seven exited (robotsystem, gyration, crophub, croplab, agrihub, cryptoworks, parcelshop). Names leaving retain their evidence. USPTO conflicts take precedence over incomplete other sources and score 25; otherwise incomplete coverage scores 40.")
+    add("Manual trademark checks the owner can do", "Official pages: TMview https://www.tmdn.org/tmview/; UKIPO https://trademarks.ipo.gov.uk/ipo-tmtext; USPTO https://tmsearch.uspto.gov/. TMview source-wide refused: connection closed (evidence REWORK1-TMVIEW-PROBES, 2026-10-13T18:02:42Z); per-name results are unverified because of that refusal. UKIPO source-wide refused: automated access refused (evidence PKGD-0003, 2026-10-13T17:09:52Z); per-name results are blocked because of that refusal. No further TMview or UKIPO attempts were made. USPTO's prior HTTP 403 at 2026-10-13T18:05:11Z is retained (REWORK1-USPTO-00259; REWORK1-USPTO-SOURCE-STOP). PKG-G originally made 117 USPTO POSTs (one control and 116 candidates); T-18 added six (one control and five candidates). The combined total is " + str(resume_posts) + " sequential requests, at least five seconds apart; all " + str(resume_http_200) + " returned HTTP 200 JSON, with no new 403, CAPTCHA, login, non-JSON response, timeout, 5xx, or retry. No result is a clearance.")
+    add("Completion-mode research validation", "Use python -m si_domains validate-research --candidates data/candidates.csv --completion-mode for an offline record check. Each top-100 name/source pair needs completed exact and near queries, or dated blocked/unverified rows with an official URL and an evidence-backed reason (HTTP status, CAPTCHA, connection closed, source-stop ID, local evidence-write failure, or the documented three-round limit). Missing pairs fail; incomplete sources score 40, conflicts score 25, and 85 requires all three sources complete with no match. Every top-100 opportunity must have a trademark status other than not yet screened. Strict mode without the flag still exits 2 until required queries complete.")
     add("Trademark mapping rationale", f"One source of truth: limited_screen_no_obvious_match={TRADEMARK_CLEAR_SCORE}; needs legal review={TRADEMARK_CONFLICT_SCORE}; blocked/unverified/not yet screened={TRADEMARK_UNVERIFIED_SCORE}. The documented {TRADEMARK_UNVERIFIED_SCORE} is below clear and above conflict; no renormalization is used. Unknown risk loses up to 4.5 weighted points versus a clear result; a finding loses more.")
     add("Trademark similarity rule", "Flag legal review for identical word marks, whole-word containment, edit distance <=1 for labels of 5+ characters, or identical stem, in any class. Classes 9, 35, 36, 38, 41, and 42 are higher relevance. Uncertain is never clear.")
-    add("Trademark probe outcome", "TMview had one earlier POST plus three new probes (two POST shapes and one GET) to /tmview/api/search/results; all four API connections closed before an HTTP response. UKIPO: one GET returned HTTP 403 Service Captcha; stopped. USPTO had an earlier UI-shell GET (HTTP 200 JavaScript HTML, no parseable search data) plus 139 JSON POSTs; controls were google (194 hits) and qzxwvk (0). POSTs comprised three initial API/field probes, two controls, and 134 candidate attempts (133 HTTP 200 JSON, one HTTP 403 at bankingdesk). The remaining 66 query slots were blocked without requests. Pace was <=1 per second. Final top-100 source coverage is stated above; 24 domains have a possible conflict and score 25.")
+    add("Trademark probe outcome", "Before PKG-G, USPTO history recorded one HTTP 403 on bankingdesk; it remains in the evidence log. " + resume_outcomes + " The T-18 requests were: one google control; powdery [fuzzy-1] (2097 total, 10 returned, 10 similar); denimwear exact and fuzzy-1 (2 returned and similar per query); and soillab exact (0 hits) and fuzzy-1 (12 total, 10 returned, 10 similar). All five candidate queries and the control returned HTTP 200 JSON. Final top-100 source coverage: " + coverage + ". Current names needing legal review: " + (", ".join(final_flags) if final_flags else "none") + ". Thirteen newly flagged names are autokernel, autonetwork, autostream, carboncell, cashops, jewelshop, keyscan, pharmascan, powdery, reveler, robotspark, soilhub, and soillab.")
     add("Trademark limitations", "Exact public-query coverage is not comprehensive phonetic, class, national-office, or worldwide clearance. Possible conflicts need professional legal review; unknown risk scores 40, below a complete no-obvious-match screen at 85 and above a conflict at 25.")
     add("Valuation evidence", f"Evidence records: {val_summary}. No current evidence meets the direct-comparable rule for any shortlist row; unsupported valuations have blank currency and low/high cells.")
     add("Availability limits", "RDAP and WHOIS are timestamped registry-channel observations, not registrar checkout confirmation, eligibility confirmation, or a guarantee of successful registration.")
@@ -1388,7 +1462,7 @@ def _estimated_wrapped_lines(value: object, width: float) -> int:
             replace_whitespace=False,
             drop_whitespace=False,
             max_lines=_MAX_ESTIMATED_WRAP_LINES,
-            placeholder="…",
+            placeholder="...",
         )
         count += max(1, len(wrapped))
         if count >= _MAX_ESTIMATED_WRAP_LINES:

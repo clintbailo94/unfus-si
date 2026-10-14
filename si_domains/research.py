@@ -210,6 +210,10 @@ def _refusal_reason_category(
     lowered = notes.casefold()
     if "captcha" in lowered:
         return "captcha"
+    if "local evidence write failed" in lowered:
+        return "local evidence write failure"
+    if "maximum three rerank rounds" in lowered:
+        return "screening round limit"
     for http_status in _HTTP_STATUS.finditer(notes):
         if int(http_status.group(1)) >= 400:
             return f"HTTP {http_status.group(1)}"
@@ -422,8 +426,16 @@ def _valid_record_time_and_url(row: dict[str, str]) -> bool:
 
 
 def _print_completion_counts(
-    counts: dict[str, dict[str, object]], needs_legal_review: int | str
+    counts: dict[str, dict[str, object]],
+    needs_legal_review: int | str,
+    evidence_rows: list[dict[str, str]] | None = None,
 ) -> None:
+    evidence_rows = evidence_rows or []
+    evidence_index = {
+        row.get("evidence_id", ""): row
+        for row in evidence_rows
+        if row.get("evidence_id")
+    }
     for source in REQUIRED_SOURCES:
         source_counts = counts[source]
         reasons = source_counts["refusal_reasons"]
@@ -437,6 +449,33 @@ def _print_completion_counts(
         print(
             f"{source}: completed={source_counts['completed']}, {refused_text}, "
             f"missing={source_counts['missing']}"
+        )
+        if int(source_counts["completed"]) != 0 or int(source_counts["refused"]) == 0:
+            continue
+        sourcewide_rows = [
+            row for row in evidence_rows
+            if row.get("source") == source
+            and row.get("domain") == "*"
+            and "control query" not in row.get("notes", "").casefold()
+            and row.get("result_status") in {"blocked", "unverified"}
+        ]
+        if not sourcewide_rows:
+            continue
+        sourcewide = max(
+            sourcewide_rows,
+            key=lambda row: (row.get("utc_timestamp", ""), row.get("evidence_id", "")),
+        )
+        reason = _refusal_reason_category(sourcewide, evidence_index)
+        if reason == "connection closed":
+            refusal_kind = "connection closed"
+        elif reason == "captcha" or (reason and reason.startswith("HTTP ")):
+            refusal_kind = "automated access refused"
+        else:
+            continue
+        print(
+            f"{source} source-wide refused: {refusal_kind} "
+            f"(evidence {sourcewide['evidence_id']}, {sourcewide['utc_timestamp']}); "
+            f"per-name results are {sourcewide['result_status']} because of that refusal."
         )
     print(f"Needs legal review names: {needs_legal_review}")
 
@@ -812,7 +851,7 @@ def validate_research(
                 == "needs legal review"
                 for row in top_rows
             )
-            _print_completion_counts(completion_counts, needs_legal_review)
+            _print_completion_counts(completion_counts, needs_legal_review, trademark_evidence_rows)
             if issues:
                 print(f"COMPLETION-MODE FAIL: {'; '.join(issues)}")
                 return 2

@@ -11,6 +11,7 @@ from si_domains.trademarks import (
 )
 from si_domains.uspto import (
     is_similar_wordmark,
+    parse_search_response,
     probe_uspto_controls,
     search_uspto_label,
 )
@@ -120,6 +121,46 @@ def test_uspto_json_controls_and_fuzzy_screen_use_distilled_fields():
     assert is_similar_wordmark("ai", whole_word.hits[0].wordmark)
 
 
+def test_non_ascii_uspto_facts_can_be_written_as_ascii_and_still_match(tmp_path):
+    result = parse_search_response(
+        {
+            "hits": {
+                "totalValue": 1,
+                "hits": [{
+                    "source": {
+                        "id": "12345678",
+                        "wordmark": "POWD\u00c9RY",
+                        "alive": True,
+                        "statusDescription": "ENREGISTR\u00c9 \u2014 LIVE",
+                        "internationalClass": ["IC 035"],
+                    }
+                }],
+            }
+        },
+        query="powdery",
+        mode="near-fuzzy-1",
+    )
+    hit = result.hits[0]
+    row = {
+        "mark_number": hit.serial_number,
+        "mark_name": hit.wordmark,
+        "mark_status": hit.status,
+        "classes": ",".join(hit.classes),
+        "result_status": "possible_conflict" if is_similar_wordmark("powdery", hit.wordmark) else "no_obvious_match",
+    }
+    path = tmp_path / "ascii-evidence.csv"
+    with path.open("w", encoding="ascii", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(row), lineterminator="\n")
+        writer.writeheader()
+        writer.writerow(row)
+
+    saved = path.read_bytes().decode("ascii")
+    assert "POWDERY" in saved
+    assert "ENREGISTRE" in saved
+    assert "possible_conflict" in saved
+    assert is_similar_wordmark("powdery", hit.wordmark)
+
+
 def _write_csv(path: Path, fields: list[str], rows: list[dict[str, str]]) -> None:
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
@@ -194,6 +235,43 @@ def _candidate(path: Path, label: str, category: str, seed: str) -> None:
         ["domain_label", "category", "method", "seed", "tags", "quality_score"],
         [{"domain_label": label, "category": category, "method": "hack-suffix", "seed": seed, "tags": "", "quality_score": "80"}],
     )
+
+
+def test_latest_query_result_supersedes_older_conflict(tmp_path):
+    domains = tmp_path / "domains.csv"
+    evidence_path = tmp_path / "trademark_evidence.csv"
+    summary_path = tmp_path / "trademark_summary.csv"
+    candidates_path = tmp_path / "candidates.csv"
+    evidence = _complete_rows("unfus", conflict_source="USPTO")
+    for index, query in enumerate(("unfus", "unfus [fuzzy-1]")):
+        evidence.append(
+            _evidence(
+                f"USPTO-RESUME-{index}",
+                "USPTO",
+                "no_obvious_match",
+                domain="unfus.si",
+                query=query,
+                utc_timestamp=f"2026-10-14T09:00:0{index}Z",
+                mark_number="",
+                mark_name="",
+                mark_status="",
+                classes="",
+                result_url="https://tmsearch.uspto.gov/search/search-results?query=unfus",
+                notes="HTTP 200 JSON; newer result supersedes older query evidence.",
+            )
+        )
+    _write_csv(domains, ["rank", "domain"], [{"rank": "1", "domain": "unfus.si"}])
+    _candidate(candidates_path, "unfus", "technology", "unfus")
+    _write_csv(evidence_path, EVIDENCE_FIELDS, evidence)
+
+    assert write_trademark_summary(
+        evidence_path, domains, summary_path, candidates_path=candidates_path
+    ) == 1
+
+    with summary_path.open("r", encoding="utf-8", newline="") as handle:
+        row = next(csv.DictReader(handle))
+    assert row["status"] == "limited_screen_no_obvious_match"
+    assert row["trademark_score"] == "85"
 
 
 @pytest.mark.parametrize(

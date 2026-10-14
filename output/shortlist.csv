@@ -2,7 +2,7 @@ rank,domain,category,total,brandability,commercial,shortness,hack,resale,tradema
 1,newsagen.si,domain_hacks,81.0,85,85,82,93,93,25,2026-10-13T03:30:01Z,2026-10-13T08:27:10Z,Hack 'newsagen.si' completes seed 'newsagency'; root 'news'; 8 letters; CVCCVCVC.
 2,unfus.si,domain_hacks,77.0,90,46,98,92,95,25,2026-10-13T04:44:30Z,2026-10-13T09:46:53Z,Hack 'unfus.si' completes seed 'unfussy'; 5 letters; VCCVC.
 3,tryto.si,domain_hacks,76.8,90,46,100,89,95,25,2026-10-13T04:43:36Z,2026-10-13T09:46:21Z,Hack 'tryto.si' completes seed 'tryto see'; 5 letters; CCVCV.
-4,cashops.si,business_finance,70.4,88,79,90,12,89,40,2026-10-13T01:28:26Z,2026-10-13T07:04:05Z,Compound 'cashops' head 'cash' + tail 'ops'; root 'cash'; payments and finance; 7 letters.
+4,cashops.si,business_finance,69.0,88,79,90,12,89,25,2026-10-13T01:28:26Z,2026-10-13T07:04:05Z,Compound 'cashops' head 'cash' + tail 'ops'; root 'cash'; payments and finance; 7 letters.
 5,paymentops.si,technology,68.4,87,97,74,12,79,25,2026-10-13T03:41:29Z,2026-10-13T08:55:40Z,Compound 'paymentops' head 'payment' + tail 'ops'; root 'pay'; fintech and payments; 10 letters.
 6,datafleet.si,ai,67.9,87,90,77,12,82,25,2026-10-13T01:37:17Z,2026-10-13T07:05:21Z,Compound 'datafleet' head 'data' + tail 'fleet'; root 'data'; cross-industry analytics; 9 letters.
 7,ledgerhub.si,technology,67.9,88,85,77,12,77,40,2026-10-13T02:43:34Z,2026-10-13T07:31:45Z,Compound 'ledgerhub' head 'ledger' + tail 'hub'; root 'ledger'; accounting and financial technology; 9 letters.
@@ -52,450 +52,450 @@ rank,domain,category,total,brandability,commercial,shortness,hack,resale,tradema
 51,bankingdesk.si,business_finance,61.8,73,90,65,12,67,40,2026-10-13T01:23:08Z,2026-10-13T05:30:21Z,Compound 'bankingdesk' head 'banking' + tail 'desk'; root 'bank'; finance; 11 letters.
 52,roboticmesh.si,ai,61.8,81,79,69,12,64,40,2026-10-13T04:06:09Z,2026-10-13T09:10:17Z,Compound 'roboticmesh' head 'robotic' + tail 'mesh'; root 'robot'; robotics; 11 letters.
 53,agenticport.si,ai,61.7,81,80,68,12,63,40,2026-10-13T01:17:59Z,2026-10-13T05:18:56Z,Compound 'agenticport' head 'agentic' + tail 'port'; root 'agent'; automation and services; 11 letters.
-54,powdery.si,dictionary,61.6,93,39,88,12,77,40,2026-10-13T03:46:43Z,2026-10-13T08:58:25Z,Common word 'powdery' means fine and dry like powder; 7 letters; CVCCVCV.
-55,robotsignal.si,ai,61.6,82,75,69,12,66,40,2026-10-13T04:07:01Z,2026-10-13T09:10:47Z,Compound 'robotsignal' head 'robot' + tail 'signal'; root 'robot'; robotics; 11 letters.
-56,decorshop.si,consumer_brands,61.4,82,65,77,12,70,40,2026-10-13T01:38:31Z,2026-10-13T07:06:24Z,Compound 'decorshop' head 'decor' + tail 'shop'; root 'shop'; retail; 9 letters.
-57,linenshop.si,consumer_brands,61.4,82,65,77,12,70,40,2026-10-13T02:47:47Z,2026-10-13T07:33:17Z,Compound 'linenshop' head 'linen' + tail 'shop'; root 'shop'; retail; 9 letters.
-58,autostream.si,ai,61.4,77,80,71,12,65,40,2026-10-13T01:22:40Z,2026-10-13T05:29:57Z,Root 'auto' in 'autostream' signals automotive; 10 letters; VVCVCCCVVC.
-59,ledgerstack.si,technology,61.4,74,85,67,12,67,40,2026-10-13T02:43:37Z,2026-10-13T07:31:49Z,Compound 'ledgerstack' head 'ledger' + tail 'stack'; root 'ledger'; accounting and financial technology; 11 letters.
-60,autokernel.si,ai,61.3,83,80,72,12,53,40,2026-10-13T01:22:02Z,2026-10-13T05:29:06Z,Root 'auto' in 'autokernel' signals automotive; 10 letters; VVCVCVCCVC.
-61,biocharlab.si,emerging_industries,61.2,85,65,72,12,69,40,2026-10-13T01:24:26Z,2026-10-13T05:37:48Z,Compound 'biocharlab' head 'biochar' + tail 'lab'; root 'bio'; biotechnology; 10 letters.
-62,leaning.si,dictionary,61.0,93,39,90,12,81,25,2026-10-13T02:42:51Z,2026-10-13T07:31:25Z,Common word 'leaning' means inclination or preference; 7 letters; CVVCVCC.
-63,carbonhub.si,emerging_industries,61.0,87,64,77,12,71,25,2026-10-13T01:28:05Z,2026-10-13T05:54:16Z,Compound 'carbonhub' head 'carbon' + tail 'hub'; root 'carbon'; climate technology; 9 letters.
-64,robotspark.si,ai,61.0,78,75,72,12,66,40,2026-10-13T04:07:05Z,2026-10-13T09:10:51Z,Compound 'robotspark' head 'robot' + tail 'spark'; root 'robot'; robotics; 10 letters.
-65,robotbeacon.si,ai,61.0,80,75,69,12,66,40,2026-10-13T04:05:23Z,2026-10-13T09:09:53Z,Compound 'robotbeacon' head 'robot' + tail 'beacon'; root 'robot'; robotics; 11 letters.
-66,autoswitch.si,ai,60.9,79,80,72,12,67,25,2026-10-13T01:22:42Z,2026-10-13T05:30:00Z,Root 'auto' in 'autoswitch' signals automotive; 10 letters; VVCVCCVCCC.
-67,biocharhub.si,emerging_industries,60.9,85,65,71,12,68,40,2026-10-13T01:24:25Z,2026-10-13T05:37:44Z,Compound 'biocharhub' head 'biochar' + tail 'hub'; root 'bio'; biotechnology; 10 letters.
-68,pharmascan.si,health_science,60.9,85,65,72,12,67,40,2026-10-13T03:44:00Z,2026-10-13T08:57:20Z,Compound 'pharmascan' head 'pharma' + tail 'scan'; root 'pharma'; pharmaceuticals; 10 letters.
-69,roboticsops.si,emerging_industries,60.9,80,78,67,12,63,40,2026-10-13T04:06:25Z,2026-10-13T09:10:31Z,Compound 'roboticsops' head 'robotics' + tail 'ops'; root 'robot'; robotics; 11 letters.
-70,autobeacon.si,ai,60.8,83,80,72,12,60,25,2026-10-13T01:21:53Z,2026-10-13T05:29:00Z,Root 'auto' in 'autobeacon' signals automotive; 10 letters; VVCVCVVCVC.
-71,autosearch.si,ai,60.8,79,80,72,12,66,25,2026-10-13T01:22:34Z,2026-10-13T05:29:54Z,Root 'auto' in 'autosearch' signals automotive; 10 letters; VVCVCVVCCC.
-72,keyscan.si,technology,60.6,92,42,91,12,65,40,2026-10-13T02:35:55Z,2026-10-13T07:28:35Z,Compound 'keyscan' head 'key' + tail 'scan'; no listed demand root; general service; 7 letters.
-73,jewelshop.si,consumer_brands,60.5,81,65,76,12,67,40,2026-10-13T02:32:07Z,2026-10-13T07:26:45Z,Compound 'jewelshop' head 'jewel' + tail 'shop'; root 'shop'; retail; 9 letters.
-74,autonetwork.si,ai,60.5,80,76,67,12,63,40,2026-10-13T01:22:12Z,2026-10-13T05:29:15Z,Compound 'autonetwork' head 'auto' + tail 'network'; root 'auto'; automotive; 11 letters.
-75,databaseflow.si,technology,60.4,75,93,52,12,63,40,2026-10-13T01:37:07Z,2026-10-13T07:05:09Z,Compound 'databaseflow' head 'database' + tail 'flow'; root 'data'; cross-industry analytics; 12 letters.
-76,cowhide.si,dictionary,60.2,93,39,88,12,78,25,2026-10-13T01:35:04Z,2026-10-13T06:40:20Z,Common word 'cowhide' means animal hide used as leather; 7 letters; CVCCVCV.
-77,reveler.si,dictionary,60.2,87,38,87,12,80,40,2026-10-13T04:01:06Z,2026-10-13T09:07:03Z,Common word 'reveler' means person enjoying a lively event; 7 letters; CVCVCVC.
-78,carboncell.si,emerging_industries,60.2,84,63,72,12,67,40,2026-10-13T01:28:01Z,2026-10-13T05:53:52Z,Compound 'carboncell' head 'carbon' + tail 'cell'; root 'carbon'; climate technology; 10 letters.
-79,walletstack.si,technology,60.2,72,85,65,12,64,40,2026-10-13T04:56:03Z,2026-10-13T10:02:39Z,Compound 'walletstack' head 'wallet' + tail 'stack'; root 'wallet'; payments; 11 letters.
-80,genomelab.si,health_science,60.1,85,64,76,12,59,40,2026-10-13T03:02:03Z,2026-10-13T07:19:12Z,Compound 'genomelab' head 'genome' + tail 'lab'; root 'genome'; genomics; 9 letters.
-81,roboticport.si,ai,60.1,78,78,67,12,61,40,2026-10-13T04:06:15Z,2026-10-13T09:10:23Z,Compound 'roboticport' head 'robotic' + tail 'port'; root 'robot'; robotics; 11 letters.
-82,soilhub.si,emerging_industries,60.0,91,41,90,12,65,40,2026-10-13T04:19:39Z,2026-10-13T09:20:19Z,Compound 'soilhub' head 'soil' + tail 'hub'; no listed demand root; general service; 7 letters.
-83,bakeryshop.si,consumer_brands,60.0,84,65,72,12,63,40,2026-10-13T01:23:00Z,2026-10-13T05:30:18Z,Compound 'bakeryshop' head 'bakery' + tail 'shop'; root 'shop'; retail; 10 letters.
-84,tailorshop.si,consumer_brands,59.9,81,65,72,12,67,40,2026-10-13T04:27:33Z,2026-10-13T09:31:07Z,Compound 'tailorshop' head 'tailor' + tail 'shop'; root 'shop'; retail; 10 letters.
-85,robotsystem.si,ai,59.9,79,75,67,12,62,40,2026-10-13T04:07:13Z,2026-10-13T09:10:55Z,Compound 'robotsystem' head 'robot' + tail 'system'; root 'robot'; robotics; 11 letters.
-86,soillab.si,emerging_industries,59.8,90,41,90,12,65,40,2026-10-13T04:19:41Z,2026-10-13T09:20:31Z,Compound 'soillab' head 'soil' + tail 'lab'; no listed demand root; general service; 7 letters.
-87,gyration.si,dictionary,59.6,87,37,83,12,81,40,2026-10-13T02:19:17Z,2026-10-13T07:21:06Z,Common word 'gyration' means circular movement; 8 letters; CVCVCVVC.
-88,payloadgrid.si,emerging_industries,59.6,75,75,66,12,68,40,2026-10-13T03:41:14Z,2026-10-13T08:55:32Z,Compound 'payloadgrid' head 'payload' + tail 'grid'; root 'payload'; software data transfer; 11 letters.
-89,crophub.si,emerging_industries,59.5,89,41,90,12,65,40,2026-10-13T01:35:39Z,2026-10-13T06:47:25Z,Compound 'crophub' head 'crop' + tail 'hub'; no listed demand root; general service; 7 letters.
-90,croplab.si,emerging_industries,59.5,89,41,90,12,65,40,2026-10-13T01:35:40Z,2026-10-13T06:47:31Z,Compound 'croplab' head 'crop' + tail 'lab'; no listed demand root; general service; 7 letters.
-91,robotorbit.si,ai,59.5,78,75,71,12,57,40,2026-10-13T04:06:51Z,2026-10-13T09:10:43Z,Compound 'robotorbit' head 'robot' + tail 'orbit'; root 'robot'; robotics; 10 letters.
-92,databasegrid.si,technology,59.5,74,92,51,12,61,40,2026-10-13T01:37:08Z,2026-10-13T07:05:11Z,Compound 'databasegrid' head 'database' + tail 'grid'; root 'data'; cross-industry analytics; 12 letters.
-93,agrihub.si,emerging_industries,59.3,90,41,87,12,65,40,2026-10-13T01:18:25Z,2026-10-13T05:19:08Z,Compound 'agrihub' head 'agri' + tail 'hub'; no listed demand root; general service; 7 letters.
-94,agentlearn.si,ai,59.2,76,76,71,12,57,40,2026-10-13T01:18:07Z,2026-10-13T05:19:06Z,Compound 'agentlearn' head 'agent' + tail 'learn'; root 'agent'; automation and services; 10 letters.
-95,roboticcore.si,ai,59.2,75,78,67,12,60,40,2026-10-13T04:05:45Z,2026-10-13T09:09:55Z,Compound 'roboticcore' head 'robotic' + tail 'core'; root 'robot'; robotics; 11 letters.
-96,robotsearch.si,ai,59.2,74,74,67,12,67,40,2026-10-13T04:06:57Z,2026-10-13T09:10:45Z,Compound 'robotsearch' head 'robot' + tail 'search'; root 'robot'; robotics; 11 letters.
-97,cryptoworks.si,technology,59.1,74,75,67,12,65,40,2026-10-13T01:35:54Z,2026-10-13T06:47:49Z,Compound 'cryptoworks' head 'crypto' + tail 'works'; root 'crypto'; digital finance; 11 letters.
-98,chatloop.si,ai,59.0,89,42,85,12,65,40,2026-10-13T01:29:52Z,2026-10-13T06:09:34Z,Compound 'chatloop' head 'chat' + tail 'loop'; no listed demand root; general service; 8 letters.
-99,parcelshop.si,consumer_brands,59.0,79,65,72,12,64,40,2026-10-13T03:39:44Z,2026-10-13T08:37:12Z,Compound 'parcelshop' head 'parcel' + tail 'shop'; root 'shop'; retail; 10 letters.
-100,recipeshop.si,consumer_brands,59.0,82,65,72,12,59,40,2026-10-13T03:56:48Z,2026-10-13T09:04:22Z,Compound 'recipeshop' head 'recipe' + tail 'shop'; root 'shop'; retail; 10 letters.
-101,bankingvault.si,business_finance,59.0,71,88,53,12,66,40,2026-10-13T01:23:11Z,2026-10-13T05:30:30Z,Compound 'bankingvault' head 'banking' + tail 'vault'; root 'bank'; finance; 12 letters.
-102,roboticlink.si,ai,58.9,78,78,67,12,53,40,2026-10-13T04:06:03Z,2026-10-13T09:10:11Z,Compound 'roboticlink' head 'robotic' + tail 'link'; root 'robot'; robotics; 11 letters.
-103,roboticloop.si,ai,58.9,78,78,67,12,53,40,2026-10-13T04:06:05Z,2026-10-13T09:10:13Z,Compound 'roboticloop' head 'robotic' + tail 'loop'; root 'robot'; robotics; 11 letters.
-104,memolab.si,ai,58.8,88,41,87,12,65,40,2026-10-13T03:11:19Z,2026-10-13T07:40:36Z,Compound 'memolab' head 'memo' + tail 'lab'; no listed demand root; general service; 7 letters.
-105,pharmatrial.si,health_science,58.8,80,65,67,12,66,40,2026-10-13T03:44:02Z,2026-10-13T08:57:25Z,Compound 'pharmatrial' head 'pharma' + tail 'trial'; root 'pharma'; pharmaceuticals; 11 letters.
-106,roboticflow.si,ai,58.8,74,78,67,12,59,40,2026-10-13T04:05:49Z,2026-10-13T09:09:59Z,Compound 'roboticflow' head 'robotic' + tail 'flow'; root 'robot'; robotics; 11 letters.
-107,epaulet.si,dictionary,58.7,89,37,87,12,68,40,2026-10-13T01:44:01Z,2026-10-13T07:12:23Z,Common word 'epaulet' means ornamental shoulder piece; 7 letters; VCVVCVC.
-108,trekgear.si,consumer_brands,58.7,88,42,85,12,65,40,2026-10-13T04:43:11Z,2026-10-13T09:46:19Z,Compound 'trekgear' head 'trek' + tail 'gear'; no listed demand root; general service; 8 letters.
-109,gerilab.si,health_science,58.6,88,41,86,12,65,40,2026-10-13T02:14:17Z,2026-10-13T07:19:50Z,Compound 'gerilab' head 'geri' + tail 'lab'; no listed demand root; general service; 7 letters.
-110,chatlink.si,ai,58.6,88,42,84,12,65,40,2026-10-13T01:29:51Z,2026-10-13T06:09:28Z,Compound 'chatlink' head 'chat' + tail 'link'; no listed demand root; general service; 8 letters.
-111,agenticsolve.si,ai,58.6,79,79,53,12,62,40,2026-10-13T01:18:02Z,2026-10-13T05:19:02Z,Compound 'agenticsolve' head 'agentic' + tail 'solve'; root 'agent'; automation and services; 12 letters.
-112,omnivault.si,ai,58.4,91,42,78,12,65,40,2026-10-13T03:36:06Z,2026-10-13T08:33:27Z,Compound 'omnivault' head 'omni' + tail 'vault'; no listed demand root; general service; 9 letters.
-113,biomasslab.si,emerging_industries,58.4,78,65,71,12,63,40,2026-10-13T01:24:39Z,2026-10-13T05:38:38Z,Compound 'biomasslab' head 'biomass' + tail 'lab'; root 'bio'; biotechnology; 10 letters.
-114,credittrack.si,business_finance,58.4,72,76,66,12,63,40,2026-10-13T01:35:34Z,2026-10-13T06:47:13Z,Compound 'credittrack' head 'credit' + tail 'track'; root 'credit'; finance; 11 letters.
-115,deepport.si,ai,58.3,87,42,84,12,65,40,2026-10-13T01:38:54Z,2026-10-13T07:06:34Z,Compound 'deepport' head 'deep' + tail 'port'; no listed demand root; general service; 8 letters.
-116,chatsolve.si,ai,58.3,90,42,79,12,65,40,2026-10-13T01:30:02Z,2026-10-13T06:10:28Z,Compound 'chatsolve' head 'chat' + tail 'solve'; no listed demand root; general service; 9 letters.
-117,denimwear.si,consumer_brands,58.3,90,42,79,12,65,40,2026-10-13T01:39:41Z,2026-10-13T07:07:47Z,Compound 'denimwear' head 'denim' + tail 'wear'; no listed demand root; general service; 9 letters.
-118,memovault.si,ai,58.3,90,42,79,12,65,40,2026-10-13T03:13:03Z,2026-10-13T07:50:52Z,Compound 'memovault' head 'memo' + tail 'vault'; no listed demand root; general service; 9 letters.
-119,neuraport.si,ai,58.3,90,42,79,12,65,40,2026-10-13T03:28:02Z,2026-10-13T08:24:58Z,Compound 'neuraport' head 'neura' + tail 'port'; no listed demand root; general service; 9 letters.
-120,robotswitch.si,ai,58.3,73,73,66,12,65,40,2026-10-13T04:07:11Z,2026-10-13T09:10:53Z,Compound 'robotswitch' head 'robot' + tail 'switch'; root 'robot'; robotics; 11 letters.
-121,roboticvault.si,ai,58.3,78,78,54,12,62,40,2026-10-13T04:06:31Z,2026-10-13T09:10:35Z,Compound 'roboticvault' head 'robotic' + tail 'vault'; root 'robot'; robotics; 12 letters.
-122,omnicraft.si,ai,58.2,90,42,78,12,65,40,2026-10-13T03:35:07Z,2026-10-13T08:32:10Z,Compound 'omnicraft' head 'omni' + tail 'craft'; no listed demand root; general service; 9 letters.
-123,omnifleet.si,ai,58.2,90,42,78,12,65,40,2026-10-13T03:35:11Z,2026-10-13T08:32:24Z,Compound 'omnifleet' head 'omni' + tail 'fleet'; no listed demand root; general service; 9 letters.
-124,sentiflow.si,ai,58.2,90,42,78,12,65,40,2026-10-13T04:13:46Z,2026-10-13T09:14:36Z,Compound 'sentiflow' head 'senti' + tail 'flow'; no listed demand root; general service; 9 letters.
-125,sentiloop.si,ai,58.2,90,42,78,12,65,40,2026-10-13T04:14:04Z,2026-10-13T09:14:52Z,Compound 'sentiloop' head 'senti' + tail 'loop'; no listed demand root; general service; 9 letters.
-126,genomescan.si,health_science,58.2,82,63,72,12,57,40,2026-10-13T03:02:07Z,2026-10-13T07:19:16Z,Compound 'genomescan' head 'genome' + tail 'scan'; root 'genome'; genomics; 10 letters.
-127,roboticgrid.si,ai,58.2,73,78,67,12,57,40,2026-10-13T04:05:53Z,2026-10-13T09:10:03Z,Compound 'roboticgrid' head 'robotic' + tail 'grid'; root 'robot'; robotics; 11 letters.
-128,roboticsolve.si,ai,58.2,78,78,54,12,61,40,2026-10-13T04:06:23Z,2026-10-13T09:10:29Z,Compound 'roboticsolve' head 'robotic' + tail 'solve'; root 'robot'; robotics; 12 letters.
-129,chatport.si,ai,58.1,87,41,84,12,65,40,2026-10-13T01:29:58Z,2026-10-13T06:10:04Z,Compound 'chatport' head 'chat' + tail 'port'; no listed demand root; general service; 8 letters.
-130,robotkernel.si,ai,58.1,78,74,67,12,53,40,2026-10-13T04:06:33Z,2026-10-13T09:10:37Z,Compound 'robotkernel' head 'robot' + tail 'kernel'; root 'robot'; robotics; 11 letters.
-131,edgelink.si,technology,58.0,87,42,82,12,65,40,2026-10-13T01:42:22Z,2026-10-13T07:10:02Z,Compound 'edgelink' head 'edge' + tail 'link'; no listed demand root; general service; 8 letters.
-132,dronescan.si,emerging_industries,58.0,89,42,79,12,65,40,2026-10-13T01:41:53Z,2026-10-13T07:09:56Z,Compound 'dronescan' head 'drone' + tail 'scan'; no listed demand root; general service; 9 letters.
-133,memocraft.si,ai,58.0,89,42,79,12,65,40,2026-10-13T03:11:03Z,2026-10-13T07:39:40Z,Compound 'memocraft' head 'memo' + tail 'craft'; no listed demand root; general service; 9 letters.
-134,modelport.si,ai,58.0,89,42,79,12,65,40,2026-10-13T03:17:45Z,2026-10-13T08:09:20Z,Compound 'modelport' head 'model' + tail 'port'; no listed demand root; general service; 9 letters.
-135,sentilabs.si,ai,58.0,89,42,79,12,65,40,2026-10-13T04:13:56Z,2026-10-13T09:14:46Z,Compound 'sentilabs' head 'senti' + tail 'labs'; no listed demand root; general service; 9 letters.
-136,sentiport.si,ai,58.0,89,42,79,12,65,40,2026-10-13T04:14:16Z,2026-10-13T09:15:04Z,Compound 'sentiport' head 'senti' + tail 'port'; no listed demand root; general service; 9 letters.
-137,carbongrid.si,emerging_industries,58.0,78,63,72,12,62,40,2026-10-13T01:28:04Z,2026-10-13T05:54:10Z,Compound 'carbongrid' head 'carbon' + tail 'grid'; root 'carbon'; climate technology; 10 letters.
-138,biopsyscope.si,health_science,58.0,80,65,67,12,61,40,2026-10-13T01:24:49Z,2026-10-13T05:39:18Z,Compound 'biopsyscope' head 'biopsy' + tail 'scope'; root 'bio'; biotechnology; 11 letters.
-139,carbonforge.si,emerging_industries,58.0,81,63,68,12,61,40,2026-10-13T01:28:03Z,2026-10-13T05:54:04Z,Compound 'carbonforge' head 'carbon' + tail 'forge'; root 'carbon'; climate technology; 11 letters.
-140,creditsignal.si,business_finance,58.0,78,76,54,12,63,40,2026-10-13T01:35:33Z,2026-10-13T06:47:07Z,Compound 'creditsignal' head 'credit' + tail 'signal'; root 'credit'; finance; 12 letters.
-141,auditdesk.si,business_finance,57.9,89,42,78,12,65,40,2026-10-13T01:21:41Z,2026-10-13T05:28:36Z,Compound 'auditdesk' head 'audit' + tail 'desk'; no listed demand root; general service; 9 letters.
-142,chatorbit.si,ai,57.9,89,42,78,12,65,40,2026-10-13T01:29:56Z,2026-10-13T06:09:58Z,Compound 'chatorbit' head 'chat' + tail 'orbit'; no listed demand root; general service; 9 letters.
-143,inferport.si,ai,57.9,89,42,78,12,65,40,2026-10-13T02:29:11Z,2026-10-13T07:25:47Z,Compound 'inferport' head 'infer' + tail 'port'; no listed demand root; general service; 9 letters.
-144,lidarmesh.si,emerging_industries,57.9,89,42,78,12,65,40,2026-10-13T02:46:55Z,2026-10-13T07:32:51Z,Compound 'lidarmesh' head 'lidar' + tail 'mesh'; no listed demand root; general service; 9 letters.
-145,linenwear.si,consumer_brands,57.9,89,42,78,12,65,40,2026-10-13T02:47:54Z,2026-10-13T07:33:24Z,Compound 'linenwear' head 'linen' + tail 'wear'; no listed demand root; general service; 9 letters.
-146,logicport.si,ai,57.9,89,42,78,12,65,40,2026-10-13T03:03:53Z,2026-10-13T07:36:27Z,Compound 'logicport' head 'logic' + tail 'port'; no listed demand root; general service; 9 letters.
-147,memoorbit.si,ai,57.9,89,42,78,12,65,40,2026-10-13T03:11:35Z,2026-10-13T07:42:56Z,Compound 'memoorbit' head 'memo' + tail 'orbit'; no listed demand root; general service; 9 letters.
-148,memospark.si,ai,57.9,89,42,78,12,65,40,2026-10-13T03:12:51Z,2026-10-13T07:49:07Z,Compound 'memospark' head 'memo' + tail 'spark'; no listed demand root; general service; 9 letters.
-149,neuroport.si,ai,57.9,89,42,78,12,65,40,2026-10-13T03:29:21Z,2026-10-13T08:26:48Z,Compound 'neuroport' head 'neuro' + tail 'port'; no listed demand root; general service; 9 letters.
-150,chatmesh.si,ai,57.8,86,41,84,12,65,40,2026-10-13T01:29:54Z,2026-10-13T06:09:46Z,Compound 'chatmesh' head 'chat' + tail 'mesh'; no listed demand root; general service; 8 letters.
-151,audiomesh.si,ai,57.8,89,42,77,12,65,40,2026-10-13T01:21:22Z,2026-10-13T05:22:52Z,Compound 'audiomesh' head 'audio' + tail 'mesh'; no listed demand root; general service; 9 letters.
-152,cognimesh.si,ai,57.8,89,42,77,12,65,40,2026-10-13T01:32:23Z,2026-10-13T06:16:46Z,Compound 'cognimesh' head 'cogni' + tail 'mesh'; no listed demand root; general service; 9 letters.
-153,loanvault.si,business_finance,57.8,88,42,79,12,65,40,2026-10-13T03:03:03Z,2026-10-13T07:36:05Z,Compound 'loanvault' head 'loan' + tail 'vault'; no listed demand root; general service; 9 letters.
-154,memostack.si,ai,57.8,89,42,77,12,65,40,2026-10-13T03:12:53Z,2026-10-13T07:49:09Z,Compound 'memostack' head 'memo' + tail 'stack'; no listed demand root; general service; 9 letters.
-155,multigrid.si,ai,57.8,89,42,77,12,65,40,2026-10-13T03:21:26Z,2026-10-13T08:16:38Z,Compound 'multigrid' head 'multi' + tail 'grid'; no listed demand root; general service; 9 letters.
-156,multimesh.si,ai,57.8,89,42,77,12,65,40,2026-10-13T03:21:42Z,2026-10-13T08:16:58Z,Compound 'multimesh' head 'multi' + tail 'mesh'; no listed demand root; general service; 9 letters.
-157,remitdesk.si,business_finance,57.8,88,42,79,12,65,40,2026-10-13T03:58:49Z,2026-10-13T09:05:45Z,Compound 'remitdesk' head 'remit' + tail 'desk'; no listed demand root; general service; 9 letters.
-158,sentigrid.si,ai,57.8,89,42,77,12,65,40,2026-10-13T04:13:52Z,2026-10-13T09:14:42Z,Compound 'sentigrid' head 'senti' + tail 'grid'; no listed demand root; general service; 9 letters.
-159,synaplink.si,ai,57.8,89,42,77,12,65,40,2026-10-13T04:25:36Z,2026-10-13T09:27:06Z,Compound 'synaplink' head 'synap' + tail 'link'; no listed demand root; general service; 9 letters.
-160,agenticvault.si,ai,57.8,77,79,53,12,60,40,2026-10-13T01:18:04Z,2026-10-13T05:19:04Z,Compound 'agenticvault' head 'agentic' + tail 'vault'; root 'agent'; automation and services; 12 letters.
-161,geriscan.si,health_science,57.7,86,41,83,12,65,40,2026-10-13T02:14:18Z,2026-10-13T07:19:52Z,Compound 'geriscan' head 'geri' + tail 'scan'; no listed demand root; general service; 8 letters.
-162,fleetdock.si,emerging_industries,57.7,87,42,80,12,65,40,2026-10-13T01:47:38Z,2026-10-13T07:16:10Z,Compound 'fleetdock' head 'fleet' + tail 'dock'; no listed demand root; general service; 9 letters.
-163,coutureshop.si,consumer_brands,57.7,80,65,66,12,60,40,2026-10-13T01:34:52Z,2026-10-13T06:39:38Z,Compound 'coutureshop' head 'couture' + tail 'shop'; root 'shop'; retail; 11 letters.
-164,groceryshop.si,consumer_brands,57.7,80,65,67,12,59,40,2026-10-13T02:18:38Z,2026-10-13T07:20:54Z,Compound 'groceryshop' head 'grocery' + tail 'shop'; root 'shop'; retail; 11 letters.
-165,memolink.si,ai,57.6,86,41,82,12,65,40,2026-10-13T03:11:25Z,2026-10-13T07:41:26Z,Compound 'memolink' head 'memo' + tail 'link'; no listed demand root; general service; 8 letters.
-166,alloygrid.si,emerging_industries,57.6,88,42,78,12,65,40,2026-10-13T01:19:09Z,2026-10-13T05:20:17Z,Compound 'alloygrid' head 'alloy' + tail 'grid'; no listed demand root; general service; 9 letters.
-167,alloymesh.si,emerging_industries,57.6,88,42,78,12,65,40,2026-10-13T01:19:11Z,2026-10-13T05:20:21Z,Compound 'alloymesh' head 'alloy' + tail 'mesh'; no listed demand root; general service; 9 letters.
-168,audioscan.si,technology,57.6,88,42,78,12,65,40,2026-10-13T01:21:28Z,2026-10-13T05:23:02Z,Compound 'audioscan' head 'audio' + tail 'scan'; no listed demand root; general service; 9 letters.
-169,chatsense.si,ai,57.6,88,42,78,12,65,40,2026-10-13T01:30:00Z,2026-10-13T06:10:16Z,Compound 'chatsense' head 'chat' + tail 'sense'; no listed demand root; general service; 9 letters.
-170,dramashow.si,consumer_brands,57.6,88,42,78,12,65,40,2026-10-13T01:41:41Z,2026-10-13T07:09:48Z,Compound 'dramashow' head 'drama' + tail 'show'; no listed demand root; general service; 9 letters.
-171,memofleet.si,ai,57.6,88,42,78,12,65,40,2026-10-13T03:11:07Z,2026-10-13T07:39:44Z,Compound 'memofleet' head 'memo' + tail 'fleet'; no listed demand root; general service; 9 letters.
-172,queryflow.si,technology,57.6,89,42,76,12,65,40,2026-10-13T03:52:13Z,2026-10-13T09:01:30Z,Compound 'queryflow' head 'query' + tail 'flow'; no listed demand root; general service; 9 letters.
-173,roboticsense.si,ai,57.6,77,78,53,12,60,40,2026-10-13T04:06:17Z,2026-10-13T09:10:25Z,Compound 'roboticsense' head 'robotic' + tail 'sense'; root 'robot'; robotics; 12 letters.
-174,databasestack.si,technology,57.6,73,92,41,12,60,40,2026-10-13T01:37:12Z,2026-10-13T07:05:19Z,Compound 'databasestack' head 'database' + tail 'stack'; root 'data'; cross-industry analytics; 13 letters.
-175,silkwear.si,consumer_brands,57.5,84,41,85,12,65,40,2026-10-13T04:17:52Z,2026-10-13T09:18:25Z,Compound 'silkwear' head 'silk' + tail 'wear'; no listed demand root; general service; 8 letters.
-176,coverdesk.si,business_finance,57.5,88,42,77,12,65,40,2026-10-13T01:34:56Z,2026-10-13T06:39:50Z,Compound 'coverdesk' head 'cover' + tail 'desk'; no listed demand root; general service; 9 letters.
-177,deeppilot.si,ai,57.5,88,42,77,12,65,40,2026-10-13T01:38:53Z,2026-10-13T07:06:32Z,Compound 'deeppilot' head 'deep' + tail 'pilot'; no listed demand root; general service; 9 letters.
-178,embedlink.si,ai,57.5,88,42,77,12,65,40,2026-10-13T01:42:58Z,2026-10-13T07:10:36Z,Compound 'embedlink' head 'embed' + tail 'link'; no listed demand root; general service; 9 letters.
-179,forexdesk.si,business_finance,57.5,88,42,77,12,65,40,2026-10-13T01:48:13Z,2026-10-13T07:16:38Z,Compound 'forexdesk' head 'forex' + tail 'desk'; no listed demand root; general service; 9 letters.
-180,omniorbit.si,ai,57.5,88,42,77,12,65,40,2026-10-13T03:35:40Z,2026-10-13T08:32:58Z,Compound 'omniorbit' head 'omni' + tail 'orbit'; no listed demand root; general service; 9 letters.
-181,robospark.si,ai,57.5,88,42,77,12,65,40,2026-10-13T04:05:11Z,2026-10-13T09:09:43Z,Compound 'robospark' head 'robo' + tail 'spark'; no listed demand root; general service; 9 letters.
-182,synaploop.si,ai,57.5,88,42,77,12,65,40,2026-10-13T04:25:38Z,2026-10-13T09:27:08Z,Compound 'synaploop' head 'synap' + tail 'loop'; no listed demand root; general service; 9 letters.
-183,synapmesh.si,ai,57.5,88,42,77,12,65,40,2026-10-13T04:25:42Z,2026-10-13T09:27:12Z,Compound 'synapmesh' head 'synap' + tail 'mesh'; no listed demand root; general service; 9 letters.
-184,agenticorbit.si,ai,57.5,77,79,53,12,58,40,2026-10-13T01:17:57Z,2026-10-13T05:18:54Z,Compound 'agenticorbit' head 'agentic' + tail 'orbit'; root 'agent'; automation and services; 12 letters.
-185,omniloop.si,ai,57.4,86,41,81,12,65,40,2026-10-13T03:35:32Z,2026-10-13T08:32:42Z,Compound 'omniloop' head 'omni' + tail 'loop'; no listed demand root; general service; 8 letters.
-186,cogniloop.si,ai,57.4,88,42,76,12,65,40,2026-10-13T01:32:21Z,2026-10-13T06:16:40Z,Compound 'cogniloop' head 'cogni' + tail 'loop'; no listed demand root; general service; 9 letters.
-187,embedloop.si,ai,57.4,88,42,76,12,65,40,2026-10-13T01:42:59Z,2026-10-13T07:10:38Z,Compound 'embedloop' head 'embed' + tail 'loop'; no listed demand root; general service; 9 letters.
-188,omnisolve.si,ai,57.4,90,42,78,12,60,40,2026-10-13T03:35:52Z,2026-10-13T08:33:04Z,Compound 'omnisolve' head 'omni' + tail 'solve'; no listed demand root; general service; 9 letters.
-189,insuranceflow.si,business_finance,57.4,77,85,43,12,59,40,2026-10-13T02:30:06Z,2026-10-13T07:26:05Z,Compound 'insuranceflow' head 'insurance' + tail 'flow'; root 'insurance'; insurance; 13 letters.
-190,memogrid.si,ai,57.3,85,41,82,12,65,40,2026-10-13T03:11:15Z,2026-10-13T07:40:32Z,Compound 'memogrid' head 'memo' + tail 'grid'; no listed demand root; general service; 8 letters.
-191,chatlearn.si,ai,57.3,88,41,80,12,62,40,2026-10-13T01:29:49Z,2026-10-13T06:09:16Z,Compound 'chatlearn' head 'chat' + tail 'learn'; no listed demand root; general service; 9 letters.
-192,synaplabs.si,ai,57.3,88,41,77,12,65,40,2026-10-13T04:25:30Z,2026-10-13T09:26:49Z,Compound 'synaplabs' head 'synap' + tail 'labs'; no listed demand root; general service; 9 letters.
-193,autofoundry.si,ai,57.3,73,74,66,12,57,40,2026-10-13T01:22:00Z,2026-10-13T05:29:03Z,Compound 'autofoundry' head 'auto' + tail 'foundry'; root 'auto'; automotive; 11 letters.
-194,decorous.si,dictionary,57.2,86,37,83,12,67,40,2026-10-13T01:38:30Z,2026-10-13T07:06:22Z,Common word 'decorous' means proper and restrained; 8 letters; CVCVCVVC.
-195,chatvault.si,ai,57.2,87,41,78,12,65,40,2026-10-13T01:30:08Z,2026-10-13T06:10:52Z,Compound 'chatvault' head 'chat' + tail 'vault'; no listed demand root; general service; 9 letters.
-196,cobotmesh.si,emerging_industries,57.2,87,42,77,12,65,40,2026-10-13T01:31:46Z,2026-10-13T06:14:58Z,Compound 'cobotmesh' head 'cobot' + tail 'mesh'; no listed demand root; general service; 9 letters.
-197,hydrocell.si,emerging_industries,57.2,87,42,77,12,65,40,2026-10-13T02:24:17Z,2026-10-13T07:23:44Z,Compound 'hydrocell' head 'hydro' + tail 'cell'; no listed demand root; general service; 9 letters.
-198,orbitdock.si,emerging_industries,57.2,87,42,77,12,65,40,2026-10-13T03:37:12Z,2026-10-13T08:34:41Z,Compound 'orbitdock' head 'orbit' + tail 'dock'; no listed demand root; general service; 9 letters.
-199,parcelbox.si,consumer_brands,57.2,88,41,76,12,65,40,2026-10-13T03:39:38Z,2026-10-13T08:36:56Z,Compound 'parcelbox' head 'parcel' + tail 'box'; no listed demand root; general service; 9 letters.
-200,tidaldock.si,emerging_industries,57.2,87,42,77,12,65,40,2026-10-13T04:33:09Z,2026-10-13T09:39:37Z,Compound 'tidaldock' head 'tidal' + tail 'dock'; no listed demand root; general service; 9 letters.
-201,biopsyassay.si,health_science,57.1,77,65,65,12,62,40,2026-10-13T01:24:46Z,2026-10-13T05:39:05Z,Compound 'biopsyassay' head 'biopsy' + tail 'assay'; root 'bio'; biotechnology; 11 letters.
-202,genomeatlas.si,health_science,57.1,80,62,67,12,59,40,2026-10-13T03:02:01Z,2026-10-13T07:19:10Z,Compound 'genomeatlas' head 'genome' + tail 'atlas'; root 'genome'; genomics; 11 letters.
-203,dronedock.si,emerging_industries,57.0,86,42,77,12,65,40,2026-10-13T01:41:48Z,2026-10-13T07:09:52Z,Compound 'dronedock' head 'drone' + tail 'dock'; no listed demand root; general service; 9 letters.
-204,serumcell.si,health_science,57.0,87,41,77,12,65,40,2026-10-13T04:15:20Z,2026-10-13T09:16:04Z,Compound 'serumcell' head 'serum' + tail 'cell'; no listed demand root; general service; 9 letters.
-205,synapcore.si,ai,57.0,88,42,78,12,61,40,2026-10-13T04:25:08Z,2026-10-13T09:26:01Z,Compound 'synapcore' head 'synap' + tail 'core'; no listed demand root; general service; 9 letters.
-206,filmhouse.si,consumer_brands,56.9,85,42,78,12,65,40,2026-10-13T01:46:46Z,2026-10-13T07:15:36Z,Compound 'filmhouse' head 'film' + tail 'house'; no listed demand root; general service; 9 letters.
-207,hedgeflow.si,business_finance,56.9,87,41,77,12,64,40,2026-10-13T02:20:15Z,2026-10-13T07:21:42Z,Compound 'hedgeflow' head 'hedge' + tail 'flow'; no listed demand root; general service; 9 letters.
-208,biochargrid.si,emerging_industries,56.9,75,65,66,12,63,40,2026-10-13T01:24:24Z,2026-10-13T05:37:39Z,Compound 'biochargrid' head 'biochar' + tail 'grid'; root 'bio'; biotechnology; 11 letters.
-209,authlink.si,technology,56.8,82,41,84,12,65,40,2026-10-13T01:21:51Z,2026-10-13T05:28:54Z,Compound 'authlink' head 'auth' + tail 'link'; no listed demand root; general service; 8 letters.
-210,memoflow.si,ai,56.8,84,41,81,12,64,40,2026-10-13T03:11:09Z,2026-10-13T07:39:46Z,Compound 'memoflow' head 'memo' + tail 'flow'; no listed demand root; general service; 8 letters.
-211,yogaclub.si,consumer_brands,56.8,86,41,81,12,61,40,2026-10-13T04:58:29Z,2026-10-13T10:07:06Z,Compound 'yogaclub' head 'yoga' + tail 'club'; no listed demand root; general service; 8 letters.
-212,yogawear.si,consumer_brands,56.8,83,41,82,12,65,40,2026-10-13T04:58:35Z,2026-10-13T10:07:20Z,Compound 'yogawear' head 'yoga' + tail 'wear'; no listed demand root; general service; 8 letters.
-213,alloycell.si,emerging_industries,56.8,86,42,76,12,65,40,2026-10-13T01:19:07Z,2026-10-13T05:20:13Z,Compound 'alloycell' head 'alloy' + tail 'cell'; no listed demand root; general service; 9 letters.
-214,embedlabs.si,ai,56.8,87,41,76,12,64,40,2026-10-13T01:42:55Z,2026-10-13T07:10:30Z,Compound 'embedlabs' head 'embed' + tail 'labs'; no listed demand root; general service; 9 letters.
-215,agenticsense.si,ai,56.8,75,79,51,12,59,40,2026-10-13T01:18:00Z,2026-10-13T05:18:58Z,Compound 'agenticsense' head 'agentic' + tail 'sense'; root 'agent'; automation and services; 12 letters.
-216,cobotops.si,emerging_industries,56.6,83,41,82,12,64,40,2026-10-13T01:31:47Z,2026-10-13T06:15:04Z,Compound 'cobotops' head 'cobot' + tail 'ops'; no listed demand root; general service; 8 letters.
-217,auditscan.si,technology,56.6,84,42,78,12,65,40,2026-10-13T01:21:48Z,2026-10-13T05:28:48Z,Compound 'auditscan' head 'audit' + tail 'scan'; no listed demand root; general service; 9 letters.
-218,cognigrid.si,ai,56.6,87,41,76,12,63,40,2026-10-13T01:32:15Z,2026-10-13T06:16:16Z,Compound 'cognigrid' head 'cogni' + tail 'grid'; no listed demand root; general service; 9 letters.
-219,neuroloop.si,ai,56.6,87,41,76,12,63,40,2026-10-13T03:28:59Z,2026-10-13T08:26:14Z,Compound 'neuroloop' head 'neuro' + tail 'loop'; no listed demand root; general service; 9 letters.
-220,roboorbit.si,ai,56.6,86,41,76,12,65,40,2026-10-13T04:04:57Z,2026-10-13T09:09:33Z,Compound 'roboorbit' head 'robo' + tail 'orbit'; no listed demand root; general service; 9 letters.
-221,serverops.si,technology,56.6,86,41,77,12,64,40,2026-10-13T04:15:42Z,2026-10-13T09:16:16Z,Compound 'serverops' head 'server' + tail 'ops'; no listed demand root; general service; 9 letters.
-222,physioscan.si,health_science,56.6,87,41,74,12,65,40,2026-10-13T03:44:28Z,2026-10-13T08:57:43Z,Compound 'physioscan' head 'physio' + tail 'scan'; no listed demand root; general service; 10 letters.
-223,riskvault.si,business_finance,56.5,83,41,80,12,65,40,2026-10-13T04:03:18Z,2026-10-13T09:08:48Z,Compound 'riskvault' head 'risk' + tail 'vault'; no listed demand root; general service; 9 letters.
-224,loanflow.si,business_finance,56.4,81,41,83,12,65,40,2026-10-13T03:02:53Z,2026-10-13T07:35:57Z,Compound 'loanflow' head 'loan' + tail 'flow'; no listed demand root; general service; 8 letters.
-225,rehabscan.si,health_science,56.4,83,41,79,12,65,40,2026-10-13T03:57:39Z,2026-10-13T09:04:46Z,Compound 'rehabscan' head 'rehab' + tail 'scan'; no listed demand root; general service; 9 letters.
-226,batteryops.si,emerging_industries,56.4,87,41,74,12,64,40,2026-10-13T01:23:28Z,2026-10-13T05:30:45Z,Compound 'batteryops' head 'battery' + tail 'ops'; no listed demand root; general service; 10 letters.
-227,fusioncell.si,emerging_industries,56.4,87,41,74,12,64,40,2026-10-13T01:48:58Z,2026-10-13T07:17:27Z,Compound 'fusioncell' head 'fusion' + tail 'cell'; no listed demand root; general service; 10 letters.
-228,privacyops.si,technology,56.4,87,41,74,12,64,40,2026-10-13T03:47:38Z,2026-10-13T08:58:45Z,Compound 'privacyops' head 'privacy' + tail 'ops'; no listed demand root; general service; 10 letters.
-229,remitvault.si,business_finance,56.4,87,41,74,12,64,40,2026-10-13T03:58:59Z,2026-10-13T09:05:55Z,Compound 'remitvault' head 'remit' + tail 'vault'; no listed demand root; general service; 10 letters.
-230,videostack.si,technology,56.4,87,41,73,12,65,40,2026-10-13T04:51:27Z,2026-10-13T09:56:02Z,Compound 'videostack' head 'video' + tail 'stack'; no listed demand root; general service; 10 letters.
-231,pharmaworks.si,health_science,56.4,74,65,66,12,61,40,2026-10-13T03:44:04Z,2026-10-13T08:57:27Z,Compound 'pharmaworks' head 'pharma' + tail 'works'; root 'pharma'; pharmaceuticals; 11 letters.
-232,silkhouse.si,consumer_brands,56.3,84,41,78,12,64,40,2026-10-13T04:17:50Z,2026-10-13T09:18:13Z,Compound 'silkhouse' head 'silk' + tail 'house'; no listed demand root; general service; 9 letters.
-233,profitdesk.si,business_finance,56.3,87,41,73,12,64,40,2026-10-13T03:47:58Z,2026-10-13T08:58:53Z,Compound 'profitdesk' head 'profit' + tail 'desk'; no listed demand root; general service; 10 letters.
-234,scentbox.si,consumer_brands,56.2,81,40,83,12,65,40,2026-10-13T04:09:44Z,2026-10-13T09:11:33Z,Compound 'scentbox' head 'scent' + tail 'box'; no listed demand root; general service; 8 letters.
-235,helixscan.si,health_science,56.2,83,41,78,12,65,40,2026-10-13T02:21:29Z,2026-10-13T07:22:26Z,Compound 'helixscan' head 'helix' + tail 'scan'; no listed demand root; general service; 9 letters.
-236,autopilotops.si,emerging_industries,56.2,75,78,51,12,56,40,2026-10-13T01:22:32Z,2026-10-13T05:29:51Z,Compound 'autopilotops' head 'autopilot' + tail 'ops'; root 'auto'; automotive; 12 letters.
-237,insurancedesk.si,business_finance,56.2,74,85,41,12,58,40,2026-10-13T02:30:05Z,2026-10-13T07:26:03Z,Compound 'insurancedesk' head 'insurance' + tail 'desk'; root 'insurance'; insurance; 13 letters.
-238,yogagear.si,consumer_brands,56.1,82,41,81,12,63,40,2026-10-13T04:58:31Z,2026-10-13T10:07:18Z,Compound 'yogagear' head 'yoga' + tail 'gear'; no listed demand root; general service; 8 letters.
+54,robotsignal.si,ai,61.6,82,75,69,12,66,40,2026-10-13T04:07:01Z,2026-10-13T09:10:47Z,Compound 'robotsignal' head 'robot' + tail 'signal'; root 'robot'; robotics; 11 letters.
+55,decorshop.si,consumer_brands,61.4,82,65,77,12,70,40,2026-10-13T01:38:31Z,2026-10-13T07:06:24Z,Compound 'decorshop' head 'decor' + tail 'shop'; root 'shop'; retail; 9 letters.
+56,linenshop.si,consumer_brands,61.4,82,65,77,12,70,40,2026-10-13T02:47:47Z,2026-10-13T07:33:17Z,Compound 'linenshop' head 'linen' + tail 'shop'; root 'shop'; retail; 9 letters.
+57,ledgerstack.si,technology,61.4,74,85,67,12,67,40,2026-10-13T02:43:37Z,2026-10-13T07:31:49Z,Compound 'ledgerstack' head 'ledger' + tail 'stack'; root 'ledger'; accounting and financial technology; 11 letters.
+58,biocharlab.si,emerging_industries,61.2,85,65,72,12,69,40,2026-10-13T01:24:26Z,2026-10-13T05:37:48Z,Compound 'biocharlab' head 'biochar' + tail 'lab'; root 'bio'; biotechnology; 10 letters.
+59,leaning.si,dictionary,61.0,93,39,90,12,81,25,2026-10-13T02:42:51Z,2026-10-13T07:31:25Z,Common word 'leaning' means inclination or preference; 7 letters; CVVCVCC.
+60,carbonhub.si,emerging_industries,61.0,87,64,77,12,71,25,2026-10-13T01:28:05Z,2026-10-13T05:54:16Z,Compound 'carbonhub' head 'carbon' + tail 'hub'; root 'carbon'; climate technology; 9 letters.
+61,robotbeacon.si,ai,61.0,80,75,69,12,66,40,2026-10-13T04:05:23Z,2026-10-13T09:09:53Z,Compound 'robotbeacon' head 'robot' + tail 'beacon'; root 'robot'; robotics; 11 letters.
+62,autoswitch.si,ai,60.9,79,80,72,12,67,25,2026-10-13T01:22:42Z,2026-10-13T05:30:00Z,Root 'auto' in 'autoswitch' signals automotive; 10 letters; VVCVCCVCCC.
+63,biocharhub.si,emerging_industries,60.9,85,65,71,12,68,40,2026-10-13T01:24:25Z,2026-10-13T05:37:44Z,Compound 'biocharhub' head 'biochar' + tail 'hub'; root 'bio'; biotechnology; 10 letters.
+64,roboticsops.si,emerging_industries,60.9,80,78,67,12,63,40,2026-10-13T04:06:25Z,2026-10-13T09:10:31Z,Compound 'roboticsops' head 'robotics' + tail 'ops'; root 'robot'; robotics; 11 letters.
+65,autobeacon.si,ai,60.8,83,80,72,12,60,25,2026-10-13T01:21:53Z,2026-10-13T05:29:00Z,Root 'auto' in 'autobeacon' signals automotive; 10 letters; VVCVCVVCVC.
+66,autosearch.si,ai,60.8,79,80,72,12,66,25,2026-10-13T01:22:34Z,2026-10-13T05:29:54Z,Root 'auto' in 'autosearch' signals automotive; 10 letters; VVCVCVVCCC.
+67,databaseflow.si,technology,60.4,75,93,52,12,63,40,2026-10-13T01:37:07Z,2026-10-13T07:05:09Z,Compound 'databaseflow' head 'database' + tail 'flow'; root 'data'; cross-industry analytics; 12 letters.
+68,cowhide.si,dictionary,60.2,93,39,88,12,78,25,2026-10-13T01:35:04Z,2026-10-13T06:40:20Z,Common word 'cowhide' means animal hide used as leather; 7 letters; CVCCVCV.
+69,walletstack.si,technology,60.2,72,85,65,12,64,40,2026-10-13T04:56:03Z,2026-10-13T10:02:39Z,Compound 'walletstack' head 'wallet' + tail 'stack'; root 'wallet'; payments; 11 letters.
+70,powdery.si,dictionary,60.1,93,39,88,12,77,25,2026-10-13T03:46:43Z,2026-10-13T08:58:25Z,Common word 'powdery' means fine and dry like powder; 7 letters; CVCCVCV.
+71,genomelab.si,health_science,60.1,85,64,76,12,59,40,2026-10-13T03:02:03Z,2026-10-13T07:19:12Z,Compound 'genomelab' head 'genome' + tail 'lab'; root 'genome'; genomics; 9 letters.
+72,roboticport.si,ai,60.1,78,78,67,12,61,40,2026-10-13T04:06:15Z,2026-10-13T09:10:23Z,Compound 'roboticport' head 'robotic' + tail 'port'; root 'robot'; robotics; 11 letters.
+73,autostream.si,ai,60.0,77,80,71,12,65,25,2026-10-13T01:22:40Z,2026-10-13T05:29:57Z,Root 'auto' in 'autostream' signals automotive; 10 letters; VVCVCCCVVC.
+74,bakeryshop.si,consumer_brands,60.0,84,65,72,12,63,40,2026-10-13T01:23:00Z,2026-10-13T05:30:18Z,Compound 'bakeryshop' head 'bakery' + tail 'shop'; root 'shop'; retail; 10 letters.
+75,tailorshop.si,consumer_brands,59.9,81,65,72,12,67,40,2026-10-13T04:27:33Z,2026-10-13T09:31:07Z,Compound 'tailorshop' head 'tailor' + tail 'shop'; root 'shop'; retail; 10 letters.
+76,autokernel.si,ai,59.8,83,80,72,12,53,25,2026-10-13T01:22:02Z,2026-10-13T05:29:06Z,Root 'auto' in 'autokernel' signals automotive; 10 letters; VVCVCVCCVC.
+77,payloadgrid.si,emerging_industries,59.6,75,75,66,12,68,40,2026-10-13T03:41:14Z,2026-10-13T08:55:32Z,Compound 'payloadgrid' head 'payload' + tail 'grid'; root 'payload'; software data transfer; 11 letters.
+78,robotorbit.si,ai,59.5,78,75,71,12,57,40,2026-10-13T04:06:51Z,2026-10-13T09:10:43Z,Compound 'robotorbit' head 'robot' + tail 'orbit'; root 'robot'; robotics; 10 letters.
+79,robotspark.si,ai,59.5,78,75,72,12,66,25,2026-10-13T04:07:05Z,2026-10-13T09:10:51Z,Compound 'robotspark' head 'robot' + tail 'spark'; root 'robot'; robotics; 10 letters.
+80,databasegrid.si,technology,59.5,74,92,51,12,61,40,2026-10-13T01:37:08Z,2026-10-13T07:05:11Z,Compound 'databasegrid' head 'database' + tail 'grid'; root 'data'; cross-industry analytics; 12 letters.
+81,pharmascan.si,health_science,59.4,85,65,72,12,67,25,2026-10-13T03:44:00Z,2026-10-13T08:57:20Z,Compound 'pharmascan' head 'pharma' + tail 'scan'; root 'pharma'; pharmaceuticals; 10 letters.
+82,examhub.si,consumer_brands,59.3,90,41,87,12,65,40,2026-10-13T01:44:35Z,2026-10-13T07:12:51Z,Compound 'examhub' head 'exam' + tail 'hub'; no listed demand root; general service; 7 letters.
+83,agentlearn.si,ai,59.2,76,76,71,12,57,40,2026-10-13T01:18:07Z,2026-10-13T05:19:06Z,Compound 'agentlearn' head 'agent' + tail 'learn'; root 'agent'; automation and services; 10 letters.
+84,roboticcore.si,ai,59.2,75,78,67,12,60,40,2026-10-13T04:05:45Z,2026-10-13T09:09:55Z,Compound 'roboticcore' head 'robotic' + tail 'core'; root 'robot'; robotics; 11 letters.
+85,robotsearch.si,ai,59.2,74,74,67,12,67,40,2026-10-13T04:06:57Z,2026-10-13T09:10:45Z,Compound 'robotsearch' head 'robot' + tail 'search'; root 'robot'; robotics; 11 letters.
+86,keyscan.si,technology,59.1,92,42,91,12,65,25,2026-10-13T02:35:55Z,2026-10-13T07:28:35Z,Compound 'keyscan' head 'key' + tail 'scan'; no listed demand root; general service; 7 letters.
+87,chatloop.si,ai,59.0,89,42,85,12,65,40,2026-10-13T01:29:52Z,2026-10-13T06:09:34Z,Compound 'chatloop' head 'chat' + tail 'loop'; no listed demand root; general service; 8 letters.
+88,jewelshop.si,consumer_brands,59.0,81,65,76,12,67,25,2026-10-13T02:32:07Z,2026-10-13T07:26:45Z,Compound 'jewelshop' head 'jewel' + tail 'shop'; root 'shop'; retail; 9 letters.
+89,recipeshop.si,consumer_brands,59.0,82,65,72,12,59,40,2026-10-13T03:56:48Z,2026-10-13T09:04:22Z,Compound 'recipeshop' head 'recipe' + tail 'shop'; root 'shop'; retail; 10 letters.
+90,autonetwork.si,ai,59.0,80,76,67,12,63,25,2026-10-13T01:22:12Z,2026-10-13T05:29:15Z,Compound 'autonetwork' head 'auto' + tail 'network'; root 'auto'; automotive; 11 letters.
+91,bankingvault.si,business_finance,59.0,71,88,53,12,66,40,2026-10-13T01:23:11Z,2026-10-13T05:30:30Z,Compound 'bankingvault' head 'banking' + tail 'vault'; root 'bank'; finance; 12 letters.
+92,roboticlink.si,ai,58.9,78,78,67,12,53,40,2026-10-13T04:06:03Z,2026-10-13T09:10:11Z,Compound 'roboticlink' head 'robotic' + tail 'link'; root 'robot'; robotics; 11 letters.
+93,roboticloop.si,ai,58.9,78,78,67,12,53,40,2026-10-13T04:06:05Z,2026-10-13T09:10:13Z,Compound 'roboticloop' head 'robotic' + tail 'loop'; root 'robot'; robotics; 11 letters.
+94,biomasshub.si,emerging_industries,58.8,79,65,71,12,64,40,2026-10-13T01:24:38Z,2026-10-13T05:38:33Z,Compound 'biomasshub' head 'biomass' + tail 'hub'; root 'bio'; biotechnology; 10 letters.
+95,carboncell.si,emerging_industries,58.8,84,63,72,12,67,25,2026-10-13T01:28:01Z,2026-10-13T05:53:52Z,Compound 'carboncell' head 'carbon' + tail 'cell'; root 'carbon'; climate technology; 10 letters.
+96,roboticflow.si,ai,58.8,74,78,67,12,59,40,2026-10-13T04:05:49Z,2026-10-13T09:09:59Z,Compound 'roboticflow' head 'robotic' + tail 'flow'; root 'robot'; robotics; 11 letters.
+97,reveler.si,dictionary,58.7,87,38,87,12,80,25,2026-10-13T04:01:06Z,2026-10-13T09:07:03Z,Common word 'reveler' means person enjoying a lively event; 7 letters; CVCVCVC.
+98,soilhub.si,emerging_industries,58.5,91,41,90,12,65,25,2026-10-13T04:19:39Z,2026-10-13T09:20:19Z,Compound 'soilhub' head 'soil' + tail 'hub'; no listed demand root; general service; 7 letters.
+99,biomasslab.si,emerging_industries,58.4,78,65,71,12,63,40,2026-10-13T01:24:39Z,2026-10-13T05:38:38Z,Compound 'biomasslab' head 'biomass' + tail 'lab'; root 'bio'; biotechnology; 10 letters.
+100,soillab.si,emerging_industries,58.2,90,41,90,12,65,25,2026-10-13T04:19:41Z,2026-10-13T09:20:31Z,Compound 'soillab' head 'soil' + tail 'lab'; no listed demand root; general service; 7 letters.
+101,omnicraft.si,ai,58.2,90,42,78,12,65,40,2026-10-13T03:35:07Z,2026-10-13T08:32:10Z,Compound 'omnicraft' head 'omni' + tail 'craft'; no listed demand root; general service; 9 letters.
+102,omnifleet.si,ai,58.2,90,42,78,12,65,40,2026-10-13T03:35:11Z,2026-10-13T08:32:24Z,Compound 'omnifleet' head 'omni' + tail 'fleet'; no listed demand root; general service; 9 letters.
+103,sentiflow.si,ai,58.2,90,42,78,12,65,40,2026-10-13T04:13:46Z,2026-10-13T09:14:36Z,Compound 'sentiflow' head 'senti' + tail 'flow'; no listed demand root; general service; 9 letters.
+104,sentiloop.si,ai,58.2,90,42,78,12,65,40,2026-10-13T04:14:04Z,2026-10-13T09:14:52Z,Compound 'sentiloop' head 'senti' + tail 'loop'; no listed demand root; general service; 9 letters.
+105,genomescan.si,health_science,58.2,82,63,72,12,57,40,2026-10-13T03:02:07Z,2026-10-13T07:19:16Z,Compound 'genomescan' head 'genome' + tail 'scan'; root 'genome'; genomics; 10 letters.
+106,roboticgrid.si,ai,58.2,73,78,67,12,57,40,2026-10-13T04:05:53Z,2026-10-13T09:10:03Z,Compound 'roboticgrid' head 'robotic' + tail 'grid'; root 'robot'; robotics; 11 letters.
+107,roboticsolve.si,ai,58.2,78,78,54,12,61,40,2026-10-13T04:06:23Z,2026-10-13T09:10:29Z,Compound 'roboticsolve' head 'robotic' + tail 'solve'; root 'robot'; robotics; 12 letters.
+108,chatport.si,ai,58.1,87,41,84,12,65,40,2026-10-13T01:29:58Z,2026-10-13T06:10:04Z,Compound 'chatport' head 'chat' + tail 'port'; no listed demand root; general service; 8 letters.
+109,robotkernel.si,ai,58.1,78,74,67,12,53,40,2026-10-13T04:06:33Z,2026-10-13T09:10:37Z,Compound 'robotkernel' head 'robot' + tail 'kernel'; root 'robot'; robotics; 11 letters.
+110,croplab.si,emerging_industries,58.0,89,41,90,12,65,25,2026-10-13T01:35:40Z,2026-10-13T06:47:31Z,Compound 'croplab' head 'crop' + tail 'lab'; no listed demand root; general service; 7 letters.
+111,edgelink.si,technology,58.0,87,42,82,12,65,40,2026-10-13T01:42:22Z,2026-10-13T07:10:02Z,Compound 'edgelink' head 'edge' + tail 'link'; no listed demand root; general service; 8 letters.
+112,gyration.si,dictionary,58.0,87,37,83,12,81,25,2026-10-13T02:19:17Z,2026-10-13T07:21:06Z,Common word 'gyration' means circular movement; 8 letters; CVCVCVVC.
+113,dronescan.si,emerging_industries,58.0,89,42,79,12,65,40,2026-10-13T01:41:53Z,2026-10-13T07:09:56Z,Compound 'dronescan' head 'drone' + tail 'scan'; no listed demand root; general service; 9 letters.
+114,memocraft.si,ai,58.0,89,42,79,12,65,40,2026-10-13T03:11:03Z,2026-10-13T07:39:40Z,Compound 'memocraft' head 'memo' + tail 'craft'; no listed demand root; general service; 9 letters.
+115,modelport.si,ai,58.0,89,42,79,12,65,40,2026-10-13T03:17:45Z,2026-10-13T08:09:20Z,Compound 'modelport' head 'model' + tail 'port'; no listed demand root; general service; 9 letters.
+116,sentilabs.si,ai,58.0,89,42,79,12,65,40,2026-10-13T04:13:56Z,2026-10-13T09:14:46Z,Compound 'sentilabs' head 'senti' + tail 'labs'; no listed demand root; general service; 9 letters.
+117,sentiport.si,ai,58.0,89,42,79,12,65,40,2026-10-13T04:14:16Z,2026-10-13T09:15:04Z,Compound 'sentiport' head 'senti' + tail 'port'; no listed demand root; general service; 9 letters.
+118,carbongrid.si,emerging_industries,58.0,78,63,72,12,62,40,2026-10-13T01:28:04Z,2026-10-13T05:54:10Z,Compound 'carbongrid' head 'carbon' + tail 'grid'; root 'carbon'; climate technology; 10 letters.
+119,biopsyscope.si,health_science,58.0,80,65,67,12,61,40,2026-10-13T01:24:49Z,2026-10-13T05:39:18Z,Compound 'biopsyscope' head 'biopsy' + tail 'scope'; root 'bio'; biotechnology; 11 letters.
+120,carbonforge.si,emerging_industries,58.0,81,63,68,12,61,40,2026-10-13T01:28:03Z,2026-10-13T05:54:04Z,Compound 'carbonforge' head 'carbon' + tail 'forge'; root 'carbon'; climate technology; 11 letters.
+121,creditsignal.si,business_finance,58.0,78,76,54,12,63,40,2026-10-13T01:35:33Z,2026-10-13T06:47:07Z,Compound 'creditsignal' head 'credit' + tail 'signal'; root 'credit'; finance; 12 letters.
+122,auditdesk.si,business_finance,57.9,89,42,78,12,65,40,2026-10-13T01:21:41Z,2026-10-13T05:28:36Z,Compound 'auditdesk' head 'audit' + tail 'desk'; no listed demand root; general service; 9 letters.
+123,cardiolab.si,health_science,57.9,89,42,78,12,65,40,2026-10-13T01:28:12Z,2026-10-13T05:54:40Z,Compound 'cardiolab' head 'cardio' + tail 'lab'; no listed demand root; general service; 9 letters.
+124,chatorbit.si,ai,57.9,89,42,78,12,65,40,2026-10-13T01:29:56Z,2026-10-13T06:09:58Z,Compound 'chatorbit' head 'chat' + tail 'orbit'; no listed demand root; general service; 9 letters.
+125,configlab.si,technology,57.9,89,42,78,12,65,40,2026-10-13T01:33:36Z,2026-10-13T06:30:39Z,Compound 'configlab' head 'config' + tail 'lab'; no listed demand root; general service; 9 letters.
+126,inferport.si,ai,57.9,89,42,78,12,65,40,2026-10-13T02:29:11Z,2026-10-13T07:25:47Z,Compound 'inferport' head 'infer' + tail 'port'; no listed demand root; general service; 9 letters.
+127,lidarmesh.si,emerging_industries,57.9,89,42,78,12,65,40,2026-10-13T02:46:55Z,2026-10-13T07:32:51Z,Compound 'lidarmesh' head 'lidar' + tail 'mesh'; no listed demand root; general service; 9 letters.
+128,linenwear.si,consumer_brands,57.9,89,42,78,12,65,40,2026-10-13T02:47:54Z,2026-10-13T07:33:24Z,Compound 'linenwear' head 'linen' + tail 'wear'; no listed demand root; general service; 9 letters.
+129,logicport.si,ai,57.9,89,42,78,12,65,40,2026-10-13T03:03:53Z,2026-10-13T07:36:27Z,Compound 'logicport' head 'logic' + tail 'port'; no listed demand root; general service; 9 letters.
+130,memoorbit.si,ai,57.9,89,42,78,12,65,40,2026-10-13T03:11:35Z,2026-10-13T07:42:56Z,Compound 'memoorbit' head 'memo' + tail 'orbit'; no listed demand root; general service; 9 letters.
+131,memospark.si,ai,57.9,89,42,78,12,65,40,2026-10-13T03:12:51Z,2026-10-13T07:49:07Z,Compound 'memospark' head 'memo' + tail 'spark'; no listed demand root; general service; 9 letters.
+132,neuroport.si,ai,57.9,89,42,78,12,65,40,2026-10-13T03:29:21Z,2026-10-13T08:26:48Z,Compound 'neuroport' head 'neuro' + tail 'port'; no listed demand root; general service; 9 letters.
+133,synapport.si,ai,57.9,89,42,78,12,65,40,2026-10-13T04:25:50Z,2026-10-13T09:27:40Z,Compound 'synapport' head 'synap' + tail 'port'; no listed demand root; general service; 9 letters.
+134,chatmesh.si,ai,57.8,86,41,84,12,65,40,2026-10-13T01:29:54Z,2026-10-13T06:09:46Z,Compound 'chatmesh' head 'chat' + tail 'mesh'; no listed demand root; general service; 8 letters.
+135,audiomesh.si,ai,57.8,89,42,77,12,65,40,2026-10-13T01:21:22Z,2026-10-13T05:22:52Z,Compound 'audiomesh' head 'audio' + tail 'mesh'; no listed demand root; general service; 9 letters.
+136,cognimesh.si,ai,57.8,89,42,77,12,65,40,2026-10-13T01:32:23Z,2026-10-13T06:16:46Z,Compound 'cognimesh' head 'cogni' + tail 'mesh'; no listed demand root; general service; 9 letters.
+137,embedport.si,ai,57.8,89,42,77,12,65,40,2026-10-13T01:43:06Z,2026-10-13T07:10:50Z,Compound 'embedport' head 'embed' + tail 'port'; no listed demand root; general service; 9 letters.
+138,loanvault.si,business_finance,57.8,88,42,79,12,65,40,2026-10-13T03:03:03Z,2026-10-13T07:36:05Z,Compound 'loanvault' head 'loan' + tail 'vault'; no listed demand root; general service; 9 letters.
+139,memostack.si,ai,57.8,89,42,77,12,65,40,2026-10-13T03:12:53Z,2026-10-13T07:49:09Z,Compound 'memostack' head 'memo' + tail 'stack'; no listed demand root; general service; 9 letters.
+140,multigrid.si,ai,57.8,89,42,77,12,65,40,2026-10-13T03:21:26Z,2026-10-13T08:16:38Z,Compound 'multigrid' head 'multi' + tail 'grid'; no listed demand root; general service; 9 letters.
+141,multimesh.si,ai,57.8,89,42,77,12,65,40,2026-10-13T03:21:42Z,2026-10-13T08:16:58Z,Compound 'multimesh' head 'multi' + tail 'mesh'; no listed demand root; general service; 9 letters.
+142,remitdesk.si,business_finance,57.8,88,42,79,12,65,40,2026-10-13T03:58:49Z,2026-10-13T09:05:45Z,Compound 'remitdesk' head 'remit' + tail 'desk'; no listed demand root; general service; 9 letters.
+143,sentigrid.si,ai,57.8,89,42,77,12,65,40,2026-10-13T04:13:52Z,2026-10-13T09:14:42Z,Compound 'sentigrid' head 'senti' + tail 'grid'; no listed demand root; general service; 9 letters.
+144,synaplink.si,ai,57.8,89,42,77,12,65,40,2026-10-13T04:25:36Z,2026-10-13T09:27:06Z,Compound 'synaplink' head 'synap' + tail 'link'; no listed demand root; general service; 9 letters.
+145,agenticvault.si,ai,57.8,77,79,53,12,60,40,2026-10-13T01:18:04Z,2026-10-13T05:19:04Z,Compound 'agenticvault' head 'agentic' + tail 'vault'; root 'agent'; automation and services; 12 letters.
+146,geriscan.si,health_science,57.7,86,41,83,12,65,40,2026-10-13T02:14:18Z,2026-10-13T07:19:52Z,Compound 'geriscan' head 'geri' + tail 'scan'; no listed demand root; general service; 8 letters.
+147,fleetdock.si,emerging_industries,57.7,87,42,80,12,65,40,2026-10-13T01:47:38Z,2026-10-13T07:16:10Z,Compound 'fleetdock' head 'fleet' + tail 'dock'; no listed demand root; general service; 9 letters.
+148,coutureshop.si,consumer_brands,57.7,80,65,66,12,60,40,2026-10-13T01:34:52Z,2026-10-13T06:39:38Z,Compound 'coutureshop' head 'couture' + tail 'shop'; root 'shop'; retail; 11 letters.
+149,groceryshop.si,consumer_brands,57.7,80,65,67,12,59,40,2026-10-13T02:18:38Z,2026-10-13T07:20:54Z,Compound 'groceryshop' head 'grocery' + tail 'shop'; root 'shop'; retail; 11 letters.
+150,memolink.si,ai,57.6,86,41,82,12,65,40,2026-10-13T03:11:25Z,2026-10-13T07:41:26Z,Compound 'memolink' head 'memo' + tail 'link'; no listed demand root; general service; 8 letters.
+151,alloygrid.si,emerging_industries,57.6,88,42,78,12,65,40,2026-10-13T01:19:09Z,2026-10-13T05:20:17Z,Compound 'alloygrid' head 'alloy' + tail 'grid'; no listed demand root; general service; 9 letters.
+152,alloymesh.si,emerging_industries,57.6,88,42,78,12,65,40,2026-10-13T01:19:11Z,2026-10-13T05:20:21Z,Compound 'alloymesh' head 'alloy' + tail 'mesh'; no listed demand root; general service; 9 letters.
+153,audioscan.si,technology,57.6,88,42,78,12,65,40,2026-10-13T01:21:28Z,2026-10-13T05:23:02Z,Compound 'audioscan' head 'audio' + tail 'scan'; no listed demand root; general service; 9 letters.
+154,chatsense.si,ai,57.6,88,42,78,12,65,40,2026-10-13T01:30:00Z,2026-10-13T06:10:16Z,Compound 'chatsense' head 'chat' + tail 'sense'; no listed demand root; general service; 9 letters.
+155,dramashow.si,consumer_brands,57.6,88,42,78,12,65,40,2026-10-13T01:41:41Z,2026-10-13T07:09:48Z,Compound 'dramashow' head 'drama' + tail 'show'; no listed demand root; general service; 9 letters.
+156,memofleet.si,ai,57.6,88,42,78,12,65,40,2026-10-13T03:11:07Z,2026-10-13T07:39:44Z,Compound 'memofleet' head 'memo' + tail 'fleet'; no listed demand root; general service; 9 letters.
+157,queryflow.si,technology,57.6,89,42,76,12,65,40,2026-10-13T03:52:13Z,2026-10-13T09:01:30Z,Compound 'queryflow' head 'query' + tail 'flow'; no listed demand root; general service; 9 letters.
+158,cryptoworks.si,technology,57.6,74,75,67,12,65,25,2026-10-13T01:35:54Z,2026-10-13T06:47:49Z,Compound 'cryptoworks' head 'crypto' + tail 'works'; root 'crypto'; digital finance; 11 letters.
+159,roboticsense.si,ai,57.6,77,78,53,12,60,40,2026-10-13T04:06:17Z,2026-10-13T09:10:25Z,Compound 'roboticsense' head 'robotic' + tail 'sense'; root 'robot'; robotics; 12 letters.
+160,databasestack.si,technology,57.6,73,92,41,12,60,40,2026-10-13T01:37:12Z,2026-10-13T07:05:19Z,Compound 'databasestack' head 'database' + tail 'stack'; root 'data'; cross-industry analytics; 13 letters.
+161,silkwear.si,consumer_brands,57.5,84,41,85,12,65,40,2026-10-13T04:17:52Z,2026-10-13T09:18:25Z,Compound 'silkwear' head 'silk' + tail 'wear'; no listed demand root; general service; 8 letters.
+162,coverdesk.si,business_finance,57.5,88,42,77,12,65,40,2026-10-13T01:34:56Z,2026-10-13T06:39:50Z,Compound 'coverdesk' head 'cover' + tail 'desk'; no listed demand root; general service; 9 letters.
+163,deeppilot.si,ai,57.5,88,42,77,12,65,40,2026-10-13T01:38:53Z,2026-10-13T07:06:32Z,Compound 'deeppilot' head 'deep' + tail 'pilot'; no listed demand root; general service; 9 letters.
+164,embedlink.si,ai,57.5,88,42,77,12,65,40,2026-10-13T01:42:58Z,2026-10-13T07:10:36Z,Compound 'embedlink' head 'embed' + tail 'link'; no listed demand root; general service; 9 letters.
+165,forexdesk.si,business_finance,57.5,88,42,77,12,65,40,2026-10-13T01:48:13Z,2026-10-13T07:16:38Z,Compound 'forexdesk' head 'forex' + tail 'desk'; no listed demand root; general service; 9 letters.
+166,omniorbit.si,ai,57.5,88,42,77,12,65,40,2026-10-13T03:35:40Z,2026-10-13T08:32:58Z,Compound 'omniorbit' head 'omni' + tail 'orbit'; no listed demand root; general service; 9 letters.
+167,robospark.si,ai,57.5,88,42,77,12,65,40,2026-10-13T04:05:11Z,2026-10-13T09:09:43Z,Compound 'robospark' head 'robo' + tail 'spark'; no listed demand root; general service; 9 letters.
+168,synaploop.si,ai,57.5,88,42,77,12,65,40,2026-10-13T04:25:38Z,2026-10-13T09:27:08Z,Compound 'synaploop' head 'synap' + tail 'loop'; no listed demand root; general service; 9 letters.
+169,synapmesh.si,ai,57.5,88,42,77,12,65,40,2026-10-13T04:25:42Z,2026-10-13T09:27:12Z,Compound 'synapmesh' head 'synap' + tail 'mesh'; no listed demand root; general service; 9 letters.
+170,textileshop.si,consumer_brands,57.5,80,64,66,12,60,40,2026-10-13T04:32:23Z,2026-10-13T09:38:43Z,Compound 'textileshop' head 'textile' + tail 'shop'; root 'shop'; retail; 11 letters.
+171,agenticorbit.si,ai,57.5,77,79,53,12,58,40,2026-10-13T01:17:57Z,2026-10-13T05:18:54Z,Compound 'agenticorbit' head 'agentic' + tail 'orbit'; root 'agent'; automation and services; 12 letters.
+172,omniloop.si,ai,57.4,86,41,81,12,65,40,2026-10-13T03:35:32Z,2026-10-13T08:32:42Z,Compound 'omniloop' head 'omni' + tail 'loop'; no listed demand root; general service; 8 letters.
+173,cogniloop.si,ai,57.4,88,42,76,12,65,40,2026-10-13T01:32:21Z,2026-10-13T06:16:40Z,Compound 'cogniloop' head 'cogni' + tail 'loop'; no listed demand root; general service; 9 letters.
+174,embedloop.si,ai,57.4,88,42,76,12,65,40,2026-10-13T01:42:59Z,2026-10-13T07:10:38Z,Compound 'embedloop' head 'embed' + tail 'loop'; no listed demand root; general service; 9 letters.
+175,omnisolve.si,ai,57.4,90,42,78,12,60,40,2026-10-13T03:35:52Z,2026-10-13T08:33:04Z,Compound 'omnisolve' head 'omni' + tail 'solve'; no listed demand root; general service; 9 letters.
+176,roboticforge.si,ai,57.4,77,78,52,12,60,40,2026-10-13T04:05:51Z,2026-10-13T09:10:01Z,Compound 'roboticforge' head 'robotic' + tail 'forge'; root 'robot'; robotics; 12 letters.
+177,insuranceflow.si,business_finance,57.4,77,85,43,12,59,40,2026-10-13T02:30:06Z,2026-10-13T07:26:05Z,Compound 'insuranceflow' head 'insurance' + tail 'flow'; root 'insurance'; insurance; 13 letters.
+178,memogrid.si,ai,57.3,85,41,82,12,65,40,2026-10-13T03:11:15Z,2026-10-13T07:40:32Z,Compound 'memogrid' head 'memo' + tail 'grid'; no listed demand root; general service; 8 letters.
+179,chatlearn.si,ai,57.3,88,41,80,12,62,40,2026-10-13T01:29:49Z,2026-10-13T06:09:16Z,Compound 'chatlearn' head 'chat' + tail 'learn'; no listed demand root; general service; 9 letters.
+180,synaplabs.si,ai,57.3,88,41,77,12,65,40,2026-10-13T04:25:30Z,2026-10-13T09:26:49Z,Compound 'synaplabs' head 'synap' + tail 'labs'; no listed demand root; general service; 9 letters.
+181,autofoundry.si,ai,57.3,73,74,66,12,57,40,2026-10-13T01:22:00Z,2026-10-13T05:29:03Z,Compound 'autofoundry' head 'auto' + tail 'foundry'; root 'auto'; automotive; 11 letters.
+182,epaulet.si,dictionary,57.2,89,37,87,12,68,25,2026-10-13T01:44:01Z,2026-10-13T07:12:23Z,Common word 'epaulet' means ornamental shoulder piece; 7 letters; VCVVCVC.
+183,decorous.si,dictionary,57.2,86,37,83,12,67,40,2026-10-13T01:38:30Z,2026-10-13T07:06:22Z,Common word 'decorous' means proper and restrained; 8 letters; CVCVCVVC.
+184,trekgear.si,consumer_brands,57.2,88,42,85,12,65,25,2026-10-13T04:43:11Z,2026-10-13T09:46:19Z,Compound 'trekgear' head 'trek' + tail 'gear'; no listed demand root; general service; 8 letters.
+185,chatvault.si,ai,57.2,87,41,78,12,65,40,2026-10-13T01:30:08Z,2026-10-13T06:10:52Z,Compound 'chatvault' head 'chat' + tail 'vault'; no listed demand root; general service; 9 letters.
+186,cobotmesh.si,emerging_industries,57.2,87,42,77,12,65,40,2026-10-13T01:31:46Z,2026-10-13T06:14:58Z,Compound 'cobotmesh' head 'cobot' + tail 'mesh'; no listed demand root; general service; 9 letters.
+187,hydrocell.si,emerging_industries,57.2,87,42,77,12,65,40,2026-10-13T02:24:17Z,2026-10-13T07:23:44Z,Compound 'hydrocell' head 'hydro' + tail 'cell'; no listed demand root; general service; 9 letters.
+188,orbitdock.si,emerging_industries,57.2,87,42,77,12,65,40,2026-10-13T03:37:12Z,2026-10-13T08:34:41Z,Compound 'orbitdock' head 'orbit' + tail 'dock'; no listed demand root; general service; 9 letters.
+189,parcelbox.si,consumer_brands,57.2,88,41,76,12,65,40,2026-10-13T03:39:38Z,2026-10-13T08:36:56Z,Compound 'parcelbox' head 'parcel' + tail 'box'; no listed demand root; general service; 9 letters.
+190,tidaldock.si,emerging_industries,57.2,87,42,77,12,65,40,2026-10-13T04:33:09Z,2026-10-13T09:39:37Z,Compound 'tidaldock' head 'tidal' + tail 'dock'; no listed demand root; general service; 9 letters.
+191,pharmatrial.si,health_science,57.2,80,65,67,12,66,25,2026-10-13T03:44:02Z,2026-10-13T08:57:25Z,Compound 'pharmatrial' head 'pharma' + tail 'trial'; root 'pharma'; pharmaceuticals; 11 letters.
+192,biopsyassay.si,health_science,57.1,77,65,65,12,62,40,2026-10-13T01:24:46Z,2026-10-13T05:39:05Z,Compound 'biopsyassay' head 'biopsy' + tail 'assay'; root 'bio'; biotechnology; 11 letters.
+193,genomeatlas.si,health_science,57.1,80,62,67,12,59,40,2026-10-13T03:02:01Z,2026-10-13T07:19:10Z,Compound 'genomeatlas' head 'genome' + tail 'atlas'; root 'genome'; genomics; 11 letters.
+194,dronedock.si,emerging_industries,57.0,86,42,77,12,65,40,2026-10-13T01:41:48Z,2026-10-13T07:09:52Z,Compound 'dronedock' head 'drone' + tail 'dock'; no listed demand root; general service; 9 letters.
+195,serumcell.si,health_science,57.0,87,41,77,12,65,40,2026-10-13T04:15:20Z,2026-10-13T09:16:04Z,Compound 'serumcell' head 'serum' + tail 'cell'; no listed demand root; general service; 9 letters.
+196,synapcore.si,ai,57.0,88,42,78,12,61,40,2026-10-13T04:25:08Z,2026-10-13T09:26:01Z,Compound 'synapcore' head 'synap' + tail 'core'; no listed demand root; general service; 9 letters.
+197,filmhouse.si,consumer_brands,56.9,85,42,78,12,65,40,2026-10-13T01:46:46Z,2026-10-13T07:15:36Z,Compound 'filmhouse' head 'film' + tail 'house'; no listed demand root; general service; 9 letters.
+198,hedgeflow.si,business_finance,56.9,87,41,77,12,64,40,2026-10-13T02:20:15Z,2026-10-13T07:21:42Z,Compound 'hedgeflow' head 'hedge' + tail 'flow'; no listed demand root; general service; 9 letters.
+199,biochargrid.si,emerging_industries,56.9,75,65,66,12,63,40,2026-10-13T01:24:24Z,2026-10-13T05:37:39Z,Compound 'biochargrid' head 'biochar' + tail 'grid'; root 'bio'; biotechnology; 11 letters.
+200,authlink.si,technology,56.8,82,41,84,12,65,40,2026-10-13T01:21:51Z,2026-10-13T05:28:54Z,Compound 'authlink' head 'auth' + tail 'link'; no listed demand root; general service; 8 letters.
+201,memoflow.si,ai,56.8,84,41,81,12,64,40,2026-10-13T03:11:09Z,2026-10-13T07:39:46Z,Compound 'memoflow' head 'memo' + tail 'flow'; no listed demand root; general service; 8 letters.
+202,yogaclub.si,consumer_brands,56.8,86,41,81,12,61,40,2026-10-13T04:58:29Z,2026-10-13T10:07:06Z,Compound 'yogaclub' head 'yoga' + tail 'club'; no listed demand root; general service; 8 letters.
+203,yogawear.si,consumer_brands,56.8,83,41,82,12,65,40,2026-10-13T04:58:35Z,2026-10-13T10:07:20Z,Compound 'yogawear' head 'yoga' + tail 'wear'; no listed demand root; general service; 8 letters.
+204,alloycell.si,emerging_industries,56.8,86,42,76,12,65,40,2026-10-13T01:19:07Z,2026-10-13T05:20:13Z,Compound 'alloycell' head 'alloy' + tail 'cell'; no listed demand root; general service; 9 letters.
+205,denimwear.si,consumer_brands,56.8,90,42,79,12,65,25,2026-10-13T01:39:41Z,2026-10-13T07:07:47Z,Compound 'denimwear' head 'denim' + tail 'wear'; no listed demand root; general service; 9 letters.
+206,embedlabs.si,ai,56.8,87,41,76,12,64,40,2026-10-13T01:42:55Z,2026-10-13T07:10:30Z,Compound 'embedlabs' head 'embed' + tail 'labs'; no listed demand root; general service; 9 letters.
+207,credittrack.si,business_finance,56.8,72,76,66,12,63,25,2026-10-13T01:35:34Z,2026-10-13T06:47:13Z,Compound 'credittrack' head 'credit' + tail 'track'; root 'credit'; finance; 11 letters.
+208,agenticsense.si,ai,56.8,75,79,51,12,59,40,2026-10-13T01:18:00Z,2026-10-13T05:18:58Z,Compound 'agenticsense' head 'agentic' + tail 'sense'; root 'agent'; automation and services; 12 letters.
+209,cobotops.si,emerging_industries,56.6,83,41,82,12,64,40,2026-10-13T01:31:47Z,2026-10-13T06:15:04Z,Compound 'cobotops' head 'cobot' + tail 'ops'; no listed demand root; general service; 8 letters.
+210,auditscan.si,technology,56.6,84,42,78,12,65,40,2026-10-13T01:21:48Z,2026-10-13T05:28:48Z,Compound 'auditscan' head 'audit' + tail 'scan'; no listed demand root; general service; 9 letters.
+211,cognigrid.si,ai,56.6,87,41,76,12,63,40,2026-10-13T01:32:15Z,2026-10-13T06:16:16Z,Compound 'cognigrid' head 'cogni' + tail 'grid'; no listed demand root; general service; 9 letters.
+212,neuroloop.si,ai,56.6,87,41,76,12,63,40,2026-10-13T03:28:59Z,2026-10-13T08:26:14Z,Compound 'neuroloop' head 'neuro' + tail 'loop'; no listed demand root; general service; 9 letters.
+213,roboorbit.si,ai,56.6,86,41,76,12,65,40,2026-10-13T04:04:57Z,2026-10-13T09:09:33Z,Compound 'roboorbit' head 'robo' + tail 'orbit'; no listed demand root; general service; 9 letters.
+214,serverops.si,technology,56.6,86,41,77,12,64,40,2026-10-13T04:15:42Z,2026-10-13T09:16:16Z,Compound 'serverops' head 'server' + tail 'ops'; no listed demand root; general service; 9 letters.
+215,physioscan.si,health_science,56.6,87,41,74,12,65,40,2026-10-13T03:44:28Z,2026-10-13T08:57:43Z,Compound 'physioscan' head 'physio' + tail 'scan'; no listed demand root; general service; 10 letters.
+216,riskvault.si,business_finance,56.5,83,41,80,12,65,40,2026-10-13T04:03:18Z,2026-10-13T09:08:48Z,Compound 'riskvault' head 'risk' + tail 'vault'; no listed demand root; general service; 9 letters.
+217,autonomyflow.si,ai,56.5,75,78,52,12,57,40,2026-10-13T01:22:15Z,2026-10-13T05:29:21Z,Compound 'autonomyflow' head 'autonomy' + tail 'flow'; root 'auto'; automotive; 12 letters.
+218,autonomylink.si,ai,56.5,75,78,52,12,57,40,2026-10-13T01:22:19Z,2026-10-13T05:29:24Z,Compound 'autonomylink' head 'autonomy' + tail 'link'; root 'auto'; automotive; 12 letters.
+219,embedcore.si,ai,56.4,88,42,76,12,59,40,2026-10-13T01:42:46Z,2026-10-13T07:10:12Z,Compound 'embedcore' head 'embed' + tail 'core'; no listed demand root; general service; 9 letters.
+220,memolearn.si,ai,56.4,88,41,77,12,59,40,2026-10-13T03:11:21Z,2026-10-13T07:41:18Z,Compound 'memolearn' head 'memo' + tail 'learn'; no listed demand root; general service; 9 letters.
+221,rehabscan.si,health_science,56.4,83,41,79,12,65,40,2026-10-13T03:57:39Z,2026-10-13T09:04:46Z,Compound 'rehabscan' head 'rehab' + tail 'scan'; no listed demand root; general service; 9 letters.
+222,senticore.si,ai,56.4,87,42,78,12,58,40,2026-10-13T04:13:38Z,2026-10-13T09:14:28Z,Compound 'senticore' head 'senti' + tail 'core'; no listed demand root; general service; 9 letters.
+223,batteryops.si,emerging_industries,56.4,87,41,74,12,64,40,2026-10-13T01:23:28Z,2026-10-13T05:30:45Z,Compound 'batteryops' head 'battery' + tail 'ops'; no listed demand root; general service; 10 letters.
+224,fusioncell.si,emerging_industries,56.4,87,41,74,12,64,40,2026-10-13T01:48:58Z,2026-10-13T07:17:27Z,Compound 'fusioncell' head 'fusion' + tail 'cell'; no listed demand root; general service; 10 letters.
+225,privacyops.si,technology,56.4,87,41,74,12,64,40,2026-10-13T03:47:38Z,2026-10-13T08:58:45Z,Compound 'privacyops' head 'privacy' + tail 'ops'; no listed demand root; general service; 10 letters.
+226,remitvault.si,business_finance,56.4,87,41,74,12,64,40,2026-10-13T03:58:59Z,2026-10-13T09:05:55Z,Compound 'remitvault' head 'remit' + tail 'vault'; no listed demand root; general service; 10 letters.
+227,videostack.si,technology,56.4,87,41,73,12,65,40,2026-10-13T04:51:27Z,2026-10-13T09:56:02Z,Compound 'videostack' head 'video' + tail 'stack'; no listed demand root; general service; 10 letters.
+228,pharmaworks.si,health_science,56.4,74,65,66,12,61,40,2026-10-13T03:44:04Z,2026-10-13T08:57:27Z,Compound 'pharmaworks' head 'pharma' + tail 'works'; root 'pharma'; pharmaceuticals; 11 letters.
+229,silkhouse.si,consumer_brands,56.3,84,41,78,12,64,40,2026-10-13T04:17:50Z,2026-10-13T09:18:13Z,Compound 'silkhouse' head 'silk' + tail 'house'; no listed demand root; general service; 9 letters.
+230,profitdesk.si,business_finance,56.3,87,41,73,12,64,40,2026-10-13T03:47:58Z,2026-10-13T08:58:53Z,Compound 'profitdesk' head 'profit' + tail 'desk'; no listed demand root; general service; 10 letters.
+231,scentbox.si,consumer_brands,56.2,81,40,83,12,65,40,2026-10-13T04:09:44Z,2026-10-13T09:11:33Z,Compound 'scentbox' head 'scent' + tail 'box'; no listed demand root; general service; 8 letters.
+232,helixscan.si,health_science,56.2,83,41,78,12,65,40,2026-10-13T02:21:29Z,2026-10-13T07:22:26Z,Compound 'helixscan' head 'helix' + tail 'scan'; no listed demand root; general service; 9 letters.
+233,covervault.si,business_finance,56.2,87,41,73,12,63,40,2026-10-13T01:35:02Z,2026-10-13T06:40:14Z,Compound 'covervault' head 'cover' + tail 'vault'; no listed demand root; general service; 10 letters.
+234,reasonlink.si,ai,56.2,86,41,74,12,64,40,2026-10-13T03:55:32Z,2026-10-13T09:03:30Z,Compound 'reasonlink' head 'reason' + tail 'link'; no listed demand root; general service; 10 letters.
+235,autopilotops.si,emerging_industries,56.2,75,78,51,12,56,40,2026-10-13T01:22:32Z,2026-10-13T05:29:51Z,Compound 'autopilotops' head 'autopilot' + tail 'ops'; root 'auto'; automotive; 12 letters.
+236,insurancedesk.si,business_finance,56.2,74,85,41,12,58,40,2026-10-13T02:30:05Z,2026-10-13T07:26:03Z,Compound 'insurancedesk' head 'insurance' + tail 'desk'; root 'insurance'; insurance; 13 letters.
+237,yogagear.si,consumer_brands,56.1,82,41,81,12,63,40,2026-10-13T04:58:31Z,2026-10-13T10:07:18Z,Compound 'yogagear' head 'yoga' + tail 'gear'; no listed demand root; general service; 8 letters.
+238,fundvault.si,business_finance,56.1,82,41,79,12,65,40,2026-10-13T01:48:49Z,2026-10-13T07:17:18Z,Compound 'fundvault' head 'fund' + tail 'vault'; no listed demand root; general service; 9 letters.
 239,loantrack.si,business_finance,56.1,82,41,79,12,65,40,2026-10-13T03:03:01Z,2026-10-13T07:36:03Z,Compound 'loantrack' head 'loan' + tail 'track'; no listed demand root; general service; 9 letters.
-240,nomadstay.si,consumer_brands,56.1,83,42,77,12,64,40,2026-10-13T03:32:03Z,2026-10-13T08:29:55Z,Compound 'nomadstay' head 'nomad' + tail 'stay'; no listed demand root; general service; 9 letters.
-241,bonddesk.si,business_finance,56.0,80,40,83,12,65,40,2026-10-13T01:25:21Z,2026-10-13T05:45:46Z,Compound 'bonddesk' head 'bond' + tail 'desk'; no listed demand root; general service; 8 letters.
-242,helixcell.si,health_science,56.0,85,41,76,12,62,40,2026-10-13T02:21:19Z,2026-10-13T07:22:20Z,Compound 'helixcell' head 'helix' + tail 'cell'; no listed demand root; general service; 9 letters.
-243,reactorops.si,emerging_industries,56.0,86,41,73,12,64,40,2026-10-13T03:54:53Z,2026-10-13T09:03:16Z,Compound 'reactorops' head 'reactor' + tail 'ops'; no listed demand root; general service; 10 letters.
-244,bondindex.si,business_finance,55.9,86,41,75,12,61,40,2026-10-13T01:25:23Z,2026-10-13T05:45:58Z,Compound 'bondindex' head 'bond' + tail 'index'; no listed demand root; general service; 9 letters.
-245,fundforge.si,business_finance,55.9,83,41,78,12,63,40,2026-10-13T01:48:45Z,2026-10-13T07:17:12Z,Compound 'fundforge' head 'fund' + tail 'forge'; no listed demand root; general service; 9 letters.
-246,jewelbox.si,consumer_brands,55.8,83,41,80,12,60,40,2026-10-13T02:31:54Z,2026-10-13T07:26:39Z,Compound 'jewelbox' head 'jewel' + tail 'box'; no listed demand root; general service; 8 letters.
-247,dramaclub.si,consumer_brands,55.8,87,41,77,12,57,40,2026-10-13T01:41:39Z,2026-10-13T07:09:44Z,Compound 'dramaclub' head 'drama' + tail 'club'; no listed demand root; general service; 9 letters.
-248,windforge.si,emerging_industries,55.8,83,40,77,12,65,40,2026-10-13T04:57:23Z,2026-10-13T10:05:22Z,Compound 'windforge' head 'wind' + tail 'forge'; no listed demand root; general service; 9 letters.
-249,trekclub.si,consumer_brands,55.6,80,40,83,12,62,40,2026-10-13T04:43:09Z,2026-10-13T09:46:17Z,Compound 'trekclub' head 'trek' + tail 'club'; no listed demand root; general service; 8 letters.
-250,coffeebox.si,consumer_brands,55.6,85,41,75,12,61,40,2026-10-13T01:32:00Z,2026-10-13T06:15:28Z,Compound 'coffeebox' head 'coffee' + tail 'box'; no listed demand root; general service; 9 letters.
-251,tailorwear.si,consumer_brands,55.5,85,41,73,12,62,40,2026-10-13T04:27:37Z,2026-10-13T09:31:11Z,Compound 'tailorwear' head 'tailor' + tail 'wear'; no listed demand root; general service; 10 letters.
-252,biocharforge.si,emerging_industries,55.5,79,65,54,12,59,40,2026-10-13T01:24:23Z,2026-10-13T05:37:35Z,Compound 'biocharforge' head 'biochar' + tail 'forge'; root 'bio'; biotechnology; 12 letters.
-253,geneworks.si,health_science,55.4,82,41,77,12,62,40,2026-10-13T01:50:34Z,2026-10-13T07:19:00Z,Compound 'geneworks' head 'gene' + tail 'works'; no listed demand root; general service; 9 letters.
-254,loansignal.si,business_finance,55.4,85,41,73,12,61,40,2026-10-13T03:02:59Z,2026-10-13T07:36:01Z,Compound 'loansignal' head 'loan' + tail 'signal'; no listed demand root; general service; 10 letters.
-255,querystack.si,technology,55.4,86,41,72,12,61,40,2026-10-13T03:52:21Z,2026-10-13T09:01:34Z,Compound 'querystack' head 'query' + tail 'stack'; no listed demand root; general service; 10 letters.
-256,genomescope.si,health_science,55.4,76,62,66,12,55,40,2026-10-13T03:02:09Z,2026-10-13T07:19:18Z,Compound 'genomescope' head 'genome' + tail 'scope'; root 'genome'; genomics; 11 letters.
-257,opticlink.si,technology,55.3,86,41,77,12,55,40,2026-10-13T03:36:38Z,2026-10-13T08:33:51Z,Compound 'opticlink' head 'optic' + tail 'link'; no listed demand root; general service; 9 letters.
-258,autonomydrive.si,emerging_industries,55.3,76,79,43,12,55,40,2026-10-13T01:22:14Z,2026-10-13T05:29:18Z,Compound 'autonomydrive' head 'autonomy' + tail 'drive'; root 'auto'; automotive; 13 letters.
-259,filmworks.si,consumer_brands,55.2,79,40,79,12,65,40,2026-10-13T01:46:47Z,2026-10-13T07:15:38Z,Compound 'filmworks' head 'film' + tail 'works'; no listed demand root; general service; 9 letters.
-260,dermascope.si,health_science,55.2,87,41,74,12,56,40,2026-10-13T01:39:56Z,2026-10-13T07:08:05Z,Compound 'dermascope' head 'derma' + tail 'scope'; no listed demand root; general service; 10 letters.
-261,myelincell.si,health_science,55.2,85,41,72,12,61,40,2026-10-13T03:22:50Z,2026-10-13T08:18:33Z,Compound 'myelincell' head 'myelin' + tail 'cell'; no listed demand root; general service; 10 letters.
-262,sleepatlas.si,health_science,55.1,84,41,73,12,61,40,2026-10-13T04:18:52Z,2026-10-13T09:19:41Z,Compound 'sleepatlas' head 'sleep' + tail 'atlas'; no listed demand root; general service; 10 letters.
-263,opticforge.si,technology,55.0,87,41,73,12,55,40,2026-10-13T03:36:32Z,2026-10-13T08:33:45Z,Compound 'opticforge' head 'optic' + tail 'forge'; no listed demand root; general service; 10 letters.
-264,dramahouse.si,consumer_brands,54.8,86,41,74,12,55,40,2026-10-13T01:41:40Z,2026-10-13T07:09:46Z,Compound 'dramahouse' head 'drama' + tail 'house'; no listed demand root; general service; 10 letters.
-265,plasmacell.si,health_science,54.8,84,41,73,12,59,40,2026-10-13T03:45:10Z,2026-10-13T08:57:49Z,Compound 'plasmacell' head 'plasma' + tail 'cell'; no listed demand root; general service; 10 letters.
-266,hedgetrack.si,business_finance,54.7,85,40,72,12,59,40,2026-10-13T02:20:28Z,2026-10-13T07:21:50Z,Compound 'hedgetrack' head 'hedge' + tail 'track'; no listed demand root; general service; 10 letters.
-267,genomeworks.si,health_science,54.7,74,62,66,12,54,40,2026-10-13T03:02:13Z,2026-10-13T07:19:26Z,Compound 'genomeworks' head 'genome' + tail 'works'; root 'genome'; genomics; 11 letters.
-268,recipebox.si,consumer_brands,54.6,85,41,77,12,52,40,2026-10-13T03:56:40Z,2026-10-13T09:04:14Z,Compound 'recipebox' head 'recipe' + tail 'box'; no listed demand root; general service; 9 letters.
-269,alloystack.si,emerging_industries,54.6,84,41,71,12,60,40,2026-10-13T01:19:12Z,2026-10-13T05:20:23Z,Compound 'alloystack' head 'alloy' + tail 'stack'; no listed demand root; general service; 10 letters.
-270,denimhouse.si,consumer_brands,54.6,86,41,73,12,54,40,2026-10-13T01:39:38Z,2026-10-13T07:07:18Z,Compound 'denimhouse' head 'denim' + tail 'house'; no listed demand root; general service; 10 letters.
-271,delio.si,invented,54.4,64,43,100,12,60,40,2026-10-13T01:39:23Z,2026-10-13T07:07:02Z,Coinage 'delio' ends -io; CVCVV; no repeated letters.
-272,meria.si,invented,54.4,64,43,100,12,60,40,2026-10-13T03:13:43Z,2026-10-13T07:54:01Z,Coinage 'meria' starts m; CVCVV; no repeated letters.
-273,raleo.si,invented,54.4,64,43,100,12,60,40,2026-10-13T03:53:07Z,2026-10-13T09:01:58Z,Coinage 'raleo' starts r; CVCVV; no repeated letters.
-274,angelforge.si,business_finance,54.4,86,41,72,12,54,40,2026-10-13T01:19:28Z,2026-10-13T05:20:31Z,Compound 'angelforge' head 'angel' + tail 'forge'; no listed demand root; general service; 10 letters.
-275,examcourse.si,consumer_brands,54.4,86,41,72,12,54,40,2026-10-13T01:44:34Z,2026-10-13T07:12:49Z,Compound 'examcourse' head 'exam' + tail 'course'; no listed demand root; general service; 10 letters.
-276,biopsyscreen.si,health_science,54.4,73,65,53,12,63,40,2026-10-13T01:24:50Z,2026-10-13T07:04:03Z,Compound 'biopsyscreen' head 'biopsy' + tail 'screen'; root 'bio'; biotechnology; 12 letters.
-277,bakerybox.si,consumer_brands,54.3,85,41,76,12,51,40,2026-10-13T01:22:56Z,2026-10-13T05:30:06Z,Compound 'bakerybox' head 'bakery' + tail 'box'; no listed demand root; general service; 9 letters.
-278,laserforge.si,emerging_industries,54.3,85,41,73,12,54,40,2026-10-13T02:41:10Z,2026-10-13T07:30:57Z,Compound 'laserforge' head 'laser' + tail 'forge'; no listed demand root; general service; 10 letters.
-279,nomadclub.si,consumer_brands,54.2,82,41,76,12,55,40,2026-10-13T03:31:59Z,2026-10-13T08:29:43Z,Compound 'nomadclub' head 'nomad' + tail 'club'; no listed demand root; general service; 9 letters.
-280,claimquote.si,business_finance,54.2,85,40,73,12,55,40,2026-10-13T01:30:54Z,2026-10-13T06:12:58Z,Compound 'claimquote' head 'claim' + tail 'quote'; no listed demand root; general service; 10 letters.
-281,cobotforge.si,emerging_industries,54.2,85,41,72,12,54,40,2026-10-13T01:31:43Z,2026-10-13T06:14:46Z,Compound 'cobotforge' head 'cobot' + tail 'forge'; no listed demand root; general service; 10 letters.
-282,denimcraft.si,consumer_brands,54.2,81,40,73,12,61,40,2026-10-13T01:39:37Z,2026-10-13T07:07:16Z,Compound 'denimcraft' head 'denim' + tail 'craft'; no listed demand root; general service; 10 letters.
-283,qubitforge.si,emerging_industries,54.2,86,41,71,12,54,40,2026-10-13T03:52:01Z,2026-10-13T09:01:24Z,Compound 'qubitforge' head 'qubit' + tail 'forge'; no listed demand root; general service; 10 letters.
-284,serumtrial.si,health_science,54.2,81,41,73,12,60,40,2026-10-13T04:15:32Z,2026-10-13T09:16:14Z,Compound 'serumtrial' head 'serum' + tail 'trial'; no listed demand root; general service; 10 letters.
-285,nirio.si,invented,54.0,63,43,99,12,60,40,2026-10-13T03:31:23Z,2026-10-13T08:29:00Z,Coinage 'nirio' ends -io; CVCVV; repeats i.
-286,brenia.si,invented,54.0,64,44,96,12,60,40,2026-10-13T01:26:08Z,2026-10-13T05:48:04Z,Coinage 'brenia' starts b; CCVCVV; no repeated letters.
-287,brenio.si,invented,54.0,64,44,96,12,60,40,2026-10-13T01:26:12Z,2026-10-13T05:48:28Z,Coinage 'brenio' ends -io; CCVCVV; no repeated letters.
-288,denimworks.si,consumer_brands,54.0,81,40,73,12,60,40,2026-10-13T01:39:42Z,2026-10-13T07:07:49Z,Compound 'denimworks' head 'denim' + tail 'works'; no listed demand root; general service; 10 letters.
-289,hikingwear.si,consumer_brands,54.0,81,40,73,12,60,40,2026-10-13T02:23:14Z,2026-10-13T07:23:28Z,Compound 'hikingwear' head 'hiking' + tail 'wear'; no listed demand root; general service; 10 letters.
-290,neuroscope.si,health_science,54.0,85,41,72,12,53,40,2026-10-13T03:29:25Z,2026-10-13T08:26:50Z,Compound 'neuroscope' head 'neuro' + tail 'scope'; no listed demand root; general service; 10 letters.
-291,cardiopulse.si,health_science,53.9,83,40,69,12,60,40,2026-10-13T01:28:14Z,2026-10-13T05:54:52Z,Compound 'cardiopulse' head 'cardio' + tail 'pulse'; no listed demand root; general service; 11 letters.
-292,biotechworks.si,health_science,53.9,72,65,53,12,61,40,2026-10-13T01:24:57Z,2026-10-13T05:44:58Z,Compound 'biotechworks' head 'biotech' + tail 'works'; root 'bio'; biotechnology; 12 letters.
-293,doreo.si,invented,53.8,63,43,99,12,59,40,2026-10-13T01:41:09Z,2026-10-13T07:08:53Z,Coinage 'doreo' starts d; CVCVV; repeats o.
-294,lania.si,invented,53.8,63,43,99,12,59,40,2026-10-13T02:39:28Z,2026-10-13T07:30:01Z,Coinage 'lania' starts l; CVCVV; repeats a.
-295,meleo.si,invented,53.8,63,43,99,12,59,40,2026-10-13T03:10:21Z,2026-10-13T07:39:13Z,Coinage 'meleo' starts m; CVCVV; repeats e.
-296,milio.si,invented,53.8,63,43,99,12,59,40,2026-10-13T03:15:15Z,2026-10-13T08:01:26Z,Coinage 'milio' ends -io; CVCVV; repeats i.
-297,mirio.si,invented,53.8,63,43,99,12,59,40,2026-10-13T03:16:27Z,2026-10-13T08:06:01Z,Coinage 'mirio' ends -io; CVCVV; repeats i.
-298,neleo.si,invented,53.8,63,43,99,12,59,40,2026-10-13T03:24:40Z,2026-10-13T08:21:20Z,Coinage 'neleo' starts n; CVCVV; repeats e.
-299,rinia.si,invented,53.8,63,43,99,12,59,40,2026-10-13T04:02:44Z,2026-10-13T09:08:26Z,Coinage 'rinia' starts r; CVCVV; repeats i.
-300,wenio.si,invented,53.8,64,41,99,12,60,40,2026-10-13T04:56:53Z,2026-10-13T10:04:04Z,Coinage 'wenio' ends -io; CVCVV; no repeated letters.
-301,fleetdrive.si,emerging_industries,53.8,80,41,73,12,59,40,2026-10-13T01:47:39Z,2026-10-13T07:16:12Z,Compound 'fleetdrive' head 'fleet' + tail 'drive'; no listed demand root; general service; 10 letters.
-302,immunocell.si,health_science,53.8,85,41,71,12,53,40,2026-10-13T02:26:59Z,2026-10-13T07:25:02Z,Compound 'immunocell' head 'immuno' + tail 'cell'; no listed demand root; general service; 10 letters.
-303,rocketdock.si,emerging_industries,53.8,82,40,72,12,58,40,2026-10-13T04:07:26Z,2026-10-13T09:10:57Z,Compound 'rocketdock' head 'rocket' + tail 'dock'; no listed demand root; general service; 10 letters.
-304,stromacell.si,health_science,53.8,80,41,74,12,58,40,2026-10-13T04:23:15Z,2026-10-13T09:24:05Z,Compound 'stromacell' head 'stroma' + tail 'cell'; no listed demand root; general service; 10 letters.
-305,voyageclub.si,consumer_brands,53.8,85,40,72,12,53,40,2026-10-13T04:55:43Z,2026-10-13T10:02:16Z,Compound 'voyageclub' head 'voyage' + tail 'club'; no listed demand root; general service; 10 letters.
-306,softwarestack.si,technology,53.8,68,85,41,12,52,40,2026-10-13T04:19:33Z,2026-10-13T09:20:13Z,Compound 'softwarestack' head 'software' + tail 'stack'; root 'software'; software; 13 letters.
-307,noral.si,invented,53.7,62,42,100,12,60,40,2026-10-13T03:32:15Z,2026-10-13T08:29:57Z,Coinage 'noral' ends -al; CVCVC; no repeated letters.
-308,insurancetrack.si,business_finance,53.7,72,85,33,12,53,40,2026-10-13T02:30:12Z,2026-10-13T07:26:07Z,Compound 'insurancetrack' head 'insurance' + tail 'track'; root 'insurance'; insurance; 14 letters.
-309,falia.si,invented,53.6,63,42,99,12,59,40,2026-10-13T01:45:11Z,2026-10-13T07:13:42Z,Coinage 'falia' starts f; CVCVV; repeats a.
-310,peleo.si,invented,53.6,63,42,99,12,59,40,2026-10-13T03:41:57Z,2026-10-13T08:55:58Z,Coinage 'peleo' starts p; CVCVV; repeats e.
-311,brenal.si,invented,53.6,64,42,96,12,60,40,2026-10-13T01:25:58Z,2026-10-13T05:47:04Z,Coinage 'brenal' ends -al; CCVCVC; no repeated letters.
-312,breneo.si,invented,53.6,63,44,96,12,59,40,2026-10-13T01:26:05Z,2026-10-13T05:47:46Z,Coinage 'breneo' starts b; CCVCVV; repeats e.
-313,relvia.si,invented,53.6,64,43,96,12,59,40,2026-10-13T03:58:45Z,2026-10-13T09:05:43Z,Coinage 'relvia' ends -via; CVCCVV; no repeated letters.
-314,renvia.si,invented,53.6,64,43,96,12,59,40,2026-10-13T03:59:52Z,2026-10-13T09:06:29Z,Coinage 'renvia' ends -via; CVCCVV; no repeated letters.
-315,alloyforge.si,emerging_industries,53.6,84,41,71,12,53,40,2026-10-13T01:19:08Z,2026-10-13T05:20:15Z,Compound 'alloyforge' head 'alloy' + tail 'forge'; no listed demand root; general service; 10 letters.
-316,decorhouse.si,consumer_brands,53.6,84,40,72,12,53,40,2026-10-13T01:38:29Z,2026-10-13T07:06:20Z,Compound 'decorhouse' head 'decor' + tail 'house'; no listed demand root; general service; 10 letters.
-317,linenhouse.si,consumer_brands,53.6,84,40,72,12,53,40,2026-10-13T02:47:46Z,2026-10-13T07:33:15Z,Compound 'linenhouse' head 'linen' + tail 'house'; no listed demand root; general service; 10 letters.
-318,marinastay.si,consumer_brands,53.6,84,41,72,12,52,40,2026-10-13T03:08:46Z,2026-10-13T07:38:43Z,Compound 'marinastay' head 'marina' + tail 'stay'; no listed demand root; general service; 10 letters.
-319,scenthouse.si,consumer_brands,53.6,80,41,72,12,59,40,2026-10-13T04:09:46Z,2026-10-13T09:11:35Z,Compound 'scenthouse' head 'scent' + tail 'house'; no listed demand root; general service; 10 letters.
-320,sleeptrack.si,health_science,53.6,79,40,74,12,60,40,2026-10-13T04:19:06Z,2026-10-13T09:19:51Z,Compound 'sleeptrack' head 'sleep' + tail 'track'; no listed demand root; general service; 10 letters.
-321,rinal.si,invented,53.5,62,41,100,12,60,40,2026-10-13T04:02:24Z,2026-10-13T09:08:06Z,Coinage 'rinal' ends -al; CVCVC; no repeated letters.
-322,belvia.si,invented,53.5,64,43,95,12,59,40,2026-10-13T01:24:04Z,2026-10-13T05:37:03Z,Coinage 'belvia' ends -via; CVCCVV; no repeated letters.
-323,delvia.si,invented,53.5,64,43,95,12,59,40,2026-10-13T01:39:33Z,2026-10-13T07:07:14Z,Coinage 'delvia' ends -via; CVCCVV; no repeated letters.
-324,dorvia.si,invented,53.5,64,43,95,12,59,40,2026-10-13T01:41:30Z,2026-10-13T07:09:17Z,Coinage 'dorvia' ends -via; CVCCVV; no repeated letters.
-325,fenvia.si,invented,53.5,64,43,95,12,59,40,2026-10-13T01:46:05Z,2026-10-13T07:14:42Z,Coinage 'fenvia' ends -via; CVCCVV; no repeated letters.
-326,softwareworks.si,technology,53.5,67,85,41,12,52,40,2026-10-13T04:19:35Z,2026-10-13T09:20:15Z,Compound 'softwareworks' head 'software' + tail 'works'; root 'software'; software; 13 letters.
-327,cinemashow.si,consumer_brands,53.4,84,40,72,12,52,40,2026-10-13T01:30:25Z,2026-10-13T06:11:46Z,Compound 'cinemashow' head 'cinema' + tail 'show'; no listed demand root; general service; 10 letters.
-328,forexsignal.si,business_finance,53.4,83,40,69,12,57,40,2026-10-13T01:48:18Z,2026-10-13T07:16:48Z,Compound 'forexsignal' head 'forex' + tail 'signal'; no listed demand root; general service; 11 letters.
-329,trekbooking.si,consumer_brands,53.4,81,40,67,12,62,40,2026-10-13T04:43:07Z,2026-10-13T09:46:05Z,Compound 'trekbooking' head 'trek' + tail 'booking'; no listed demand root; general service; 11 letters.
-330,fenal.si,invented,53.3,62,40,100,12,60,40,2026-10-13T01:45:46Z,2026-10-13T07:14:06Z,Coinage 'fenal' ends -al; CVCVC; no repeated letters.
-331,niral.si,invented,53.3,62,40,100,12,60,40,2026-10-13T03:30:55Z,2026-10-13T08:28:04Z,Coinage 'niral' ends -al; CVCVC; no repeated letters.
-332,peral.si,invented,53.3,62,40,100,12,60,40,2026-10-13T03:42:57Z,2026-10-13T08:56:44Z,Coinage 'peral' ends -al; CVCVC; no repeated letters.
-333,teral.si,invented,53.3,62,40,100,12,60,40,2026-10-13T04:31:19Z,2026-10-13T09:36:50Z,Coinage 'teral' ends -al; CVCVC; no repeated letters.
-334,toral.si,invented,53.3,62,40,100,12,60,40,2026-10-13T04:35:39Z,2026-10-13T09:43:00Z,Coinage 'toral' ends -al; CVCVC; no repeated letters.
-335,veneo.si,invented,53.3,63,41,98,12,59,40,2026-10-13T04:49:27Z,2026-10-13T09:53:17Z,Coinage 'veneo' starts v; CVCVV; repeats e.
-336,bondsignal.si,business_finance,53.3,80,40,73,12,57,40,2026-10-13T01:25:25Z,2026-10-13T05:46:10Z,Compound 'bondsignal' head 'bond' + tail 'signal'; no listed demand root; general service; 10 letters.
-337,cruiseclub.si,consumer_brands,53.3,84,41,71,12,51,40,2026-10-13T01:35:45Z,2026-10-13T06:47:43Z,Compound 'cruiseclub' head 'cruise' + tail 'club'; no listed demand root; general service; 10 letters.
-338,fiberworks.si,technology,53.3,80,40,73,12,57,40,2026-10-13T01:46:40Z,2026-10-13T07:15:32Z,Compound 'fiberworks' head 'fiber' + tail 'works'; no listed demand root; general service; 10 letters.
-339,fundsignal.si,business_finance,53.3,80,40,73,12,57,40,2026-10-13T01:48:48Z,2026-10-13T07:17:16Z,Compound 'fundsignal' head 'fund' + tail 'signal'; no listed demand root; general service; 10 letters.
-340,hikinggear.si,consumer_brands,53.3,80,40,72,12,58,40,2026-10-13T02:23:10Z,2026-10-13T07:23:26Z,Compound 'hikinggear' head 'hiking' + tail 'gear'; no listed demand root; general service; 10 letters.
-341,linencraft.si,consumer_brands,53.3,80,40,73,12,57,40,2026-10-13T02:47:44Z,2026-10-13T07:33:11Z,Compound 'linencraft' head 'linen' + tail 'craft'; no listed demand root; general service; 10 letters.
-342,brena.si,invented,53.2,64,36,100,12,61,40,2026-10-13T01:25:57Z,2026-10-13T05:46:58Z,Coinage 'brena' ends -ena; CCVCV; no repeated letters.
-343,ranal.si,invented,53.2,61,42,99,12,59,40,2026-10-13T03:53:41Z,2026-10-13T09:02:26Z,Coinage 'ranal' ends -al; CVCVC; repeats a.
-344,ranium.si,invented,53.2,64,41,96,12,59,40,2026-10-13T03:54:09Z,2026-10-13T09:02:52Z,Coinage 'ranium' ends -ium; CVCVVC; no repeated letters.
-345,indexstack.si,technology,53.2,80,40,72,12,57,40,2026-10-13T02:27:38Z,2026-10-13T07:25:14Z,Compound 'indexstack' head 'index' + tail 'stack'; no listed demand root; general service; 10 letters.
-346,voyagestay.si,consumer_brands,53.2,82,40,71,12,55,40,2026-10-13T04:55:47Z,2026-10-13T10:02:18Z,Compound 'voyagestay' head 'voyage' + tail 'stay'; no listed demand root; general service; 10 letters.
-347,plasmatrial.si,health_science,53.2,80,40,68,12,61,40,2026-10-13T03:45:20Z,2026-10-13T08:57:59Z,Compound 'plasmatrial' head 'plasma' + tail 'trial'; no listed demand root; general service; 11 letters.
-348,narium.si,invented,53.1,64,41,95,12,59,40,2026-10-13T03:23:44Z,2026-10-13T08:19:52Z,Coinage 'narium' ends -ium; CVCVVC; no repeated letters.
-349,norium.si,invented,53.1,64,41,95,12,59,40,2026-10-13T03:32:47Z,2026-10-13T08:30:53Z,Coinage 'norium' ends -ium; CVCVVC; no repeated letters.
-350,ralium.si,invented,53.1,64,41,95,12,59,40,2026-10-13T03:53:19Z,2026-10-13T09:02:10Z,Coinage 'ralium' ends -ium; CVCVVC; no repeated letters.
-351,relium.si,invented,53.1,64,41,95,12,59,40,2026-10-13T03:58:29Z,2026-10-13T09:05:31Z,Coinage 'relium' ends -ium; CVCVVC; no repeated letters.
-352,naral.si,invented,53.0,61,41,99,12,59,40,2026-10-13T03:23:18Z,2026-10-13T08:18:58Z,Coinage 'naral' ends -al; CVCVC; repeats a.
-353,relal.si,invented,53.0,61,41,99,12,59,40,2026-10-13T03:57:47Z,2026-10-13T09:04:54Z,Coinage 'relal' ends -al; CVCVC; repeats l.
-354,wenal.si,invented,53.0,62,40,99,12,59,40,2026-10-13T04:56:29Z,2026-10-13T10:03:09Z,Coinage 'wenal' ends -al; CVCVC; no repeated letters.
-355,winal.si,invented,53.0,62,40,99,12,59,40,2026-10-13T04:57:13Z,2026-10-13T10:04:52Z,Coinage 'winal' ends -al; CVCVC; no repeated letters.
-356,fenium.si,invented,53.0,64,41,94,12,59,40,2026-10-13T01:45:58Z,2026-10-13T07:14:30Z,Coinage 'fenium' ends -ium; CVCVVC; no repeated letters.
-357,helixassay.si,health_science,53.0,84,40,71,12,50,40,2026-10-13T02:21:14Z,2026-10-13T07:22:16Z,Compound 'helixassay' head 'helix' + tail 'assay'; no listed demand root; general service; 10 letters.
-358,jewelhouse.si,consumer_brands,53.0,84,40,71,12,50,40,2026-10-13T02:32:00Z,2026-10-13T07:26:43Z,Compound 'jewelhouse' head 'jewel' + tail 'house'; no listed demand root; general service; 10 letters.
-359,safaristay.si,consumer_brands,53.0,83,41,71,12,51,40,2026-10-13T04:08:32Z,2026-10-13T09:11:11Z,Compound 'safaristay' head 'safari' + tail 'stay'; no listed demand root; general service; 10 letters.
-360,dramastudio.si,consumer_brands,53.0,82,40,68,12,57,40,2026-10-13T01:41:42Z,2026-10-13T07:09:50Z,Compound 'dramastudio' head 'drama' + tail 'studio'; no listed demand root; general service; 11 letters.
-361,fenaro.si,invented,52.9,62,44,93,12,59,40,2026-10-13T01:45:49Z,2026-10-13T07:14:12Z,Coinage 'fenaro' ends -aro; CVCVCV; no repeated letters.
-362,lenaro.si,invented,52.9,62,44,93,12,59,40,2026-10-13T02:44:11Z,2026-10-13T07:31:57Z,Coinage 'lenaro' ends -aro; CVCVCV; no repeated letters.
-363,merona.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:14:01Z,2026-10-13T07:55:29Z,Coinage 'merona' starts m; CVCVCV; no repeated letters.
-364,narelo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:23:26Z,2026-10-13T08:19:16Z,Coinage 'narelo' starts n; CVCVCV; no repeated letters.
-365,nelaro.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:24:32Z,2026-10-13T08:21:02Z,Coinage 'nelaro' ends -aro; CVCVCV; no repeated letters.
-366,nelora.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:24:58Z,2026-10-13T08:21:59Z,Coinage 'nelora' ends -ora; CVCVCV; no repeated letters.
-367,ralino.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:53:17Z,2026-10-13T09:02:08Z,Coinage 'ralino' ends -ino; CVCVCV; no repeated letters.
-368,raluno.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:53:31Z,2026-10-13T09:02:20Z,Coinage 'raluno' starts r; CVCVCV; no repeated letters.
-369,ranelo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:53:53Z,2026-10-13T09:02:38Z,Coinage 'ranelo' starts r; CVCVCV; no repeated letters.
-370,ranilo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:54:03Z,2026-10-13T09:02:46Z,Coinage 'ranilo' starts r; CVCVCV; no repeated letters.
-371,relami.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:57:49Z,2026-10-13T09:04:56Z,Coinage 'relami' starts r; CVCVCV; no repeated letters.
-372,relina.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:58:25Z,2026-10-13T09:05:27Z,Coinage 'relina' ends -ina; CVCVCV; no repeated letters.
-373,relino.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:58:27Z,2026-10-13T09:05:29Z,Coinage 'relino' ends -ino; CVCVCV; no repeated letters.
-374,relona.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:58:35Z,2026-10-13T09:05:33Z,Coinage 'relona' starts r; CVCVCV; no repeated letters.
-375,reluno.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:58:41Z,2026-10-13T09:05:39Z,Coinage 'reluno' starts r; CVCVCV; no repeated letters.
-376,renami.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:59:05Z,2026-10-13T09:05:57Z,Coinage 'renami' starts r; CVCVCV; no repeated letters.
-377,renilo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:59:32Z,2026-10-13T09:06:17Z,Coinage 'renilo' starts r; CVCVCV; no repeated letters.
-378,rinelo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T04:02:36Z,2026-10-13T09:08:18Z,Coinage 'rinelo' starts r; CVCVCV; no repeated letters.
-379,terona.si,invented,52.9,62,44,93,12,59,40,2026-10-13T04:31:51Z,2026-10-13T09:38:09Z,Coinage 'terona' starts t; CVCVCV; no repeated letters.
-380,torena.si,invented,52.9,62,44,93,12,59,40,2026-10-13T04:35:51Z,2026-10-13T09:43:32Z,Coinage 'torena' ends -ena; CVCVCV; no repeated letters.
-381,leatherwear.si,consumer_brands,52.9,79,40,67,12,62,40,2026-10-13T02:43:22Z,2026-10-13T07:31:41Z,Compound 'leatherwear' head 'leather' + tail 'wear'; no listed demand root; general service; 11 letters.
-382,elova.si,invented,52.8,62,41,96,12,59,40,2026-10-13T01:42:41Z,2026-10-13T07:10:08Z,Coinage 'elova' starts e; VCVCV; no repeated letters.
-383,lisal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T02:50:21Z,2026-10-13T07:34:50Z,Coinage 'lisal' ends -al; CVCVC; repeats l.
-384,melal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:10:07Z,2026-10-13T07:39:01Z,Coinage 'melal' ends -al; CVCVC; repeats l.
-385,milal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:14:47Z,2026-10-13T07:58:55Z,Coinage 'milal' ends -al; CVCVC; repeats l.
-386,molal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:18:21Z,2026-10-13T08:11:38Z,Coinage 'molal' ends -al; CVCVC; repeats l.
-387,nelal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:24:26Z,2026-10-13T08:20:46Z,Coinage 'nelal' ends -al; CVCVC; repeats l.
-388,pelal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:41:43Z,2026-10-13T08:55:44Z,Coinage 'pelal' ends -al; CVCVC; repeats l.
-389,angelpitch.si,business_finance,52.8,79,40,71,12,57,40,2026-10-13T01:19:31Z,2026-10-13T05:20:33Z,Compound 'angelpitch' head 'angel' + tail 'pitch'; no listed demand root; general service; 10 letters.
-390,assetindex.si,business_finance,52.8,84,41,70,12,49,40,2026-10-13T01:20:22Z,2026-10-13T05:21:09Z,Compound 'assetindex' head 'asset' + tail 'index'; no listed demand root; general service; 10 letters.
-391,comedyshow.si,consumer_brands,52.8,83,40,72,12,50,40,2026-10-13T01:33:01Z,2026-10-13T07:04:11Z,Compound 'comedyshow' head 'comedy' + tail 'show'; no listed demand root; general service; 10 letters.
-392,forextrack.si,business_finance,52.8,79,40,72,12,56,40,2026-10-13T01:48:19Z,2026-10-13T07:16:50Z,Compound 'forextrack' head 'forex' + tail 'track'; no listed demand root; general service; 10 letters.
-393,serumassay.si,health_science,52.8,83,40,71,12,51,40,2026-10-13T04:15:18Z,2026-10-13T09:16:02Z,Compound 'serumassay' head 'serum' + tail 'assay'; no listed demand root; general service; 10 letters.
-394,belaro.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:23:45Z,2026-10-13T05:31:00Z,Coinage 'belaro' ends -aro; CVCVCV; no repeated letters.
-395,belino.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:23:54Z,2026-10-13T05:36:32Z,Coinage 'belino' ends -ino; CVCVCV; no repeated letters.
-396,beluno.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:24:02Z,2026-10-13T05:36:54Z,Coinage 'beluno' starts b; CVCVCV; no repeated letters.
-397,belura.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:24:03Z,2026-10-13T05:36:59Z,Coinage 'belura' starts b; CVCVCV; no repeated letters.
-398,darelo.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:36:46Z,2026-10-13T07:04:41Z,Coinage 'darelo' starts d; CVCVCV; no repeated letters.
-399,darino.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:36:53Z,2026-10-13T07:04:51Z,Coinage 'darino' ends -ino; CVCVCV; no repeated letters.
-400,daruno.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:37:00Z,2026-10-13T07:05:03Z,Coinage 'daruno' starts d; CVCVCV; no repeated letters.
-401,delami.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:09Z,2026-10-13T07:06:40Z,Coinage 'delami' starts d; CVCVCV; no repeated letters.
-402,delaro.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:11Z,2026-10-13T07:06:44Z,Coinage 'delaro' ends -aro; CVCVCV; no repeated letters.
-403,delino.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:22Z,2026-10-13T07:07:00Z,Coinage 'delino' ends -ino; CVCVCV; no repeated letters.
-404,delora.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:28Z,2026-10-13T07:07:06Z,Coinage 'delora' ends -ora; CVCVCV; no repeated letters.
-405,delova.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:29Z,2026-10-13T07:07:08Z,Coinage 'delova' starts d; CVCVCV; no repeated letters.
-406,deluno.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:30Z,2026-10-13T07:07:10Z,Coinage 'deluno' starts d; CVCVCV; no repeated letters.
-407,delura.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:31Z,2026-10-13T07:07:12Z,Coinage 'delura' starts d; CVCVCV; no repeated letters.
-408,dorami.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:41:02Z,2026-10-13T07:08:39Z,Coinage 'dorami' starts d; CVCVCV; no repeated letters.
-409,dorena.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:41:07Z,2026-10-13T07:08:49Z,Coinage 'dorena' ends -ena; CVCVCV; no repeated letters.
-410,doriva.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:41:17Z,2026-10-13T07:09:07Z,Coinage 'doriva' starts d; CVCVCV; no repeated letters.
-411,falino.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:14Z,2026-10-13T07:13:48Z,Coinage 'falino' ends -ino; CVCVCV; no repeated letters.
-412,faluno.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:21Z,2026-10-13T07:14:00Z,Coinage 'faluno' starts f; CVCVCV; no repeated letters.
-413,fenami.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:47Z,2026-10-13T07:14:08Z,Coinage 'fenami' starts f; CVCVCV; no repeated letters.
-414,fenilo.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:55Z,2026-10-13T07:14:24Z,Coinage 'fenilo' starts f; CVCVCV; no repeated letters.
-415,feniva.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:59Z,2026-10-13T07:14:32Z,Coinage 'feniva' starts f; CVCVCV; no repeated letters.
-416,fenova.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:02Z,2026-10-13T07:14:36Z,Coinage 'fenova' starts f; CVCVCV; no repeated letters.
-417,fenura.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:04Z,2026-10-13T07:14:40Z,Coinage 'fenura' starts f; CVCVCV; no repeated letters.
-418,ferami.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:07Z,2026-10-13T07:14:44Z,Coinage 'ferami' starts f; CVCVCV; no repeated letters.
-419,ferilo.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:15Z,2026-10-13T07:15:00Z,Coinage 'ferilo' starts f; CVCVCV; no repeated letters.
-420,feriva.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:19Z,2026-10-13T07:15:06Z,Coinage 'feriva' starts f; CVCVCV; no repeated letters.
-421,ferova.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:23Z,2026-10-13T07:15:10Z,Coinage 'ferova' starts f; CVCVCV; no repeated letters.
-422,linaro.si,invented,52.7,62,43,93,12,59,40,2026-10-13T02:47:23Z,2026-10-13T07:33:01Z,Coinage 'linaro' ends -aro; CVCVCV; no repeated letters.
-423,audittrack.si,business_finance,52.6,79,40,71,12,56,40,2026-10-13T01:21:49Z,2026-10-13T05:28:51Z,Compound 'audittrack' head 'audit' + tail 'track'; no listed demand root; general service; 10 letters.
-424,examstudio.si,consumer_brands,52.6,81,40,72,12,52,40,2026-10-13T01:44:37Z,2026-10-13T07:12:53Z,Compound 'examstudio' head 'exam' + tail 'studio'; no listed demand root; general service; 10 letters.
-425,hostelstay.si,consumer_brands,52.6,79,40,71,12,56,40,2026-10-13T02:23:57Z,2026-10-13T07:23:42Z,Compound 'hostelstay' head 'hostel' + tail 'stay'; no listed demand root; general service; 10 letters.
-426,genemarker.si,health_science,52.5,81,40,72,12,51,40,2026-10-13T01:50:21Z,2026-10-13T07:18:48Z,Compound 'genemarker' head 'gene' + tail 'marker'; no listed demand root; general service; 10 letters.
-427,laserworks.si,emerging_industries,52.5,78,40,72,12,56,40,2026-10-13T02:41:26Z,2026-10-13T07:31:05Z,Compound 'laserworks' head 'laser' + tail 'works'; no listed demand root; general service; 10 letters.
-428,remittrack.si,business_finance,52.5,78,40,72,12,56,40,2026-10-13T03:58:57Z,2026-10-13T09:05:53Z,Compound 'remittrack' head 'remit' + tail 'track'; no listed demand root; general service; 10 letters.
-429,yieldindex.si,business_finance,52.5,81,40,70,12,53,40,2026-10-13T04:58:21Z,2026-10-13T10:06:50Z,Compound 'yieldindex' head 'yield' + tail 'index'; no listed demand root; general service; 10 letters.
-430,helixatlas.si,health_science,52.4,82,40,71,12,50,40,2026-10-13T02:21:18Z,2026-10-13T07:22:18Z,Compound 'helixatlas' head 'helix' + tail 'atlas'; no listed demand root; general service; 10 letters.
-431,kitchenbox.si,consumer_brands,52.4,79,40,71,12,55,40,2026-10-13T02:36:30Z,2026-10-13T07:28:37Z,Compound 'kitchenbox' head 'kitchen' + tail 'box'; no listed demand root; general service; 10 letters.
-432,rehabtrack.si,health_science,52.4,78,40,72,12,55,40,2026-10-13T03:57:41Z,2026-10-13T09:04:48Z,Compound 'rehabtrack' head 'rehab' + tail 'track'; no listed demand root; general service; 10 letters.
-433,neuronatlas.si,health_science,52.4,81,40,68,12,54,40,2026-10-13T03:29:04Z,2026-10-13T08:26:16Z,Compound 'neuronatlas' head 'neuron' + tail 'atlas'; no listed demand root; general service; 11 letters.
-434,skincarebox.si,consumer_brands,52.4,82,40,67,12,54,40,2026-10-13T04:18:36Z,2026-10-13T09:18:47Z,Compound 'skincarebox' head 'skincare' + tail 'box'; no listed demand root; general service; 11 letters.
-435,tailorhouse.si,consumer_brands,52.4,81,40,68,12,54,40,2026-10-13T04:27:31Z,2026-10-13T09:30:55Z,Compound 'tailorhouse' head 'tailor' + tail 'house'; no listed demand root; general service; 11 letters.
-436,coffeeclub.si,consumer_brands,52.3,82,40,71,12,49,40,2026-10-13T01:32:01Z,2026-10-13T06:15:34Z,Compound 'coffeeclub' head 'coffee' + tail 'club'; no listed demand root; general service; 10 letters.
-437,jewelcraft.si,consumer_brands,52.3,79,40,71,12,54,40,2026-10-13T02:31:55Z,2026-10-13T07:26:41Z,Compound 'jewelcraft' head 'jewel' + tail 'craft'; no listed demand root; general service; 10 letters.
-438,musicclub.si,consumer_brands,52.2,79,40,75,12,49,40,2026-10-13T03:22:22Z,2026-10-13T08:17:57Z,Compound 'musicclub' head 'music' + tail 'club'; no listed demand root; general service; 9 letters.
-439,decorcraft.si,consumer_brands,52.2,78,40,71,12,55,40,2026-10-13T01:38:27Z,2026-10-13T07:06:18Z,Compound 'decorcraft' head 'decor' + tail 'craft'; no listed demand root; general service; 10 letters.
-440,laserstack.si,emerging_industries,52.2,78,40,71,12,55,40,2026-10-13T02:41:24Z,2026-10-13T07:31:03Z,Compound 'laserstack' head 'laser' + tail 'stack'; no listed demand root; general service; 10 letters.
-441,droneflight.si,emerging_industries,52.2,77,39,68,12,61,40,2026-10-13T01:41:49Z,2026-10-13T07:09:54Z,Compound 'droneflight' head 'drone' + tail 'flight'; no listed demand root; general service; 11 letters.
-442,helixmarker.si,health_science,52.2,81,40,68,12,53,40,2026-10-13T02:21:25Z,2026-10-13T07:22:24Z,Compound 'helixmarker' head 'helix' + tail 'marker'; no listed demand root; general service; 11 letters.
-443,myelinatlas.si,health_science,52.2,81,40,67,12,54,40,2026-10-13T03:22:48Z,2026-10-13T08:18:21Z,Compound 'myelinatlas' head 'myelin' + tail 'atlas'; no listed demand root; general service; 11 letters.
-444,helixscope.si,health_science,52.1,80,40,72,12,50,40,2026-10-13T02:21:30Z,2026-10-13T07:22:28Z,Compound 'helixscope' head 'helix' + tail 'scope'; no listed demand root; general service; 10 letters.
-445,serumscope.si,health_science,52.1,80,40,72,12,50,40,2026-10-13T04:15:30Z,2026-10-13T09:16:12Z,Compound 'serumscope' head 'serum' + tail 'scope'; no listed demand root; general service; 10 letters.
-446,plasmascope.si,health_science,52.1,80,40,68,12,54,40,2026-10-13T03:45:18Z,2026-10-13T08:57:57Z,Compound 'plasmascope' head 'plasma' + tail 'scope'; no listed demand root; general service; 11 letters.
-447,retinascope.si,health_science,52.1,80,40,68,12,54,40,2026-10-13T04:00:34Z,2026-10-13T09:06:39Z,Compound 'retinascope' head 'retina' + tail 'scope'; no listed demand root; general service; 11 letters.
-448,galleryshow.si,consumer_brands,51.9,81,40,67,12,52,40,2026-10-13T01:49:44Z,2026-10-13T07:18:17Z,Compound 'galleryshow' head 'gallery' + tail 'show'; no listed demand root; general service; 11 letters.
-449,bakerycraft.si,consumer_brands,51.8,80,40,67,12,53,40,2026-10-13T01:22:58Z,2026-10-13T05:30:12Z,Compound 'bakerycraft' head 'bakery' + tail 'craft'; no listed demand root; general service; 11 letters.
-450,campingwear.si,consumer_brands,51.8,76,39,68,12,60,40,2026-10-13T01:27:31Z,2026-10-13T05:52:22Z,Compound 'campingwear' head 'camping' + tail 'wear'; no listed demand root; general service; 11 letters.
-451,serummarker.si,health_science,51.7,79,40,68,12,53,40,2026-10-13T04:15:26Z,2026-10-13T09:16:08Z,Compound 'serummarker' head 'serum' + tail 'marker'; no listed demand root; general service; 11 letters.
-452,mentorclub.si,consumer_brands,51.6,79,40,71,12,49,40,2026-10-13T03:13:11Z,2026-10-13T07:51:39Z,Compound 'mentorclub' head 'mentor' + tail 'club'; no listed demand root; general service; 10 letters.
-453,enzymescope.si,health_science,51.6,80,40,66,12,53,40,2026-10-13T01:43:58Z,2026-10-13T07:12:17Z,Compound 'enzymescope' head 'enzyme' + tail 'scope'; no listed demand root; general service; 11 letters.
-454,linendesign.si,consumer_brands,51.6,79,40,67,12,53,40,2026-10-13T02:47:45Z,2026-10-13T07:33:13Z,Compound 'linendesign' head 'linen' + tail 'design'; no listed demand root; general service; 11 letters.
-455,recipecraft.si,consumer_brands,51.6,80,40,67,12,52,40,2026-10-13T03:56:44Z,2026-10-13T09:04:18Z,Compound 'recipecraft' head 'recipe' + tail 'craft'; no listed demand root; general service; 11 letters.
-456,sailingwear.si,consumer_brands,51.6,76,39,67,12,60,40,2026-10-13T04:08:40Z,2026-10-13T09:11:15Z,Compound 'sailingwear' head 'sailing' + tail 'wear'; no listed demand root; general service; 11 letters.
-457,canyonstay.si,consumer_brands,51.5,77,40,70,12,53,40,2026-10-13T01:27:42Z,2026-10-13T05:52:58Z,Compound 'canyonstay' head 'canyon' + tail 'stay'; no listed demand root; general service; 10 letters.
-458,plasmaassay.si,health_science,51.5,77,40,65,12,58,40,2026-10-13T03:45:08Z,2026-10-13T08:57:47Z,Compound 'plasmaassay' head 'plasma' + tail 'assay'; no listed demand root; general service; 11 letters.
-459,weddingbox.si,consumer_brands,51.4,78,40,70,12,51,40,2026-10-13T04:56:19Z,2026-10-13T10:02:53Z,Compound 'weddingbox' head 'wedding' + tail 'box'; no listed demand root; general service; 10 letters.
-460,hedgesignal.si,business_finance,51.3,80,39,66,12,52,40,2026-10-13T02:20:27Z,2026-10-13T07:21:48Z,Compound 'hedgesignal' head 'hedge' + tail 'signal'; no listed demand root; general service; 11 letters.
-461,marinaclub.si,consumer_brands,51.2,82,40,72,12,41,40,2026-10-13T03:08:44Z,2026-10-13T07:38:41Z,Compound 'marinaclub' head 'marina' + tail 'club'; no listed demand root; general service; 10 letters.
-462,assetsignal.si,business_finance,51.2,79,40,66,12,52,40,2026-10-13T01:20:24Z,2026-10-13T05:21:13Z,Compound 'assetsignal' head 'asset' + tail 'signal'; no listed demand root; general service; 11 letters.
-463,sailinggear.si,consumer_brands,51.1,75,39,67,12,58,40,2026-10-13T04:08:38Z,2026-10-13T09:11:13Z,Compound 'sailinggear' head 'sailing' + tail 'gear'; no listed demand root; general service; 11 letters.
-464,myelinscope.si,health_science,51.0,77,39,68,12,53,40,2026-10-13T03:22:58Z,2026-10-13T08:18:52Z,Compound 'myelinscope' head 'myelin' + tail 'scope'; no listed demand root; general service; 11 letters.
-465,bakeryhouse.si,consumer_brands,50.6,78,39,68,12,49,40,2026-10-13T01:22:59Z,2026-10-13T05:30:15Z,Compound 'bakeryhouse' head 'bakery' + tail 'house'; no listed demand root; general service; 11 letters.
-466,cookwarebox.si,consumer_brands,50.6,79,39,65,12,50,40,2026-10-13T01:34:09Z,2026-10-13T06:32:27Z,Compound 'cookwarebox' head 'cookware' + tail 'box'; no listed demand root; general service; 11 letters.
-467,tailorcraft.si,consumer_brands,50.6,74,39,67,12,56,40,2026-10-13T04:27:27Z,2026-10-13T09:30:51Z,Compound 'tailorcraft' head 'tailor' + tail 'craft'; no listed demand root; general service; 11 letters.
-468,theatershow.si,consumer_brands,50.6,74,40,66,12,56,40,2026-10-13T04:32:39Z,2026-10-13T09:39:01Z,Compound 'theatershow' head 'theater' + tail 'show'; no listed demand root; general service; 11 letters.
-469,optionquote.si,business_finance,50.4,78,39,66,12,49,40,2026-10-13T03:36:56Z,2026-10-13T08:34:25Z,Compound 'optionquote' head 'option' + tail 'quote'; no listed demand root; general service; 11 letters.
-470,biomarkeratlas.si,health_science,50.4,74,65,35,12,52,40,2026-10-13T01:24:30Z,2026-10-13T05:38:02Z,Compound 'biomarkeratlas' head 'biomarker' + tail 'atlas'; root 'bio'; biotechnology; 14 letters.
-471,payloadcontrol.si,emerging_industries,50.3,68,73,34,12,52,40,2026-10-13T03:41:12Z,2026-10-13T08:55:30Z,Compound 'payloadcontrol' head 'payload' + tail 'control'; root 'payload'; software data transfer; 14 letters.
-472,decorstudio.si,consumer_brands,50.2,75,39,67,12,52,40,2026-10-13T01:38:32Z,2026-10-13T07:06:26Z,Compound 'decorstudio' head 'decor' + tail 'studio'; no listed demand root; general service; 11 letters.
-473,jewelstudio.si,consumer_brands,50.2,76,39,67,12,50,40,2026-10-13T02:32:11Z,2026-10-13T07:26:47Z,Compound 'jewelstudio' head 'jewel' + tail 'studio'; no listed demand root; general service; 11 letters.
-474,lidarflight.si,emerging_industries,50.2,74,39,66,12,55,40,2026-10-13T02:46:44Z,2026-10-13T07:32:45Z,Compound 'lidarflight' head 'lidar' + tail 'flight'; no listed demand root; general service; 11 letters.
-475,linenstudio.si,consumer_brands,50.2,75,39,67,12,52,40,2026-10-13T02:47:50Z,2026-10-13T07:33:19Z,Compound 'linenstudio' head 'linen' + tail 'studio'; no listed demand root; general service; 11 letters.
-476,stromaassay.si,health_science,50.2,73,39,66,12,56,40,2026-10-13T04:23:13Z,2026-10-13T09:24:03Z,Compound 'stromaassay' head 'stroma' + tail 'assay'; no listed demand root; general service; 11 letters.
-477,yieldsignal.si,business_finance,50.2,74,39,66,12,55,40,2026-10-13T04:58:25Z,2026-10-13T10:07:04Z,Compound 'yieldsignal' head 'yield' + tail 'signal'; no listed demand root; general service; 11 letters.
-478,sleepmonitor.si,health_science,50.2,80,40,55,12,54,40,2026-10-13T04:19:00Z,2026-10-13T09:19:45Z,Compound 'sleepmonitor' head 'sleep' + tail 'monitor'; no listed demand root; general service; 12 letters.
-479,denimstudio.si,consumer_brands,50.0,75,39,67,12,51,40,2026-10-13T01:39:40Z,2026-10-13T07:07:45Z,Compound 'denimstudio' head 'denim' + tail 'studio'; no listed demand root; general service; 11 letters.
-480,enzymeassay.si,health_science,50.0,77,39,66,12,48,40,2026-10-13T01:43:54Z,2026-10-13T07:12:09Z,Compound 'enzymeassay' head 'enzyme' + tail 'assay'; no listed demand root; general service; 11 letters.
-481,equityindex.si,business_finance,49.8,78,39,65,12,46,40,2026-10-13T01:44:12Z,2026-10-13T07:12:29Z,Compound 'equityindex' head 'equity' + tail 'index'; no listed demand root; general service; 11 letters.
-482,tailordesign.si,consumer_brands,49.8,80,39,54,12,54,40,2026-10-13T04:27:29Z,2026-10-13T09:30:53Z,Compound 'tailordesign' head 'tailor' + tail 'design'; no listed demand root; general service; 12 letters.
-483,dermaclinic.si,health_science,49.6,79,39,66,12,42,40,2026-10-13T01:39:53Z,2026-10-13T07:08:03Z,Compound 'dermaclinic' head 'derma' + tail 'clinic'; no listed demand root; general service; 11 letters.
-484,brokersignal.si,business_finance,49.4,79,39,54,12,53,40,2026-10-13T01:26:34Z,2026-10-13T05:49:40Z,Compound 'brokersignal' head 'broker' + tail 'signal'; no listed demand root; general service; 12 letters.
-485,proteinatlas.si,health_science,49.4,79,39,54,12,53,40,2026-10-13T03:48:28Z,2026-10-13T08:59:07Z,Compound 'proteinatlas' head 'protein' + tail 'atlas'; no listed demand root; general service; 12 letters.
-486,gericlinic.si,health_science,49.2,79,39,70,12,36,40,2026-10-13T02:14:13Z,2026-10-13T07:19:48Z,Compound 'gericlinic' head 'geri' + tail 'clinic'; no listed demand root; general service; 10 letters.
-487,caravanstay.si,consumer_brands,49.2,74,39,66,12,48,40,2026-10-13T01:28:00Z,2026-10-13T05:53:46Z,Compound 'caravanstay' head 'caravan' + tail 'stay'; no listed demand root; general service; 11 letters.
-488,cyclingwear.si,consumer_brands,49.2,74,38,67,12,48,40,2026-10-13T01:36:25Z,2026-10-13T06:48:49Z,Compound 'cyclingwear' head 'cycling' + tail 'wear'; no listed demand root; general service; 11 letters.
-489,mentorclass.si,consumer_brands,49.2,74,39,67,12,47,40,2026-10-13T03:13:09Z,2026-10-13T07:50:56Z,Compound 'mentorclass' head 'mentor' + tail 'class'; no listed demand root; general service; 11 letters.
-490,synapsetrial.si,health_science,49.2,79,39,54,12,52,40,2026-10-13T04:26:54Z,2026-10-13T09:29:47Z,Compound 'synapsetrial' head 'synapse' + tail 'trial'; no listed demand root; general service; 12 letters.
-491,biomarkerassay.si,health_science,49.2,72,65,34,12,49,40,2026-10-13T01:24:29Z,2026-10-13T05:37:57Z,Compound 'biomarkerassay' head 'biomarker' + tail 'assay'; root 'bio'; biotechnology; 14 letters.
-492,myelinmarker.si,health_science,48.8,78,39,53,12,52,40,2026-10-13T03:22:54Z,2026-10-13T08:18:37Z,Compound 'myelinmarker' head 'myelin' + tail 'marker'; no listed demand root; general service; 12 letters.
-493,mentorcourse.si,consumer_brands,48.7,78,39,53,12,51,40,2026-10-13T03:13:13Z,2026-10-13T07:51:41Z,Compound 'mentorcourse' head 'mentor' + tail 'course'; no listed demand root; general service; 12 letters.
-494,proteinassay.si,health_science,48.6,78,39,53,12,50,40,2026-10-13T03:48:26Z,2026-10-13T08:59:05Z,Compound 'proteinassay' head 'protein' + tail 'assay'; no listed demand root; general service; 12 letters.
-495,biocharstorage.si,emerging_industries,48.5,69,65,34,12,49,40,2026-10-13T01:24:27Z,2026-10-13T05:37:53Z,Compound 'biocharstorage' head 'biochar' + tail 'storage'; root 'bio'; biotechnology; 14 letters.
-496,cyclinggear.si,consumer_brands,48.4,73,38,66,12,46,40,2026-10-13T01:36:24Z,2026-10-13T06:48:43Z,Compound 'cyclinggear' head 'cycling' + tail 'gear'; no listed demand root; general service; 11 letters.
-497,hydrostorage.si,emerging_industries,48.4,78,39,53,12,49,40,2026-10-13T02:24:42Z,2026-10-13T07:23:58Z,Compound 'hydrostorage' head 'hydro' + tail 'storage'; no listed demand root; general service; 12 letters.
-498,nomadbooking.si,consumer_brands,48.2,77,39,52,12,50,40,2026-10-13T03:31:57Z,2026-10-13T08:29:41Z,Compound 'nomadbooking' head 'nomad' + tail 'booking'; no listed demand root; general service; 12 letters.
-499,plasmamarker.si,health_science,48.2,76,39,53,12,51,40,2026-10-13T03:45:14Z,2026-10-13T08:57:53Z,Compound 'plasmamarker' head 'plasma' + tail 'marker'; no listed demand root; general service; 12 letters.
-500,recipestudio.si,consumer_brands,48.2,77,39,53,12,49,40,2026-10-13T03:56:50Z,2026-10-13T09:04:24Z,Compound 'recipestudio' head 'recipe' + tail 'studio'; no listed demand root; general service; 12 letters.
+240,lockvault.si,technology,56.1,82,41,79,12,65,40,2026-10-13T03:03:07Z,2026-10-13T07:36:09Z,Compound 'lockvault' head 'lock' + tail 'vault'; no listed demand root; general service; 9 letters.
+241,nomadstay.si,consumer_brands,56.1,83,42,77,12,64,40,2026-10-13T03:32:03Z,2026-10-13T08:29:55Z,Compound 'nomadstay' head 'nomad' + tail 'stay'; no listed demand root; general service; 9 letters.
+242,bonddesk.si,business_finance,56.0,80,40,83,12,65,40,2026-10-13T01:25:21Z,2026-10-13T05:45:46Z,Compound 'bonddesk' head 'bond' + tail 'desk'; no listed demand root; general service; 8 letters.
+243,helixcell.si,health_science,56.0,85,41,76,12,62,40,2026-10-13T02:21:19Z,2026-10-13T07:22:20Z,Compound 'helixcell' head 'helix' + tail 'cell'; no listed demand root; general service; 9 letters.
+244,reactorops.si,emerging_industries,56.0,86,41,73,12,64,40,2026-10-13T03:54:53Z,2026-10-13T09:03:16Z,Compound 'reactorops' head 'reactor' + tail 'ops'; no listed demand root; general service; 10 letters.
+245,bondindex.si,business_finance,55.9,86,41,75,12,61,40,2026-10-13T01:25:23Z,2026-10-13T05:45:58Z,Compound 'bondindex' head 'bond' + tail 'index'; no listed demand root; general service; 9 letters.
+246,fundforge.si,business_finance,55.9,83,41,78,12,63,40,2026-10-13T01:48:45Z,2026-10-13T07:17:12Z,Compound 'fundforge' head 'fund' + tail 'forge'; no listed demand root; general service; 9 letters.
+247,multispark.si,ai,55.9,86,41,73,12,63,40,2026-10-13T03:22:00Z,2026-10-13T08:17:43Z,Compound 'multispark' head 'multi' + tail 'spark'; no listed demand root; general service; 10 letters.
+248,jewelbox.si,consumer_brands,55.8,83,41,80,12,60,40,2026-10-13T02:31:54Z,2026-10-13T07:26:39Z,Compound 'jewelbox' head 'jewel' + tail 'box'; no listed demand root; general service; 8 letters.
+249,deepfleet.si,ai,55.8,81,41,79,12,65,40,2026-10-13T01:38:38Z,2026-10-13T07:06:30Z,Compound 'deepfleet' head 'deep' + tail 'fleet'; no listed demand root; general service; 9 letters.
+250,dramaclub.si,consumer_brands,55.8,87,41,77,12,57,40,2026-10-13T01:41:39Z,2026-10-13T07:09:44Z,Compound 'dramaclub' head 'drama' + tail 'club'; no listed demand root; general service; 9 letters.
+251,windforge.si,emerging_industries,55.8,83,40,77,12,65,40,2026-10-13T04:57:23Z,2026-10-13T10:05:22Z,Compound 'windforge' head 'wind' + tail 'forge'; no listed demand root; general service; 9 letters.
+252,trekclub.si,consumer_brands,55.6,80,40,83,12,62,40,2026-10-13T04:43:09Z,2026-10-13T09:46:17Z,Compound 'trekclub' head 'trek' + tail 'club'; no listed demand root; general service; 8 letters.
+253,coffeebox.si,consumer_brands,55.6,85,41,75,12,61,40,2026-10-13T01:32:00Z,2026-10-13T06:15:28Z,Compound 'coffeebox' head 'coffee' + tail 'box'; no listed demand root; general service; 9 letters.
+254,tailorwear.si,consumer_brands,55.5,85,41,73,12,62,40,2026-10-13T04:27:37Z,2026-10-13T09:31:11Z,Compound 'tailorwear' head 'tailor' + tail 'wear'; no listed demand root; general service; 10 letters.
+255,biocharforge.si,emerging_industries,55.5,79,65,54,12,59,40,2026-10-13T01:24:23Z,2026-10-13T05:37:35Z,Compound 'biocharforge' head 'biochar' + tail 'forge'; root 'bio'; biotechnology; 12 letters.
+256,geneworks.si,health_science,55.4,82,41,77,12,62,40,2026-10-13T01:50:34Z,2026-10-13T07:19:00Z,Compound 'geneworks' head 'gene' + tail 'works'; no listed demand root; general service; 9 letters.
+257,loansignal.si,business_finance,55.4,85,41,73,12,61,40,2026-10-13T03:02:59Z,2026-10-13T07:36:01Z,Compound 'loansignal' head 'loan' + tail 'signal'; no listed demand root; general service; 10 letters.
+258,querystack.si,technology,55.4,86,41,72,12,61,40,2026-10-13T03:52:21Z,2026-10-13T09:01:34Z,Compound 'querystack' head 'query' + tail 'stack'; no listed demand root; general service; 10 letters.
+259,genomescope.si,health_science,55.4,76,62,66,12,55,40,2026-10-13T03:02:09Z,2026-10-13T07:19:18Z,Compound 'genomescope' head 'genome' + tail 'scope'; root 'genome'; genomics; 11 letters.
+260,autonomydrive.si,emerging_industries,55.3,76,79,43,12,55,40,2026-10-13T01:22:14Z,2026-10-13T05:29:18Z,Compound 'autonomydrive' head 'autonomy' + tail 'drive'; root 'auto'; automotive; 13 letters.
+261,filmworks.si,consumer_brands,55.2,79,40,79,12,65,40,2026-10-13T01:46:47Z,2026-10-13T07:15:38Z,Compound 'filmworks' head 'film' + tail 'works'; no listed demand root; general service; 9 letters.
+262,dermascope.si,health_science,55.2,87,41,74,12,56,40,2026-10-13T01:39:56Z,2026-10-13T07:08:05Z,Compound 'dermascope' head 'derma' + tail 'scope'; no listed demand root; general service; 10 letters.
+263,myelincell.si,health_science,55.2,85,41,72,12,61,40,2026-10-13T03:22:50Z,2026-10-13T08:18:33Z,Compound 'myelincell' head 'myelin' + tail 'cell'; no listed demand root; general service; 10 letters.
+264,sleepatlas.si,health_science,55.1,84,41,73,12,61,40,2026-10-13T04:18:52Z,2026-10-13T09:19:41Z,Compound 'sleepatlas' head 'sleep' + tail 'atlas'; no listed demand root; general service; 10 letters.
+265,opticforge.si,technology,55.0,87,41,73,12,55,40,2026-10-13T03:36:32Z,2026-10-13T08:33:45Z,Compound 'opticforge' head 'optic' + tail 'forge'; no listed demand root; general service; 10 letters.
+266,dramahouse.si,consumer_brands,54.8,86,41,74,12,55,40,2026-10-13T01:41:40Z,2026-10-13T07:09:46Z,Compound 'dramahouse' head 'drama' + tail 'house'; no listed demand root; general service; 10 letters.
+267,plasmacell.si,health_science,54.8,84,41,73,12,59,40,2026-10-13T03:45:10Z,2026-10-13T08:57:49Z,Compound 'plasmacell' head 'plasma' + tail 'cell'; no listed demand root; general service; 10 letters.
+268,hedgetrack.si,business_finance,54.7,85,40,72,12,59,40,2026-10-13T02:20:28Z,2026-10-13T07:21:50Z,Compound 'hedgetrack' head 'hedge' + tail 'track'; no listed demand root; general service; 10 letters.
+269,genomeworks.si,health_science,54.7,74,62,66,12,54,40,2026-10-13T03:02:13Z,2026-10-13T07:19:26Z,Compound 'genomeworks' head 'genome' + tail 'works'; root 'genome'; genomics; 11 letters.
+270,recipebox.si,consumer_brands,54.6,85,41,77,12,52,40,2026-10-13T03:56:40Z,2026-10-13T09:04:14Z,Compound 'recipebox' head 'recipe' + tail 'box'; no listed demand root; general service; 9 letters.
+271,alloystack.si,emerging_industries,54.6,84,41,71,12,60,40,2026-10-13T01:19:12Z,2026-10-13T05:20:23Z,Compound 'alloystack' head 'alloy' + tail 'stack'; no listed demand root; general service; 10 letters.
+272,denimhouse.si,consumer_brands,54.6,86,41,73,12,54,40,2026-10-13T01:39:38Z,2026-10-13T07:07:18Z,Compound 'denimhouse' head 'denim' + tail 'house'; no listed demand root; general service; 10 letters.
+273,delio.si,invented,54.4,64,43,100,12,60,40,2026-10-13T01:39:23Z,2026-10-13T07:07:02Z,Coinage 'delio' ends -io; CVCVV; no repeated letters.
+274,meria.si,invented,54.4,64,43,100,12,60,40,2026-10-13T03:13:43Z,2026-10-13T07:54:01Z,Coinage 'meria' starts m; CVCVV; no repeated letters.
+275,raleo.si,invented,54.4,64,43,100,12,60,40,2026-10-13T03:53:07Z,2026-10-13T09:01:58Z,Coinage 'raleo' starts r; CVCVV; no repeated letters.
+276,angelforge.si,business_finance,54.4,86,41,72,12,54,40,2026-10-13T01:19:28Z,2026-10-13T05:20:31Z,Compound 'angelforge' head 'angel' + tail 'forge'; no listed demand root; general service; 10 letters.
+277,examcourse.si,consumer_brands,54.4,86,41,72,12,54,40,2026-10-13T01:44:34Z,2026-10-13T07:12:49Z,Compound 'examcourse' head 'exam' + tail 'course'; no listed demand root; general service; 10 letters.
+278,biopsyscreen.si,health_science,54.4,73,65,53,12,63,40,2026-10-13T01:24:50Z,2026-10-13T07:04:03Z,Compound 'biopsyscreen' head 'biopsy' + tail 'screen'; root 'bio'; biotechnology; 12 letters.
+279,bakerybox.si,consumer_brands,54.3,85,41,76,12,51,40,2026-10-13T01:22:56Z,2026-10-13T05:30:06Z,Compound 'bakerybox' head 'bakery' + tail 'box'; no listed demand root; general service; 9 letters.
+280,laserforge.si,emerging_industries,54.3,85,41,73,12,54,40,2026-10-13T02:41:10Z,2026-10-13T07:30:57Z,Compound 'laserforge' head 'laser' + tail 'forge'; no listed demand root; general service; 10 letters.
+281,nomadclub.si,consumer_brands,54.2,82,41,76,12,55,40,2026-10-13T03:31:59Z,2026-10-13T08:29:43Z,Compound 'nomadclub' head 'nomad' + tail 'club'; no listed demand root; general service; 9 letters.
+282,claimquote.si,business_finance,54.2,85,40,73,12,55,40,2026-10-13T01:30:54Z,2026-10-13T06:12:58Z,Compound 'claimquote' head 'claim' + tail 'quote'; no listed demand root; general service; 10 letters.
+283,cobotforge.si,emerging_industries,54.2,85,41,72,12,54,40,2026-10-13T01:31:43Z,2026-10-13T06:14:46Z,Compound 'cobotforge' head 'cobot' + tail 'forge'; no listed demand root; general service; 10 letters.
+284,denimcraft.si,consumer_brands,54.2,81,40,73,12,61,40,2026-10-13T01:39:37Z,2026-10-13T07:07:16Z,Compound 'denimcraft' head 'denim' + tail 'craft'; no listed demand root; general service; 10 letters.
+285,qubitforge.si,emerging_industries,54.2,86,41,71,12,54,40,2026-10-13T03:52:01Z,2026-10-13T09:01:24Z,Compound 'qubitforge' head 'qubit' + tail 'forge'; no listed demand root; general service; 10 letters.
+286,serumtrial.si,health_science,54.2,81,41,73,12,60,40,2026-10-13T04:15:32Z,2026-10-13T09:16:14Z,Compound 'serumtrial' head 'serum' + tail 'trial'; no listed demand root; general service; 10 letters.
+287,nirio.si,invented,54.0,63,43,99,12,60,40,2026-10-13T03:31:23Z,2026-10-13T08:29:00Z,Coinage 'nirio' ends -io; CVCVV; repeats i.
+288,brenia.si,invented,54.0,64,44,96,12,60,40,2026-10-13T01:26:08Z,2026-10-13T05:48:04Z,Coinage 'brenia' starts b; CCVCVV; no repeated letters.
+289,brenio.si,invented,54.0,64,44,96,12,60,40,2026-10-13T01:26:12Z,2026-10-13T05:48:28Z,Coinage 'brenio' ends -io; CCVCVV; no repeated letters.
+290,denimworks.si,consumer_brands,54.0,81,40,73,12,60,40,2026-10-13T01:39:42Z,2026-10-13T07:07:49Z,Compound 'denimworks' head 'denim' + tail 'works'; no listed demand root; general service; 10 letters.
+291,hikingwear.si,consumer_brands,54.0,81,40,73,12,60,40,2026-10-13T02:23:14Z,2026-10-13T07:23:28Z,Compound 'hikingwear' head 'hiking' + tail 'wear'; no listed demand root; general service; 10 letters.
+292,neuroscope.si,health_science,54.0,85,41,72,12,53,40,2026-10-13T03:29:25Z,2026-10-13T08:26:50Z,Compound 'neuroscope' head 'neuro' + tail 'scope'; no listed demand root; general service; 10 letters.
+293,cardiopulse.si,health_science,53.9,83,40,69,12,60,40,2026-10-13T01:28:14Z,2026-10-13T05:54:52Z,Compound 'cardiopulse' head 'cardio' + tail 'pulse'; no listed demand root; general service; 11 letters.
+294,biotechworks.si,health_science,53.9,72,65,53,12,61,40,2026-10-13T01:24:57Z,2026-10-13T05:44:58Z,Compound 'biotechworks' head 'biotech' + tail 'works'; root 'bio'; biotechnology; 12 letters.
+295,doreo.si,invented,53.8,63,43,99,12,59,40,2026-10-13T01:41:09Z,2026-10-13T07:08:53Z,Coinage 'doreo' starts d; CVCVV; repeats o.
+296,lania.si,invented,53.8,63,43,99,12,59,40,2026-10-13T02:39:28Z,2026-10-13T07:30:01Z,Coinage 'lania' starts l; CVCVV; repeats a.
+297,meleo.si,invented,53.8,63,43,99,12,59,40,2026-10-13T03:10:21Z,2026-10-13T07:39:13Z,Coinage 'meleo' starts m; CVCVV; repeats e.
+298,milio.si,invented,53.8,63,43,99,12,59,40,2026-10-13T03:15:15Z,2026-10-13T08:01:26Z,Coinage 'milio' ends -io; CVCVV; repeats i.
+299,mirio.si,invented,53.8,63,43,99,12,59,40,2026-10-13T03:16:27Z,2026-10-13T08:06:01Z,Coinage 'mirio' ends -io; CVCVV; repeats i.
+300,neleo.si,invented,53.8,63,43,99,12,59,40,2026-10-13T03:24:40Z,2026-10-13T08:21:20Z,Coinage 'neleo' starts n; CVCVV; repeats e.
+301,rinia.si,invented,53.8,63,43,99,12,59,40,2026-10-13T04:02:44Z,2026-10-13T09:08:26Z,Coinage 'rinia' starts r; CVCVV; repeats i.
+302,wenio.si,invented,53.8,64,41,99,12,60,40,2026-10-13T04:56:53Z,2026-10-13T10:04:04Z,Coinage 'wenio' ends -io; CVCVV; no repeated letters.
+303,fleetdrive.si,emerging_industries,53.8,80,41,73,12,59,40,2026-10-13T01:47:39Z,2026-10-13T07:16:12Z,Compound 'fleetdrive' head 'fleet' + tail 'drive'; no listed demand root; general service; 10 letters.
+304,immunocell.si,health_science,53.8,85,41,71,12,53,40,2026-10-13T02:26:59Z,2026-10-13T07:25:02Z,Compound 'immunocell' head 'immuno' + tail 'cell'; no listed demand root; general service; 10 letters.
+305,rocketdock.si,emerging_industries,53.8,82,40,72,12,58,40,2026-10-13T04:07:26Z,2026-10-13T09:10:57Z,Compound 'rocketdock' head 'rocket' + tail 'dock'; no listed demand root; general service; 10 letters.
+306,stromacell.si,health_science,53.8,80,41,74,12,58,40,2026-10-13T04:23:15Z,2026-10-13T09:24:05Z,Compound 'stromacell' head 'stroma' + tail 'cell'; no listed demand root; general service; 10 letters.
+307,voyageclub.si,consumer_brands,53.8,85,40,72,12,53,40,2026-10-13T04:55:43Z,2026-10-13T10:02:16Z,Compound 'voyageclub' head 'voyage' + tail 'club'; no listed demand root; general service; 10 letters.
+308,softwarestack.si,technology,53.8,68,85,41,12,52,40,2026-10-13T04:19:33Z,2026-10-13T09:20:13Z,Compound 'softwarestack' head 'software' + tail 'stack'; root 'software'; software; 13 letters.
+309,noral.si,invented,53.7,62,42,100,12,60,40,2026-10-13T03:32:15Z,2026-10-13T08:29:57Z,Coinage 'noral' ends -al; CVCVC; no repeated letters.
+310,insurancetrack.si,business_finance,53.7,72,85,33,12,53,40,2026-10-13T02:30:12Z,2026-10-13T07:26:07Z,Compound 'insurancetrack' head 'insurance' + tail 'track'; root 'insurance'; insurance; 14 letters.
+311,falia.si,invented,53.6,63,42,99,12,59,40,2026-10-13T01:45:11Z,2026-10-13T07:13:42Z,Coinage 'falia' starts f; CVCVV; repeats a.
+312,peleo.si,invented,53.6,63,42,99,12,59,40,2026-10-13T03:41:57Z,2026-10-13T08:55:58Z,Coinage 'peleo' starts p; CVCVV; repeats e.
+313,brenal.si,invented,53.6,64,42,96,12,60,40,2026-10-13T01:25:58Z,2026-10-13T05:47:04Z,Coinage 'brenal' ends -al; CCVCVC; no repeated letters.
+314,breneo.si,invented,53.6,63,44,96,12,59,40,2026-10-13T01:26:05Z,2026-10-13T05:47:46Z,Coinage 'breneo' starts b; CCVCVV; repeats e.
+315,relvia.si,invented,53.6,64,43,96,12,59,40,2026-10-13T03:58:45Z,2026-10-13T09:05:43Z,Coinage 'relvia' ends -via; CVCCVV; no repeated letters.
+316,renvia.si,invented,53.6,64,43,96,12,59,40,2026-10-13T03:59:52Z,2026-10-13T09:06:29Z,Coinage 'renvia' ends -via; CVCCVV; no repeated letters.
+317,decorhouse.si,consumer_brands,53.6,84,40,72,12,53,40,2026-10-13T01:38:29Z,2026-10-13T07:06:20Z,Compound 'decorhouse' head 'decor' + tail 'house'; no listed demand root; general service; 10 letters.
+318,linenhouse.si,consumer_brands,53.6,84,40,72,12,53,40,2026-10-13T02:47:46Z,2026-10-13T07:33:15Z,Compound 'linenhouse' head 'linen' + tail 'house'; no listed demand root; general service; 10 letters.
+319,marinastay.si,consumer_brands,53.6,84,41,72,12,52,40,2026-10-13T03:08:46Z,2026-10-13T07:38:43Z,Compound 'marinastay' head 'marina' + tail 'stay'; no listed demand root; general service; 10 letters.
+320,scenthouse.si,consumer_brands,53.6,80,41,72,12,59,40,2026-10-13T04:09:46Z,2026-10-13T09:11:35Z,Compound 'scenthouse' head 'scent' + tail 'house'; no listed demand root; general service; 10 letters.
+321,sleeptrack.si,health_science,53.6,79,40,74,12,60,40,2026-10-13T04:19:06Z,2026-10-13T09:19:51Z,Compound 'sleeptrack' head 'sleep' + tail 'track'; no listed demand root; general service; 10 letters.
+322,rinal.si,invented,53.5,62,41,100,12,60,40,2026-10-13T04:02:24Z,2026-10-13T09:08:06Z,Coinage 'rinal' ends -al; CVCVC; no repeated letters.
+323,belvia.si,invented,53.5,64,43,95,12,59,40,2026-10-13T01:24:04Z,2026-10-13T05:37:03Z,Coinage 'belvia' ends -via; CVCCVV; no repeated letters.
+324,delvia.si,invented,53.5,64,43,95,12,59,40,2026-10-13T01:39:33Z,2026-10-13T07:07:14Z,Coinage 'delvia' ends -via; CVCCVV; no repeated letters.
+325,dorvia.si,invented,53.5,64,43,95,12,59,40,2026-10-13T01:41:30Z,2026-10-13T07:09:17Z,Coinage 'dorvia' ends -via; CVCCVV; no repeated letters.
+326,fenvia.si,invented,53.5,64,43,95,12,59,40,2026-10-13T01:46:05Z,2026-10-13T07:14:42Z,Coinage 'fenvia' ends -via; CVCCVV; no repeated letters.
+327,softwareworks.si,technology,53.5,67,85,41,12,52,40,2026-10-13T04:19:35Z,2026-10-13T09:20:15Z,Compound 'softwareworks' head 'software' + tail 'works'; root 'software'; software; 13 letters.
+328,cinemashow.si,consumer_brands,53.4,84,40,72,12,52,40,2026-10-13T01:30:25Z,2026-10-13T06:11:46Z,Compound 'cinemashow' head 'cinema' + tail 'show'; no listed demand root; general service; 10 letters.
+329,forexsignal.si,business_finance,53.4,83,40,69,12,57,40,2026-10-13T01:48:18Z,2026-10-13T07:16:48Z,Compound 'forexsignal' head 'forex' + tail 'signal'; no listed demand root; general service; 11 letters.
+330,trekbooking.si,consumer_brands,53.4,81,40,67,12,62,40,2026-10-13T04:43:07Z,2026-10-13T09:46:05Z,Compound 'trekbooking' head 'trek' + tail 'booking'; no listed demand root; general service; 11 letters.
+331,fenal.si,invented,53.3,62,40,100,12,60,40,2026-10-13T01:45:46Z,2026-10-13T07:14:06Z,Coinage 'fenal' ends -al; CVCVC; no repeated letters.
+332,niral.si,invented,53.3,62,40,100,12,60,40,2026-10-13T03:30:55Z,2026-10-13T08:28:04Z,Coinage 'niral' ends -al; CVCVC; no repeated letters.
+333,peral.si,invented,53.3,62,40,100,12,60,40,2026-10-13T03:42:57Z,2026-10-13T08:56:44Z,Coinage 'peral' ends -al; CVCVC; no repeated letters.
+334,teral.si,invented,53.3,62,40,100,12,60,40,2026-10-13T04:31:19Z,2026-10-13T09:36:50Z,Coinage 'teral' ends -al; CVCVC; no repeated letters.
+335,toral.si,invented,53.3,62,40,100,12,60,40,2026-10-13T04:35:39Z,2026-10-13T09:43:00Z,Coinage 'toral' ends -al; CVCVC; no repeated letters.
+336,veneo.si,invented,53.3,63,41,98,12,59,40,2026-10-13T04:49:27Z,2026-10-13T09:53:17Z,Coinage 'veneo' starts v; CVCVV; repeats e.
+337,bondsignal.si,business_finance,53.3,80,40,73,12,57,40,2026-10-13T01:25:25Z,2026-10-13T05:46:10Z,Compound 'bondsignal' head 'bond' + tail 'signal'; no listed demand root; general service; 10 letters.
+338,cruiseclub.si,consumer_brands,53.3,84,41,71,12,51,40,2026-10-13T01:35:45Z,2026-10-13T06:47:43Z,Compound 'cruiseclub' head 'cruise' + tail 'club'; no listed demand root; general service; 10 letters.
+339,fiberworks.si,technology,53.3,80,40,73,12,57,40,2026-10-13T01:46:40Z,2026-10-13T07:15:32Z,Compound 'fiberworks' head 'fiber' + tail 'works'; no listed demand root; general service; 10 letters.
+340,fundsignal.si,business_finance,53.3,80,40,73,12,57,40,2026-10-13T01:48:48Z,2026-10-13T07:17:16Z,Compound 'fundsignal' head 'fund' + tail 'signal'; no listed demand root; general service; 10 letters.
+341,hikinggear.si,consumer_brands,53.3,80,40,72,12,58,40,2026-10-13T02:23:10Z,2026-10-13T07:23:26Z,Compound 'hikinggear' head 'hiking' + tail 'gear'; no listed demand root; general service; 10 letters.
+342,linencraft.si,consumer_brands,53.3,80,40,73,12,57,40,2026-10-13T02:47:44Z,2026-10-13T07:33:11Z,Compound 'linencraft' head 'linen' + tail 'craft'; no listed demand root; general service; 10 letters.
+343,brena.si,invented,53.2,64,36,100,12,61,40,2026-10-13T01:25:57Z,2026-10-13T05:46:58Z,Coinage 'brena' ends -ena; CCVCV; no repeated letters.
+344,ranal.si,invented,53.2,61,42,99,12,59,40,2026-10-13T03:53:41Z,2026-10-13T09:02:26Z,Coinage 'ranal' ends -al; CVCVC; repeats a.
+345,ranium.si,invented,53.2,64,41,96,12,59,40,2026-10-13T03:54:09Z,2026-10-13T09:02:52Z,Coinage 'ranium' ends -ium; CVCVVC; no repeated letters.
+346,indexstack.si,technology,53.2,80,40,72,12,57,40,2026-10-13T02:27:38Z,2026-10-13T07:25:14Z,Compound 'indexstack' head 'index' + tail 'stack'; no listed demand root; general service; 10 letters.
+347,voyagestay.si,consumer_brands,53.2,82,40,71,12,55,40,2026-10-13T04:55:47Z,2026-10-13T10:02:18Z,Compound 'voyagestay' head 'voyage' + tail 'stay'; no listed demand root; general service; 10 letters.
+348,plasmatrial.si,health_science,53.2,80,40,68,12,61,40,2026-10-13T03:45:20Z,2026-10-13T08:57:59Z,Compound 'plasmatrial' head 'plasma' + tail 'trial'; no listed demand root; general service; 11 letters.
+349,narium.si,invented,53.1,64,41,95,12,59,40,2026-10-13T03:23:44Z,2026-10-13T08:19:52Z,Coinage 'narium' ends -ium; CVCVVC; no repeated letters.
+350,norium.si,invented,53.1,64,41,95,12,59,40,2026-10-13T03:32:47Z,2026-10-13T08:30:53Z,Coinage 'norium' ends -ium; CVCVVC; no repeated letters.
+351,ralium.si,invented,53.1,64,41,95,12,59,40,2026-10-13T03:53:19Z,2026-10-13T09:02:10Z,Coinage 'ralium' ends -ium; CVCVVC; no repeated letters.
+352,relium.si,invented,53.1,64,41,95,12,59,40,2026-10-13T03:58:29Z,2026-10-13T09:05:31Z,Coinage 'relium' ends -ium; CVCVVC; no repeated letters.
+353,naral.si,invented,53.0,61,41,99,12,59,40,2026-10-13T03:23:18Z,2026-10-13T08:18:58Z,Coinage 'naral' ends -al; CVCVC; repeats a.
+354,relal.si,invented,53.0,61,41,99,12,59,40,2026-10-13T03:57:47Z,2026-10-13T09:04:54Z,Coinage 'relal' ends -al; CVCVC; repeats l.
+355,wenal.si,invented,53.0,62,40,99,12,59,40,2026-10-13T04:56:29Z,2026-10-13T10:03:09Z,Coinage 'wenal' ends -al; CVCVC; no repeated letters.
+356,winal.si,invented,53.0,62,40,99,12,59,40,2026-10-13T04:57:13Z,2026-10-13T10:04:52Z,Coinage 'winal' ends -al; CVCVC; no repeated letters.
+357,fenium.si,invented,53.0,64,41,94,12,59,40,2026-10-13T01:45:58Z,2026-10-13T07:14:30Z,Coinage 'fenium' ends -ium; CVCVVC; no repeated letters.
+358,helixassay.si,health_science,53.0,84,40,71,12,50,40,2026-10-13T02:21:14Z,2026-10-13T07:22:16Z,Compound 'helixassay' head 'helix' + tail 'assay'; no listed demand root; general service; 10 letters.
+359,jewelhouse.si,consumer_brands,53.0,84,40,71,12,50,40,2026-10-13T02:32:00Z,2026-10-13T07:26:43Z,Compound 'jewelhouse' head 'jewel' + tail 'house'; no listed demand root; general service; 10 letters.
+360,safaristay.si,consumer_brands,53.0,83,41,71,12,51,40,2026-10-13T04:08:32Z,2026-10-13T09:11:11Z,Compound 'safaristay' head 'safari' + tail 'stay'; no listed demand root; general service; 10 letters.
+361,dramastudio.si,consumer_brands,53.0,82,40,68,12,57,40,2026-10-13T01:41:42Z,2026-10-13T07:09:50Z,Compound 'dramastudio' head 'drama' + tail 'studio'; no listed demand root; general service; 11 letters.
+362,fenaro.si,invented,52.9,62,44,93,12,59,40,2026-10-13T01:45:49Z,2026-10-13T07:14:12Z,Coinage 'fenaro' ends -aro; CVCVCV; no repeated letters.
+363,lenaro.si,invented,52.9,62,44,93,12,59,40,2026-10-13T02:44:11Z,2026-10-13T07:31:57Z,Coinage 'lenaro' ends -aro; CVCVCV; no repeated letters.
+364,merona.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:14:01Z,2026-10-13T07:55:29Z,Coinage 'merona' starts m; CVCVCV; no repeated letters.
+365,narelo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:23:26Z,2026-10-13T08:19:16Z,Coinage 'narelo' starts n; CVCVCV; no repeated letters.
+366,nelaro.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:24:32Z,2026-10-13T08:21:02Z,Coinage 'nelaro' ends -aro; CVCVCV; no repeated letters.
+367,nelora.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:24:58Z,2026-10-13T08:21:59Z,Coinage 'nelora' ends -ora; CVCVCV; no repeated letters.
+368,ralino.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:53:17Z,2026-10-13T09:02:08Z,Coinage 'ralino' ends -ino; CVCVCV; no repeated letters.
+369,raluno.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:53:31Z,2026-10-13T09:02:20Z,Coinage 'raluno' starts r; CVCVCV; no repeated letters.
+370,ranelo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:53:53Z,2026-10-13T09:02:38Z,Coinage 'ranelo' starts r; CVCVCV; no repeated letters.
+371,ranilo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:54:03Z,2026-10-13T09:02:46Z,Coinage 'ranilo' starts r; CVCVCV; no repeated letters.
+372,relami.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:57:49Z,2026-10-13T09:04:56Z,Coinage 'relami' starts r; CVCVCV; no repeated letters.
+373,relina.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:58:25Z,2026-10-13T09:05:27Z,Coinage 'relina' ends -ina; CVCVCV; no repeated letters.
+374,relino.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:58:27Z,2026-10-13T09:05:29Z,Coinage 'relino' ends -ino; CVCVCV; no repeated letters.
+375,relona.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:58:35Z,2026-10-13T09:05:33Z,Coinage 'relona' starts r; CVCVCV; no repeated letters.
+376,reluno.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:58:41Z,2026-10-13T09:05:39Z,Coinage 'reluno' starts r; CVCVCV; no repeated letters.
+377,renami.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:59:05Z,2026-10-13T09:05:57Z,Coinage 'renami' starts r; CVCVCV; no repeated letters.
+378,renilo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T03:59:32Z,2026-10-13T09:06:17Z,Coinage 'renilo' starts r; CVCVCV; no repeated letters.
+379,rinelo.si,invented,52.9,62,44,93,12,59,40,2026-10-13T04:02:36Z,2026-10-13T09:08:18Z,Coinage 'rinelo' starts r; CVCVCV; no repeated letters.
+380,terona.si,invented,52.9,62,44,93,12,59,40,2026-10-13T04:31:51Z,2026-10-13T09:38:09Z,Coinage 'terona' starts t; CVCVCV; no repeated letters.
+381,torena.si,invented,52.9,62,44,93,12,59,40,2026-10-13T04:35:51Z,2026-10-13T09:43:32Z,Coinage 'torena' ends -ena; CVCVCV; no repeated letters.
+382,leatherwear.si,consumer_brands,52.9,79,40,67,12,62,40,2026-10-13T02:43:22Z,2026-10-13T07:31:41Z,Compound 'leatherwear' head 'leather' + tail 'wear'; no listed demand root; general service; 11 letters.
+383,elova.si,invented,52.8,62,41,96,12,59,40,2026-10-13T01:42:41Z,2026-10-13T07:10:08Z,Coinage 'elova' starts e; VCVCV; no repeated letters.
+384,lisal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T02:50:21Z,2026-10-13T07:34:50Z,Coinage 'lisal' ends -al; CVCVC; repeats l.
+385,melal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:10:07Z,2026-10-13T07:39:01Z,Coinage 'melal' ends -al; CVCVC; repeats l.
+386,milal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:14:47Z,2026-10-13T07:58:55Z,Coinage 'milal' ends -al; CVCVC; repeats l.
+387,molal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:18:21Z,2026-10-13T08:11:38Z,Coinage 'molal' ends -al; CVCVC; repeats l.
+388,nelal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:24:26Z,2026-10-13T08:20:46Z,Coinage 'nelal' ends -al; CVCVC; repeats l.
+389,pelal.si,invented,52.8,61,40,99,12,59,40,2026-10-13T03:41:43Z,2026-10-13T08:55:44Z,Coinage 'pelal' ends -al; CVCVC; repeats l.
+390,angelpitch.si,business_finance,52.8,79,40,71,12,57,40,2026-10-13T01:19:31Z,2026-10-13T05:20:33Z,Compound 'angelpitch' head 'angel' + tail 'pitch'; no listed demand root; general service; 10 letters.
+391,assetindex.si,business_finance,52.8,84,41,70,12,49,40,2026-10-13T01:20:22Z,2026-10-13T05:21:09Z,Compound 'assetindex' head 'asset' + tail 'index'; no listed demand root; general service; 10 letters.
+392,comedyshow.si,consumer_brands,52.8,83,40,72,12,50,40,2026-10-13T01:33:01Z,2026-10-13T07:04:11Z,Compound 'comedyshow' head 'comedy' + tail 'show'; no listed demand root; general service; 10 letters.
+393,forextrack.si,business_finance,52.8,79,40,72,12,56,40,2026-10-13T01:48:19Z,2026-10-13T07:16:50Z,Compound 'forextrack' head 'forex' + tail 'track'; no listed demand root; general service; 10 letters.
+394,serumassay.si,health_science,52.8,83,40,71,12,51,40,2026-10-13T04:15:18Z,2026-10-13T09:16:02Z,Compound 'serumassay' head 'serum' + tail 'assay'; no listed demand root; general service; 10 letters.
+395,belaro.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:23:45Z,2026-10-13T05:31:00Z,Coinage 'belaro' ends -aro; CVCVCV; no repeated letters.
+396,belino.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:23:54Z,2026-10-13T05:36:32Z,Coinage 'belino' ends -ino; CVCVCV; no repeated letters.
+397,beluno.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:24:02Z,2026-10-13T05:36:54Z,Coinage 'beluno' starts b; CVCVCV; no repeated letters.
+398,belura.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:24:03Z,2026-10-13T05:36:59Z,Coinage 'belura' starts b; CVCVCV; no repeated letters.
+399,darelo.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:36:46Z,2026-10-13T07:04:41Z,Coinage 'darelo' starts d; CVCVCV; no repeated letters.
+400,darino.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:36:53Z,2026-10-13T07:04:51Z,Coinage 'darino' ends -ino; CVCVCV; no repeated letters.
+401,daruno.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:37:00Z,2026-10-13T07:05:03Z,Coinage 'daruno' starts d; CVCVCV; no repeated letters.
+402,delami.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:09Z,2026-10-13T07:06:40Z,Coinage 'delami' starts d; CVCVCV; no repeated letters.
+403,delaro.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:11Z,2026-10-13T07:06:44Z,Coinage 'delaro' ends -aro; CVCVCV; no repeated letters.
+404,delino.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:22Z,2026-10-13T07:07:00Z,Coinage 'delino' ends -ino; CVCVCV; no repeated letters.
+405,delora.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:28Z,2026-10-13T07:07:06Z,Coinage 'delora' ends -ora; CVCVCV; no repeated letters.
+406,delova.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:29Z,2026-10-13T07:07:08Z,Coinage 'delova' starts d; CVCVCV; no repeated letters.
+407,deluno.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:30Z,2026-10-13T07:07:10Z,Coinage 'deluno' starts d; CVCVCV; no repeated letters.
+408,delura.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:39:31Z,2026-10-13T07:07:12Z,Coinage 'delura' starts d; CVCVCV; no repeated letters.
+409,dorami.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:41:02Z,2026-10-13T07:08:39Z,Coinage 'dorami' starts d; CVCVCV; no repeated letters.
+410,dorena.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:41:07Z,2026-10-13T07:08:49Z,Coinage 'dorena' ends -ena; CVCVCV; no repeated letters.
+411,doriva.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:41:17Z,2026-10-13T07:09:07Z,Coinage 'doriva' starts d; CVCVCV; no repeated letters.
+412,falino.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:14Z,2026-10-13T07:13:48Z,Coinage 'falino' ends -ino; CVCVCV; no repeated letters.
+413,faluno.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:21Z,2026-10-13T07:14:00Z,Coinage 'faluno' starts f; CVCVCV; no repeated letters.
+414,fenami.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:47Z,2026-10-13T07:14:08Z,Coinage 'fenami' starts f; CVCVCV; no repeated letters.
+415,fenilo.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:55Z,2026-10-13T07:14:24Z,Coinage 'fenilo' starts f; CVCVCV; no repeated letters.
+416,feniva.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:45:59Z,2026-10-13T07:14:32Z,Coinage 'feniva' starts f; CVCVCV; no repeated letters.
+417,fenova.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:02Z,2026-10-13T07:14:36Z,Coinage 'fenova' starts f; CVCVCV; no repeated letters.
+418,fenura.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:04Z,2026-10-13T07:14:40Z,Coinage 'fenura' starts f; CVCVCV; no repeated letters.
+419,ferami.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:07Z,2026-10-13T07:14:44Z,Coinage 'ferami' starts f; CVCVCV; no repeated letters.
+420,ferilo.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:15Z,2026-10-13T07:15:00Z,Coinage 'ferilo' starts f; CVCVCV; no repeated letters.
+421,feriva.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:19Z,2026-10-13T07:15:06Z,Coinage 'feriva' starts f; CVCVCV; no repeated letters.
+422,ferova.si,invented,52.7,62,43,93,12,59,40,2026-10-13T01:46:23Z,2026-10-13T07:15:10Z,Coinage 'ferova' starts f; CVCVCV; no repeated letters.
+423,linaro.si,invented,52.7,62,43,93,12,59,40,2026-10-13T02:47:23Z,2026-10-13T07:33:01Z,Coinage 'linaro' ends -aro; CVCVCV; no repeated letters.
+424,audittrack.si,business_finance,52.6,79,40,71,12,56,40,2026-10-13T01:21:49Z,2026-10-13T05:28:51Z,Compound 'audittrack' head 'audit' + tail 'track'; no listed demand root; general service; 10 letters.
+425,examstudio.si,consumer_brands,52.6,81,40,72,12,52,40,2026-10-13T01:44:37Z,2026-10-13T07:12:53Z,Compound 'examstudio' head 'exam' + tail 'studio'; no listed demand root; general service; 10 letters.
+426,hostelstay.si,consumer_brands,52.6,79,40,71,12,56,40,2026-10-13T02:23:57Z,2026-10-13T07:23:42Z,Compound 'hostelstay' head 'hostel' + tail 'stay'; no listed demand root; general service; 10 letters.
+427,genemarker.si,health_science,52.5,81,40,72,12,51,40,2026-10-13T01:50:21Z,2026-10-13T07:18:48Z,Compound 'genemarker' head 'gene' + tail 'marker'; no listed demand root; general service; 10 letters.
+428,laserworks.si,emerging_industries,52.5,78,40,72,12,56,40,2026-10-13T02:41:26Z,2026-10-13T07:31:05Z,Compound 'laserworks' head 'laser' + tail 'works'; no listed demand root; general service; 10 letters.
+429,remittrack.si,business_finance,52.5,78,40,72,12,56,40,2026-10-13T03:58:57Z,2026-10-13T09:05:53Z,Compound 'remittrack' head 'remit' + tail 'track'; no listed demand root; general service; 10 letters.
+430,yieldindex.si,business_finance,52.5,81,40,70,12,53,40,2026-10-13T04:58:21Z,2026-10-13T10:06:50Z,Compound 'yieldindex' head 'yield' + tail 'index'; no listed demand root; general service; 10 letters.
+431,helixatlas.si,health_science,52.4,82,40,71,12,50,40,2026-10-13T02:21:18Z,2026-10-13T07:22:18Z,Compound 'helixatlas' head 'helix' + tail 'atlas'; no listed demand root; general service; 10 letters.
+432,kitchenbox.si,consumer_brands,52.4,79,40,71,12,55,40,2026-10-13T02:36:30Z,2026-10-13T07:28:37Z,Compound 'kitchenbox' head 'kitchen' + tail 'box'; no listed demand root; general service; 10 letters.
+433,rehabtrack.si,health_science,52.4,78,40,72,12,55,40,2026-10-13T03:57:41Z,2026-10-13T09:04:48Z,Compound 'rehabtrack' head 'rehab' + tail 'track'; no listed demand root; general service; 10 letters.
+434,neuronatlas.si,health_science,52.4,81,40,68,12,54,40,2026-10-13T03:29:04Z,2026-10-13T08:26:16Z,Compound 'neuronatlas' head 'neuron' + tail 'atlas'; no listed demand root; general service; 11 letters.
+435,skincarebox.si,consumer_brands,52.4,82,40,67,12,54,40,2026-10-13T04:18:36Z,2026-10-13T09:18:47Z,Compound 'skincarebox' head 'skincare' + tail 'box'; no listed demand root; general service; 11 letters.
+436,tailorhouse.si,consumer_brands,52.4,81,40,68,12,54,40,2026-10-13T04:27:31Z,2026-10-13T09:30:55Z,Compound 'tailorhouse' head 'tailor' + tail 'house'; no listed demand root; general service; 11 letters.
+437,coffeeclub.si,consumer_brands,52.3,82,40,71,12,49,40,2026-10-13T01:32:01Z,2026-10-13T06:15:34Z,Compound 'coffeeclub' head 'coffee' + tail 'club'; no listed demand root; general service; 10 letters.
+438,jewelcraft.si,consumer_brands,52.3,79,40,71,12,54,40,2026-10-13T02:31:55Z,2026-10-13T07:26:41Z,Compound 'jewelcraft' head 'jewel' + tail 'craft'; no listed demand root; general service; 10 letters.
+439,musicclub.si,consumer_brands,52.2,79,40,75,12,49,40,2026-10-13T03:22:22Z,2026-10-13T08:17:57Z,Compound 'musicclub' head 'music' + tail 'club'; no listed demand root; general service; 9 letters.
+440,decorcraft.si,consumer_brands,52.2,78,40,71,12,55,40,2026-10-13T01:38:27Z,2026-10-13T07:06:18Z,Compound 'decorcraft' head 'decor' + tail 'craft'; no listed demand root; general service; 10 letters.
+441,laserstack.si,emerging_industries,52.2,78,40,71,12,55,40,2026-10-13T02:41:24Z,2026-10-13T07:31:03Z,Compound 'laserstack' head 'laser' + tail 'stack'; no listed demand root; general service; 10 letters.
+442,droneflight.si,emerging_industries,52.2,77,39,68,12,61,40,2026-10-13T01:41:49Z,2026-10-13T07:09:54Z,Compound 'droneflight' head 'drone' + tail 'flight'; no listed demand root; general service; 11 letters.
+443,helixmarker.si,health_science,52.2,81,40,68,12,53,40,2026-10-13T02:21:25Z,2026-10-13T07:22:24Z,Compound 'helixmarker' head 'helix' + tail 'marker'; no listed demand root; general service; 11 letters.
+444,myelinatlas.si,health_science,52.2,81,40,67,12,54,40,2026-10-13T03:22:48Z,2026-10-13T08:18:21Z,Compound 'myelinatlas' head 'myelin' + tail 'atlas'; no listed demand root; general service; 11 letters.
+445,helixscope.si,health_science,52.1,80,40,72,12,50,40,2026-10-13T02:21:30Z,2026-10-13T07:22:28Z,Compound 'helixscope' head 'helix' + tail 'scope'; no listed demand root; general service; 10 letters.
+446,serumscope.si,health_science,52.1,80,40,72,12,50,40,2026-10-13T04:15:30Z,2026-10-13T09:16:12Z,Compound 'serumscope' head 'serum' + tail 'scope'; no listed demand root; general service; 10 letters.
+447,plasmascope.si,health_science,52.1,80,40,68,12,54,40,2026-10-13T03:45:18Z,2026-10-13T08:57:57Z,Compound 'plasmascope' head 'plasma' + tail 'scope'; no listed demand root; general service; 11 letters.
+448,retinascope.si,health_science,52.1,80,40,68,12,54,40,2026-10-13T04:00:34Z,2026-10-13T09:06:39Z,Compound 'retinascope' head 'retina' + tail 'scope'; no listed demand root; general service; 11 letters.
+449,galleryshow.si,consumer_brands,51.9,81,40,67,12,52,40,2026-10-13T01:49:44Z,2026-10-13T07:18:17Z,Compound 'galleryshow' head 'gallery' + tail 'show'; no listed demand root; general service; 11 letters.
+450,bakerycraft.si,consumer_brands,51.8,80,40,67,12,53,40,2026-10-13T01:22:58Z,2026-10-13T05:30:12Z,Compound 'bakerycraft' head 'bakery' + tail 'craft'; no listed demand root; general service; 11 letters.
+451,campingwear.si,consumer_brands,51.8,76,39,68,12,60,40,2026-10-13T01:27:31Z,2026-10-13T05:52:22Z,Compound 'campingwear' head 'camping' + tail 'wear'; no listed demand root; general service; 11 letters.
+452,serummarker.si,health_science,51.7,79,40,68,12,53,40,2026-10-13T04:15:26Z,2026-10-13T09:16:08Z,Compound 'serummarker' head 'serum' + tail 'marker'; no listed demand root; general service; 11 letters.
+453,mentorclub.si,consumer_brands,51.6,79,40,71,12,49,40,2026-10-13T03:13:11Z,2026-10-13T07:51:39Z,Compound 'mentorclub' head 'mentor' + tail 'club'; no listed demand root; general service; 10 letters.
+454,enzymescope.si,health_science,51.6,80,40,66,12,53,40,2026-10-13T01:43:58Z,2026-10-13T07:12:17Z,Compound 'enzymescope' head 'enzyme' + tail 'scope'; no listed demand root; general service; 11 letters.
+455,linendesign.si,consumer_brands,51.6,79,40,67,12,53,40,2026-10-13T02:47:45Z,2026-10-13T07:33:13Z,Compound 'linendesign' head 'linen' + tail 'design'; no listed demand root; general service; 11 letters.
+456,recipecraft.si,consumer_brands,51.6,80,40,67,12,52,40,2026-10-13T03:56:44Z,2026-10-13T09:04:18Z,Compound 'recipecraft' head 'recipe' + tail 'craft'; no listed demand root; general service; 11 letters.
+457,sailingwear.si,consumer_brands,51.6,76,39,67,12,60,40,2026-10-13T04:08:40Z,2026-10-13T09:11:15Z,Compound 'sailingwear' head 'sailing' + tail 'wear'; no listed demand root; general service; 11 letters.
+458,canyonstay.si,consumer_brands,51.5,77,40,70,12,53,40,2026-10-13T01:27:42Z,2026-10-13T05:52:58Z,Compound 'canyonstay' head 'canyon' + tail 'stay'; no listed demand root; general service; 10 letters.
+459,plasmaassay.si,health_science,51.5,77,40,65,12,58,40,2026-10-13T03:45:08Z,2026-10-13T08:57:47Z,Compound 'plasmaassay' head 'plasma' + tail 'assay'; no listed demand root; general service; 11 letters.
+460,weddingbox.si,consumer_brands,51.4,78,40,70,12,51,40,2026-10-13T04:56:19Z,2026-10-13T10:02:53Z,Compound 'weddingbox' head 'wedding' + tail 'box'; no listed demand root; general service; 10 letters.
+461,hedgesignal.si,business_finance,51.3,80,39,66,12,52,40,2026-10-13T02:20:27Z,2026-10-13T07:21:48Z,Compound 'hedgesignal' head 'hedge' + tail 'signal'; no listed demand root; general service; 11 letters.
+462,marinaclub.si,consumer_brands,51.2,82,40,72,12,41,40,2026-10-13T03:08:44Z,2026-10-13T07:38:41Z,Compound 'marinaclub' head 'marina' + tail 'club'; no listed demand root; general service; 10 letters.
+463,assetsignal.si,business_finance,51.2,79,40,66,12,52,40,2026-10-13T01:20:24Z,2026-10-13T05:21:13Z,Compound 'assetsignal' head 'asset' + tail 'signal'; no listed demand root; general service; 11 letters.
+464,sailinggear.si,consumer_brands,51.1,75,39,67,12,58,40,2026-10-13T04:08:38Z,2026-10-13T09:11:13Z,Compound 'sailinggear' head 'sailing' + tail 'gear'; no listed demand root; general service; 11 letters.
+465,myelinscope.si,health_science,51.0,77,39,68,12,53,40,2026-10-13T03:22:58Z,2026-10-13T08:18:52Z,Compound 'myelinscope' head 'myelin' + tail 'scope'; no listed demand root; general service; 11 letters.
+466,bakeryhouse.si,consumer_brands,50.6,78,39,68,12,49,40,2026-10-13T01:22:59Z,2026-10-13T05:30:15Z,Compound 'bakeryhouse' head 'bakery' + tail 'house'; no listed demand root; general service; 11 letters.
+467,cookwarebox.si,consumer_brands,50.6,79,39,65,12,50,40,2026-10-13T01:34:09Z,2026-10-13T06:32:27Z,Compound 'cookwarebox' head 'cookware' + tail 'box'; no listed demand root; general service; 11 letters.
+468,tailorcraft.si,consumer_brands,50.6,74,39,67,12,56,40,2026-10-13T04:27:27Z,2026-10-13T09:30:51Z,Compound 'tailorcraft' head 'tailor' + tail 'craft'; no listed demand root; general service; 11 letters.
+469,theatershow.si,consumer_brands,50.6,74,40,66,12,56,40,2026-10-13T04:32:39Z,2026-10-13T09:39:01Z,Compound 'theatershow' head 'theater' + tail 'show'; no listed demand root; general service; 11 letters.
+470,optionquote.si,business_finance,50.4,78,39,66,12,49,40,2026-10-13T03:36:56Z,2026-10-13T08:34:25Z,Compound 'optionquote' head 'option' + tail 'quote'; no listed demand root; general service; 11 letters.
+471,biomarkeratlas.si,health_science,50.4,74,65,35,12,52,40,2026-10-13T01:24:30Z,2026-10-13T05:38:02Z,Compound 'biomarkeratlas' head 'biomarker' + tail 'atlas'; root 'bio'; biotechnology; 14 letters.
+472,payloadcontrol.si,emerging_industries,50.3,68,73,34,12,52,40,2026-10-13T03:41:12Z,2026-10-13T08:55:30Z,Compound 'payloadcontrol' head 'payload' + tail 'control'; root 'payload'; software data transfer; 14 letters.
+473,decorstudio.si,consumer_brands,50.2,75,39,67,12,52,40,2026-10-13T01:38:32Z,2026-10-13T07:06:26Z,Compound 'decorstudio' head 'decor' + tail 'studio'; no listed demand root; general service; 11 letters.
+474,jewelstudio.si,consumer_brands,50.2,76,39,67,12,50,40,2026-10-13T02:32:11Z,2026-10-13T07:26:47Z,Compound 'jewelstudio' head 'jewel' + tail 'studio'; no listed demand root; general service; 11 letters.
+475,lidarflight.si,emerging_industries,50.2,74,39,66,12,55,40,2026-10-13T02:46:44Z,2026-10-13T07:32:45Z,Compound 'lidarflight' head 'lidar' + tail 'flight'; no listed demand root; general service; 11 letters.
+476,linenstudio.si,consumer_brands,50.2,75,39,67,12,52,40,2026-10-13T02:47:50Z,2026-10-13T07:33:19Z,Compound 'linenstudio' head 'linen' + tail 'studio'; no listed demand root; general service; 11 letters.
+477,stromaassay.si,health_science,50.2,73,39,66,12,56,40,2026-10-13T04:23:13Z,2026-10-13T09:24:03Z,Compound 'stromaassay' head 'stroma' + tail 'assay'; no listed demand root; general service; 11 letters.
+478,yieldsignal.si,business_finance,50.2,74,39,66,12,55,40,2026-10-13T04:58:25Z,2026-10-13T10:07:04Z,Compound 'yieldsignal' head 'yield' + tail 'signal'; no listed demand root; general service; 11 letters.
+479,sleepmonitor.si,health_science,50.2,80,40,55,12,54,40,2026-10-13T04:19:00Z,2026-10-13T09:19:45Z,Compound 'sleepmonitor' head 'sleep' + tail 'monitor'; no listed demand root; general service; 12 letters.
+480,denimstudio.si,consumer_brands,50.0,75,39,67,12,51,40,2026-10-13T01:39:40Z,2026-10-13T07:07:45Z,Compound 'denimstudio' head 'denim' + tail 'studio'; no listed demand root; general service; 11 letters.
+481,enzymeassay.si,health_science,50.0,77,39,66,12,48,40,2026-10-13T01:43:54Z,2026-10-13T07:12:09Z,Compound 'enzymeassay' head 'enzyme' + tail 'assay'; no listed demand root; general service; 11 letters.
+482,equityindex.si,business_finance,49.8,78,39,65,12,46,40,2026-10-13T01:44:12Z,2026-10-13T07:12:29Z,Compound 'equityindex' head 'equity' + tail 'index'; no listed demand root; general service; 11 letters.
+483,tailordesign.si,consumer_brands,49.8,80,39,54,12,54,40,2026-10-13T04:27:29Z,2026-10-13T09:30:53Z,Compound 'tailordesign' head 'tailor' + tail 'design'; no listed demand root; general service; 12 letters.
+484,dermaclinic.si,health_science,49.6,79,39,66,12,42,40,2026-10-13T01:39:53Z,2026-10-13T07:08:03Z,Compound 'dermaclinic' head 'derma' + tail 'clinic'; no listed demand root; general service; 11 letters.
+485,brokersignal.si,business_finance,49.4,79,39,54,12,53,40,2026-10-13T01:26:34Z,2026-10-13T05:49:40Z,Compound 'brokersignal' head 'broker' + tail 'signal'; no listed demand root; general service; 12 letters.
+486,proteinatlas.si,health_science,49.4,79,39,54,12,53,40,2026-10-13T03:48:28Z,2026-10-13T08:59:07Z,Compound 'proteinatlas' head 'protein' + tail 'atlas'; no listed demand root; general service; 12 letters.
+487,gericlinic.si,health_science,49.2,79,39,70,12,36,40,2026-10-13T02:14:13Z,2026-10-13T07:19:48Z,Compound 'gericlinic' head 'geri' + tail 'clinic'; no listed demand root; general service; 10 letters.
+488,caravanstay.si,consumer_brands,49.2,74,39,66,12,48,40,2026-10-13T01:28:00Z,2026-10-13T05:53:46Z,Compound 'caravanstay' head 'caravan' + tail 'stay'; no listed demand root; general service; 11 letters.
+489,cyclingwear.si,consumer_brands,49.2,74,38,67,12,48,40,2026-10-13T01:36:25Z,2026-10-13T06:48:49Z,Compound 'cyclingwear' head 'cycling' + tail 'wear'; no listed demand root; general service; 11 letters.
+490,mentorclass.si,consumer_brands,49.2,74,39,67,12,47,40,2026-10-13T03:13:09Z,2026-10-13T07:50:56Z,Compound 'mentorclass' head 'mentor' + tail 'class'; no listed demand root; general service; 11 letters.
+491,synapsetrial.si,health_science,49.2,79,39,54,12,52,40,2026-10-13T04:26:54Z,2026-10-13T09:29:47Z,Compound 'synapsetrial' head 'synapse' + tail 'trial'; no listed demand root; general service; 12 letters.
+492,biomarkerassay.si,health_science,49.2,72,65,34,12,49,40,2026-10-13T01:24:29Z,2026-10-13T05:37:57Z,Compound 'biomarkerassay' head 'biomarker' + tail 'assay'; root 'bio'; biotechnology; 14 letters.
+493,myelinmarker.si,health_science,48.8,78,39,53,12,52,40,2026-10-13T03:22:54Z,2026-10-13T08:18:37Z,Compound 'myelinmarker' head 'myelin' + tail 'marker'; no listed demand root; general service; 12 letters.
+494,mentorcourse.si,consumer_brands,48.7,78,39,53,12,51,40,2026-10-13T03:13:13Z,2026-10-13T07:51:41Z,Compound 'mentorcourse' head 'mentor' + tail 'course'; no listed demand root; general service; 12 letters.
+495,proteinassay.si,health_science,48.6,78,39,53,12,50,40,2026-10-13T03:48:26Z,2026-10-13T08:59:05Z,Compound 'proteinassay' head 'protein' + tail 'assay'; no listed demand root; general service; 12 letters.
+496,biocharstorage.si,emerging_industries,48.5,69,65,34,12,49,40,2026-10-13T01:24:27Z,2026-10-13T05:37:53Z,Compound 'biocharstorage' head 'biochar' + tail 'storage'; root 'bio'; biotechnology; 14 letters.
+497,cyclinggear.si,consumer_brands,48.4,73,38,66,12,46,40,2026-10-13T01:36:24Z,2026-10-13T06:48:43Z,Compound 'cyclinggear' head 'cycling' + tail 'gear'; no listed demand root; general service; 11 letters.
+498,hydrostorage.si,emerging_industries,48.4,78,39,53,12,49,40,2026-10-13T02:24:42Z,2026-10-13T07:23:58Z,Compound 'hydrostorage' head 'hydro' + tail 'storage'; no listed demand root; general service; 12 letters.
+499,nomadbooking.si,consumer_brands,48.2,77,39,52,12,50,40,2026-10-13T03:31:57Z,2026-10-13T08:29:41Z,Compound 'nomadbooking' head 'nomad' + tail 'booking'; no listed demand root; general service; 12 letters.
+500,plasmamarker.si,health_science,48.2,76,39,53,12,51,40,2026-10-13T03:45:14Z,2026-10-13T08:57:53Z,Compound 'plasmamarker' head 'plasma' + tail 'marker'; no listed demand root; general service; 12 letters.
