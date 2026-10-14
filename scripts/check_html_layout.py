@@ -1,10 +1,49 @@
-"""Check the generated HTML report at narrow and desktop viewport widths."""
+"""Check the offline HTML report layout, tabs, keyboard controls, and row paging."""
 
 from __future__ import annotations
 
 import sys
 import traceback
 from pathlib import Path
+
+
+PAGE_SIZE = 50
+MAX_VISIBLE = 150
+
+
+def expect(condition: bool, message: str) -> None:
+    if not condition:
+        raise AssertionError(message)
+
+
+def no_horizontal_overflow(page, width: int, mode: str) -> None:
+    overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth")
+    expect(not overflow, f"horizontal overflow in {mode} at {width}px")
+
+
+def rows(page, mode: str) -> int:
+    return page.locator(f"#panel-{mode} .row:not(.head)").count()
+
+
+def check_more_and_window_limit(page, mode: str) -> tuple[int, int, int]:
+    start = rows(page, mode)
+    expect(start <= PAGE_SIZE + 2, f"{mode} initially rendered {start} rows")
+    more = page.locator(f"#panel-{mode} [data-more]")
+    expect(more.is_visible(), f"{mode} Show more button is hidden")
+    more.click()
+    after_more = rows(page, mode)
+    expect(after_more > start, f"Show more did not add rows in {mode}")
+    expect(after_more == start + PAGE_SIZE, f"Show more did not add one page in {mode}")
+    expect(after_more <= PAGE_SIZE * 2 + 2, f"{mode} Show more rendered {after_more} rows")
+    more.click()
+    expect(rows(page, mode) == MAX_VISIBLE, f"{mode} did not grow to the 150-row window")
+    before_shift = page.locator(f"#panel-{mode} [data-page-label]").inner_text()
+    more.click()
+    capped = rows(page, mode)
+    after_shift = page.locator(f"#panel-{mode} [data-page-label]").inner_text()
+    expect(capped <= MAX_VISIBLE, f"{mode} rendered {capped} rows past the window limit")
+    expect(before_shift != after_shift, f"{mode} did not advance beyond its current row window")
+    return start, after_more, capped
 
 
 def main() -> int:
@@ -19,89 +58,136 @@ def main() -> int:
         print(f"HTML report not found: {report}", file=sys.stderr)
         return 1
 
+    summaries: list[str] = []
     try:
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch()
             try:
                 for width in (390, 1440):
                     page = browser.new_page(viewport={"width": width, "height": 1000})
-                    page.route("https://fonts.googleapis.com/**", lambda route: route.abort())
-                    page.route("https://fonts.gstatic.com/**", lambda route: route.abort())
+                    page_errors: list[str] = []
+                    external_requests: list[str] = []
+                    page.on("pageerror", lambda error: page_errors.append(str(error)))
+                    page.on(
+                        "request",
+                        lambda request: external_requests.append(request.url)
+                        if request.url.startswith(("http://", "https://"))
+                        else None,
+                    )
                     page.goto(report.as_uri(), wait_until="domcontentloaded")
-                    page.locator("#owned-chip").wait_for()
-                    assert page.locator("#tab-top").get_attribute("aria-selected") == "true"
-                    assert page.locator(".stat b").all_inner_texts() == ["6,204", "3,395", "500", "2,809"]
-                    assert page.locator(".stat span").all_inner_texts() == [
-                        "checked", "available", "top 500 ranked", "unavailable"
-                    ]
-                    assert page.locator("#table .row:not(.head)").count() == 60
-                    assert page.locator("#more").is_visible()
-                    assert page.locator("#pager").is_hidden()
-                    page.locator("#owned-chip").click()
-                    assert page.locator("#owned-chip").inner_text().strip().startswith("Owned")
-                    assert page.locator("#owned-chip i").inner_text().strip() == "10"
-                    assert page.locator("#owned-summary").is_visible()
-                    assert page.locator("#owned-summary .owned-list li").count() == 10
-                    assert page.locator("#table .row:not(.head)").count() == 10
-                    assert page.locator("#table .owned-badge").count() == 10
-                    overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth")
-                    assert not overflow, f"horizontal overflow on Top 500 at {width}px"
+
+                    expect(page.locator('[role="tablist"] [role="tab"]').count() == 3, "expected three tabs")
+                    expect(page.locator('[role="tabpanel"]').count() == 3, "expected three tabpanels")
+                    for mode in ("top", "available", "unavailable"):
+                        expect(
+                            page.locator(f"#tab-{mode}").get_attribute("aria-controls") == f"panel-{mode}",
+                            f"{mode} tab does not control its tabpanel",
+                        )
+                        expect(
+                            page.locator(f"#panel-{mode}").get_attribute("aria-labelledby") == f"tab-{mode}",
+                            f"{mode} tabpanel does not label itself from its tab",
+                        )
+                    expect(page.locator("#tab-top").get_attribute("aria-selected") == "true", "Top 500 is not selected initially")
+                    expect(page.locator("#tab-top").get_attribute("tabindex") == "0", "initial tab does not own keyboard focus")
+                    expect(page.locator("#panel-available[hidden] .row:not(.head)").count() == 0, "All available rendered before first open")
+                    expect(page.locator("#panel-unavailable[hidden] .row:not(.head)").count() == 0, "Unavailable rendered before first open")
+                    expect(page.locator(".stat b").all_inner_texts() == ["6,204", "3,395", "500", "2,809"], "header counts differ")
+                    expect(page.locator("#owned-summary .owned-list li").count() == 10, "owned summary does not list ten domains")
+                    expect(rows(page, "top") == PAGE_SIZE, "Top 500 did not start with one page")
+                    no_horizontal_overflow(page, width, "Top 500")
+                    top_counts = check_more_and_window_limit(page, "top")
+                    no_horizontal_overflow(page, width, "Top 500 after paging")
+
+                    owned_chip = page.locator("#panel-top .chip[data-owned=true]")
+                    expect(owned_chip.locator("i").inner_text().strip() == "10", "Owned filter count is not ten")
+                    owned_chip.click()
+                    expect(rows(page, "top") == 10, "Owned filter does not show ten rows")
+                    expect(page.locator("#panel-top .owned-badge").count() == 10, "owned rows lack badges")
+                    page.locator("#panel-top .row:not(.head)").first.click()
+                    expect("owned by you (bought 2026-10-14)" in page.locator("#panel-top").inner_text(), "owned availability wording is missing")
+                    page.locator("#panel-top .chip[data-c='']").click()
 
                     page.locator("#tab-top").focus()
                     page.keyboard.press("ArrowRight")
-                    assert page.locator("#tab-available").get_attribute("aria-selected") == "true"
-                    assert page.locator("#count").inner_text() == "3,395 of 3,395 names"
-                    assert page.locator("#owned-chip i").inner_text().strip() == "10"
-                    assert page.locator("#table .row:not(.head)").count() == 60
-                    assert page.locator("#table .row:not(.head)").first.locator(".c-cat").is_visible()
-                    assert page.locator("#table .row:not(.head)").first.locator(".c-why").is_visible()
-                    overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth")
-                    assert not overflow, f"horizontal overflow on All available at {width}px"
-                    assert page.locator("#page-label").inner_text().startswith("Rows 1–60 of 3,395")
-                    short_length_count = page.evaluate("() => JSON.parse(document.getElementById('data').textContent).available.filter(r => r.d.slice(0,-3).length <= 4).length")
-                    page.locator("#len").select_option("4")
-                    assert page.locator("#count").inner_text() == f"{short_length_count:,} of 3,395 names"
-                    page.locator("#len").select_option("")
-                    category = page.locator("#cats .chip[data-c]").nth(1).get_attribute("data-c")
-                    category_count = page.evaluate("c => JSON.parse(document.getElementById('data').textContent).available.filter(r => r.c === c).length", category)
-                    page.locator(f"#cats .chip[data-c='{category}']").click()
-                    assert page.locator("#count").inner_text() == f"{category_count:,} of 3,395 names"
-                    page.locator("#cats .chip[data-c='']").click()
-                    expected_score_leader = page.evaluate("() => JSON.parse(document.getElementById('data').textContent).available.slice().sort((a,b) => (b.t ?? -1) - (a.t ?? -1) || a.d.localeCompare(b.d))[0].d")
-                    page.locator("#table [data-s='t']").click()
-                    assert page.locator("#table .row:not(.head)").first.get_attribute("data-d") == expected_score_leader
-                    page.locator("#next-page").click()
-                    assert page.locator("#page-label").inner_text().startswith("Rows 61–120 of 3,395")
-                    assert page.locator("#table .row:not(.head)").count() == 60
-                    page.locator("#previous-page").click()
-                    page.locator("#q").fill("absorben.si")
-                    assert page.locator("#count").inner_text() == "1 of 3,395 names"
-                    assert page.locator("#table .row:not(.head)").count() == 1
-                    page.locator("#table .row:not(.head)").click()
-                    assert "outside_shortlist_cap" in page.locator("#table .detail").inner_text()
-                    assert "score breakdown" in page.locator("#table .detail").inner_text().lower()
+                    expect(page.locator("#tab-available").get_attribute("aria-selected") == "true", "ArrowRight did not activate All available")
+                    expect(page.locator("#tab-available").get_attribute("tabindex") == "0", "All available did not receive the roving tabindex")
+                    expect(rows(page, "available") == PAGE_SIZE, "All available did not lazily render one page")
+                    no_horizontal_overflow(page, width, "All available")
+                    available_counts = check_more_and_window_limit(page, "available")
+
+                    data_candidate = page.evaluate(
+                        "() => JSON.parse(document.getElementById('data').textContent).a.find(row => row[4] === null)[0]"
+                    )
+                    page.locator("#panel-available [data-query]").fill(data_candidate)
+                    expect(page.locator("#panel-available [data-count]").inner_text() == "1 of 3,395 names", "All available search failed")
+                    page.locator("#panel-available [data-query]").fill("")
+
+                    short_count = page.evaluate(
+                        "() => JSON.parse(document.getElementById('data').textContent).a.filter(row => row[0].slice(0, -3).length <= 4).length"
+                    )
+                    page.locator("#panel-available [data-length]").select_option("4")
+                    expect(
+                        page.locator("#panel-available [data-count]").inner_text() == f"{short_count:,} of 3,395 names",
+                        "All available length filter differs from embedded data",
+                    )
+                    page.locator("#panel-available [data-length]").select_option("")
+                    category = page.locator("#panel-available .chip[data-c]").nth(1).get_attribute("data-c")
+                    category_count = page.evaluate(
+                        "category => JSON.parse(document.getElementById('data').textContent).a.filter(row => row[1] === category).length",
+                        category,
+                    )
+                    page.locator(f"#panel-available .chip[data-c='{category}']").click()
+                    expect(
+                        page.locator("#panel-available [data-count]").inner_text() == f"{category_count:,} of 3,395 names",
+                        "All available category filter differs from embedded data",
+                    )
+                    page.locator("#panel-available .chip[data-c='']").click()
+                    expected_leader = page.evaluate(
+                        "() => JSON.parse(document.getElementById('data').textContent).a.slice().sort((a,b) => (b[2] ?? -1) - (a[2] ?? -1) || a[0].localeCompare(b[0]))[0][0]"
+                    )
+                    page.locator("#panel-available [data-sort='t']").click()
+                    expect(
+                        page.locator("#panel-available .row:not(.head)").first.get_attribute("data-d") == expected_leader,
+                        "All available score sort differs from embedded data",
+                    )
+                    no_horizontal_overflow(page, width, "All available after filtering and sorting")
 
                     page.locator("#tab-available").focus()
                     page.keyboard.press("ArrowRight")
-                    assert page.locator("#tab-unavailable").get_attribute("aria-selected") == "true"
-                    assert page.locator("#count").inner_text() == "2,809 of 2,809 names"
-                    assert page.locator("#reasonf").is_visible()
-                    assert page.locator("#table .row:not(.head)").count() == 60
-                    assert page.locator("#table .row:not(.head)").first.locator(".c-category").is_visible()
-                    assert page.locator("#table .row:not(.head)").first.locator(".c-stamp").is_visible()
-                    overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth")
-                    assert not overflow, f"horizontal overflow on Unavailable at {width}px"
-                    page.locator("#q").fill("abdomen.si")
-                    assert page.locator("#count").inner_text() == "1 of 2,809 names"
-                    page.locator("#q").fill("")
-                    assert page.locator("#reasonf option[value=rdap_registered]").inner_text() == "RDAP registered (2,803)"
-                    assert page.locator("#reasonf option[value=whois_registered]").inner_text() == "WHOIS registered (6)"
-                    page.locator("#reasonf").select_option("whois_registered")
-                    assert page.locator("#count").inner_text() == "6 of 2,809 names"
-                    assert page.locator("#table .row:not(.head)").count() == 6
+                    expect(page.locator("#tab-unavailable").get_attribute("aria-selected") == "true", "ArrowRight did not activate Unavailable")
+                    expect(rows(page, "unavailable") == PAGE_SIZE, "Unavailable did not lazily render one page")
+                    no_horizontal_overflow(page, width, "Unavailable")
+                    unavailable_counts = check_more_and_window_limit(page, "unavailable")
+                    reason = page.locator("#panel-unavailable [data-reason]")
+                    expect(reason.is_visible(), "Unavailable reason filter is hidden")
+                    expect(reason.locator("option[value='rdap_registered']").inner_text() == "RDAP registered (2,803)", "RDAP reason count differs")
+                    expect(reason.locator("option[value='whois_registered']").inner_text() == "WHOIS registered (6)", "WHOIS reason count differs")
+                    reason.select_option("whois_registered")
+                    expect(page.locator("#panel-unavailable [data-count]").inner_text() == "6 of 2,809 names", "Unavailable reason filter failed")
+                    unavailable_domain = page.evaluate(
+                        "() => JSON.parse(document.getElementById('data').textContent).u.find(row => row[2] === 'whois_registered')[0]"
+                    )
+                    page.locator("#panel-unavailable [data-query]").fill(unavailable_domain)
+                    expect(page.locator("#panel-unavailable [data-count]").inner_text() == "1 of 2,809 names", "Unavailable search failed")
+                    no_horizontal_overflow(page, width, "Unavailable after reason filter")
 
-                    overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth")
-                    assert not overflow, f"horizontal overflow at {width}px"
+                    page.locator("#tab-unavailable").focus()
+                    page.keyboard.press("End")
+                    expect(page.locator("#tab-unavailable").get_attribute("aria-selected") == "true", "End did not select the last tab")
+                    page.keyboard.press("ArrowLeft")
+                    expect(page.locator("#tab-available").get_attribute("aria-selected") == "true", "ArrowLeft did not return to All available")
+                    page.keyboard.press("Home")
+                    expect(page.locator("#tab-top").get_attribute("aria-selected") == "true", "Home did not select Top 500")
+                    focus_outline = page.evaluate("getComputedStyle(document.activeElement).outlineStyle")
+                    expect(focus_outline != "none", "keyboard focus ring is not visible")
+                    expect(not page_errors, f"JavaScript errors: {page_errors}")
+                    expect(not external_requests, f"offline page made external requests: {external_requests}")
+                    summaries.append(
+                        f"{width}px: Top 500 {top_counts[0]}->{top_counts[1]}->{top_counts[2]}, "
+                        f"All available {available_counts[0]}->{available_counts[1]}->{available_counts[2]}, "
+                        f"Unavailable {unavailable_counts[0]}->{unavailable_counts[1]}->{unavailable_counts[2]}; "
+                        "Top 500/All available/Unavailable overflow 0; external requests 0"
+                    )
                     page.close()
                 browser.close()
             except Exception:
@@ -115,7 +201,7 @@ def main() -> int:
         print(f"HTML layout check failed at line {frame.lineno}: {exc}", file=sys.stderr)
         return 1
 
-    print("HTML layout PASS at 390px and 1440px; 10 owned rows and badges verified.")
+    print("HTML layout PASS; " + "; ".join(summaries) + ".")
     return 0
 
 

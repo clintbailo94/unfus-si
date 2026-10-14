@@ -4,6 +4,7 @@ import html
 import json
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 import openpyxl
@@ -52,6 +53,10 @@ if len(owned_by_domain) != len(owned_sheet):
     raise ValueError("Owned sheet contains duplicate domains")
 if len(owned_by_domain) != 10:
     raise ValueError(f"Expected ten owned domains in the workbook, found {len(owned_by_domain)}")
+candidate_owned = {str(row["domain"]) for row in all_candidates if row.get("owned") == "yes"}
+if candidate_owned != set(owned_by_domain):
+    mismatch = sorted(candidate_owned.symmetric_difference(owned_by_domain))
+    raise ValueError("Owned sheet and All candidates owned flags disagree: " + ", ".join(mismatch))
 rows = []
 for r in short:
     domain = str(r["domain"])
@@ -100,8 +105,8 @@ def unavailable_reason(candidate):
     rule_detail = str(candidate.get("known_rule_explanation") or "")
     if rule_class != "ok":
         if rule_class == "invalid_syntax":
-            return "syntax_rule", "Syntax rule", rule_detail, "Local rule", ""
-        return f"special:{rule_class}", f"Reserved / special class: {rule_class}", rule_detail, "Local rule", ""
+            return "syntax_rule", "Syntax rule", rule_detail, "Local rule", rdap_time or whois_time
+        return f"special:{rule_class}", f"Reserved / special class: {rule_class}", rule_detail, "Local rule", rdap_time or whois_time
     if rdap_class == "registered":
         return "rdap_registered", "RDAP registered", "", "RDAP", rdap_time
     if rdap_class in {"reserved", "restricted", "premium", "invalid_syntax"}:
@@ -116,7 +121,7 @@ def unavailable_reason(candidate):
     if whois_class in {"unverified", "missing"}:
         label = "WHOIS unverified" if whois_class == "unverified" else "WHOIS not checked"
         return f"whois_{whois_class}", label, str(candidate.get("latest_whois_error") or ""), "WHOIS", whois_time
-    return "not_available", str(candidate.get("exclusion_reason") or "Not available"), "", "Registry", rdap_time or whois_time
+    return "not_available", str(candidate.get("exclusion_reason") or "").strip(), "", "Registry", rdap_time or whois_time
 
 
 score_fields = ("brandability", "commercial", "shortness", "hack", "resale", "trademark")
@@ -146,10 +151,33 @@ for candidate in all_candidates:
                      "evidence_source": source, "evidence_time": timestamp})
         unavailable_rows.append(base)
 
-if len(available_rows) + len(unavailable_rows) != cands:
-    raise ValueError("Available and unavailable rows do not cover All candidates")
-if sum(row["r"] is not None for row in available_rows) != len(short):
-    raise ValueError("All available shortlist ranks do not match the Shortlist sheet")
+checked_domains = [str(row["domain"]) for row in all_candidates]
+assigned_domains = [row["d"] for row in available_rows + unavailable_rows]
+checked_counts, assigned_counts = Counter(checked_domains), Counter(assigned_domains)
+if len(available_rows) + len(unavailable_rows) != cands or checked_counts != assigned_counts:
+    missing = sorted(name for name, count in checked_counts.items() if assigned_counts.get(name, 0) < count)
+    extra = sorted(name for name, count in assigned_counts.items() if checked_counts.get(name, 0) < count)
+    raise ValueError(
+        f"Available and unavailable rows do not cover All candidates "
+        f"({len(available_rows)} + {len(unavailable_rows)} != {cands}); "
+        f"unaccounted names: {', '.join(missing) or '(none)'}; "
+        f"unexpected names: {', '.join(extra) or '(none)'}"
+    )
+if any(count > 1 for count in checked_counts.values()) or any(count > 1 for count in assigned_counts.values()):
+    duplicates = sorted({name for counts in (checked_counts, assigned_counts)
+                         for name, count in counts.items() if count > 1})
+    raise ValueError(f"Duplicate candidate names prevent an exact availability partition: {', '.join(duplicates)}")
+missing_timestamps = [row["d"] for row in unavailable_rows if not row["evidence_time"]]
+if missing_timestamps:
+    raise ValueError(
+        "Unavailable candidates lack an evidence timestamp: " + ", ".join(missing_timestamps)
+    )
+missing_reasons = [row["d"] for row in unavailable_rows if not row["reason"]]
+if missing_reasons:
+    raise ValueError("Unavailable candidates lack a recorded reason: " + ", ".join(missing_reasons))
+ranked = sorted(row["r"] for row in available_rows if row["r"] is not None)
+if len(short) != 500 or ranked != list(range(1, 501)):
+    raise ValueError("All available shortlist ranks do not cover ranks 1 through 500")
 
 weights = meth.get("Ranking weights", "")
 rdap_counts = meth.get("Latest RDAP counts", "")
@@ -158,8 +186,25 @@ tm_range = meth.get("Trademark evidence timestamp range", "")
 rdap_range = meth.get("RDAP history timestamp range", "")
 whois_range = meth.get("WHOIS history timestamp range", "")
 
-data = json.dumps({"rows": rows, "available": available_rows, "unavailable": unavailable_rows,
-                   "avail": avail, "sales": sales}, ensure_ascii=True, separators=(",", ":"))
+# Positional arrays keep the embedded data compact. Their field order is decoded in the page script below.
+short_data = [[r["r"], r["d"], r["t"], r["c"], r["owned"], r["owned_status"], r["s"], r["tm"],
+               r["cov"], r["why"], r["val"], r["rdap"][0], r["rdap"][1], r["whois"][0], r["whois"][1]]
+              for r in rows]
+available_data = [[r["d"], r["c"], r["t"], r["s"], r["r"],
+                   (r["why"].strip() or "not recorded") if r["r"] is None else "",
+                   r["owned"], r["owned_status"], *r["rdap"], *r["whois"]]
+                  for r in available_rows]
+unavailable_data = [[r["d"], r["c"], r["reason_code"], r["reason"], r["reason_detail"],
+                     r["evidence_source"], r["evidence_time"]]
+                    for r in unavailable_rows]
+data = json.dumps({
+    "s": short_data,
+    "a": available_data,
+    "u": unavailable_data,
+    "v": [[r["cat"], r["pool"], r["eligible"], r["final"]] for r in avail],
+    "l": [[r[k] for k in ("sold_domain", "amount", "currency", "transaction_date", "venue", "relevance", "source_url")]
+          for r in sales],
+}, ensure_ascii=True, separators=(",", ":"))
 data = data.replace("</", "<\\/")
 E = lambda value: html.escape(str(value)).encode("ascii", errors="xmlcharrefreplace").decode("ascii")
 owned_summary = "".join(
@@ -175,9 +220,6 @@ page = r"""<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>.si Domain Shortlist</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f6f4ef; --paper:#fffdf9; --ink:#1b1f24; --muted:#5d6670; --faint:#8a929b; --line:#e4dfd5;
@@ -215,6 +257,7 @@ h2{font:650 24px/1.2 Fraunces,Georgia,serif;margin:0 0 6px}
 .tab:hover{color:var(--ink);border-color:var(--accent)}
 .tab[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .tab:focus-visible,.chip:focus-visible,.more:focus-visible,.pager button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.report-panel[hidden]{display:none}
 .chip{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:7px 13px;font:500 13px Inter,sans-serif;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
 .chip i{font-style:normal;color:var(--faint);font-variant-numeric:tabular-nums}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -339,32 +382,62 @@ footer{color:var(--faint);font-size:13px;padding:30px 0 60px;border-top:1px soli
 
 <section id="list">
   <div class="tabs" role="tablist" aria-label="Domain views">
-    <button class="tab" id="tab-top" role="tab" aria-selected="true" aria-controls="report-panel" tabindex="0" data-mode="top">Top 500</button>
-    <button class="tab" id="tab-available" role="tab" aria-selected="false" aria-controls="report-panel" tabindex="-1" data-mode="available">All available</button>
-    <button class="tab" id="tab-unavailable" role="tab" aria-selected="false" aria-controls="report-panel" tabindex="-1" data-mode="unavailable">Unavailable</button>
+    <button class="tab" id="tab-top" role="tab" aria-selected="true" aria-controls="panel-top" tabindex="0" data-mode="top">Top 500</button>
+    <button class="tab" id="tab-available" role="tab" aria-selected="false" aria-controls="panel-available" tabindex="-1" data-mode="available">All available</button>
+    <button class="tab" id="tab-unavailable" role="tab" aria-selected="false" aria-controls="panel-unavailable" tabindex="-1" data-mode="unavailable">Unavailable</button>
   </div>
-  <div id="report-panel" role="tabpanel" aria-labelledby="tab-top" tabindex="0">
-  <h2 id="view-title">The shortlist</h2>
-  <p class="sub" id="view-sub">Tap a category to filter. Tap any row for the reasoning, score breakdown and evidence.</p>
-  <div class="cats" id="cats"><button type="button" class="chip" id="owned-chip" data-owned="true" aria-pressed="false">Owned <i>__OWNED_COUNT__</i></button></div>
-  <div class="controls">
-    <input id="q" type="search" placeholder="Search domains or reasoning..." aria-label="Search">
-    <select id="tmf" aria-label="Trademark status" hidden>
-      <option value="">All trademark statuses</option>
-      <option value="blocked">Blocked / incomplete screen</option>
-      <option value="needs legal review">Needs legal review</option>
-      <option value="not yet screened">Not yet screened</option>
-    </select>
-    <select id="reasonf" aria-label="Unavailable reason" hidden><option value="">All reasons</option></select>
-    <select id="len" aria-label="Length">
-      <option value="">Any length</option><option value="4"><= 4 letters</option><option value="6"><= 6 letters</option><option value="8"><= 8 letters</option>
-    </select>
-    <span class="count" id="count"></span>
-  </div>
-  <div class="table" id="table"></div>
-  <button class="more" id="more" hidden>Show more</button>
-  <div class="pager" id="pager" hidden><button id="previous-page" type="button">Previous</button><span id="page-label"></span><button id="next-page" type="button">Next</button></div>
-  </div>
+  <section id="panel-top" role="tabpanel" aria-labelledby="tab-top" class="report-panel" tabindex="0">
+    <h2>The shortlist</h2>
+    <p class="sub">Tap a category to filter. Tap any row for the reasoning, score breakdown and evidence.</p>
+    <div class="cats" data-cats><button type="button" class="chip" data-owned="true" aria-pressed="false">Owned <i>__OWNED_COUNT__</i></button></div>
+    <div class="controls">
+      <input data-query type="search" placeholder="Search domains or reasoning..." aria-label="Search Top 500">
+      <select data-trademark aria-label="Trademark status">
+        <option value="">All trademark statuses</option>
+        <option value="blocked">Blocked / incomplete screen</option>
+        <option value="needs legal review">Needs legal review</option>
+        <option value="not yet screened">Not yet screened</option>
+      </select>
+      <select data-length aria-label="Length">
+        <option value="">Any length</option><option value="4"><= 4 letters</option><option value="6"><= 6 letters</option><option value="8"><= 8 letters</option>
+      </select>
+      <span class="count" data-count></span>
+    </div>
+    <div class="table" data-table></div>
+    <button class="more" data-more hidden>Show more</button>
+    <div class="pager" data-pager><button data-previous type="button" hidden>Show previous</button><span data-page-label></span></div>
+  </section>
+  <section id="panel-available" role="tabpanel" aria-labelledby="tab-available" class="report-panel" tabindex="0" hidden>
+    <h2>All available</h2>
+    <p class="sub">Every name with RDAP 404, WHOIS not_registered and known rules passing. Ranked names include their shortlist rank; other exclusion reasons come from the workbook.</p>
+    <div class="cats" data-cats></div>
+    <div class="controls">
+      <input data-query type="search" placeholder="Search domains or reasoning..." aria-label="Search all available">
+      <select data-length aria-label="Length">
+        <option value="">Any length</option><option value="4"><= 4 letters</option><option value="6"><= 6 letters</option><option value="8"><= 8 letters</option>
+      </select>
+      <span class="count" data-count></span>
+    </div>
+    <div class="table" data-table></div>
+    <button class="more" data-more hidden>Show more</button>
+    <div class="pager" data-pager><button data-previous type="button" hidden>Show previous</button><span data-page-label></span></div>
+  </section>
+  <section id="panel-unavailable" role="tabpanel" aria-labelledby="tab-unavailable" class="report-panel" tabindex="0" hidden>
+    <h2>Unavailable</h2>
+    <p class="sub">Names that failed an availability check or a known rule. Search by domain and filter by the recorded reason; timestamps are from the evidence.</p>
+    <div class="cats" data-cats></div>
+    <div class="controls">
+      <input data-query type="search" placeholder="Search domains or reason..." aria-label="Search unavailable">
+      <select data-reason aria-label="Unavailable reason"><option value="">All reasons</option></select>
+      <select data-length aria-label="Length">
+        <option value="">Any length</option><option value="4"><= 4 letters</option><option value="6"><= 6 letters</option><option value="8"><= 8 letters</option>
+      </select>
+      <span class="count" data-count></span>
+    </div>
+    <div class="table" data-table></div>
+    <button class="more" data-more hidden>Show more</button>
+    <div class="pager" data-pager><button data-previous type="button" hidden>Show previous</button><span data-page-label></span></div>
+  </section>
 </section>
 
 <section>
@@ -402,7 +475,7 @@ footer{color:var(--faint);font-size:13px;padding:30px 0 60px;border-top:1px soli
 <script id="data" type="application/json">__DATA__</script>
 <script>
 (function(){
-const D = JSON.parse(document.getElementById('data').textContent);
+const raw = JSON.parse(document.getElementById('data').textContent);
 const CAT = {ai:'AI',invented:'Invented',consumer_brands:'Consumer brands',health_science:'Health & science',
   business_finance:'Business & finance',emerging_industries:'Emerging industries',technology:'Technology',
   dictionary:'Dictionary words',short:'Short',domain_hacks:'Domain hacks'};
@@ -410,10 +483,39 @@ const TM = {'needs legal review':['review','Needs legal review'],'blocked':['blo
 const PARTS = ['Brandability','Commercial','Shortness','Hack','Resale','Trademark'];
 const COV = {complete:['ok','clear'],no_obvious_match:['ok','no obvious match'],possible_conflict:['warn','possible conflict'],
   unverified:['mute','unchecked (refused access)'],blocked:['mute','unchecked (blocked)']};
+const D = {
+  rows: null,
+  available: null,
+  unavailable: null,
+  avail: raw.v.map(([cat,pool,eligible,final]) => ({cat,pool,eligible,final})),
+  sales: raw.l.map(([sold_domain,amount,currency,transaction_date,venue,relevance,source_url]) =>
+    ({sold_domain,amount,currency,transaction_date,venue,relevance,source_url}))
+};
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const $ = id => document.getElementById(id);
-const PAGE_SIZE = 60;
-const st = {mode:'top', cat:'', owned:false, q:'', tm:'', reason:'', len:'', sort:'r', dir:1, shown:60, page:0};
+const PAGE_SIZE = 50;
+const MAX_VISIBLE = 150;
+const MODES = ['top','available','unavailable'];
+const S = Object.fromEntries(MODES.map(mode => [mode, {
+  cat:'', owned:false, q:'', tm:'', reason:'', len:'', sort:mode === 'unavailable' ? 'd' : 'r', dir:1,
+  start:0, shown:PAGE_SIZE, initialized:false
+}]));
+const panel = mode => document.getElementById('panel-' + mode);
+function sourceRows(mode){
+  if (mode === 'top' && D.rows === null) {
+    D.rows = raw.s.map(([r,d,t,c,owned,owned_status,s,tm,cov,why,val,rdap_status,rdap_time,whois_class,whois_time]) =>
+      ({r,d,t,c,owned,owned_status,s,tm,cov,why,val,rdap:[rdap_status,rdap_time],whois:[whois_class,whois_time]}));
+  }
+  if (mode === 'available' && D.available === null) {
+    D.available = raw.a.map(([d,c,t,s,r,why,owned,owned_status,rdap_status,rdap_class,rdap_time,whois_class,whois_time]) =>
+      ({d,c,t,s,r,why,owned,owned_status,rdap:[rdap_status,rdap_class,rdap_time],whois:[whois_class,whois_time]}));
+  }
+  if (mode === 'unavailable' && D.unavailable === null) {
+    D.unavailable = raw.u.map(([d,c,reason_code,reason,reason_detail,evidence_source,evidence_time]) =>
+      ({d,c,reason_code,reason,reason_detail,evidence_source,evidence_time}));
+  }
+  return mode === 'top' ? D.rows : mode === 'available' ? D.available : D.unavailable;
+}
 
 // theme toggle
 try { const t = localStorage.getItem('si-theme'); if (t) document.documentElement.dataset.theme = t; } catch(e) {}
@@ -424,45 +526,38 @@ $('theme').onclick = () => {
   try { localStorage.setItem('si-theme', document.documentElement.dataset.theme); } catch(e) {}
 };
 
-function sourceRows(){ return st.mode === 'top' ? D.rows : st.mode === 'available' ? D.available : D.unavailable; }
-function resetPaging(){ st.shown = PAGE_SIZE; st.page = 0; }
-function drawCategories(){
-  const source = sourceRows(), counts = {};
+function resetPaging(st){ st.start = 0; st.shown = PAGE_SIZE; }
+function drawCategories(mode){
+  const st = S[mode], source = sourceRows(mode), counts = {};
   source.forEach(r => counts[r.c] = (counts[r.c] || 0) + 1);
   const cats = [['', 'All', source.length], ...Object.entries(counts).sort((a,b) => b[1]-a[1]).map(([k,n]) => [k, CAT[k] || k, n])];
   const chips = cats.map(([k,l,n]) => `<button type="button" class="chip" data-c="${esc(k)}" aria-pressed="${k === st.cat && !st.owned}">${esc(l)} <i>${n.toLocaleString()}</i></button>`).join('');
-  const owned = st.mode === 'unavailable' ? '' : `<button type="button" class="chip" id="owned-chip" data-owned="true" aria-pressed="${st.owned}">Owned <i>${source.filter(r => r.owned).length}</i></button>`;
-  $('cats').innerHTML = chips + owned;
+  const owned = mode === 'unavailable' ? '' : `<button type="button" class="chip" data-owned="true" aria-pressed="${st.owned}">Owned <i>${source.filter(r => r.owned).length}</i></button>`;
+  panel(mode).querySelector('[data-cats]').innerHTML = chips + owned;
 }
 function drawReasonFilter(){
   const counts = {};
   D.unavailable.forEach(r => { if (!counts[r.reason_code]) counts[r.reason_code] = {label:r.reason,count:0}; counts[r.reason_code].count++; });
   const options = Object.entries(counts).sort((a,b) => b[1].count-a[1].count)
     .map(([code,v]) => `<option value="${esc(code)}">${esc(v.label)} (${v.count.toLocaleString()})</option>`).join('');
-  $('reasonf').innerHTML = '<option value="">All reasons</option>' + options;
-}
-function updateControls(){
-  $('tmf').hidden = st.mode !== 'top'; $('reasonf').hidden = st.mode !== 'unavailable';
-  $('view-title').textContent = st.mode === 'top' ? 'The shortlist' : st.mode === 'available' ? 'All available' : 'Unavailable';
-  $('view-sub').textContent = st.mode === 'top'
-    ? 'Tap a category to filter. Tap any row for the reasoning, score breakdown and evidence.'
-    : st.mode === 'available'
-      ? 'Every name with RDAP 404, WHOIS not_registered and known rules passing. Ranked names include their shortlist rank; other exclusion reasons come from the workbook.'
-      : 'Names that failed an availability check or a known rule. Search by domain and filter by the recorded reason; timestamps are from the evidence.';
+  panel('unavailable').querySelector('[data-reason]').innerHTML = '<option value="">All reasons</option>' + options;
 }
 function selectMode(mode, focusTab){
-  st.mode = mode; st.cat = ''; st.owned = false; st.tm = ''; st.reason = ''; st.len = ''; st.q = '';
-  st.sort = mode === 'unavailable' ? 'd' : 'r'; st.dir = 1; resetPaging();
-  $('q').value = ''; $('tmf').value = ''; $('reasonf').value = ''; $('len').value = '';
   document.querySelectorAll('[role="tab"]').forEach(tab => {
     const selected = tab.dataset.mode === mode;
     tab.setAttribute('aria-selected', String(selected)); tab.tabIndex = selected ? 0 : -1;
-    if (selected) { $('report-panel').setAttribute('aria-labelledby', tab.id); if (focusTab) tab.focus(); }
+    if (selected && focusTab) tab.focus();
   });
-  updateControls(); drawCategories(); render();
+  MODES.forEach(name => { panel(name).hidden = name !== mode; });
+  if (!S[mode].initialized) {
+    sourceRows(mode);
+    if (mode === 'unavailable') drawReasonFilter();
+    render(mode);
+  }
 }
-function filtered(){
-  const rs = sourceRows().filter(r => (!st.cat || r.c === st.cat) && (!st.owned || r.owned)
+function filtered(mode){
+  const st = S[mode];
+  const rs = sourceRows(mode).filter(r => (!st.cat || r.c === st.cat) && (!st.owned || r.owned)
     && (!st.tm || r.tm === st.tm) && (!st.reason || r.reason_code === st.reason)
     && (!st.len || r.d.slice(0, -3).length <= +st.len)
     && (!st.q || [r.d,r.c,r.why,r.reason,r.reason_detail].filter(Boolean).join(' ').toLowerCase().includes(st.q)));
@@ -475,7 +570,7 @@ function filtered(){
       else result = cmp(b.t,a.t) || cmp(a.d,b.d);
     } else {
       if (a.r == null || b.r == null) result = a.r == null ? (b.r == null ? cmp(a.d,b.d) : 1) : -1;
-      else result = cmp(a.r,b.r);
+      else result = cmp(a.r,b.r) || cmp(a.d,b.d);
     }
     return result * st.dir;
   });
@@ -512,7 +607,7 @@ function scoreBars(r){
 }
 function availableRow(r){
   const label_ = r.d.slice(0, -3);
-  const reason = r.r == null ? (r.why || 'No exclusion reason recorded') : 'In Top 500';
+  const reason = r.r == null ? r.why : 'In Top 500';
   return `<div class="row available" role="button" tabindex="0" aria-expanded="false" data-d="${esc(r.d)}">
     <span class="rank">${r.r == null ? '\u2014' : r.r}</span>
     <span class="dom">${esc(label_)}<em>.si</em>${r.owned ? '<span class="owned-badge">Owned</span>' : ''}</span>
@@ -525,7 +620,7 @@ function availableDetail(r){
   const score = r.t == null || !r.s || r.s.some(v => v == null)
     ? '<p class="mute">No score is recorded for this name.</p>'
     : PARTS.map((p,i) => `<div class="sc"><span>${p}</span><span class="bar"><div style="width:${r.s[i]}%"></div></span><span>${r.s[i]}</span></div>`).join('');
-  const why = r.r == null ? `<p>${esc(r.why || 'No exclusion reason recorded in the workbook.')}</p>` : `<p>Shortlist rank <b>${r.r}</b>.</p>`;
+  const why = r.r == null ? `<p>${esc(r.why)}</p>` : `<p>Shortlist rank <b>${r.r}</b>.</p>`;
   const evidence = r.owned
     ? `<p><b>${esc(r.owned_status)}</b></p><p>Registry observations are pre-purchase history (${esc(r.rdap[2])}; ${esc(r.whois[1])}).</p>`
     : `<p>RDAP <b>${esc(r.rdap[0])}</b> (${esc(r.rdap[1])}) at ${esc(r.rdap[2])}<br>WHOIS <b>${esc(r.whois[0])}</b> at ${esc(r.whois[1])}</p>`;
@@ -533,7 +628,7 @@ function availableDetail(r){
 }
 function unavailableRow(r){
   const label_ = r.d.slice(0, -3);
-  const timestamp = r.evidence_time ? `${r.evidence_source} \u00b7 ${r.evidence_time}` : 'Local rule \u00b7 no registry timestamp';
+  const timestamp = `${r.evidence_source} \u00b7 ${r.evidence_time}`;
   return `<div class="row unavailable" role="button" tabindex="0" aria-expanded="false" data-d="${esc(r.d)}">
     <span class="dom">${esc(label_)}<em>.si</em></span>
     <span class="c-category"><span class="pill">${esc(CAT[r.c] || r.c)}</span></span>
@@ -543,61 +638,62 @@ function unavailableRow(r){
 }
 function unavailableDetail(r){
   const why = r.reason_detail ? `<p>${esc(r.reason_detail)}</p>` : '';
-  const evidence = r.evidence_time
-    ? `<p>${esc(r.evidence_source)} evidence timestamp: <b>${esc(r.evidence_time)}</b></p>`
-    : '<p>This is a local known-rule classification; the workbook has no registry timestamp for the rule itself.</p>';
+  const evidence = `<p>${esc(r.evidence_source)} evidence timestamp: <b>${esc(r.evidence_time)}</b></p>`;
   return `<div class="dgrid"><div><h4>Why unavailable</h4><p><b>${esc(r.reason)}</b></p>${why}</div><div><h4>Evidence timestamp</h4>${evidence}</div><div><h4>Category</h4><p>${esc(CAT[r.c] || r.c)}</p></div></div>`;
 }
-function head(){
-  const arrow = k => st.sort === k ? (st.dir > 0 ? ' ^' : ' v') : '';
-  if (st.mode === 'unavailable') return `<div class="row head unavailable"><button data-s="d">Domain${arrow('d')}</button><span class="c-category">Category</span><span>Reason</span><span class="c-stamp">Evidence timestamp</span><span></span></div>`;
-  if (st.mode === 'available') return `<div class="row head available"><button data-s="r">Rank${arrow('r')}</button><button data-s="d">Domain${arrow('d')}</button>
-    <span class="c-cat">Category</span><button class="c-total" data-s="t">Total score${arrow('t')}</button>
+function head(mode){
+  const st = S[mode], arrow = key => st.sort === key ? (st.dir > 0 ? ' ^' : ' v') : '';
+  if (mode === 'unavailable') return `<div class="row head unavailable"><button data-sort="d">Domain${arrow('d')}</button><span class="c-category">Category</span><span>Reason</span><span class="c-stamp">Evidence timestamp</span><span></span></div>`;
+  if (mode === 'available') return `<div class="row head available"><button data-sort="r">Rank${arrow('r')}</button><button data-sort="d">Domain${arrow('d')}</button>
+    <span class="c-cat">Category</span><button class="c-total" data-sort="t">Total score${arrow('t')}</button>
     <span class="c-mini">Breakdown</span><span class="c-why">Why outside 500</span><span></span></div>`;
-  return `<div class="row head"><button data-s="r">#${arrow('r')}</button><button data-s="d">Domain${arrow('d')}</button>
-    <span class="c-cat">Category</span><button class="c-total" data-s="t">Score${arrow('t')}</button>
+  return `<div class="row head"><button data-sort="r">#${arrow('r')}</button><button data-sort="d">Domain${arrow('d')}</button>
+    <span class="c-cat">Category</span><button class="c-total" data-sort="t">Score${arrow('t')}</button>
     <span class="c-mini" title="Brandability, commercial, shortness, hack, resale, trademark">Breakdown</span><span class="c-tm">Trademark</span><span></span></div>`;
 }
-function render(){
-  const rs = filtered();
-  const source = sourceRows();
-  $('count').textContent = `${rs.length.toLocaleString()} of ${source.length.toLocaleString()} names`;
-  const start = st.mode === 'top' ? 0 : st.page * PAGE_SIZE;
-  const visible = st.mode === 'top' ? rs.slice(0, st.shown) : rs.slice(start, start + PAGE_SIZE);
-  const drawRow = st.mode === 'top' ? shortRow : st.mode === 'available' ? availableRow : unavailableRow;
-  $('table').innerHTML = head() + (visible.length ? visible.map(drawRow).join('') : '<div class="empty">No names match these filters.</div>');
-  $('more').hidden = rs.length <= st.shown;
-  $('more').textContent = `Show more (${rs.length - st.shown} left)`;
-  $('pager').hidden = st.mode === 'top';
-  const pageCount = Math.max(1, Math.ceil(rs.length / PAGE_SIZE));
-  const from = rs.length ? start + 1 : 0;
-  const to = Math.min(start + PAGE_SIZE, rs.length);
-  $('page-label').textContent = `Rows ${from.toLocaleString()}\u2013${to.toLocaleString()} of ${rs.length.toLocaleString()} \u00b7 page ${st.page + 1} of ${pageCount}`;
-  $('previous-page').disabled = st.page === 0;
-  $('next-page').disabled = st.page + 1 >= pageCount;
+function render(mode){
+  const st = S[mode], pane = panel(mode), rs = filtered(mode), source = sourceRows(mode);
+  drawCategories(mode);
+  pane.querySelector('[data-count]').textContent = `${rs.length.toLocaleString()} of ${source.length.toLocaleString()} names`;
+  const visible = rs.slice(st.start, st.start + st.shown);
+  const drawRow = mode === 'top' ? shortRow : mode === 'available' ? availableRow : unavailableRow;
+  const table = pane.querySelector('[data-table]');
+  table.innerHTML = head(mode) + (visible.length ? visible.map(drawRow).join('') : '<div class="empty">No names match these filters.</div>');
+  const more = pane.querySelector('[data-more]'), previous = pane.querySelector('[data-previous]');
+  const moreLeft = rs.length - (st.start + st.shown);
+  more.hidden = moreLeft <= 0;
+  more.textContent = `Show more (${moreLeft.toLocaleString()} left)`;
+  previous.hidden = st.start === 0 && st.shown === PAGE_SIZE;
+  const from = rs.length ? st.start + 1 : 0, to = Math.min(st.start + st.shown, rs.length);
+  pane.querySelector('[data-page-label]').textContent = `Rows ${from.toLocaleString()}-${to.toLocaleString()} of ${rs.length.toLocaleString()}`;
+  st.initialized = true;
 }
-$('table').addEventListener('click', e => {
-  const s = e.target.closest('[data-s]');
-  if (s) { st.dir = st.sort === s.dataset.s ? -st.dir : 1; st.sort = s.dataset.s; resetPaging(); render(); return; }
-  const r = e.target.closest('.row:not(.head)'); if (!r) return;
-  const open = r.getAttribute('aria-expanded') !== 'true';
-  r.setAttribute('aria-expanded', open); r.nextElementSibling.classList.toggle('open', open);
+document.getElementById('list').addEventListener('click', e => {
+  const tab = e.target.closest('[role="tab"]');
+  if (tab) { selectMode(tab.dataset.mode, false); return; }
+  const pane = e.target.closest('.report-panel'); if (!pane) return;
+  const mode = pane.id.slice('panel-'.length), st = S[mode];
+  const sort = e.target.closest('[data-sort]');
+  if (sort) { st.dir = st.sort === sort.dataset.sort ? -st.dir : 1; st.sort = sort.dataset.sort; resetPaging(st); render(mode); return; }
+  const chip = e.target.closest('.chip');
+  if (chip) { st.owned = chip.dataset.owned === 'true'; st.cat = st.owned ? '' : chip.dataset.c; resetPaging(st); render(mode); return; }
+  if (e.target.closest('[data-more]')) {
+    if (st.shown < MAX_VISIBLE) st.shown = Math.min(st.shown + PAGE_SIZE, MAX_VISIBLE);
+    else st.start = Math.min(st.start + PAGE_SIZE, Math.max(0, filtered(mode).length - PAGE_SIZE));
+    render(mode); return;
+  }
+  if (e.target.closest('[data-previous]')) {
+    if (st.start > 0) st.start = Math.max(0, st.start - PAGE_SIZE);
+    else st.shown = Math.max(PAGE_SIZE, st.shown - PAGE_SIZE);
+    render(mode); return;
+  }
+  const row = e.target.closest('.row:not(.head)'); if (!row) return;
+  const open = row.getAttribute('aria-expanded') !== 'true';
+  row.setAttribute('aria-expanded', String(open)); row.nextElementSibling.classList.toggle('open', open);
 });
-$('table').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('row')) { e.preventDefault(); e.target.click(); } });
-$('cats').addEventListener('click', e => {
-  const b = e.target.closest('.chip'); if (!b) return;
-  st.owned = b.dataset.owned === 'true'; st.cat = st.owned ? '' : b.dataset.c;
-  resetPaging(); drawCategories(); render();
-});
-$('q').oninput = e => { st.q = e.target.value.trim().toLowerCase(); resetPaging(); render(); };
-$('tmf').onchange = e => { st.tm = e.target.value; resetPaging(); render(); };
-$('reasonf').onchange = e => { st.reason = e.target.value; resetPaging(); render(); };
-$('len').onchange = e => { st.len = e.target.value; resetPaging(); render(); };
-$('more').onclick = () => { st.shown += 100; render(); };
-$('previous-page').onclick = () => { st.page = Math.max(0, st.page - 1); render(); };
-$('next-page').onclick = () => { st.page++; render(); };
-$('list').addEventListener('click', e => { const tab = e.target.closest('[role="tab"]'); if (tab) selectMode(tab.dataset.mode, false); });
-$('list').addEventListener('keydown', e => {
+document.getElementById('list').addEventListener('keydown', e => {
+  const row = e.target.closest('.row[role="button"]');
+  if (row && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); row.click(); return; }
   const tab = e.target.closest('[role="tab"]'); if (!tab) return;
   const tabs = [...document.querySelectorAll('[role="tab"]')];
   let next = tabs.indexOf(tab);
@@ -605,18 +701,25 @@ $('list').addEventListener('keydown', e => {
   else if (e.key === 'ArrowLeft') next = (next - 1 + tabs.length) % tabs.length;
   else if (e.key === 'Home') next = 0;
   else if (e.key === 'End') next = tabs.length - 1;
-  else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectMode(tab.dataset.mode, false); return; }
   else return;
   e.preventDefault(); selectMode(tabs[next].dataset.mode, true);
 });
-drawReasonFilter(); updateControls(); drawCategories(); render();
+MODES.forEach(mode => {
+  const pane = panel(mode), st = S[mode];
+  pane.querySelector('[data-query]').addEventListener('input', e => { st.q = e.target.value.trim().toLowerCase(); resetPaging(st); render(mode); });
+  pane.querySelector('[data-length]').addEventListener('change', e => { st.len = e.target.value; resetPaging(st); render(mode); });
+  const tm = pane.querySelector('[data-trademark]');
+  if (tm) tm.addEventListener('change', e => { st.tm = e.target.value; resetPaging(st); render(mode); });
+  const reason = pane.querySelector('[data-reason]');
+  if (reason) reason.addEventListener('change', e => { st.reason = e.target.value; resetPaging(st); render(mode); });
+});
+render('top');
 
 $('avail').innerHTML = '<tr><th>Category</th><th style="text-align:right">Candidates</th><th style="text-align:right">Eligible (snapshot)</th><th style="text-align:right">In the 500</th></tr>'
   + D.avail.sort((a,b) => b.final - a.final).map(a => `<tr><td>${esc(CAT[a.cat] || a.cat)}</td><td class="n">${a.pool.toLocaleString()}</td><td class="n">${a.eligible.toLocaleString()}</td><td class="n"><b>${a.final}</b></td></tr>`).join('');
 $('sales').innerHTML = '<tr><th>Domain sold</th><th style="text-align:right">Price</th><th>Date</th><th>Venue</th><th>Source</th></tr>'
   + D.sales.sort((a,b) => b.amount - a.amount).map(s => `<tr><td><b>${esc(s.sold_domain)}</b></td><td class="n">${esc(s.currency)} ${Number(s.amount).toLocaleString()}</td><td>${esc(s.transaction_date)}</td><td>${esc(s.venue)}</td><td><a href="${esc(s.source_url)}" target="_blank" rel="noopener">link</a></td></tr>`).join('');
-})();
-</script>
+})()</script>
 </body>
 </html>
 """
