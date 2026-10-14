@@ -196,6 +196,43 @@ def _candidate(path: Path, label: str, category: str, seed: str) -> None:
     )
 
 
+def test_latest_query_result_supersedes_older_conflict(tmp_path):
+    domains = tmp_path / "domains.csv"
+    evidence_path = tmp_path / "trademark_evidence.csv"
+    summary_path = tmp_path / "trademark_summary.csv"
+    candidates_path = tmp_path / "candidates.csv"
+    evidence = _complete_rows("unfus", conflict_source="USPTO")
+    for index, query in enumerate(("unfus", "unfus [fuzzy-1]")):
+        evidence.append(
+            _evidence(
+                f"USPTO-RESUME-{index}",
+                "USPTO",
+                "no_obvious_match",
+                domain="unfus.si",
+                query=query,
+                utc_timestamp=f"2026-10-14T09:00:0{index}Z",
+                mark_number="",
+                mark_name="",
+                mark_status="",
+                classes="",
+                result_url="https://tmsearch.uspto.gov/search/search-results?query=unfus",
+                notes="HTTP 200 JSON; newer result supersedes older query evidence.",
+            )
+        )
+    _write_csv(domains, ["rank", "domain"], [{"rank": "1", "domain": "unfus.si"}])
+    _candidate(candidates_path, "unfus", "technology", "unfus")
+    _write_csv(evidence_path, EVIDENCE_FIELDS, evidence)
+
+    assert write_trademark_summary(
+        evidence_path, domains, summary_path, candidates_path=candidates_path
+    ) == 1
+
+    with summary_path.open("r", encoding="utf-8", newline="") as handle:
+        row = next(csv.DictReader(handle))
+    assert row["status"] == "limited_screen_no_obvious_match"
+    assert row["trademark_score"] == "85"
+
+
 @pytest.mark.parametrize(
     ("scenario", "evidence", "expected_status", "expected_score"),
     [

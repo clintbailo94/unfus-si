@@ -49,7 +49,7 @@ agenticsignal.si,ai,73,78,41,12,56,40,54.2,Compound 'agenticsignal' head 'agenti
 agenticsolve.si,ai,79,79,53,12,62,40,58.6,Compound 'agenticsolve' head 'agentic' + tail 'solve'; root 'agent'; automation and services; 12 letters.
 agenticvault.si,ai,77,79,53,12,60,40,57.8,Compound 'agenticvault' head 'agentic' + tail 'vault'; root 'agent'; automation and services; 12 letters.
 agentlearn.si,ai,76,76,71,12,57,40,59.2,Compound 'agentlearn' head 'agent' + tail 'learn'; root 'agent'; automation and services; 10 letters.
-agrihub.si,emerging_industries,90,41,87,12,65,40,59.3,Compound 'agrihub' head 'agri' + tail 'hub'; no listed demand root; general service; 7 letters.
+agrihub.si,emerging_industries,90,41,87,12,65,25,57.8,Compound 'agrihub' head 'agri' + tail 'hub'; no listed demand root; general service; 7 letters.
 algobeacon.si,ai,61,43,72,12,53,40,48.4,Label 'algobeacon' starts a; 10 letters; VCCVCVVCVC; 4 syllables.
 algocraft.si,ai,61,42,77,12,58,40,49.7,Label 'algocraft' starts a; 9 letters; VCCVCCVCC; 3 syllables.
 algoengine.si,ai,60,44,71,12,52,40,48.0,Label 'algoengine' starts a; 10 letters; VCCVVCCVCV; 4 syllables.
@@ -183,10 +183,10 @@ authlink.si,technology,82,41,84,12,65,40,56.8,Compound 'authlink' head 'auth' + 
 authvault.si,technology,79,41,77,12,62,40,54.6,Compound 'authvault' head 'auth' + tail 'vault'; no listed demand root; general service; 9 letters.
 autobeacon.si,ai,83,80,72,12,60,25,60.8,Root 'auto' in 'autobeacon' signals automotive; 10 letters; VVCVCVVCVC.
 autofoundry.si,ai,73,74,66,12,57,40,57.3,Compound 'autofoundry' head 'auto' + tail 'foundry'; root 'auto'; automotive; 11 letters.
-autokernel.si,ai,83,80,72,12,53,40,61.3,Root 'auto' in 'autokernel' signals automotive; 10 letters; VVCVCVCCVC.
+autokernel.si,ai,83,80,72,12,53,25,59.8,Root 'auto' in 'autokernel' signals automotive; 10 letters; VVCVCVCCVC.
 autoledger.si,ai,85,85,74,12,66,25,63.6,Root 'ledger' in 'autoledger' signals accounting and financial technology; 10 letters; VVCVCVCCVC.
 automationops.si,technology,73,77,41,12,53,40,53.6,Compound 'automationops' head 'automation' + tail 'ops'; root 'auto'; automotive; 13 letters.
-autonetwork.si,ai,80,76,67,12,63,40,60.5,Compound 'autonetwork' head 'auto' + tail 'network'; root 'auto'; automotive; 11 letters.
+autonetwork.si,ai,80,76,67,12,63,25,59.0,Compound 'autonetwork' head 'auto' + tail 'network'; root 'auto'; automotive; 11 letters.
 autonomydrive.si,emerging_industries,76,79,43,12,55,40,55.3,Compound 'autonomydrive' head 'autonomy' + tail 'drive'; root 'auto'; automotive; 13 letters.
 autonomyflow.si,ai,75,78,52,12,57,40,56.5,Compound 'autonomyflow' head 'autonomy' + tail 'flow'; root 'auto'; automotive; 12 letters.
 autonomylink.si,ai,75,78,52,12,57,40,56.5,Compound 'autonomylink' head 'autonomy' + tail 'link'; root 'auto'; automotive; 12 letters.
@@ -200,7 +200,7 @@ autopilotlab.si,emerging_industries,74,78,51,12,55,40,55.8,Compound 'autopilotla
 autopilotmesh.si,emerging_industries,76,79,43,12,55,40,55.3,Compound 'autopilotmesh' head 'autopilot' + tail 'mesh'; root 'auto'; automotive; 13 letters.
 autopilotops.si,emerging_industries,75,78,51,12,56,40,56.2,Compound 'autopilotops' head 'autopilot' + tail 'ops'; root 'auto'; automotive; 12 letters.
 autosearch.si,ai,79,80,72,12,66,25,60.8,Root 'auto' in 'autosearch' signals automotive; 10 letters; VVCVCVVCCC.
-autostream.si,ai,77,80,71,12,65,40,61.4,Root 'auto' in 'autostream' signals automotive; 10 letters; VVCVCCCVVC.
+autostream.si,ai,77,80,71,12,65,25,60.0,Root 'auto' in 'autostream' signals automotive; 10 letters; VVCVCCCVVC.
 autoswitch.si,ai,79,80,72,12,67,25,60.9,Root 'auto' in 'autoswitch' signals automotive; 10 letters; VVCVCCVCCC.
 autosystem.si,ai,83,80,71,12,61,40,62.4,Root 'auto' in 'autosystem' signals automotive; 10 letters; VVCVCVCCVC.
 bakerybox.si,consumer_brands,85,41,76,12,51,40,54.3,Compound 'bakerybox' head 'bakery' + tail 'box'; no listed demand root; general service; 9 letters.
@@ -361,7 +361,7 @@ capitaltrack.si,business_finance,68,37,51,12,42,40,44.2,Compound 'capitaltrack' 
 caravanbooking.si,consumer_brands,73,38,34,12,42,40,43.0,Compound 'caravanbooking' head 'caravan' + tail 'booking'; no listed demand root; general service; 14 letters.
 caravanclub.si,consumer_brands,71,39,65,12,35,40,46.4,Compound 'caravanclub' head 'caravan' + tail 'club'; no listed demand root; general service; 11 letters.
 caravanstay.si,consumer_brands,74,39,66,12,48,40,49.2,Compound 'caravanstay' head 'caravan' + tail 'stay'; no listed demand root; general service; 11 letters.
-carboncell.si,emerging_industries,84,63,72,12,67,40,60.2,Compound 'carboncell' head 'carbon' + tail 'cell'; root 'carbon'; climate technology; 10 letters.
+carboncell.si,emerging_industries,84,63,72,12,67,25,58.8,Compound 'carboncell' head 'carbon' + tail 'cell'; root 'carbon'; climate technology; 10 letters.
 carbonfiberlab.si,emerging_industries,72,65,33,12,47,40,48.8,Compound 'carbonfiberlab' head 'carbonfiber' + tail 'lab'; root 'carbon'; climate technology; 14 letters.
 carbonforge.si,emerging_industries,81,63,68,12,61,40,58.0,Compound 'carbonforge' head 'carbon' + tail 'forge'; root 'carbon'; climate technology; 11 letters.
 carbongrid.si,emerging_industries,78,63,72,12,62,40,58.0,Compound 'carbongrid' head 'carbon' + tail 'grid'; root 'carbon'; climate technology; 10 letters.
@@ -376,7 +376,7 @@ cardioscan.si,health_science,86,41,73,12,63,40,55.9,Compound 'cardioscan' head '
 cardledger.si,business_finance,77,85,71,12,67,40,62.8,Compound 'cardledger' head 'card' + tail 'ledger'; root 'ledger'; accounting and financial technology; 10 letters.
 cardvault.si,business_finance,82,41,78,12,65,40,56.0,Compound 'cardvault' head 'card' + tail 'vault'; no listed demand root; general service; 9 letters.
 cashledger.si,business_finance,80,91,73,12,75,25,64.7,Compound 'cashledger' head 'cash' + tail 'ledger'; root 'cash'; payments and finance; 10 letters.
-cashops.si,business_finance,88,79,90,12,89,40,70.4,Compound 'cashops' head 'cash' + tail 'ops'; root 'cash'; payments and finance; 7 letters.
+cashops.si,business_finance,88,79,90,12,89,25,69.0,Compound 'cashops' head 'cash' + tail 'ops'; root 'cash'; payments and finance; 7 letters.
 catalystforge.si,emerging_industries,71,38,43,12,44,40,44.2,Compound 'catalystforge' head 'catalyst' + tail 'forge'; no listed demand root; general service; 13 letters.
 catalysthub.si,emerging_industries,75,39,66,12,46,40,49.2,Compound 'catalysthub' head 'catalyst' + tail 'hub'; no listed demand root; general service; 11 letters.
 catalystlab.si,emerging_industries,72,39,65,12,45,40,48.1,Compound 'catalystlab' head 'catalyst' + tail 'lab'; no listed demand root; general service; 11 letters.
@@ -589,13 +589,13 @@ creatorhouse.si,consumer_brands,77,39,53,12,50,40,48.3,Compound 'creatorhouse' h
 creditdesk.si,business_finance,84,78,72,12,69,25,62.0,Compound 'creditdesk' head 'credit' + tail 'desk'; root 'credit'; finance; 10 letters.
 creditledger.si,business_finance,75,89,53,12,66,40,60.2,Compound 'creditledger' head 'credit' + tail 'ledger'; root 'credit'; finance; 12 letters.
 creditsignal.si,business_finance,78,76,54,12,63,40,58.0,Compound 'creditsignal' head 'credit' + tail 'signal'; root 'credit'; finance; 12 letters.
-credittrack.si,business_finance,72,76,66,12,63,40,58.4,Compound 'credittrack' head 'credit' + tail 'track'; root 'credit'; finance; 11 letters.
+credittrack.si,business_finance,72,76,66,12,63,25,56.8,Compound 'credittrack' head 'credit' + tail 'track'; root 'credit'; finance; 11 letters.
 cropgrid.si,emerging_industries,80,40,84,12,65,40,56.2,Compound 'cropgrid' head 'crop' + tail 'grid'; no listed demand root; general service; 8 letters.
-crophub.si,emerging_industries,89,41,90,12,65,40,59.5,Compound 'crophub' head 'crop' + tail 'hub'; no listed demand root; general service; 7 letters.
-croplab.si,emerging_industries,89,41,90,12,65,40,59.5,Compound 'croplab' head 'crop' + tail 'lab'; no listed demand root; general service; 7 letters.
+crophub.si,emerging_industries,89,41,90,12,65,25,58.0,Compound 'crophub' head 'crop' + tail 'hub'; no listed demand root; general service; 7 letters.
+croplab.si,emerging_industries,89,41,90,12,65,25,58.0,Compound 'croplab' head 'crop' + tail 'lab'; no listed demand root; general service; 7 letters.
 cruisebooking.si,consumer_brands,77,40,43,12,47,40,46.6,Compound 'cruisebooking' head 'cruise' + tail 'booking'; no listed demand root; general service; 13 letters.
 cruiseclub.si,consumer_brands,84,41,71,12,51,40,53.3,Compound 'cruiseclub' head 'cruise' + tail 'club'; no listed demand root; general service; 10 letters.
-cryptoworks.si,technology,74,75,67,12,65,40,59.1,Compound 'cryptoworks' head 'crypto' + tail 'works'; root 'crypto'; digital finance; 11 letters.
+cryptoworks.si,technology,74,75,67,12,65,25,57.6,Compound 'cryptoworks' head 'crypto' + tail 'works'; root 'crypto'; digital finance; 11 letters.
 currencydesk.si,business_finance,75,38,51,12,46,40,46.7,Compound 'currencydesk' head 'currency' + tail 'desk'; no listed demand root; general service; 12 letters.
 currencyflow.si,business_finance,76,39,52,12,48,40,47.6,Compound 'currencyflow' head 'currency' + tail 'flow'; no listed demand root; general service; 12 letters.
 currencyhub.si,business_finance,78,39,66,12,49,40,50.4,Compound 'currencyhub' head 'currency' + tail 'hub'; no listed demand root; general service; 11 letters.
@@ -829,7 +829,7 @@ enzymescan.si,health_science,85,41,72,12,54,40,54.2,Compound 'enzymescan' head '
 enzymescope.si,health_science,80,40,66,12,53,40,51.6,Compound 'enzymescope' head 'enzyme' + tail 'scope'; no listed demand root; general service; 11 letters.
 enzymetherapy.si,health_science,74,39,41,12,44,40,44.8,Compound 'enzymetherapy' head 'enzyme' + tail 'therapy'; no listed demand root; general service; 13 letters.
 enzymeworks.si,health_science,76,39,67,12,50,40,50.2,Compound 'enzymeworks' head 'enzyme' + tail 'works'; no listed demand root; general service; 11 letters.
-epaulet.si,dictionary,89,37,87,12,68,40,58.7,Common word 'epaulet' means ornamental shoulder piece; 7 letters; VCVVCVC.
+epaulet.si,dictionary,89,37,87,12,68,25,57.2,Common word 'epaulet' means ornamental shoulder piece; 7 letters; VCVVCVC.
 epigeneticslab.si,health_science,67,37,33,12,38,40,40.6,Compound 'epigeneticslab' head 'epigenetics' + tail 'lab'; no listed demand root; general service; 14 letters.
 equitydesk.si,business_finance,85,40,72,12,51,40,53.5,Compound 'equitydesk' head 'equity' + tail 'desk'; no listed demand root; general service; 10 letters.
 equityindex.si,business_finance,78,39,65,12,46,40,49.8,Compound 'equityindex' head 'equity' + tail 'index'; no listed demand root; general service; 11 letters.
@@ -1048,7 +1048,7 @@ geothermalgrid.si,emerging_industries,67,37,32,12,37,40,40.3,Compound 'geotherma
 geothermalhub.si,emerging_industries,76,38,42,12,45,40,45.4,Compound 'geothermalhub' head 'geothermal' + tail 'hub'; no listed demand root; general service; 13 letters.
 geothermallab.si,emerging_industries,75,38,41,12,45,40,45.0,Compound 'geothermallab' head 'geothermal' + tail 'lab'; no listed demand root; general service; 13 letters.
 gericlinic.si,health_science,79,39,70,12,36,40,49.2,Compound 'gericlinic' head 'geri' + tail 'clinic'; no listed demand root; general service; 10 letters.
-gerilab.si,health_science,88,41,86,12,65,40,58.6,Compound 'gerilab' head 'geri' + tail 'lab'; no listed demand root; general service; 7 letters.
+gerilab.si,health_science,88,41,86,12,65,25,57.2,Compound 'gerilab' head 'geri' + tail 'lab'; no listed demand root; general service; 7 letters.
 geriscan.si,health_science,86,41,83,12,65,40,57.7,Compound 'geriscan' head 'geri' + tail 'scan'; no listed demand root; general service; 8 letters.
 getawaybooking.si,consumer_brands,72,37,33,12,40,40,42.2,Compound 'getawaybooking' head 'getaway' + tail 'booking'; no listed demand root; general service; 14 letters.
 getawayclub.si,consumer_brands,79,39,66,12,42,40,49.6,Compound 'getawayclub' head 'getaway' + tail 'club'; no listed demand root; general service; 11 letters.
@@ -1086,7 +1086,7 @@ guza.si,short,87,47,100,12,94,40,66.0,Short 'guza' is CVCV; 4 letters; no repeat
 gynclinic.si,health_science,27,25,74,0,0,40,26.8,Negative or medical term 'gynclinic'; 9 letters; buyer-fit penalty.
 gynlab.si,health_science,38,25,93,0,32,40,37.2,Negative or medical term 'gynlab'; 6 letters; buyer-fit penalty.
 gynscan.si,health_science,32,25,89,0,23,40,33.8,Negative or medical term 'gynscan'; 7 letters; buyer-fit penalty.
-gyration.si,dictionary,87,37,83,12,81,40,59.6,Common word 'gyration' means circular movement; 8 letters; CVCVCVVC.
+gyration.si,dictionary,87,37,83,12,81,25,58.0,Common word 'gyration' means circular movement; 8 letters; CVCVCVVC.
 haircarebox.si,consumer_brands,79,39,65,12,49,40,50.4,Compound 'haircarebox' head 'haircare' + tail 'box'; no listed demand root; general service; 11 letters.
 haircarecraft.si,consumer_brands,73,39,41,12,44,40,44.6,Compound 'haircarecraft' head 'haircare' + tail 'craft'; no listed demand root; general service; 13 letters.
 haircarehouse.si,consumer_brands,72,37,41,12,43,40,43.8,Compound 'haircarehouse' head 'haircare' + tail 'house'; no listed demand root; general service; 13 letters.
@@ -1244,7 +1244,7 @@ islandbooking.si,consumer_brands,69,38,41,12,43,40,43.2,Compound 'islandbooking'
 jewelbox.si,consumer_brands,83,41,80,12,60,40,55.8,Compound 'jewelbox' head 'jewel' + tail 'box'; no listed demand root; general service; 8 letters.
 jewelcraft.si,consumer_brands,79,40,71,12,54,40,52.3,Compound 'jewelcraft' head 'jewel' + tail 'craft'; no listed demand root; general service; 10 letters.
 jewelhouse.si,consumer_brands,84,40,71,12,50,40,53.0,Compound 'jewelhouse' head 'jewel' + tail 'house'; no listed demand root; general service; 10 letters.
-jewelshop.si,consumer_brands,81,65,76,12,67,40,60.5,Compound 'jewelshop' head 'jewel' + tail 'shop'; root 'shop'; retail; 9 letters.
+jewelshop.si,consumer_brands,81,65,76,12,67,25,59.0,Compound 'jewelshop' head 'jewel' + tail 'shop'; root 'shop'; retail; 9 letters.
 jewelstudio.si,consumer_brands,76,39,67,12,50,40,50.2,Compound 'jewelstudio' head 'jewel' + tail 'studio'; no listed demand root; general service; 11 letters.
 jittery.si,dictionary,41,25,87,0,21,40,35.4,Negative or medical term 'jittery'; 7 letters; buyer-fit penalty.
 jugular.si,dictionary,39,25,86,0,18,40,34.4,Negative or medical term 'jugular'; 7 letters; buyer-fit penalty.
@@ -1288,7 +1288,7 @@ kelvia.si,invented,64,43,94,12,59,40,53.4,Coinage 'kelvia' ends -via; CVCCVV; no
 kernelforge.si,technology,78,39,67,12,43,40,49.6,Compound 'kernelforge' head 'kernel' + tail 'forge'; no listed demand root; general service; 11 letters.
 kernelgrid.si,technology,76,40,70,12,44,40,49.9,Compound 'kernelgrid' head 'kernel' + tail 'grid'; no listed demand root; general service; 10 letters.
 kernelstack.si,technology,72,39,65,12,43,40,47.8,Compound 'kernelstack' head 'kernel' + tail 'stack'; no listed demand root; general service; 11 letters.
-keyscan.si,technology,92,42,91,12,65,40,60.6,Compound 'keyscan' head 'key' + tail 'scan'; no listed demand root; general service; 7 letters.
+keyscan.si,technology,92,42,91,12,65,25,59.1,Compound 'keyscan' head 'key' + tail 'scan'; no listed demand root; general service; 7 letters.
 kitchenbox.si,consumer_brands,79,40,71,12,55,40,52.4,Compound 'kitchenbox' head 'kitchen' + tail 'box'; no listed demand root; general service; 10 letters.
 kitchencraft.si,consumer_brands,69,37,51,12,49,40,45.4,Compound 'kitchencraft' head 'kitchen' + tail 'craft'; no listed demand root; general service; 12 letters.
 kitchenhouse.si,consumer_brands,73,38,53,12,48,40,46.8,Compound 'kitchenhouse' head 'kitchen' + tail 'house'; no listed demand root; general service; 12 letters.
@@ -1612,7 +1612,7 @@ memoforge.si,ai,85,41,77,12,55,40,55.0,Compound 'memoforge' head 'memo' + tail '
 memofoundry.si,ai,75,40,66,12,51,40,50.1,Compound 'memofoundry' head 'memo' + tail 'foundry'; no listed demand root; general service; 11 letters.
 memogrid.si,ai,85,41,82,12,65,40,57.3,Compound 'memogrid' head 'memo' + tail 'grid'; no listed demand root; general service; 8 letters.
 memokernel.si,ai,58,42,71,12,40,40,45.4,Label 'memokernel' starts m; 10 letters; CVCVCVCCVC; 4 syllables.
-memolab.si,ai,88,41,87,12,65,40,58.8,Compound 'memolab' head 'memo' + tail 'lab'; no listed demand root; general service; 7 letters.
+memolab.si,ai,88,41,87,12,65,25,57.3,Compound 'memolab' head 'memo' + tail 'lab'; no listed demand root; general service; 7 letters.
 memolearn.si,ai,88,41,77,12,59,40,56.4,Compound 'memolearn' head 'memo' + tail 'learn'; no listed demand root; general service; 9 letters.
 memoledger.si,ai,81,85,72,12,64,40,63.4,Root 'ledger' in 'memoledger' signals accounting and financial technology; 10 letters; CVCVCVCCVC.
 memolink.si,ai,86,41,82,12,65,40,57.6,Compound 'memolink' head 'memo' + tail 'link'; no listed demand root; general service; 8 letters.
@@ -2073,7 +2073,7 @@ paraya.si,invented,60,41,93,12,57,40,51.5,Coinage 'paraya' starts p; CVCVVV; rep
 parcelbox.si,consumer_brands,88,41,76,12,65,40,57.2,Compound 'parcelbox' head 'parcel' + tail 'box'; no listed demand root; general service; 9 letters.
 parcelclub.si,consumer_brands,76,40,70,12,44,40,49.9,Compound 'parcelclub' head 'parcel' + tail 'club'; no listed demand root; general service; 10 letters.
 parcelhub.si,consumer_brands,89,42,77,12,65,40,57.8,Compound 'parcelhub' head 'parcel' + tail 'hub'; no listed demand root; general service; 9 letters.
-parcelshop.si,consumer_brands,79,65,72,12,64,40,59.0,Compound 'parcelshop' head 'parcel' + tail 'shop'; root 'shop'; retail; 10 letters.
+parcelshop.si,consumer_brands,79,65,72,12,64,25,57.4,Compound 'parcelshop' head 'parcel' + tail 'shop'; root 'shop'; retail; 10 letters.
 parelle.si,invented,60,43,87,12,59,40,51.3,Coinage 'parelle' starts p; CVCVCCV; repeats el.
 parelo.si,invented,62,43,93,12,59,40,52.7,Coinage 'parelo' starts p; CVCVCV; no repeated letters.
 parena.si,invented,61,43,93,12,58,40,52.3,Coinage 'parena' ends -ena; CVCVCV; repeats a.
@@ -2159,8 +2159,8 @@ perova.si,invented,62,43,93,12,59,40,52.7,Coinage 'perova' starts p; CVCVCV; no 
 peruno.si,invented,62,43,93,12,59,40,52.7,Coinage 'peruno' starts p; CVCVCV; no repeated letters.
 perura.si,invented,61,43,92,12,58,40,52.2,Coinage 'perura' starts p; CVCVCV; repeats r.
 pervia.si,invented,64,43,95,12,59,40,53.5,Coinage 'pervia' ends -via; CVCCVV; no repeated letters.
-pharmascan.si,health_science,85,65,72,12,67,40,60.9,Compound 'pharmascan' head 'pharma' + tail 'scan'; root 'pharma'; pharmaceuticals; 10 letters.
-pharmatrial.si,health_science,80,65,67,12,66,40,58.8,Compound 'pharmatrial' head 'pharma' + tail 'trial'; root 'pharma'; pharmaceuticals; 11 letters.
+pharmascan.si,health_science,85,65,72,12,67,25,59.4,Compound 'pharmascan' head 'pharma' + tail 'scan'; root 'pharma'; pharmaceuticals; 10 letters.
+pharmatrial.si,health_science,80,65,67,12,66,25,57.2,Compound 'pharmatrial' head 'pharma' + tail 'trial'; root 'pharma'; pharmaceuticals; 11 letters.
 pharmaworks.si,health_science,74,65,66,12,61,40,56.4,Compound 'pharmaworks' head 'pharma' + tail 'works'; root 'pharma'; pharmaceuticals; 11 letters.
 photonforge.si,emerging_industries,82,40,67,12,54,40,52.4,Compound 'photonforge' head 'photon' + tail 'forge'; no listed demand root; general service; 11 letters.
 photongrid.si,emerging_industries,79,40,72,12,56,40,52.8,Compound 'photongrid' head 'photon' + tail 'grid'; no listed demand root; general service; 10 letters.
@@ -2190,7 +2190,7 @@ portfoliodesk.si,business_finance,71,38,42,12,44,40,44.0,Compound 'portfoliodesk
 portfolioflow.si,business_finance,67,37,41,12,41,40,42.2,Compound 'portfolioflow' head 'portfolio' + tail 'flow'; no listed demand root; general service; 13 letters.
 portfoliohub.si,business_finance,72,39,52,12,47,40,46.4,Compound 'portfoliohub' head 'portfolio' + tail 'hub'; no listed demand root; general service; 12 letters.
 portfoliotrack.si,business_finance,66,37,33,12,38,40,40.4,Compound 'portfoliotrack' head 'portfolio' + tail 'track'; no listed demand root; general service; 14 letters.
-powdery.si,dictionary,93,39,88,12,77,40,61.6,Common word 'powdery' means fine and dry like powder; 7 letters; CVCCVCV.
+powdery.si,dictionary,93,39,88,12,77,25,60.1,Common word 'powdery' means fine and dry like powder; 7 letters; CVCCVCV.
 predictionlab.si,ai,77,38,43,12,50,40,46.6,Compound 'predictionlab' head 'prediction' + tail 'lab'; no listed demand root; general service; 13 letters.
 premiumdesk.si,business_finance,81,40,67,12,61,40,53.2,Compound 'premiumdesk' head 'premium' + tail 'desk'; no listed demand root; general service; 11 letters.
 premiumflow.si,business_finance,76,40,67,12,58,40,51.6,Compound 'premiumflow' head 'premium' + tail 'flow'; no listed demand root; general service; 11 letters.
@@ -2443,7 +2443,7 @@ revami.si,invented,62,43,93,12,59,40,52.7,Coinage 'revami' starts r; CVCVCV; no 
 revara.si,invented,60,44,91,12,58,40,52.0,Coinage 'revara' ends -ara; CVCVCV; repeats ar.
 revaro.si,invented,61,44,93,12,58,40,52.5,Coinage 'revaro' ends -aro; CVCVCV; repeats r.
 revaya.si,invented,61,42,94,12,57,40,52.1,Coinage 'revaya' starts r; CVCVVV; repeats a.
-reveler.si,dictionary,87,38,87,12,80,40,60.2,Common word 'reveler' means person enjoying a lively event; 7 letters; CVCVCVC.
+reveler.si,dictionary,87,38,87,12,80,25,58.7,Common word 'reveler' means person enjoying a lively event; 7 letters; CVCVCVC.
 revelle.si,invented,59,43,86,12,58,40,50.8,Coinage 'revelle' starts r; CVCVCCV; repeats el.
 revena.si,invented,61,44,93,12,58,40,52.5,Coinage 'revena' ends -ena; CVCVCV; repeats e.
 revene.si,invented,60,45,91,12,58,40,52.2,Coinage 'revene' starts r; CVCVCV; repeats e.
@@ -2545,9 +2545,9 @@ robotorbit.si,ai,78,75,71,12,57,40,59.5,Compound 'robotorbit' head 'robot' + tai
 robotsearch.si,ai,74,74,67,12,67,40,59.2,Compound 'robotsearch' head 'robot' + tail 'search'; root 'robot'; robotics; 11 letters.
 robotsignal.si,ai,82,75,69,12,66,40,61.6,Compound 'robotsignal' head 'robot' + tail 'signal'; root 'robot'; robotics; 11 letters.
 robotsolve.si,ai,85,76,73,12,65,40,63.0,Compound 'robotsolve' head 'robot' + tail 'solve'; root 'robot'; robotics; 10 letters.
-robotspark.si,ai,78,75,72,12,66,40,61.0,Compound 'robotspark' head 'robot' + tail 'spark'; root 'robot'; robotics; 10 letters.
+robotspark.si,ai,78,75,72,12,66,25,59.5,Compound 'robotspark' head 'robot' + tail 'spark'; root 'robot'; robotics; 10 letters.
 robotswitch.si,ai,73,73,66,12,65,40,58.3,Compound 'robotswitch' head 'robot' + tail 'switch'; root 'robot'; robotics; 11 letters.
-robotsystem.si,ai,79,75,67,12,62,40,59.9,Compound 'robotsystem' head 'robot' + tail 'system'; root 'robot'; robotics; 11 letters.
+robotsystem.si,ai,79,75,67,12,62,25,58.4,Compound 'robotsystem' head 'robot' + tail 'system'; root 'robot'; robotics; 11 letters.
 rocketdock.si,emerging_industries,82,40,72,12,58,40,53.8,Compound 'rocketdock' head 'rocket' + tail 'dock'; no listed demand root; general service; 10 letters.
 rocketflight.si,emerging_industries,71,38,52,12,51,40,46.6,Compound 'rocketflight' head 'rocket' + tail 'flight'; no listed demand root; general service; 12 letters.
 rocketgrid.si,emerging_industries,79,40,73,12,57,40,53.0,Compound 'rocketgrid' head 'rocket' + tail 'grid'; no listed demand root; general service; 10 letters.
@@ -2766,8 +2766,8 @@ softwareflow.si,technology,70,85,50,12,55,40,56.0,Compound 'softwareflow' head '
 softwarestack.si,technology,68,85,41,12,52,40,53.8,Compound 'softwarestack' head 'software' + tail 'stack'; root 'software'; software; 13 letters.
 softwareworks.si,technology,67,85,41,12,52,40,53.5,Compound 'softwareworks' head 'software' + tail 'works'; root 'software'; software; 13 letters.
 soilgrid.si,emerging_industries,81,40,84,12,65,40,56.4,Compound 'soilgrid' head 'soil' + tail 'grid'; no listed demand root; general service; 8 letters.
-soilhub.si,emerging_industries,91,41,90,12,65,40,60.0,Compound 'soilhub' head 'soil' + tail 'hub'; no listed demand root; general service; 7 letters.
-soillab.si,emerging_industries,90,41,90,12,65,40,59.8,Compound 'soillab' head 'soil' + tail 'lab'; no listed demand root; general service; 7 letters.
+soilhub.si,emerging_industries,91,41,90,12,65,25,58.5,Compound 'soilhub' head 'soil' + tail 'hub'; no listed demand root; general service; 7 letters.
+soillab.si,emerging_industries,90,41,90,12,65,25,58.2,Compound 'soillab' head 'soil' + tail 'lab'; no listed demand root; general service; 7 letters.
 solal.si,invented,61,40,99,12,59,40,52.8,Coinage 'solal' ends -al; CVCVC; repeats l.
 solami.si,invented,62,43,93,12,59,40,52.7,Coinage 'solami' starts s; CVCVCV; no repeated letters.
 solelle.si,invented,59,42,86,12,58,40,50.6,Coinage 'solelle' starts s; CVCVCCV; repeats el.
@@ -3087,7 +3087,7 @@ treasurytrack.si,business_finance,75,39,42,12,47,40,45.7,Compound 'treasurytrack
 treasuryvault.si,business_finance,75,39,43,12,47,40,45.8,Compound 'treasuryvault' head 'treasury' + tail 'vault'; no listed demand root; general service; 13 letters.
 trekbooking.si,consumer_brands,81,40,67,12,62,40,53.4,Compound 'trekbooking' head 'trek' + tail 'booking'; no listed demand root; general service; 11 letters.
 trekclub.si,consumer_brands,80,40,83,12,62,40,55.6,Compound 'trekclub' head 'trek' + tail 'club'; no listed demand root; general service; 8 letters.
-trekgear.si,consumer_brands,88,42,85,12,65,40,58.7,Compound 'trekgear' head 'trek' + tail 'gear'; no listed demand root; general service; 8 letters.
+trekgear.si,consumer_brands,88,42,85,12,65,25,57.2,Compound 'trekgear' head 'trek' + tail 'gear'; no listed demand root; general service; 8 letters.
 tryto.si,domain_hacks,90,46,100,89,95,25,76.8,Hack 'tryto.si' completes seed 'tryto see'; 5 letters; CCVCV.
 tumorlab.si,health_science,36,25,82,0,20,40,33.3,Negative or medical term 'tumorlab'; 8 letters; buyer-fit penalty.
 tumormarker.si,health_science,30,25,68,0,4,40,27.3,Negative or medical term 'tumormarker'; 11 letters; buyer-fit penalty.

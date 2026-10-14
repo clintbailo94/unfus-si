@@ -4,44 +4,44 @@
 
 Open [si_domains_ranked.xlsx](si_domains_ranked.xlsx) for the ranked workbook. It is a reproducible offline export of the timestamped CSV evidence in this repository. Its **6,204 unique candidates** were checked through the recorded registry channels; **500** names are joined into the ranked opportunity sheet.
 
-The snapshot date is **2026-10-13 UTC**. RDAP history has 6,219 rows timestamped from `2026-10-13T01:11:41Z` through `2026-10-13T05:02:17Z`; the latest-row view covers 6,204 candidates, with 2,803 `registered` and 3,401 `potentially_unregistered`. WHOIS history has 3,401 rows from `2026-10-13T05:12:13Z` through `2026-10-13T10:11:47Z`; latest results are 3,395 `not_registered` and six `registered` conflicts. These are dated registry-channel observations, not a registrar checkout guarantee or assurance that registration will succeed.
+The RDAP/WHOIS snapshot date is **2026-10-13 UTC**; trademark evidence was refreshed on **2026-10-14 UTC**. RDAP history has 6,219 rows timestamped from `2026-10-13T01:11:41Z` through `2026-10-13T05:02:17Z`; the latest-row view covers 6,204 candidates, with 2,803 `registered` and 3,401 `potentially_unregistered`. WHOIS history has 3,401 rows from `2026-10-13T05:12:13Z` through `2026-10-13T10:11:47Z`; latest results are 3,395 `not_registered` and six `registered` conflicts. These are dated registry-channel observations, not a registrar checkout guarantee or assurance that registration will succeed.
 
 Candidate counts by category are: AI 1,500; invented 1,454; dictionary 996; short 700; business and finance 359; emerging industries 289; consumer brands 265; technology 254; health and science 252; domain hacks 135. The pipeline scored 3,401 RDAP-404 rows, excluded 2,809 registered/conflict rows, selected 500 opportunities, and left 2,895 otherwise eligible rows outside the 500-name selection. The review sample contains 30 rows and uses seed 20261013.
 
 The six WHOIS conflicts are **embedengine.si, geve.si, identityhub.si, lanova.si, shallwe.si, and swarmpilot.si**. Each remains excluded and labelled as a conflict in `All candidates`; none is in `Shortlist`.
 
-The score weights remain brandability 25%, commercial demand 20%, shortness 15%, hack creativity 15%, resale heuristic 15%, and trademark 10%. Final data has 358 distinct five-component tuples and 500 distinct rationales. Commercial-score standard deviation is 16.57; mean commercial score for AI/technology/business-finance rows is 60.02 versus 42.48 for invented rows. Rootless invented/name-like resale scores cap at 65. Higher trademark scores indicate lower estimated risk. Ties sort by total descending, label length ascending, then case-folded domain.
+The score weights remain brandability 25%, commercial demand 20%, shortness 15%, hack creativity 15%, resale heuristic 15%, and trademark 10%. Final data has 356 distinct five-component tuples and 500 distinct rationales. Commercial-score standard deviation is 16.58; mean commercial score for AI/technology/business-finance rows is 60.03 versus 42.48 for invented rows. Rootless invented/name-like resale scores cap at 65. Higher trademark scores indicate lower estimated risk. Ties sort by total descending, label length ascending, then case-folded domain.
 Per-category mean commercial and resale components are listed in the [research methodology](research_methodology.md).
 
-The final 500 category limit is **100 per category (20%)**. Selection also limits any top-100 category to 35 names, six invented/given-name labels per final-three-letter ending and per first-four-letter prefix, and ten compound/blend labels per head or tail. There are 1,364 eligible labels marked `family cap`; they stay eligible and visible in `All candidates`.
+The final 500 category limit is **100 per category (20%)**. Selection also limits any top-100 category to 35 names, six invented/given-name labels per final-three-letter ending and per first-four-letter prefix, and ten compound/blend labels per head or tail. There are 1,353 eligible labels marked `family cap`; they stay eligible and visible in `All candidates`.
 
 | Category | Pool | Eligible | Final 500 | Median eligible rank | Minimum eligible rank |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | ai | 1,500 | 991 | 100 | 2362 | 6 |
 | business_finance | 359 | 288 | 51 | 1946.5 | 4 |
-| consumer_brands | 265 | 226 | 90 | 2361.5 | 66 |
+| consumer_brands | 265 | 226 | 91 | 2361.5 | 66 |
 | dictionary | 996 | 26 | 8 | 3356.5 | 59 |
 | domain_hacks | 135 | 15 | 3 | 3351 | 1 |
-| emerging_industries | 289 | 232 | 51 | 2238.5 | 30 |
+| emerging_industries | 289 | 232 | 50 | 2238.5 | 30 |
 | health_science | 252 | 221 | 59 | 2541 | 94 |
 | invented | 1,454 | 1,247 | 100 | 1403 | 517 |
 | short | 700 | 6 | 6 | 17 | 14 |
 | technology | 254 | 143 | 32 | 1068 | 5 |
 
-Top-100 category counts: ai: 33; business_finance: 12; consumer_brands: 8; dictionary: 6; domain_hacks: 3; emerging_industries: 14; health_science: 2; short: 6; technology: 16. The largest category contributes 33/100 and there are 100/100 non-invented keyword, common-word, short, or hack names. All six eligible four-letter CVCV shorts are selected at ranks 14 fuve.si, 15 guve.si, 16 puve.si, 18 kuzo.si, 19 guza.si, 28 cizo.si; no three-letter short name was registry-eligible. The three selected hacks rank 1 newsagen.si, 2 unfus.si, 3 tryto.si; 15 hacks were eligible, so hack availability exceeds selection and quality/scoring determines the selected three. Strongest root-bearing compounds include ranks 4 cashops.si, 5 paymentops.si, 6 datafleet.si, 7 ledgerhub.si, 8 payablehub.si, 9 datalearn.si, 10 payabledesk.si, 11 payableflow.si, 12 datasolve.si, 13 walletlab.si, 17 chatledger.si, 20 dataledger.si. Methodology and root-level values are in [research methodology](research_methodology.md).
+Top-100 category counts: ai: 35; business_finance: 13; consumer_brands: 9; dictionary: 5; domain_hacks: 3; emerging_industries: 12; health_science: 2; short: 6; technology: 15. The largest category contributes 35/100 and there are 100/100 non-invented keyword, common-word, short, or hack names. All six eligible four-letter CVCV shorts are selected at ranks 14 fuve.si, 15 guve.si, 16 puve.si, 18 kuzo.si, 19 guza.si, 28 cizo.si; no three-letter short name was registry-eligible. The three selected hacks rank 1 newsagen.si, 2 unfus.si, 3 tryto.si; 15 hacks were eligible, so hack availability exceeds selection and quality/scoring determines the selected three. Strongest root-bearing compounds include ranks 4 cashops.si, 5 paymentops.si, 6 datafleet.si, 7 ledgerhub.si, 8 payablehub.si, 9 datalearn.si, 10 payabledesk.si, 11 payableflow.si, 12 datasolve.si, 13 walletlab.si, 17 chatledger.si, 20 dataledger.si. Methodology and root-level values are in [research methodology](research_methodology.md).
 
 The 21 audited false-dictionary labels in `data/given_names.txt` (including brena, genal, neral, belal, celal, delal, belami, belona, belova, delina, dorina, genaro, lorina, merina, belara, calami, dorino, elette, karena, larena, and marena) are category `invented` with `given_name`; the candidate pool is unchanged. The final dictionary labels are stoical, powdery, leaning, cowhide, reveler, gyration, epaulet, and decorous. Five additional exact penalties were added after label review: bloodmonitor, bloodtrack, gynclinic, hemoclinic, and tumormarker. `floun` and `plian` are also below the cut after applying the exact penalty to hack scoring. Full dictionary meanings, clinical borderline keeps, and the existing removed-label history are in the methodology.
 
 ## Workbook sheets
 
-- **Shortlist** — the final 500 joined opportunity records in rank order. It retains every `opportunities.csv` field, numeric rank and scores, exact source timestamps, full rationales, valuation/trademark statuses and evidence IDs, plus current RDAP HTTP/classification and WHOIS classification. Unsupported low/high price cells are blank.
-- **All candidates** — all 6,204 candidate rows and their original metadata, latest RDAP and WHOIS evidence, rule/source, score components where scored, shortlist rank, registry status and exclusion reason. Latest means the last appended evidence row for a domain. Registered, missing, unchecked, unverified and WHOIS conflict states remain distinct.
-- **Unverified** — candidates with missing/unverified latest RDAP or a missing/unverified required WHOIS second check. This snapshot has zero rows; the sheet keeps its headers and the Methodology sheet explains why. Trademark uncertainty is reported separately.
-- **Special classes** — documented alias for `Reserved/Restricted/Invalid/Premium`. Excel forbids `/` in sheet names and limits names to 31 characters. Rows are normalized as `candidate` or `rule_reference`, so the reserved/restricted inventory cannot be mistaken for queried candidates. No invalid or premium candidate example is invented. An empty premium-name inventory does not establish ordinary registrar pricing.
-- **Methodology** — counts, timestamp ranges, ranking and eligibility rules, weights, per-source trademark coverage, limitations, source paths and byte-level SHA-256 hashes.
-- **Scores** — all 3,401 score records.
-- **RDAP evidence** and **WHOIS evidence** — every source CSV row, including append-only history.
-- **Valuation evidence** and **Trademark evidence** — every curated record.
+- **Shortlist** -- the final 500 joined opportunity records in rank order. It retains every `opportunities.csv` field, numeric rank and scores, exact source timestamps, full rationales, valuation/trademark statuses and evidence IDs, plus current RDAP HTTP/classification and WHOIS classification. Unsupported low/high price cells are blank.
+- **All candidates** -- all 6,204 candidate rows and their original metadata, latest RDAP and WHOIS evidence, rule/source, score components where scored, shortlist rank, registry status and exclusion reason. Latest means the last appended evidence row for a domain. Registered, missing, unchecked, unverified and WHOIS conflict states remain distinct.
+- **Unverified** -- candidates with missing/unverified latest RDAP or a missing/unverified required WHOIS second check. This snapshot has zero rows; the sheet keeps its headers and the Methodology sheet explains why. Trademark uncertainty is reported separately.
+- **Special classes** -- documented alias for `Reserved/Restricted/Invalid/Premium`. Excel forbids `/` in sheet names and limits names to 31 characters. Rows are normalized as `candidate` or `rule_reference`, so the reserved/restricted inventory cannot be mistaken for queried candidates. No invalid or premium candidate example is invented. An empty premium-name inventory does not establish ordinary registrar pricing.
+- **Methodology** -- counts, timestamp ranges, ranking and eligibility rules, weights, per-source trademark coverage, limitations, source paths and byte-level SHA-256 hashes.
+- **Scores** -- all 3,401 score records.
+- **RDAP evidence** and **WHOIS evidence** -- every source CSV row, including append-only history.
+- **Valuation evidence** and **Trademark evidence** -- every curated record.
 
 ## Source-file map
 
@@ -67,46 +67,31 @@ The RDAP and WHOIS channels are separate checks run against the same `.si` regis
 
 ## Trademark and valuation limits
 
-The final top 100 have per-source outcome rows. Screening followed the ranking for three rounds: Round 1 processed 100 labels, Round 2 added 3 new entrants, and Round 3 added 9. Names that later left the top 100 keep their evidence. Source refusal rows are blocked or unverified and never count as completed searches.
+The T-17 USPTO screen stopped after an HTTP 403 on `bankingdesk` at 2026-10-13T18:05:11Z. PKG-G resumed on 2026-10-14 after the cooldown. Before any candidate request, one `google` control returned HTTP 200 JSON with 194 hits. The pass made 116 sequential candidate-query POSTs at a minimum five-second interval. Including the control, all 117 POSTs returned HTTP 200 JSON. There was no new 403, CAPTCHA, login, non-JSON response, timeout, 5xx, or retry. Two additional requests repeated the `soilhub` exact and near pair after it re-entered the top 100; latest evidence wins.
 
-| Source | Requests and HTTP outcomes | Final top-100 outcome |
+One `powdery` near-query response was received and parsed, but its evidence could not be retained after the local ASCII writer rejected a non-ASCII wordmark. That query is recorded `unverified`, and no retry was made. The source was not stopped. The final top-100 USPTO coverage is 98 complete, 0 query-blocked, and 2 unverified. The two unverified names are `powdery` and `denimwear`; `denimwear` entered after the third entrant round and received unverified USPTO outcome rows without requests because the three-round cap had been reached.
+
+| Source | PKG-G requests and outcomes | Final top-100 coverage |
 | --- | --- | --- |
-| TMview | One earlier POST plus three rework API probes (two POST shapes, one GET); all four API connections closed before an HTTP response. The UI shell was readable but did not yield search results. | 0/100 complete; 100 unverified |
-| UKIPO | One recorded GET returned HTTP 403 `Service Captcha`; stopped, no retry. | 0/100 complete; 100 blocked |
-| USPTO | One earlier UI-shell GET returned HTTP 200 JavaScript HTML without parseable search results; plus 139 JSON API POSTs total: two recorded controls (google = 194 hits; qzxwvk = 0), three initial API/field-shape probes, and 134 candidate attempts. Candidate attempts: 133 HTTP 200 JSON, one HTTP 403 on bankingdesk near query; stopped. The remaining 66 query slots were recorded blocked without requests. | 56/100 complete; 44 query-blocked |
+| TMview | No requests. Existing probes closed before an HTTP response; new entrant rows cite `REWORK1-TMVIEW-PROBES` at 2026-10-13T18:02:42Z. | 0/100 complete; 0 query-blocked; 100 unverified |
+| UKIPO | No requests. Existing search GET returned HTTP 403 Service Captcha; new entrant rows cite `PKGD-0003` at 2026-10-13T17:09:52Z. | 0/100 complete; 100 query-blocked; 0 unverified |
+| USPTO | 1 `google` control plus 116 candidate requests; all 117 HTTP 200 JSON; 0 new 403; no retries. | 98/100 complete; 0 query-blocked; 2 unverified |
 
-USPTO exact-label queries used an exact phrase, then one near query (fuzziness 1 for labels >=5 characters, whole-word mode for shorter names), paced at no more than one request per second. Results store only distilled serial number, wordmark, live/dead flag, status, classes, result URL, exact URL/query, and UTC timestamp; owner and attorney fields were not copied. Similarity review covers identical marks, whole-word containment, edit distance <=1 for labels >=5 characters, or an identical stem in any class. Classes 9, 35, 36, 38, 41, and 42 are higher relevance; live and dead matches are both flagged. Any uncertainty requires legal review.
+The original 44 blocked final-top-100 labels each received exact and near queries. Forty-three now have both query outcomes retained; `powdery` exact is a possible conflict and its near query is unverified after the local evidence-write failure. The existing 2026-10-13 source-stop row `REWORK1-USPTO-SOURCE-STOP` remains in history. The earlier 139 JSON POSTs and UI-shell GET are also retained; PKG-G adds new evidence rather than replacing that history.
 
-**24 names** were flagged for USPTO legal review: newsagen, unfus, tryto, paymentops, datafleet, datalearn, datasolve, dataledger, loanledger, cashledger, robotloop, cizo, ledgerlink, walletlink, bankinghub, stoical, dataswitch, creditdesk, leaning, carbonhub, autoswitch, autobeacon, autosearch, cowhide. A possible conflict in any source scores 25 even when the others are blocked. Trademark scores map to 85 only when all three sources complete with no obvious similar mark, 25 for a possible conflict, and 40 for incomplete, blocked, unverified, or not-yet-screened status. The 40 is explicitly lower than clear and higher than a conflict; weights are not renormalized. Unknown risk is penalized relative to a clean screen, and a conflict is penalized most. A screened-clear name could gain up to 4.5 weighted points over an unscreened name, so new top-100 entrants are screened in later rounds when access permits. These limited queries imply no clearance.
+Three entrant rounds were processed while USPTO remained live: Round 1 added 9 (`examhub`, `bankingvault`, `roboticlink`, `roboticloop`, `memolab`, `biomasshub`, `pharmatrial`, `epaulet`, `trekgear`); Round 2 added 4 (`roboticflow`, `gerilab`, `soilhub`, `biomasslab`); Round 3 added `credittrack`. TMview and UKIPO were not contacted. Names leaving the top 100 keep their evidence. Final top-100 entries versus T-17 are `examhub`, `bankingvault`, `roboticlink`, `roboticloop`, `biomasshub`, `roboticflow`, `biomasslab`, and `denimwear`. Exits are `robotsystem`, `soillab`, `gyration`, `crophub`, `croplab`, `agrihub`, `cryptoworks`, and `parcelshop`. Names ranked 101-500 remain not yet screened.
 
-`validate-research` exits **2** because required coverage is incomplete: TMview 0 completed, 0 query-blocked, 100 unverified; UKIPO 0 completed, 100 query-blocked, 0 unverified; USPTO 56 completed, 44 query-blocked, 0 unverified. In particular TMview and UKIPO were inaccessible and USPTO stopped after an HTTP 403 with 44 top-100 labels still incomplete. Its output separates those exact states. The final top 100 are not legally cleared; the screen is not comprehensive phonetic, class, national-office, or worldwide clearance.
+There are 36 final-top-100 names flagged for legal review, up from 24. Twelve newly flagged names are `autokernel`, `autonetwork`, `autostream`, `carboncell`, `cashops`, `jewelshop`, `keyscan`, `pharmascan`, `powdery`, `reveler`, `robotspark`, and `soilhub`. The complete current list is `autobeacon`, `autokernel`, `autonetwork`, `autosearch`, `autostream`, `autoswitch`, `bankinghub`, `carboncell`, `carbonhub`, `cashledger`, `cashops`, `cizo`, `cowhide`, `creditdesk`, `datafleet`, `datalearn`, `dataledger`, `datasolve`, `dataswitch`, `jewelshop`, `keyscan`, `leaning`, `ledgerlink`, `loanledger`, `newsagen`, `paymentops`, `pharmascan`, `powdery`, `reveler`, `robotloop`, `robotspark`, `soilhub`, `stoical`, `tryto`, `unfus`, and `walletlink`.
+
+USPTO exact-label queries use an exact phrase and one near query: fuzziness 1 for labels at least five characters, or whole-word mode for shorter labels. Results retain only distilled serial number, wordmark, live/dead flag, status, classes, result URL, query and UTC timestamp; owner and attorney fields were not copied. Similarity review covers identical marks, whole-word containment, edit distance <=1, and identical stems in any class. Classes 9, 35, 36, 38, 41, and 42 are higher relevance. Live and dead marks both trigger review. A possible conflict in any source scores 25; all three sources must complete without a match to score 85; incomplete or refused sources score 40. These limited queries imply no clearance.
+
+`validate-research` exits **2** because coverage is incomplete: TMview 0 completed / 0 query-blocked / 100 unverified; UKIPO 0 completed / 100 query-blocked / 0 unverified; USPTO 98 completed / 0 query-blocked / 2 unverified. `validate-delivery` is a separate structural check and can pass while research remains blocked. Screening is not comprehensive phonetic, class, national-office, or worldwide clearance.
 
 ### Manual trademark checks the owner can do
 
-Official search pages: [TMview](https://www.tmdn.org/tmview/),
-[UKIPO](https://trademarks.ipo.gov.uk/ipo-tmtext), and
-[USPTO](https://tmsearch.uspto.gov/). TMview automated access is documented as
-unavailable after its probes closed before an HTTP response at
-2026-10-13T18:02:42Z (`REWORK1-TMVIEW-PROBES`; earlier `PKGD-0002` at
-2026-10-13T17:09:22Z). UKIPO returned HTTP 403 Service Captcha at
-2026-10-13T17:09:52Z (`PKGD-0003`). No further TMview or UKIPO attempts were
-made. USPTO screening stopped after one HTTP 403 at 2026-10-13T18:05:11Z
-(`REWORK1-USPTO-00259`; source-stop record `REWORK1-USPTO-SOURCE-STOP`). No
-USPTO resume was attempted here; a later cooled-down pass belongs to the
-separate PKG-G package. No result is a clearance.
+Official search pages: [TMview](https://www.tmdn.org/tmview/), [UKIPO](https://trademarks.ipo.gov.uk/ipo-tmtext), and [USPTO](https://tmsearch.uspto.gov/). TMview and UKIPO remain inaccessible to automated screening based on their recorded source-wide refusal evidence; no further attempts were made. USPTO's earlier HTTP 403 remains at `REWORK1-USPTO-00259` / `REWORK1-USPTO-SOURCE-STOP`. PKG-G made one cooled-down control and 116 candidate requests on 2026-10-14; all 117 returned HTTP 200 JSON with no new 403. No name is cleared.
 
-`validate-research --completion-mode` runs the same structural checks, then
-requires a recorded outcome for every top-100 name/source pair. A pair must
-have completed exact and near searches, or dated blocked/unverified records
-with an official source URL and a note naming the refusal (HTTP status,
-CAPTCHA, connection closed, or a source-stop evidence ID). Missing pairs fail.
-Only three completed no-match sources may score 85; any possible conflict
-must score 25; incomplete or refused sources score 40 unless a conflict takes
-precedence. Every top-100 opportunity must have a trademark status other than
-`not yet screened`, and the report gives completed, refused-by-reason, and
-missing counts plus the needs-legal-review total. The flag makes no network
-requests and does not weaken strict mode, which still exits 2 while required
-searches remain incomplete.
+`validate-research --completion-mode` requires a recorded outcome for every top-100 name/source pair. A pair needs completed exact and near queries or dated blocked/unverified rows with an official source URL and an evidence-backed reason. Accepted incomplete reasons include an HTTP refusal, CAPTCHA, connection closure, cited source-stop row, a local evidence-write failure after a response, or the documented three-round screening limit. Missing pairs fail. The mode checks evidence completeness and score/status consistency without network requests; strict validation still exits 2 while required searches remain incomplete.
 
 All **500 valuations** are literally `insufficiently supported`; currency, low, and high are blank. The evidence file separately records ten reported completed sales, two asking prices, and three unsupported source attempts. None qualified as a direct comparable for a current shortlist name. Asking prices are not sales, and the unsupported source attempts did not become market evidence. These entries are not appraisals.
 

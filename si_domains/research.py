@@ -210,6 +210,10 @@ def _refusal_reason_category(
     lowered = notes.casefold()
     if "captcha" in lowered:
         return "captcha"
+    if "local evidence write failed" in lowered:
+        return "local evidence write failure"
+    if "maximum three rerank rounds" in lowered:
+        return "screening round limit"
     for http_status in _HTTP_STATUS.finditer(notes):
         if int(http_status.group(1)) >= 400:
             return f"HTTP {http_status.group(1)}"

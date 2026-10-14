@@ -49,7 +49,7 @@ def _read_csv(path: Path):
         return list(csv.DictReader(handle))
 
 
-def make_fixture(tmp_path: Path, *, hostile_text=" \\t=1+1", second_eligible=False):
+def make_fixture(tmp_path: Path, *, hostile_text=" \\t=1+1", second_eligible=False, resume_evidence=False):
     """Build a complete, tiny offline package from synthetic rows."""
     paths = {name: tmp_path / f"{name}.csv" for name in (
         "candidates",
@@ -145,6 +145,45 @@ def make_fixture(tmp_path: Path, *, hostile_text=" \\t=1+1", second_eligible=Fal
             "proof_kind": "",
             "proof_path": "",
         })
+    if resume_evidence:
+        trademark_rows.extend([
+            {
+                "evidence_id": "RESUME-USPTO-CONTROL",
+                "domain": "*",
+                "source": "USPTO",
+                "jurisdiction": "US",
+                "query": "google",
+                "utc_timestamp": "2026-10-14T00:10:00Z",
+                "result_status": "possible_conflict",
+                "source_url": "https://tmsearch.uspto.gov/prod-stage-v1-0-0/tmsearch",
+                "result_url": "https://tmsearch.uspto.gov/search/search-results?query=google",
+                "mark_number": "12345678",
+                "mark_name": "GOOGLE",
+                "mark_status": "registered and renewed; live",
+                "classes": "35",
+                "notes": "Control query; HTTP 200 JSON; mode=exact; term=google; totalValue=2; first hit facts only",
+                "proof_kind": "api_query_summary",
+                "proof_path": "",
+            },
+            {
+                "evidence_id": "RESUME-USPTO-00001",
+                "domain": "probe.si",
+                "source": "USPTO",
+                "jurisdiction": "US",
+                "query": "probe exact",
+                "utc_timestamp": "2026-10-14T00:10:05Z",
+                "result_status": "unverified",
+                "source_url": "https://tmsearch.uspto.gov/prod-stage-v1-0-0/tmsearch",
+                "result_url": "",
+                "mark_number": "",
+                "mark_name": "",
+                "mark_status": "",
+                "classes": "",
+                "notes": "HTTP 200 JSON response was received; local evidence write failed",
+                "proof_kind": "api_query_summary",
+                "proof_path": "",
+            },
+        ])
     _write_csv(paths["trademark_evidence"], list(TRADEMARK_EVIDENCE_FIELDS), trademark_rows)
     write_trademark_summary(
         paths["trademark_evidence"],
@@ -163,7 +202,7 @@ def make_fixture(tmp_path: Path, *, hostile_text=" \\t=1+1", second_eligible=Fal
 
 
 def test_workbook_exports_latest_joins_numeric_cells_and_header_only_unverified(tmp_path):
-    paths = make_fixture(tmp_path)
+    paths = make_fixture(tmp_path, resume_evidence=True)
     output = tmp_path / "ranked.xlsx"
 
     model = build_workbook_model(paths)
@@ -208,6 +247,16 @@ def test_workbook_exports_latest_joins_numeric_cells_and_header_only_unverified(
     )
     assert "--completion-mode" in completion_mode[methodology_columns["Details"] - 1]
     assert "Missing pairs fail" in completion_mode[methodology_columns["Details"] - 1]
+    assert "local evidence-write failure" in completion_mode[methodology_columns["Details"] - 1]
+    assert "documented three-round limit" in completion_mode[methodology_columns["Details"] - 1]
+    probe_outcome = next(
+        row for row in methodology_rows
+        if row[methodology_columns["Topic"] - 1] == "Trademark probe outcome"
+    )
+    probe_details = probe_outcome[methodology_columns["Details"] - 1]
+    assert "2 USPTO POST attempts: 1 google control and 1 candidate-query attempts" in probe_details
+    assert "2 returned HTTP 200 JSON, 0 returned HTTP 403, and 0 retries" in probe_details
+    assert "1 HTTP 200 response could not be retained" in probe_details
 
     shortlist = normal["Shortlist"]
     headers = [cell.value for cell in shortlist[1]]

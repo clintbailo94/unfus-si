@@ -217,6 +217,38 @@ def test_completion_mode_passes_when_every_source_pair_has_a_completed_or_refuse
 
 
 @pytest.mark.parametrize(
+    ("notes", "expected_reason"),
+    [
+        (
+            "HTTP 200 JSON response was received and parsed, but the local evidence write failed; no retry was made.",
+            "local evidence write failure=1",
+        ),
+        (
+            "No query was sent because the maximum three rerank rounds had been used; the pass ended before a fourth entrant batch.",
+            "screening round limit=1",
+        ),
+    ],
+)
+def test_completion_mode_accepts_documented_unverified_query_outcomes(
+    tmp_path, capsys, notes, expected_reason
+):
+    artifacts = _single_domain_research(tmp_path, screened=True)
+    evidence = _read(artifacts["evidence"])
+    near_query = next(
+        row for row in evidence
+        if row["source"] == "USPTO" and row["query"] == "novara [fuzzy-1]"
+    )
+    near_query.update(result_status="unverified", result_url="", notes=notes)
+    _write_csv(artifacts["evidence"], TM_FIELDS, evidence)
+    _refresh_trademark_artifacts(artifacts)
+
+    assert _validate_completion_mode(artifacts) == 0
+    report = capsys.readouterr()
+    assert f"USPTO: completed=0, refused=1 ({expected_reason}), missing=0" in report.out
+    assert report.out.rstrip().endswith("COMPLETION-MODE PASS")
+
+
+@pytest.mark.parametrize(
     ("defect", "expected_diagnostic"),
     [
         ("missing_pair", "missing outcome pair(s) for novara.si: TMview"),

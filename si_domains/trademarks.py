@@ -378,7 +378,7 @@ def aggregate_trademark_rows(
             global_rows = by_source_global.get(source, [])
             evidence_ids.extend(row["evidence_id"] for row in actual)
             evidence_ids.extend(row["evidence_id"] for row in global_rows)
-            conflict = conflict or any(row["result_status"] == "possible_conflict" for row in actual)
+            conflict = conflict or bool(source_coverage[source]["possible_conflict"])
             query_blocked = query_blocked or bool(source_coverage[source]["query_blocked"])
 
         if conflict:
@@ -465,6 +465,7 @@ def query_coverage_by_source(
         query_states: dict[str, str] = {}
         sourcewide_blocked = False
         query_blocked = False
+        possible_conflict = False
         for query in required:
             matches = [row for row in domain_rows[source] if normalize_query(row["query"]) == query]
             if matches:
@@ -477,6 +478,7 @@ def query_coverage_by_source(
                 state = global_status if global_status in {"blocked", "unverified"} else "unverified"
                 sourcewide_blocked = sourcewide_blocked or state == "blocked"
             query_states[query] = state
+            possible_conflict = possible_conflict or state == "possible_conflict"
 
         completed = sum(
             state in {"no_obvious_match", "possible_conflict"}
@@ -503,6 +505,7 @@ def query_coverage_by_source(
             "missing_queries": missing_queries,
             "sourcewide_blocked": sourcewide_blocked,
             "query_blocked": query_blocked,
+            "possible_conflict": possible_conflict,
             "domain_query_attempted": bool(domain_rows[source]),
         }
     return coverage
