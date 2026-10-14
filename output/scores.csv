@@ -703,7 +703,7 @@ denimcraft.si,consumer_brands,81,40,73,12,61,40,54.2,Compound 'denimcraft' head 
 denimhouse.si,consumer_brands,86,41,73,12,54,40,54.6,Compound 'denimhouse' head 'denim' + tail 'house'; no listed demand root; general service; 10 letters.
 denimshop.si,consumer_brands,83,65,77,12,73,40,62.0,Compound 'denimshop' head 'denim' + tail 'shop'; root 'shop'; retail; 9 letters.
 denimstudio.si,consumer_brands,75,39,67,12,51,40,50.0,Compound 'denimstudio' head 'denim' + tail 'studio'; no listed demand root; general service; 11 letters.
-denimwear.si,consumer_brands,90,42,79,12,65,40,58.3,Compound 'denimwear' head 'denim' + tail 'wear'; no listed demand root; general service; 9 letters.
+denimwear.si,consumer_brands,90,42,79,12,65,25,56.8,Compound 'denimwear' head 'denim' + tail 'wear'; no listed demand root; general service; 9 letters.
 denimworks.si,consumer_brands,81,40,73,12,60,40,54.0,Compound 'denimworks' head 'denim' + tail 'works'; no listed demand root; general service; 10 letters.
 depositdesk.si,business_finance,79,39,66,12,51,40,50.9,Compound 'depositdesk' head 'deposit' + tail 'desk'; no listed demand root; general service; 11 letters.
 depositflow.si,business_finance,75,39,67,12,49,40,49.8,Compound 'depositflow' head 'deposit' + tail 'flow'; no listed demand root; general service; 11 letters.

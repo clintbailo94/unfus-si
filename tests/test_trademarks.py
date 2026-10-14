@@ -11,6 +11,7 @@ from si_domains.trademarks import (
 )
 from si_domains.uspto import (
     is_similar_wordmark,
+    parse_search_response,
     probe_uspto_controls,
     search_uspto_label,
 )
@@ -118,6 +119,46 @@ def test_uspto_json_controls_and_fuzzy_screen_use_distilled_fields():
     assert whole_word.hits[0].wordmark == "AI CLOUD"
     assert "fuzziness" not in session.calls[5][2]["query"]["bool"]["must"][0]["match"]["wordmark"]
     assert is_similar_wordmark("ai", whole_word.hits[0].wordmark)
+
+
+def test_non_ascii_uspto_facts_can_be_written_as_ascii_and_still_match(tmp_path):
+    result = parse_search_response(
+        {
+            "hits": {
+                "totalValue": 1,
+                "hits": [{
+                    "source": {
+                        "id": "12345678",
+                        "wordmark": "POWD\u00c9RY",
+                        "alive": True,
+                        "statusDescription": "ENREGISTR\u00c9 \u2014 LIVE",
+                        "internationalClass": ["IC 035"],
+                    }
+                }],
+            }
+        },
+        query="powdery",
+        mode="near-fuzzy-1",
+    )
+    hit = result.hits[0]
+    row = {
+        "mark_number": hit.serial_number,
+        "mark_name": hit.wordmark,
+        "mark_status": hit.status,
+        "classes": ",".join(hit.classes),
+        "result_status": "possible_conflict" if is_similar_wordmark("powdery", hit.wordmark) else "no_obvious_match",
+    }
+    path = tmp_path / "ascii-evidence.csv"
+    with path.open("w", encoding="ascii", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(row), lineterminator="\n")
+        writer.writeheader()
+        writer.writerow(row)
+
+    saved = path.read_bytes().decode("ascii")
+    assert "POWDERY" in saved
+    assert "ENREGISTRE" in saved
+    assert "possible_conflict" in saved
+    assert is_similar_wordmark("powdery", hit.wordmark)
 
 
 def _write_csv(path: Path, fields: list[str], rows: list[dict[str, str]]) -> None:

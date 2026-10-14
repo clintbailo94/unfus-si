@@ -243,6 +243,7 @@ def test_workbook_exports_latest_joins_numeric_cells_and_header_only_unverified(
     assert "REWORK1-USPTO-00259" in manual_checks[methodology_columns["Details"] - 1]
     assert "TMview source-wide refused: connection closed (evidence REWORK1-TMVIEW-PROBES, 2026-10-13T18:02:42Z); per-name results are unverified because of that refusal." in manual_checks[methodology_columns["Details"] - 1]
     assert "UKIPO source-wide refused: automated access refused (evidence PKGD-0003, 2026-10-13T17:09:52Z); per-name results are blocked because of that refusal." in manual_checks[methodology_columns["Details"] - 1]
+    assert "PKG-G originally made 117 USPTO POSTs (one control and 116 candidates); T-18 added six (one control and five candidates)." in manual_checks[methodology_columns["Details"] - 1]
     completion_mode = next(
         row for row in methodology_rows
         if row[methodology_columns["Topic"] - 1] == "Completion-mode research validation"
@@ -256,9 +257,9 @@ def test_workbook_exports_latest_joins_numeric_cells_and_header_only_unverified(
         if row[methodology_columns["Topic"] - 1] == "Trademark probe outcome"
     )
     probe_details = probe_outcome[methodology_columns["Details"] - 1]
-    assert "2 USPTO POST attempts: 1 google control and 1 candidate-query attempts" in probe_details
+    assert "2 USPTO POST attempts: 1 google control and 1 candidate queries" in probe_details
     assert "2 returned HTTP 200 JSON, 0 returned HTTP 403, and 0 retries" in probe_details
-    assert "1 HTTP 200 response could not be retained" in probe_details
+    assert "1 historical response row records a local evidence-write failure" in probe_details
 
     shortlist = normal["Shortlist"]
     headers = [cell.value for cell in shortlist[1]]

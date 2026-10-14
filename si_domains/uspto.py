@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass
 from typing import Mapping
 
@@ -75,14 +76,27 @@ def parse_search_response(payload: object, *, query: str, mode: str) -> SearchRe
         alive_value = source.get("alive")
         parsed.append(
             MarkHit(
-                serial_number=str(source.get("id") or "").strip(),
-                wordmark=str(source.get("wordmark") or "").strip(),
+                serial_number=_ascii_evidence_text(source.get("id") or "").strip(),
+                wordmark=_ascii_evidence_text(source.get("wordmark") or "").strip(),
                 alive=alive_value if isinstance(alive_value, bool) else None,
-                status=str(source.get("statusDescription") or "").strip(),
+                status=_ascii_evidence_text(source.get("statusDescription") or "").strip(),
                 classes=classes,
             )
         )
-    return SearchResult(query=query, mode=mode, total=total, hits=tuple(parsed))
+    return SearchResult(
+        query=_ascii_evidence_text(query),
+        mode=_ascii_evidence_text(mode),
+        total=total,
+        hits=tuple(parsed),
+    )
+
+
+def _ascii_evidence_text(value: object) -> str:
+    """Keep evidence facts ASCII while preserving readable accents and other code points."""
+
+    normalized = unicodedata.normalize("NFKD", str(value))
+    without_diacritics = "".join(character for character in normalized if not unicodedata.combining(character))
+    return without_diacritics.encode("ascii", errors="backslashreplace").decode("ascii")
 
 
 def _classes(value: object) -> tuple[str, ...]:
