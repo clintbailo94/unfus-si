@@ -31,8 +31,13 @@ PRICES = {
 }
 
 
+def get_stripe_key() -> str:
+    return STRIPE_SECRET_KEY or os.getenv("STRIPE_SECRET_KEY", "").strip()
+
+
 def is_stripe_configured() -> bool:
-    return bool(STRIPE_SECRET_KEY and STRIPE_SECRET_KEY.startswith("sk_test_"))
+    key = get_stripe_key()
+    return bool(key and (key.startswith("sk_") or key.startswith("rk_")))
 
 
 def create_checkout_session(
@@ -54,6 +59,7 @@ def create_checkout_session(
     amount = product["amount_gbp"]
 
     if is_stripe_configured():
+        stripe.api_key = get_stripe_key()
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             customer_email=customer_email,
