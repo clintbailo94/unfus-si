@@ -4,7 +4,10 @@ from __future__ import annotations
 
 import os
 import requests
+import dotenv
 from typing import Optional
+
+dotenv.load_dotenv()
 
 
 HOSTINGER_API_BASE = "https://api.hostinger.com/v1"
