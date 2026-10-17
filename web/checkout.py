@@ -60,25 +60,30 @@ def create_checkout_session(
 
     if is_stripe_configured():
         stripe.api_key = get_stripe_key()
+        price_data = {
+            "currency": "gbp",
+            "product_data": {
+                "name": product["name"],
+                "description": product["description"],
+                "tax_code": "txcd_10000000",
+            },
+            "unit_amount": amount * 100,
+        }
+        if tier == "subscription":
+            price_data["recurring"] = {"interval": "month"}
+
         session = stripe.checkout.Session.create(
             customer_email=customer_email,
             line_items=[
                 {
-                    "price_data": {
-                        "currency": "gbp",
-                        "product_data": {
-                            "name": product["name"],
-                            "description": product["description"],
-                            "tax_code": "txcd_10000000",
-                        },
-                        "unit_amount": amount * 100,
-                    },
+                    "price_data": price_data,
                     "quantity": 1,
                 }
             ],
             mode="payment" if tier == "one_off" else "subscription",
             success_url=success_url_template.replace("{CHECKOUT_SESSION_ID}", "{CHECKOUT_SESSION_ID}"),
             cancel_url=cancel_url,
+            metadata={"tier": tier, "customer_email": customer_email},
         )
         return {
             "mode": "stripe_test",
@@ -108,3 +113,44 @@ def create_checkout_session(
         "session_id": f"fake_{fake_token}",
         "access_token": order["access_token"],
     }
+
+
+def fulfill_stripe_session(session_id: str, db_path: Optional[str] = None) -> Optional[dict]:
+    """Verify and fulfill a completed Stripe checkout session into an order."""
+    if not is_stripe_configured() or not session_id:
+        return None
+
+    # Check if already fulfilled
+    existing = db.get_order_by_stripe_session(session_id, db_path=db_path)
+    if existing:
+        return existing
+
+    stripe.api_key = get_stripe_key()
+    try:
+        session = stripe.checkout.Session.retrieve(session_id)
+    except Exception:
+        return None
+
+    # Verify payment status
+    if session.payment_status not in ("paid", "no_payment_required"):
+        return None
+
+    customer_email = (
+        session.customer_details.email
+        if session.customer_details and session.customer_details.email
+        else session.customer_email
+    )
+    if not customer_email:
+        customer_email = (session.metadata or {}).get("customer_email", "customer@unfus.si")
+
+    tier = (session.metadata or {}).get("tier", "one_off")
+    amount = PRICES.get(tier, {}).get("amount_gbp", 49)
+
+    return db.create_order(
+        email=customer_email,
+        tier=tier,
+        amount_gbp=amount,
+        stripe_session_id=session.id,
+        status="paid",
+        db_path=db_path,
+    )

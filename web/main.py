@@ -20,7 +20,7 @@ dotenv.load_dotenv()
 from si_domains.config import DATA_DIR, OUTPUT_DIR
 from si_domains.sales import get_verified_completed_sales, load_sales
 from . import db
-from .checkout import PRICES, create_checkout_session
+from .checkout import PRICES, create_checkout_session, fulfill_stripe_session
 from .db import init_db, record_download, verify_access_token
 
 
@@ -271,6 +271,11 @@ async def account_page(
 
     if token:
         order = db.verify_access_token(token)
+    elif session_id:
+        order = fulfill_stripe_session(session_id)
+        if order and not token:
+            # Redirect to clean URL with access token
+            return RedirectResponse(url=f"/account?token={order['access_token']}", status_code=303)
 
     return templates.TemplateResponse(
         request=request,

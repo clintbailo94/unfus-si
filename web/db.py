@@ -126,6 +126,25 @@ def verify_access_token(token: str, db_path: Path | str | None = None) -> Option
     return None
 
 
+def get_order_by_stripe_session(session_id: str, db_path: Path | str | None = None) -> Optional[dict]:
+    if not session_id:
+        return None
+    conn = get_db(db_path)
+    cur = conn.execute(
+        """
+        SELECT o.id, o.order_ref, o.tier, o.amount_gbp, o.status, o.access_token, o.created_at, c.email
+        FROM orders o
+        JOIN customers c ON o.customer_id = c.id
+        WHERE o.stripe_session_id = ? AND o.status = 'paid'
+        """,
+        (session_id,),
+    )
+    row = cur.fetchone()
+    if row:
+        return dict(row)
+    return None
+
+
 def record_download(order_id: int, file_type: str, ip_address: str = "", db_path: Path | str | None = None) -> None:
     conn = get_db(db_path)
     with conn:
