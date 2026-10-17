@@ -412,6 +412,24 @@ def build_parser() -> argparse.ArgumentParser:
     candidates.add_argument("--out", help="output CSV; with --all, combine categories in one file")
     candidates.add_argument("--sample", type=_positive_limit, help="print a random sample from each category")
     candidates.add_argument("--seed", type=int, default=1, help="deterministic review sample seed")
+
+    refresh = subparsers.add_parser("refresh", help="continuously refresh availability against the registry")
+    refresh.add_argument("--input", default=str(DATA_DIR / "candidates.csv"), help="candidate CSV")
+    refresh.add_argument("--limit", type=_positive_limit, help="maximum candidates to check")
+    refresh.add_argument("--min-interval", type=_minimum_interval, default=1.1, help="minimum interval between requests (>= 1.1s)")
+
+    serve = subparsers.add_parser("serve", help="run the marketplace web application locally")
+    serve.add_argument("--host", default="127.0.0.1", help="host to bind")
+    serve.add_argument("--port", type=int, default=8000, help="port to bind")
+    serve.add_argument("--reload", action="store_true", help="enable auto-reload")
+
+    review_sales = subparsers.add_parser("review-sales", help="propose and review reported .si sales")
+    review_sales.add_argument("--domain", help="sold domain name")
+    review_sales.add_argument("--amount", help="sale amount")
+    review_sales.add_argument("--currency", default="USD", help="currency code")
+    review_sales.add_argument("--source-url", help="public source URL")
+    review_sales.add_argument("--venue", default="Public Report", help="venue or marketplace")
+    review_sales.add_argument("--type", default="completed_sale", choices=["completed_sale", "asking_price"], help="evidence type")
     return parser
 
 
@@ -1036,5 +1054,64 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _run_validate_delivery(args)
     if args.command == "candidates":
         return _run_candidates(args, parser)
+    if args.command == "refresh":
+        return _run_refresh_cmd(args)
+    if args.command == "serve":
+        return _run_serve_cmd(args)
+    if args.command == "review-sales":
+        return _run_review_sales_cmd(args)
     parser.error("unknown command")
     return 2
+
+
+def _run_refresh_cmd(args: argparse.Namespace) -> int:
+    from .refresh import run_refresh
+
+    print(f"Starting refresh of candidates from {args.input} (min-interval={args.min_interval}s)...")
+    res = run_refresh(
+        candidates_path=args.input,
+        limit=args.limit,
+        min_interval=args.min_interval,
+    )
+    print(f"Refresh completed: {res.checked_rdap} RDAP checked ({res.rdap_404_count} 404, {res.rdap_200_count} 200); {res.whois_checked} WHOIS checked ({res.whois_available_count} available, {res.whois_registered_count} registered); {res.shortlist_count} shortlisted; {res.rescore_count} rescored.")
+    if res.stopped_reason:
+        print(f"Notice: {res.stopped_reason}")
+    return 0
+
+
+def _run_serve_cmd(args: argparse.Namespace) -> int:
+    import uvicorn
+
+    print(f"Starting domain list marketplace server on http://{args.host}:{args.port}")
+    uvicorn.run("web.main:app", host=args.host, port=args.port, reload=args.reload)
+    return 0
+
+
+def _run_review_sales_cmd(args: argparse.Namespace) -> int:
+    from .sales import get_verified_completed_sales, propose_sale, load_sales
+
+    if not args.domain:
+        print("Curated .si sales records:")
+        for s in load_sales():
+            status = "VERIFIED SALE" if s.is_completed_sale else s.evidence_type.upper()
+            print(f"- {s.domain:15} | {s.display_price:12} | {status:15} | {s.venue:15} | {s.source_url}")
+        return 0
+
+    if not args.amount or not args.source_url:
+        print("Error: --domain, --amount, and --source-url are required to propose a sale.", file=sys.stderr)
+        return 2
+
+    added = propose_sale({
+        "domain": args.domain,
+        "amount": args.amount,
+        "currency": args.currency,
+        "source_url": args.source_url,
+        "venue": args.venue,
+        "evidence_type": args.type,
+    })
+    if added:
+        print(f"Proposed sale for {args.domain} added for review.")
+    else:
+        print(f"Sale for {args.domain} already present in feed.")
+    return 0
+
