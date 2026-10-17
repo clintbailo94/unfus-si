@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Curated Available .si Domains & Intelligence{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <h1>Acquire High-Value .si Domains Before They're Taken</h1>
+  <p>Continuous registry-verified intelligence on currently available Slovenian (.si) country-code domains, artificial intelligence (AI/SI) brandables, domain hacks, and short pronounceable names.</p>
+  <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+    <a href="/pricing" class="btn btn-lg">Get Full List Access</a>
+    <a href="#sample-names" class="btn btn-outline btn-lg">Explore Free Sample</a>
+  </div>
+</section>
+
+<section style="margin-top: 1rem;">
+  <h2 class="section-title">Recent .si Sales & Benchmark Transactions</h2>
+  <p class="section-desc">Publicly reported, verifiable domain resales and benchmark public pricing. Only sales with verifiable public sources are reported below—no embellishments, no guesses.</p>
+  
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>Price</th>
+          <th>Date</th>
+          <th>Venue</th>
+          <th>Category</th>
+          <th>Source Evidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sale in sales %}
+        <tr>
+          <td><strong>{{ sale.domain }}</strong></td>
+          <td>
+            <span class="badge {% if sale.is_completed_sale %}badge-sale{% else %}badge-ask{% endif %}">
+              {{ sale.display_price }}
+            </span>
+          </td>
+          <td>{{ sale.effective_date }}</td>
+          <td>{{ sale.venue }}</td>
+          <td><span class="badge">{{ sale.category }}</span></td>
+          <td>
+            <a href="{{ sale.source_url }}" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline; font-size: 0.85rem;">
+              Verified Source Report &rarr;
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section style="margin-top: 3rem;">
+  <h2 class="section-title">How the List Works & What's Included</h2>
+  <div class="pricing-grid" style="margin: 1.5rem 0 2.5rem;">
+    <div class="pricing-card">
+      <h3>Multi-Tier Registry Verification</h3>
+      <p style="color: var(--text-muted); margin-top: 0.5rem;">Every domain undergoes continuous dual-pass checking: RDAP API first, followed by RFC 3912 port-43 WHOIS confirmation to rule out false 404s, registry holds, and premium blocks.</p>
+    </div>
+    <div class="pricing-card">
+      <h3>Comprehensive Scoring & Rationale</h3>
+      <p style="color: var(--text-muted); margin-top: 0.5rem;">Every name is evaluated on 6 core pillars: Brandability, Commercial intent, Shortness, Domain Hack potential, Resale velocity, and Trademark conflict avoidance.</p>
+    </div>
+    <div class="pricing-card">
+      <h3>Continuously Fresh Data</h3>
+      <p style="color: var(--text-muted); margin-top: 0.5rem;">Data is refreshed continuously (top 500 daily, full list weekly). Our registry rate-limited engine monitors drops and updates availability timestamps.</p>
+    </div>
+  </div>
+</section>
+
+<section id="sample-names" style="margin-top: 2rem;">
+  <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 1rem;">
+    <div>
+      <h2 class="section-title">Free Sample: Currently Available Names</h2>
+      <p class="section-desc">Sample preview of 15 top-ranked, registry-verified available .si names (last checked: {{ last_checked }} UTC).</p>
+    </div>
+    <a href="/domains" style="color: var(--primary); font-weight: 600; text-decoration: none;">View All 500+ Opportunities &rarr;</a>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Domain</th>
+          <th>Category</th>
+          <th>Score</th>
+          <th>Length</th>
+          <th>Score Breakdown & Rationale</th>
+          <th>Last Checked</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in sample_domains %}
+        <tr>
+          <td>#{{ row.rank }}</td>
+          <td><strong>{{ row.domain }}</strong></td>
+          <td><span class="badge">{{ row.category }}</span></td>
+          <td><strong>{{ row.total }}</strong>/100</td>
+          <td>{{ row.domain|length - 3 }}</td>
+          <td style="font-size: 0.85rem; color: var(--text-muted);">{{ row.rationale }}</td>
+          <td style="font-size: 0.8rem; color: var(--text-muted);">{{ row.rdap_timestamp or row.whois_timestamp }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section style="margin-top: 2rem;">
+  <h2 class="section-title" style="text-align: center;">Simple, Transparent Pricing</h2>
+  <p class="section-desc" style="text-align: center;">Pick the access plan that suits your acquisition needs.</p>
+
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <h3>One-Off Snapshot Download</h3>
+      <p style="color: var(--text-muted);">Instant access to current full available opportunity list.</p>
+      <div class="price">£49<span>one-time</span></div>
+      <ul class="pricing-features">
+        <li>Instant CSV + formatted Excel XLSX download</li>
+        <li>Full verified list of thousands of available .si names</li>
+        <li>Score breakdown & valuation rationale for each name</li>
+        <li>Trademark conflict screening metadata</li>
+        <li>Excludes all already-registered & owned domains</li>
+      </ul>
+      <a href="/checkout?tier=one_off" class="btn btn-outline" style="text-align: center;">Buy One-Off Download (£49)</a>
+    </div>
+
+    <div class="pricing-card featured">
+      <div class="badge-top">Most Popular</div>
+      <h3>Continuous Subscription</h3>
+      <p style="color: var(--text-muted);">Stay ahead with weekly fresh drops & daily top-500 tracking.</p>
+      <div class="price">£29<span>/ month</span></div>
+      <ul class="pricing-features">
+        <li>Weekly updated fresh snapshot downloads</li>
+        <li>Daily tracking of newly unregistered top 500 drops</li>
+        <li>New candidate category additions (fintech, SaaS, AI, etc.)</li>
+        <li>Full account portal with historical snapshot access</li>
+        <li>Continuous trademark and availability audit</li>
+      </ul>
+      <a href="/checkout?tier=subscription" class="btn" style="text-align: center;">Subscribe Monthly (£29/mo)</a>
+    </div>
+  </div>
+</section>
+
+<div class="disclaimer-box">
+  <p><strong>Availability & Legal Disclaimer:</strong> All domain availability data indicates status at the timestamp of the last registry check ({{ last_checked }} UTC) and does not constitute a guaranteed reservation or warranty. Past publicly reported .si domain sales are historical data provided for context and do not predict or guarantee any specific resale value for any listed name. Registered trademarks and owner-held names are strictly excluded.</p>
+</div>
+{% endblock %}

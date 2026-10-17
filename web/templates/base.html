@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}.si Domain Intelligence & Marketplace{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="/" class="brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        <span>.si Domain Marketplace</span>
+      </a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/domains">Available Domains</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/account" class="btn btn-outline" style="padding: 0.35rem 0.75rem; margin-left: 1rem;">My Downloads</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {% if is_stale %}
+    <div class="stale-warning" role="alert">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <span><strong>Data Notice:</strong> This domain availability snapshot is older than 8 days (last checked: {{ last_checked }}). A registry refresh is recommended.</span>
+    </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div>
+        <p><strong>.si Domain Marketplace</strong> &copy; 2026. Continuous intelligence on premium available .si domains.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">Snapshot Last Checked: {{ last_checked or 'Unknown' }} UTC</p>
+      </div>
+      <div class="footer-links">
+        <a href="/terms">Terms of Service</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/domains">Browse List</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Available .si Domain Directory{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 1.5rem;">
+  <div>
+    <h1 class="section-title">Available .si Domain Opportunities</h1>
+    <p class="section-desc">Filtered by quality heuristics, trademark review, and dual-layer registry confirmation.</p>
+  </div>
+  <div>
+    {% if not has_paid %}
+    <a href="/pricing" class="btn">Unlock All Rows (£49)</a>
+    {% else %}
+    <a href="/account" class="btn btn-outline">My Downloads Portal</a>
+    {% endif %}
+  </div>
+</div>
+
+<form method="get" action="/domains" class="filters-bar">
+  <div class="filter-group">
+    <label for="category">Category</label>
+    <select name="category" id="category" onchange="this.form.submit()">
+      <option value="">All Categories</option>
+      {% for cat in categories %}
+      <option value="{{ cat }}" {% if selected_category == cat %}selected{% endif %}>{{ cat }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label for="max_length">Max Length</label>
+    <select name="max_length" id="max_length" onchange="this.form.submit()">
+      <option value="">Any Length</option>
+      <option value="4" {% if selected_max_length == 4 %}selected{% endif %}>4 letters or fewer</option>
+      <option value="6" {% if selected_max_length == 6 %}selected{% endif %}>6 letters or fewer</option>
+      <option value="8" {% if selected_max_length == 8 %}selected{% endif %}>8 letters or fewer</option>
+      <option value="10" {% if selected_max_length == 10 %}selected{% endif %}>10 letters or fewer</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label for="min_score">Min Score</label>
+    <select name="min_score" id="min_score" onchange="this.form.submit()">
+      <option value="">Any Score</option>
+      <option value="70" {% if selected_min_score == 70 %}selected{% endif %}>70+ (High quality)</option>
+      <option value="60" {% if selected_min_score == 60 %}selected{% endif %}>60+ (Good brandable)</option>
+      <option value="50" {% if selected_min_score == 50 %}selected{% endif %}>50+ (All viable)</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label for="sort_by">Sort By</label>
+    <select name="sort_by" id="sort_by" onchange="this.form.submit()">
+      <option value="score_desc" {% if sort_by == 'score_desc' %}selected{% endif %}>Score (Highest First)</option>
+      <option value="length_asc" {% if sort_by == 'length_asc' %}selected{% endif %}>Length (Shortest First)</option>
+    </select>
+  </div>
+  
+  <div class="filter-group" style="align-self: flex-end;">
+    <a href="/domains" style="font-size: 0.85rem; color: var(--text-muted); text-decoration: underline; margin-bottom: 0.4rem;">Reset Filters</a>
+  </div>
+</form>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Domain</th>
+        <th>Category</th>
+        <th>Score</th>
+        <th>Length</th>
+        <th>Score Breakdown</th>
+        <th>Last Checked</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in domains %}
+        {% if item.is_locked %}
+        <tr class="domain-row-locked">
+          <td>#{{ item.rank }}</td>
+          <td class="blur-cell"><strong>{{ item.teaser_name }}</strong></td>
+          <td><span class="badge">{{ item.category }}</span></td>
+          <td><strong>{{ item.total }}</strong>/100</td>
+          <td>{{ item.length }}</td>
+          <td class="blur-cell" style="font-size: 0.85rem; color: var(--text-muted);">{{ item.rationale }}</td>
+          <td style="font-size: 0.8rem; color: var(--text-muted);">{{ item.checked_time }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td>#{{ item.rank }}</td>
+          <td><strong>{{ item.domain }}</strong></td>
+          <td><span class="badge">{{ item.category }}</span></td>
+          <td><strong>{{ item.total }}</strong>/100</td>
+          <td>{{ item.length }}</td>
+          <td style="font-size: 0.85rem; color: var(--text-muted);">
+            {{ item.rationale }}
+            <br>
+            <span style="font-size: 0.75rem; color: var(--primary);">
+              Brand: {{ item.brandability }} | Comm: {{ item.commercial }} | Short: {{ item.shortness }} | Resale: {{ item.resale }} | TM: {{ item.trademark }}
+            </span>
+          </td>
+          <td style="font-size: 0.8rem; color: var(--text-muted);">{{ item.checked_time }}</td>
+        </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if not has_paid %}
+<div class="pricing-card featured" style="text-align: center; margin: 2rem auto; max-width: 600px;">
+  <h3>Unlock Remaining Names in the Directory</h3>
+  <p style="color: var(--text-muted); margin: 0.5rem 0 1.5rem;">Rows above #15 are blurred for preview. Purchase one-off access or subscribe to see all unblurred names, copy exact strings, and export CSV/XLSX.</p>
+  <div style="display: flex; gap: 1rem; justify-content: center;">
+    <a href="/checkout?tier=one_off" class="btn btn-lg">Buy Full List (£49)</a>
+    <a href="/pricing" class="btn btn-outline btn-lg">Compare Plans</a>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

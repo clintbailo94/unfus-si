@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}My Account & Downloads{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 1rem auto;">
+  <h1 class="section-title">Purchased Downloads & Account Portal</h1>
+  <p class="section-desc">Access your paid files. Access is verified server-side on every download request.</p>
+
+  {% if order %}
+  <div class="pricing-card" style="margin-bottom: 2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+      <div>
+        <h3>Active License: {{ order.tier|replace('_', ' ')|title }}</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Order Ref: <code>{{ order.order_ref }}</code> &bull; Customer: {{ order.email }}</p>
+      </div>
+      <span class="badge badge-sale" style="font-size: 0.9rem; padding: 0.35rem 0.75rem;">PAID &amp; ACTIVE</span>
+    </div>
+
+    <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
+
+    <h4 style="margin-bottom: 1rem;">Available File Formats</h4>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+      <div style="background: var(--table-stripe); padding: 1.25rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+        <h5 style="font-size: 1.05rem; margin-bottom: 0.35rem;">Full Opportunities (CSV)</h5>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Clean, machine-readable dataset with scores, categories, timestamps, and rationales.</p>
+        <a href="/download/csv?token={{ order.access_token }}" class="btn" style="width: 100%; text-align: center;">Download .CSV</a>
+      </div>
+
+      <div style="background: var(--table-stripe); padding: 1.25rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+        <h5 style="font-size: 1.05rem; margin-bottom: 0.35rem;">Ranked Workbook (Excel XLSX)</h5>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Formatted workbook with multiple sheets, summary pivots, and highlighted top picks.</p>
+        <a href="/download/xlsx?token={{ order.access_token }}" class="btn btn-outline" style="width: 100%; text-align: center;">Download .XLSX</a>
+      </div>
+    </div>
+    
+    <div style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
+      <strong>License URL:</strong> Bookmark this page URL containing your access token to return and re-download fresh updates at any time:
+      <pre style="background: var(--bg-color); padding: 0.5rem; border-radius: 0.25rem; margin-top: 0.35rem; overflow-x: auto;"><code>{{ request_url }}</code></pre>
+    </div>
+  </div>
+  {% else %}
+  <div class="pricing-card" style="text-align: center; padding: 3rem 1.5rem;">
+    <h3>No Active Order Found</h3>
+    <p style="color: var(--text-muted); margin: 0.5rem 0 1.5rem;">Please provide your order access token to view your downloads, or purchase a list access plan.</p>
+    
+    <form method="get" action="/account" style="max-width: 400px; margin: 0 auto 1.5rem;">
+      <div class="filter-group">
+        <label for="token">Access Token</label>
+        <input type="text" id="token" name="token" required placeholder="Paste token here">
+      </div>
+      <button type="submit" class="btn" style="margin-top: 0.75rem; width: 100%;">Access Downloads</button>
+    </form>
+    
+    <a href="/pricing" class="btn btn-outline">Explore Plans &rarr;</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

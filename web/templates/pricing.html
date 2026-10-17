@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Pricing Plans - .si Domain Intelligence{% endblock %}
+
+{% block content %}
+<div class="hero">
+  <h1>Choose Your Access Plan</h1>
+  <p>Acquire premium, brandable .si domains with confidence. Backed by verifiable sales data, trademark conflict screening, and dual-layer registry confirmation.</p>
+</div>
+
+<div class="pricing-grid">
+  <div class="pricing-card">
+    <h3>One-Off Snapshot Download</h3>
+    <p style="color: var(--text-muted);">One-time purchase of the complete verified available .si domain directory.</p>
+    <div class="price">£49<span>one-time</span></div>
+    <ul class="pricing-features">
+      <li>Immediate server-side CSV and Excel (XLSX) downloads</li>
+      <li>Full unblurred access to thousands of available .si names</li>
+      <li>Heuristic score breakdown (brandability, commercial demand, shortness, resale)</li>
+      <li>Domain hack completion details & pronounceable brandables</li>
+      <li>Pre-screened against USPTO/UKIPO and Slovenian registry trademark rules</li>
+      <li>Strictly excludes already-registered and owner-bought domains</li>
+    </ul>
+    <a href="/checkout?tier=one_off" class="btn btn-outline" style="text-align: center;">Get One-Off Download (£49)</a>
+  </div>
+
+  <div class="pricing-card featured">
+    <div class="badge-top">Recommended for Investors</div>
+    <h3>Continuous Intelligence Subscription</h3>
+    <p style="color: var(--text-muted);">Weekly updated lists, drop alerts, and freshly discovered candidates.</p>
+    <div class="price">£29<span>/ month</span></div>
+    <ul class="pricing-features">
+      <li>All features of the One-Off Snapshot</li>
+      <li>Weekly refreshed registry snapshot downloads</li>
+      <li>Daily top-500 availability change audit</li>
+      <li>New category expansions as they are generated and scored</li>
+      <li>Customer portal with access to all current and previous weekly snapshots</li>
+      <li>Cancel anytime with one click</li>
+    </ul>
+    <a href="/checkout?tier=subscription" class="btn" style="text-align: center;">Subscribe Monthly (£29/mo)</a>
+  </div>
+</div>
+
+<div class="disclaimer-box" style="margin-top: 3rem;">
+  <h3>Honesty & Realistic Valuation Disclosure</h3>
+  <p style="margin-top: 0.5rem;">Reported sales (such as <code>ai.si</code> at $34,000, <code>build.si</code> at $17,435, or <code>byte.si</code> at $3,503) are verified public historical transactions. They demonstrate genuine commercial interest in the .si namespace but do not guarantee that any particular unregistered domain will achieve a similar resale price. Domain value is subjective and dependent on finding motivated end-user buyers. Availability is determined at our latest registry check timestamp.</p>
+</div>
+{% endblock %}
