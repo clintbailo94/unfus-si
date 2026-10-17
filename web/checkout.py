@@ -61,7 +61,6 @@ def create_checkout_session(
     if is_stripe_configured():
         stripe.api_key = get_stripe_key()
         session = stripe.checkout.Session.create(
-            payment_method_types=["card"],
             customer_email=customer_email,
             line_items=[
                 {
@@ -70,6 +69,7 @@ def create_checkout_session(
                         "product_data": {
                             "name": product["name"],
                             "description": product["description"],
+                            "tax_code": "txcd_10000000",
                         },
                         "unit_amount": amount * 100,
                     },

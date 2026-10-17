@@ -79,7 +79,9 @@ def test_download_access_authorized(client, tmp_path):
 
 
 # 3. Stripe fake / test flow
-def test_checkout_fake_simulator_flow(client):
+def test_checkout_fake_simulator_flow(client, monkeypatch):
+    import web.checkout as chk
+    monkeypatch.setattr(chk, "is_stripe_configured", lambda: False)
     res = client.post("/checkout", data={"tier": "one_off", "email": "testbuyer@example.com"}, follow_redirects=False)
     assert res.status_code == 303
     loc = res.headers["location"]
