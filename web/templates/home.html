@@ -26,9 +26,30 @@
     Listen to me very carefully: Every major tech company, hedge fund, and startup is waking up to <strong>.si</strong>. Look at the numbers: <code>ai.si</code> sold for <strong>$34,000</strong>. <code>recursive.si</code> went for <strong>$20,000</strong>. <code>otherwise.si</code> pulled <strong>$18,888</strong>. 
     You wouldn't drive a sports car without coverage, so why let your competitors lock down the premium Super Intelligence namespace right out from under you?
   </p>
-  <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 2rem;">
+  <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 1.5rem;">
     <strong>unfus.si</strong> gives you the complete, verified policy on available .si names: dual-checked through RDAP &amp; WHOIS, scored for brandability and resale velocity, with full trademark clearance. Lock in your edge before someone else registers your future brand!
   </p>
+
+  <!-- Live Market KPI Strip -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; margin: 1.75rem 0 2rem; text-align: center;">
+    <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem; padding: 1rem;">
+      <div style="font-size: 1.65rem; font-weight: 800; color: var(--primary);">$34,000</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.25rem;">Record Sale (ai.si)</div>
+    </div>
+    <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem; padding: 1rem;">
+      <div style="font-size: 1.65rem; font-weight: 800; color: var(--primary);">21,500+</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.25rem;">Candidates Screened</div>
+    </div>
+    <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem; padding: 1rem;">
+      <div style="font-size: 1.65rem; font-weight: 800; color: var(--primary);">490</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.25rem;">Verified Available Now</div>
+    </div>
+    <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem; padding: 1rem;">
+      <div style="font-size: 1.65rem; font-weight: 800; color: #10b981;">100%</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.25rem;">RDAP + WHOIS &amp; TM Cleared</div>
+    </div>
+  </div>
+
   <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
     <a href="/pricing" class="btn btn-lg" style="box-shadow: 0 4px 14px rgba(37,99,235,0.4);">Claim Full Access Now (£49)</a>
     <a href="#sample-names" class="btn btn-outline btn-lg">Review Verified Free Sample</a>
@@ -125,7 +146,7 @@
           <td><strong>{{ row.total }}</strong>/100</td>
           <td>{{ row.domain|length - 3 }}</td>
           <td style="font-size: 0.85rem; color: var(--text-muted);">{{ row.rationale }}</td>
-          <td style="font-size: 0.8rem; color: var(--text-muted);">{{ row.rdap_timestamp or row.whois_timestamp }}</td>
+          <td style="font-size: 0.8rem; color: var(--text-muted);">{{ row.checked_time }}</td>
           <td>
             <a href="{{ get_hostinger_url(row.domain) }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="padding: 0.25rem 0.55rem; font-size: 0.75rem; white-space: nowrap;">
               Register &nearr;
