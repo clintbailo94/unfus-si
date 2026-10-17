@@ -127,7 +127,7 @@
           <td style="font-size: 0.85rem; color: var(--text-muted);">{{ row.rationale }}</td>
           <td style="font-size: 0.8rem; color: var(--text-muted);">{{ row.rdap_timestamp or row.whois_timestamp }}</td>
           <td>
-            <a href="https://www.hostinger.com/domain-name-search?domain={{ row.domain }}&ref=unfus_si" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="padding: 0.25rem 0.55rem; font-size: 0.75rem; white-space: nowrap;">
+            <a href="{{ get_hostinger_url(row.domain) }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="padding: 0.25rem 0.55rem; font-size: 0.75rem; white-space: nowrap;">
               Register &nearr;
             </a>
           </td>

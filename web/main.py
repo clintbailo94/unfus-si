@@ -32,8 +32,17 @@ TEMPLATES_DIR = BASE_DIR / "templates"
 
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
-HOSTINGER_AFFILIATE_URL = os.getenv("HOSTINGER_AFFILIATE_URL", "https://www.hostinger.com/domain-name-search?ref=unfus_si").strip()
+HOSTINGER_AFFILIATE_URL = os.getenv("HOSTINGER_AFFILIATE_URL", "https://www.hostinger.com/uk?REFERRALCODE=Q8QCLINTB2AY").strip()
+HOSTINGER_REFERRAL_CODE = os.getenv("HOSTINGER_REFERRAL_CODE", "Q8QCLINTB2AY").strip()
+
+def get_hostinger_url(domain_name: Optional[str] = None) -> str:
+    """Build Hostinger affiliate link with referral tracking code."""
+    if domain_name:
+        return f"https://www.hostinger.com/domain-name-search?domain={domain_name}&REFERRALCODE={HOSTINGER_REFERRAL_CODE}"
+    return HOSTINGER_AFFILIATE_URL
+
 templates.env.globals["hostinger_affiliate_url"] = HOSTINGER_AFFILIATE_URL
+templates.env.globals["get_hostinger_url"] = get_hostinger_url
 
 # Ensure database tables exist immediately on import
 init_db()

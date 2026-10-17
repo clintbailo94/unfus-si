@@ -105,7 +105,7 @@
           </td>
           <td style="font-size: 0.8rem; color: var(--text-muted);">{{ item.checked_time }}</td>
           <td>
-            <a href="https://www.hostinger.com/domain-name-search?domain={{ item.domain }}&ref=unfus_si" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="padding: 0.25rem 0.55rem; font-size: 0.75rem; white-space: nowrap;">
+            <a href="{{ get_hostinger_url(item.domain) }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="padding: 0.25rem 0.55rem; font-size: 0.75rem; white-space: nowrap;">
               Register &nearr;
             </a>
           </td>
