@@ -7,3 +7,4 @@ __pycache__/
 /output/rebuild/
 *.pyc
 .pytest_cache/
+*.db
