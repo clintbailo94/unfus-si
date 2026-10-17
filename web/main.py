@@ -138,7 +138,8 @@ async def home_page(request: Request):
     last_checked, is_stale = get_snapshot_age_info()
     sales = load_sales()  # Includes both verified sales and labeled ask prices
     all_domains = load_opportunity_rows()
-    sample_domains = all_domains[:15]
+    # Free sample preview: items 15 to 20 (indices 14 to 20)
+    sample_domains = all_domains[14:20]
 
     return templates.TemplateResponse(
         request=request,
@@ -183,10 +184,11 @@ async def domains_page(
     else:  # score_desc
         filtered.sort(key=lambda d: (-float(d["total"] or 0), d["length"]))
 
-    # Prepare rows with blur/teaser for unpaid visitors
+    # Prepare rows with blur/teaser: for unpaid visitors, ONLY items 15 to 20 are viewable.
+    # Top premium items 1-14 and remaining items 21+ are locked/blurred.
     view_rows = []
     for idx, d in enumerate(filtered, start=1):
-        is_locked = (not has_paid) and (idx > 15)
+        is_locked = (not has_paid) and not (15 <= idx <= 20)
         teaser_name = f"{d['label'][:2]}***.si" if is_locked else d["domain"]
         view_rows.append({
             **d,

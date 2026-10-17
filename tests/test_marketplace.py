@@ -37,9 +37,9 @@ def client(tmp_path, monkeypatch):
 def test_paywall_enforcement_unpaid_visitor(client):
     response = client.get("/domains")
     assert response.status_code == 200
-    # Rows after 15 should be blurred/teaser
+    # Locked rows should have blurred teaser pattern
     assert "***.si" in response.text
-    assert "Unlock Remaining Names" in response.text
+    assert "Unlock Full Access" in response.text
 
 
 def test_paywall_enforcement_paid_visitor(client, tmp_path):
@@ -50,7 +50,7 @@ def test_paywall_enforcement_paid_visitor(client, tmp_path):
     assert response.status_code == 200
     assert "My Downloads Portal" in response.text
     # Blur teaser prompt should not appear
-    assert "Unlock Remaining Names" not in response.text
+    assert "Unlock Full Access" not in response.text
 
 
 # 2. Server-side download access verification
