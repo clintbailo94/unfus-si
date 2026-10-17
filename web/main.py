@@ -116,7 +116,7 @@ def load_opportunity_rows() -> list[dict]:
                 continue  # Never include owned domains!
             label = domain.replace(".si", "")
             domains.append({
-                "rank": row.get("rank", ""),
+                "rank": str(len(domains) + 1),
                 "domain": domain,
                 "label": label,
                 "length": len(label),
