@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import io
+import os
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Optional
@@ -31,6 +32,8 @@ TEMPLATES_DIR = BASE_DIR / "templates"
 
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
+HOSTINGER_AFFILIATE_URL = os.getenv("HOSTINGER_AFFILIATE_URL", "https://www.hostinger.com/domain-name-search?ref=unfus_si").strip()
+templates.env.globals["hostinger_affiliate_url"] = HOSTINGER_AFFILIATE_URL
 
 # Ensure database tables exist immediately on import
 init_db()
