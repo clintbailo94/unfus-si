@@ -13,6 +13,9 @@ from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, Stre
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+import dotenv
+dotenv.load_dotenv()
+
 from si_domains.config import DATA_DIR, OUTPUT_DIR
 from si_domains.sales import get_verified_completed_sales, load_sales
 from . import db
